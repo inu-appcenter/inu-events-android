@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/82105/AndroidStudioProjects/InuEvents/app/src/main/res/drawable/drawable_google_logo.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/InuEvents/app/src/main/res/drawable/drawable_login_btn.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/InuEvents/app/src/main/res/layout/activity_detail.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/InuEvents/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/InuEvents/app/src/main/res/layout/activity_main.xml" value="0.264" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
