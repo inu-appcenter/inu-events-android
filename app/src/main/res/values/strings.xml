@@ -10,5 +10,9 @@
     <string name="text_target">모집 대상을 입력하세요.</string>
     <string name="text_cancel">취소</string>
     <string name="text_next">다음</string>
+    <string name="text_content">내용을 입력해주세요.</string>
+    <string name="text_before">이전</string>
+    <string name="text_complete">완료</string>
+    <string name="text_postImage">이미지 첨부</string>
 
 </resources>
