@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Inu Events</string>
+    <string name="text_select1_bold">"<b>"필수정보"</b>"</string>
     <string name="text_select1">필수정보</string>
+    <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
     <string name="text_select2">내용 입력</string>
     <string name="text_title">제목을 입력하세요.</string>
     <string name="text_organiztion">소속된 단체를 입력하세요.</string>

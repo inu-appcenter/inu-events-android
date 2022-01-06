@@ -8,7 +8,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="invisible">
+    android:visibility="visible">
     <TextView
         android:id="@+id/textView_select1"
         android:layout_width="0dp"
@@ -16,9 +16,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="291dp"
-        android:text="@string/text_select1"
+        android:text="@string/text_select1_bold"
         android:textFontWeight="700"
         android:textSize="15sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,7 @@
         android:text="@string/text_select2"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_select1"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +46,7 @@
         android:text="@string/text_title"
         android:textSize="15sp"
         android:textFontWeight="400"
+        android:textColor="@color/black1"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="232dp"
@@ -57,6 +60,7 @@
         android:layout_height="36dp"
         android:textSize="15sp"
         android:textFontWeight="400"
+        android:textColor="@color/black1"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
@@ -75,6 +79,7 @@
         android:text="@string/text_organiztion"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_title" />
@@ -88,6 +93,7 @@
         android:text="@string/text_organization_example"
         android:textSize="12sp"
         android:textFontWeight="400"
+        android:textColor="@color/black8"
         app:layout_constraintStart_toEndOf="@+id/textView_organization"
         app:layout_constraintTop_toBottomOf="@+id/editText_title" />
 
@@ -101,6 +107,7 @@
         android:background="@drawable/edit_text_background"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_organization_example" />
@@ -115,6 +122,7 @@
         android:text="@string/text_classification"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_organization" />
@@ -131,6 +139,7 @@
         android:spinnerMode="dropdown"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
@@ -145,6 +154,7 @@
         android:text="@string/text_period"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner_classification" />
@@ -160,6 +170,7 @@
         android:background="@drawable/edit_text_background"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_period" />
@@ -174,6 +185,7 @@
         android:text="@string/text_target"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_period" />
@@ -188,6 +200,7 @@
         android:background="@drawable/edit_text_background"
         android:textFontWeight="400"
         android:textSize="15sp"
+        android:textColor="@color/black1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_target" />
@@ -223,7 +236,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/textView2_select1"
@@ -235,6 +248,7 @@
             android:text="@string/text_select1"
             android:textFontWeight="700"
             android:textSize="15sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -246,9 +260,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="219dp"
-            android:text="@string/text_select2"
+            android:text="@string/text_select2_bold"
             android:textFontWeight="400"
             android:textSize="15sp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView2_select1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -259,6 +274,7 @@
             android:text="@string/text_content"
             android:textSize="15sp"
             android:textFontWeight="400"
+            android:textColor="@color/black1"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="232dp"
@@ -273,6 +289,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:textFontWeight="400"
+            android:textSize="15sp"
+            android:textColor="@color/black1"
             android:background="@drawable/edit_text_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_content"
@@ -288,6 +307,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="275dp"
             android:text="@string/text_postImage"
+            android:textFontWeight="400"
+            android:textSize="15sp"
+            android:textColor="@color/black1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editText_content"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -301,8 +323,6 @@
             android:background="@drawable/img_btn_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_postImage" />
-
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_before"
