@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Inu Events</string>
+    <string name="app_name">Uni Letter</string>
+    <string name="action_setting_title">setting</string>
+    <string name="board_sample_title1">뭐라구?앱센터 13기 신입 멤버를 모집한다구?</string>
+    <string name="board_sample_title2">앱센터 13기 모집!!</string>
+    <string name="board_sample_date1">마감</string>
+    <string name="board_sample_institution">동아리</string>
 </resources>
