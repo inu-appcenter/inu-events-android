@@ -3,19 +3,19 @@
     android:shape="rectangle">
     <item>
         <shape>
-            <solid
-                android:color="@color/white">
-            </solid>
-            <corners
-                android:radius="8dp"/>
+            <solid android:color="@color/white"/>
+            <corners android:radius="8dp" />
             <stroke
                 android:width="2dp"
-                android:color="@color/dbdbdb"/>
+                android:color="@color/dbdbdb" />
 
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_baseline_photo_camera_24"
-        android:width="20dp" android:height="20dp"
-        android:gravity="right|bottom" android:start="10dp" android:top="1dp">
-    </item>
+    <item
+        android:width="20dp"
+        android:height="20dp"
+        android:drawable="@drawable/ic_photo_camera"
+        android:gravity="right|bottom"
+        android:start="10dp"
+        android:top="1dp"/>
 </layer-list>
