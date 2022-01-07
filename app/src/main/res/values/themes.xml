@@ -12,5 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:textCursorDrawable">@color/primary</item>
+        <item name="android:textColorHighlight">@color/primary</item>
+        <item name="android:editTextColor">@color/black1</item>
     </style>
 </resources>

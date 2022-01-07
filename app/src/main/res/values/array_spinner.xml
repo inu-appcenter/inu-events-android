@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="classification">
+        <item>선택없음</item>
+        <item>동아리</item>
+        <item>소모임</item>
+        <item>간식나눔</item>
+        <item>대회 공모전</item>
+        <item>인턴</item>
+        <item>기타</item>
+    </string-array>
+</resources>
