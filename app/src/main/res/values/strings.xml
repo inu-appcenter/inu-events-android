@@ -1,8 +1,26 @@
 <resources>
-    <string name="app_name">Uni Letter</string>
+    <string name="app_title">Uni Letter</string>
     <string name="action_setting_title">setting</string>
     <string name="board_sample_title1">뭐라구?앱센터 13기 신입 멤버를 모집한다구?</string>
     <string name="board_sample_title2">앱센터 13기 모집!!</string>
     <string name="board_sample_date1">마감</string>
     <string name="board_sample_institution">동아리</string>
+    <string name="app_name">Inu Events</string>
+    <string name="text_select1_bold">"<b>"필수정보"</b>"</string>
+    <string name="text_select1">필수정보</string>
+    <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
+    <string name="text_select2">내용 입력</string>
+    <string name="text_title">제목을 입력하세요.</string>
+    <string name="text_organiztion">소속된 단체를 입력하세요.</string>
+    <string name="text_organization_example">(ex.총학생회,컴퓨터공학부)</string>
+    <string name="text_classification">분류를 선택하세요.</string>
+    <string name="text_period">모집 기간을 선택하세요.</string>
+    <string name="text_target">모집 대상을 입력하세요.</string>
+    <string name="text_cancel">취소</string>
+    <string name="text_next">다음</string>
+    <string name="text_content">내용을 입력해주세요.</string>
+    <string name="text_before">이전</string>
+    <string name="text_complete">완료</string>
+    <string name="text_postImage">이미지 첨부</string>
+
 </resources>
