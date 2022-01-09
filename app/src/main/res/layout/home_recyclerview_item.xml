@@ -13,13 +13,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="300dp">
+        android:layout_height="330dp">
 
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="230dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -33,14 +33,14 @@
 
         <TextView
             android:id="@+id/board_title"
-            android:layout_width="140dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{viewModel.title}"
             android:textColor="@color/black1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -57,7 +57,7 @@
             android:paddingEnd="5dp"
             android:text="@{viewModel.date}"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/board_title"
             tools:background="@drawable/drawable_home_board_date_deadline_background"
@@ -70,7 +70,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="@{viewModel.institution}"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/board_date"
             app:layout_constraintTop_toBottomOf="@+id/board_title"
             tools:text="@string/board_sample_institution" />
