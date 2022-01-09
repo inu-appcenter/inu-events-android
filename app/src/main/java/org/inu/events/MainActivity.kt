@@ -2,6 +2,7 @@ package org.inu.events
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import org.inu.events.databinding.ActivityMainBinding
@@ -18,5 +19,6 @@ class MainActivity : AppCompatActivity() {
             layoutManager = GridLayoutManager(context, 2)   //리사이클러뷰 매니저 설정
             adapter = HomeAdapter(homeModel.homeDataList)   //데이터를 아답터에 전달
         }
+
     }
 }
