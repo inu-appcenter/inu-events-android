@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/fixToolbarMenu"
+            android:title="수정하기"
+            tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/deleteToolbarMenu"
+            android:title="삭제하기"
+            tools:ignore="HardcodedText" />
+
+</menu>

@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var homeModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_InuEvents)
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)  //데이터 바인딩
 
