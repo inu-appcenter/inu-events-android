@@ -8,6 +8,7 @@
     android:elevation="8dp">
 
     <androidx.appcompat.widget.Toolbar
+        app:menu="@menu/event_toolbar_menu"
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"

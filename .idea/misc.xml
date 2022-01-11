@@ -16,6 +16,7 @@
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_home_board_date_ongoing_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_home_board_image_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_login_btn.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_splash.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/home_board_date_deadline_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/home_board_date_ongoing_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/home_board_image_background.xml" value="0.26979166666666665" />
@@ -36,6 +37,8 @@
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/event_toolbar.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.1296875" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_layout.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/menu/event_toolbar_menu.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>
