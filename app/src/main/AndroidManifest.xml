@@ -19,15 +19,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-            android:exported="true">
-        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".DetailActivity"
-            android:exported="true">
-        </activity>
-        <activity android:name=".CommentActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
+        <activity
+            android:name=".CommentActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".RegisterEventsActivity"
+            android:exported="true"></activity>
     </application>
 </manifest>

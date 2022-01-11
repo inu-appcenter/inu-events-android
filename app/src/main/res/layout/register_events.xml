@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View">
+        </import>
+        <variable
+            name="registerViewModel"
+            type="org.inu.events.RegisterEventsViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
-
+        android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
+        >
         <TextView
             android:id="@+id/textView_select1"
             android:layout_width="0dp"
@@ -63,6 +74,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/drawable_edit_text_background"
+            android:text="@{registerViewModel.title}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +117,7 @@
             android:layout_marginTop="9dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/drawable_edit_text_background"
+            android:text="@{registerViewModel.organization}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +150,7 @@
             android:entries="@array/classification"
             android:spinnerMode="dropdown"
             android:textColor="@color/black1"
+            android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,6 +181,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/drawable_edit_text_background"
+            android:text="@{registerViewModel.period}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +211,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/drawable_edit_text_background"
+            android:text="@{registerViewModel.target}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -224,15 +240,17 @@
             android:textColor="@color/white"
             android:textFontWeight="400"
             android:textSize="15sp"
+            android:onClick="@{ () -> registerViewModel.onNextClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_cancel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/conlayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
 
         <TextView
             android:id="@+id/textView2_select1"
@@ -287,6 +305,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/drawable_edit_text_background"
+            android:text="@{registerViewModel.content}"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -327,6 +346,7 @@
             android:textColor="@color/primary"
             android:textFontWeight="400"
             android:textSize="15sp"
+            android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_complete"
             app:layout_constraintStart_toStartOf="parent" />
@@ -346,3 +366,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
