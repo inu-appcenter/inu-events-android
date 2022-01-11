@@ -1,10 +1,10 @@
 package org.inu.events
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.RegisterEventsBinding
+import org.inu.events.viewmodel.RegisterEventsViewModel
 
 class RegisterEventsActivity:AppCompatActivity() {
     private lateinit var registerModel: RegisterEventsViewModel

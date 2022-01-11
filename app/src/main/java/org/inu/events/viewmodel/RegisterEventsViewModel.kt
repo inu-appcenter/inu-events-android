@@ -1,10 +1,8 @@
-package org.inu.events
+package org.inu.events.viewmodel
 
 import android.util.Log
-import android.view.View
 import androidx.databinding.*
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import org.inu.events.data.RegisterEventData
 
 //ViewModel()
 class RegisterEventsViewModel : BaseObservable() {

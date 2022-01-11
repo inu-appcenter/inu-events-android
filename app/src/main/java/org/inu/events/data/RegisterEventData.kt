@@ -1,4 +1,4 @@
-package org.inu.events
+package org.inu.events.data
 
 import android.view.View
 

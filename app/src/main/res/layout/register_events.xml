@@ -5,7 +5,7 @@
         </import>
         <variable
             name="registerViewModel"
-            type="org.inu.events.RegisterEventsViewModel" />
+            type="org.inu.events.viewmodel.RegisterEventsViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

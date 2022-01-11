@@ -8,7 +8,7 @@
         <import type="androidx.core.content.ContextCompat"/>
         <variable
             name="viewModel"
-            type="org.inu.events.HomeViewModel" />
+            type="org.inu.events.viewmodel.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

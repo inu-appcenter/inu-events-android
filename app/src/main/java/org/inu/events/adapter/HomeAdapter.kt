@@ -1,12 +1,15 @@
-package org.inu.events
+package org.inu.events.adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import org.inu.events.DetailActivity
+import org.inu.events.data.HomeData
+import org.inu.events.viewmodel.HomeViewModel
+import org.inu.events.R
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
 
 const val HOME_BOARD_INFO = "org.int.events.homeInfo"
@@ -32,7 +35,7 @@ class HomeAdapter(private var homeDataList: List<HomeData>):RecyclerView.Adapter
             binding.viewModel = HomeViewModel()
             itemView.setOnClickListener(this)
         }
-        fun bind(homeData:HomeData) {
+        fun bind(homeData: HomeData) {
             binding.apply {
                 viewModel?.homeData = homeData
                 executePendingBindings()
