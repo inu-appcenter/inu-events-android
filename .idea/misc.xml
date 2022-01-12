@@ -43,9 +43,12 @@
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_login.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_main.xml" value="0.20625" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/detail_toolbar.xml" value="0.24583333333333332" />
-        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/event_toolbar.xml" value="0.24583333333333332" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/event_register_toolbar.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/event_toolbar.xml" value="0.33" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/home_recyclerview_item.xml" value="0.20625" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.23020833333333332" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/toolbar_layout.xml" value="0.23020833333333332" />
       </map>
     </option>
   </component>
