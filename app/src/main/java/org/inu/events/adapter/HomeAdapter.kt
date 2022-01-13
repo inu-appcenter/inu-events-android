@@ -11,8 +11,8 @@ import org.inu.events.data.HomeData
 import org.inu.events.viewmodel.HomeViewModel
 import org.inu.events.R
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
+import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 
-const val HOME_BOARD_INFO = "org.int.events.homeInfo"
 
 class HomeAdapter(private var homeDataList: List<HomeData>):RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
