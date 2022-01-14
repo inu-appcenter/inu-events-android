@@ -23,7 +23,7 @@ class RegisterEventsActivity:AppCompatActivity() {
         binding.registerViewModel = registerModel
         binding.lifecycleOwner = this
 
-        //    todo : 수연 - 이후 설정 창으로 가도록 수정
+        //    todo : 수연 - 이후 MAIN -> 설정 창으로 가도록 수정
         registerModel.viewEvent.observe(this, {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
