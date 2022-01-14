@@ -27,10 +27,16 @@ class RegisterEventsActivity:AppCompatActivity() {
         registerModel.viewEvent.observe(this, {
             it.getContentIfNotHandled()?.let { event ->
                 when (event) {
-                    RegisterEventsViewModel.EVENT_START_MY_ACTIVITY -> {
+                    RegisterEventsViewModel.EVENT_START_MAIN_ACTIVITY -> {
                         Intent(this, MainActivity::class.java).apply{
                             startActivity(this)
                         }
+                    }
+                    RegisterEventsViewModel.EVENT_START_GALLERY -> {
+                        val intent = Intent()
+                        intent.type = "image/*"
+                        intent.action = Intent.ACTION_GET_CONTENT
+                        startActivityForResult(intent,GALLERY)
                     }
                 }
             }

@@ -56,10 +56,11 @@ class RegisterEventsViewModel : RegisterEventBaseViewModel() {
     // TODO: 수연 - 이후 나머지 click 함수 구현
 
     companion object {
-        const val EVENT_START_MY_ACTIVITY = 22212
+        const val EVENT_START_MAIN_ACTIVITY = 22212
+        const val EVENT_START_GALLERY = 22213
     }
 
-    fun onCancelClick() = viewEvent(EVENT_START_MY_ACTIVITY)
+    fun onCancelClick() = viewEvent(EVENT_START_MAIN_ACTIVITY)
 
     fun onNextClick() {
         Log.i("BUTTON", "다음 버튼 클릭")
@@ -75,5 +76,7 @@ class RegisterEventsViewModel : RegisterEventBaseViewModel() {
 
     fun onCompleteClick() {
     }
+
+    fun onImageButtonClick()  = viewEvent(EVENT_START_GALLERY)
 
 }
