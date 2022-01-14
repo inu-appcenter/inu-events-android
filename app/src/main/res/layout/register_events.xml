@@ -230,6 +230,7 @@
                 android:textColor="@color/primary"
                 android:textFontWeight="400"
                 android:textSize="15sp"
+                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -36,7 +36,11 @@
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/event_toolbar.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.1296875" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable-v24/drawable_btn_background.xml" value="0.21203703703703702" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable-v24/drawable_edit_text_background.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable/drawable_img_btn_click.xml" value="0.21203703703703702" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable/img_btn_background.xml" value="0.29010416666666666" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable/selector_img_btn.xml" value="0.21203703703703702" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/drawable/spinner_background.xml" value="0.25729166666666664" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_comment.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_detail.xml" value="0.1265625" />
