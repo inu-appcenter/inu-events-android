@@ -7,8 +7,8 @@
     <data>
         <import type="androidx.core.content.ContextCompat"/>
         <variable
-            name="viewModel"
-            type="org.inu.events.viewmodel.HomeViewModel" />
+            name="homeData"
+            type="org.inu.events.data.HomeData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:background="@drawable/drawable_home_board_image_background"
-            android:src="@{ContextCompat.getDrawable(context,viewModel.imageResId)}"
+            android:src="@{ContextCompat.getDrawable(context,homeData.imageResId)}"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/view"
@@ -49,7 +49,7 @@
             android:layout_marginVertical="4dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{viewModel.title}"
+            android:text="@{homeData.title}"
             android:textColor="@color/black1"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,9 +63,9 @@
             android:layout_height="18dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:background="@{ContextCompat.getDrawable(context,viewModel.dateColor)}"
+            android:background="@{ContextCompat.getDrawable(context,homeData.dateColor)}"
             android:paddingHorizontal="5dp"
-            android:text="@{viewModel.date}"
+            android:text="@{homeData.date}"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:text="@{viewModel.institution}"
+            android:text="@{homeData.institution}"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/board_date"
             app:layout_constraintTop_toBottomOf="@+id/board_title"
