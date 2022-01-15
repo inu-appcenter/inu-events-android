@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="commentViewModel"
-            type="org.inu.events.CommentActivity" />
+            type="org.inu.events.viewmodel.CommentViewModel" />
     </data>
 
     <LinearLayout
@@ -44,6 +45,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/commentEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -56,6 +58,7 @@
                 tools:ignore="HardcodedText" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/commentEnrollButton"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/drawable_comment_btn"

@@ -8,7 +8,7 @@ import android.view.Window
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 
-class CommentDialog {
+class LoginDialog {
     interface LoginDialog {
         fun onOk()
         fun onCancel()
