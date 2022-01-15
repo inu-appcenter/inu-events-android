@@ -7,44 +7,55 @@
     <data>
         <import type="androidx.core.content.ContextCompat"/>
         <variable
-            name="viewModel"
-            type="org.inu.events.viewmodel.HomeViewModel" />
+            name="homeData"
+            type="org.inu.events.data.HomeData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="330dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="180dp"
-            android:layout_height="230dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="72dp"
             android:background="@drawable/drawable_home_board_image_background"
-            android:src="@{ContextCompat.getDrawable(context,viewModel.imageResId)}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/img_home_board_sample_image1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/home_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/drawable_home_board_image_background"
+            android:src="@{ContextCompat.getDrawable(context,homeData.imageResId)}"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            tools:srcCompat="@drawable/img_home_board_sample_image1" />
 
         <TextView
             android:id="@+id/board_title"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="4dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{viewModel.title}"
+            android:text="@{homeData.title}"
             android:textColor="@color/black1"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            tools:text="@string/board_sample_title2" />
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:text="@string/board_sample_title1" />
 
         <TextView
             android:id="@+id/board_date"
@@ -52,10 +63,9 @@
             android:layout_height="18dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:background="@{ContextCompat.getDrawable(context,viewModel.dateColor)}"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:text="@{viewModel.date}"
+            android:background="@{ContextCompat.getDrawable(context,homeData.dateColor)}"
+            android:paddingHorizontal="5dp"
+            android:text="@{homeData.date}"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +79,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:text="@{viewModel.institution}"
+            android:text="@{homeData.institution}"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/board_date"
             app:layout_constraintTop_toBottomOf="@+id/board_title"
