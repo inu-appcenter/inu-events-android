@@ -1,40 +1,28 @@
 package org.inu.events.viewmodel
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.inu.events.R
 import org.inu.events.data.HomeData
 
-class HomeViewModel : BaseObservable() {
-    var homeData: HomeData? = null
-        set(homeData){
-            field = homeData
-            notifyChange()
-        }
+class HomeViewModel : ViewModel() {
+    private val _homeDataList = MutableLiveData<ArrayList<HomeData>>()
+    val homeDataList : LiveData<ArrayList<HomeData>>
+        get() = _homeDataList
 
-    @get:Bindable
-
-    val title: String?
-        get() = homeData?.title
-    val date: String?
-        get() = homeData?.date
-    val institution: String?
-        get() = homeData?.institution
-    val imageResId: Int?
-        get() = homeData?.imageResId
-    val dateColor: Int?
-        get() = homeData?.dateColor
-
-    val homeDataList: List<HomeData>
+    private var homeData = ArrayList<HomeData>()
 
     init{
-        homeDataList = loadHomeData()
+        homeData = loadHomeData()
+        _homeDataList.value = homeData
     }
+
 
     //TODO("서버나오면 수정해야 할 부분")
     //일단은 데이터가 없으니까 임시로 넣어줌
-    private fun loadHomeData(): List<HomeData>{
-        val homeDataList = mutableListOf<HomeData>()
+    private fun loadHomeData(): ArrayList<HomeData> {
+        val homeDataList = ArrayList<HomeData>()
         homeDataList.add(HomeData("뭐라구?앱센터 13기 신입 멤버를 모집한다구?","마감","동아리",
             R.drawable.img_home_board_sample_image1,
             R.drawable.drawable_home_board_date_deadline_background
