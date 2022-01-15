@@ -1,20 +1,13 @@
 package org.inu.events.viewmodel
 
-import android.content.Intent
 import android.util.Log
 import androidx.databinding.*
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import org.inu.events.Event
-import org.inu.events.data.RegisterEventData
+import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
+import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 
 //ViewModel()
 class RegisterEventsViewModel : RegisterEventBaseViewModel() {
-    companion object {
-        const val EVENT_START_MAIN_ACTIVITY = 22212
-        const val EVENT_START_GALLERY = 22213
-    }
 
     val title = MutableLiveData("")
     val organization = MutableLiveData("")
