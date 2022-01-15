@@ -1,369 +1,374 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
-        <import type="android.view.View">
-        </import>
+
+        <import type="android.view.View"></import>
+
         <variable
             name="registerViewModel"
             type="org.inu.events.viewmodel.RegisterEventsViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout1"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
-        >
-        <TextView
-            android:id="@+id/textView_select1"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="291dp"
-            android:text="@string/text_select1_bold"
-            android:textColor="@color/black"
-            android:textFontWeight="700"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView_select2"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="219dp"
-            android:text="@string/text_select2"
-            android:textColor="@color/black"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView_select1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_title"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="232dp"
-            android:text="@string/text_title"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView_select1" />
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
+            <include
+                android:id="@+id/toolbar_register1"
+                layout="@layout/event_register_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textView_select1"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_select1_bold"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register1" />
 
-        <EditText
-            android:id="@+id/editText_title"
+            <TextView
+                android:id="@+id/textView_select2"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_select2"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/textView_select1"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register1" />
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_title"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView_select1" />
+
+            <EditText
+                android:id="@+id/editText_title"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="7dp"
+                android:paddingStart="16dp"
+                android:text="@{registerViewModel.title}"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+
+            <TextView
+                android:id="@+id/textView_organization"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_organiztion"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+
+            <TextView
+                android:id="@+id/textView_organization_example"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/text_organization_example"
+                android:textColor="@color/black8"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/textView_organization"
+                app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+
+            <EditText
+                android:id="@+id/editText_organization"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="7dp"
+                android:paddingStart="16dp"
+                android:text="@{registerViewModel.organization}"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_organization_example" />
+
+            <TextView
+                android:id="@+id/textView_classification"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_classification"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText_organization" />
+
+            <Spinner
+                android:id="@+id/spinner_classification"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/spinner_background"
+                android:entries="@array/classification"
+                android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
+
+            <TextView
+                android:id="@+id/textView_period"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_period"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_classification" />
+
+            <!--   이 부분은 결정 후 수정-->
+            <EditText
+                android:id="@+id/editText_period"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="7dp"
+                android:paddingStart="16dp"
+                android:text="@{registerViewModel.period}"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_period" />
+
+            <TextView
+                android:id="@+id/textView_target"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_target"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText_period" />
+
+            <EditText
+                android:id="@+id/editText_target"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="7dp"
+                android:paddingStart="16dp"
+                android:text="@{registerViewModel.target}"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_target" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/drawable_btn_background"
+                android:text="@string/text_cancel"
+                android:textColor="@color/primary"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_next"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_next"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/drawable_btn_primary"
+                android:onClick="@{ () -> registerViewModel.onNextClick()}"
+                android:text="@string/text_next"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_cancel" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conlayout2"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/drawable_edit_text_background"
-            android:text="@{registerViewModel.title}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
+            <include
+                android:id="@+id/toolbar_register2"
+                layout="@layout/event_register_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/textView_organization"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="191dp"
-            android:text="@string/text_organiztion"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+            <TextView
+                android:id="@+id/textView2_select1"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_select1"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register2" />
 
-        <TextView
-            android:id="@+id/textView_organization_example"
-            android:layout_width="0dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/text_organization_example"
-            android:textColor="@color/black8"
-            android:textFontWeight="400"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/textView_organization"
-            app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+            <TextView
+                android:id="@+id/textView2_select2"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_select2_bold"
+                android:textColor="@color/black"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/textView2_select1"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register2" />
 
-        <EditText
-            android:id="@+id/editText_organization"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/drawable_edit_text_background"
-            android:text="@{registerViewModel.organization}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_organization_example" />
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_content"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView2_select1" />
 
-        <TextView
-            android:id="@+id/textView_classification"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="232dp"
-            android:text="@string/text_classification"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_organization" />
+            <EditText
+                android:id="@+id/editText_content"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="7dp"
+                android:paddingStart="16dp"
+                android:text="@{registerViewModel.content}"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_content" />
 
-        <Spinner
-            android:id="@+id/spinner_classification"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/spinner_background"
-            android:entries="@array/classification"
-            android:spinnerMode="dropdown"
-            android:textColor="@color/black1"
-            android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
+            <TextView
+                android:id="@+id/textView_postImage"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_postImage"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editText_content" />
 
-        <TextView
-            android:id="@+id/textView_period"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="204dp"
-            android:text="@string/text_period"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/spinner_classification" />
+            <ImageButton
+                android:id="@+id/imageButton_postImage"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/img_btn_background"
+                android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_postImage" />
 
-        <!--   이 부분은 결정 후 수정-->
-        <EditText
-            android:id="@+id/editText_period"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/drawable_edit_text_background"
-            android:text="@{registerViewModel.period}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_period" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_before"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/drawable_btn_background"
+                android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
+                android:text="@string/text_before"
+                android:textColor="@color/primary"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_complete"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView_target"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="204dp"
-            android:text="@string/text_target"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_period" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_complete"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/drawable_btn_primary"
+                android:text="@string/text_complete"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_before" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/editText_target"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/drawable_edit_text_background"
-            android:text="@{registerViewModel.target}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_target" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:background="@drawable/drawable_btn_background"
-            android:text="@string/text_cancel"
-            android:textColor="@color/primary"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_next"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_next"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:background="@drawable/drawable_btn_primary"
-            android:text="@string/text_next"
-            android:textColor="@color/white"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            android:onClick="@{ () -> registerViewModel.onNextClick()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_cancel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/conlayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
-
-        <TextView
-            android:id="@+id/textView2_select1"
-            android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="291dp"
-            android:text="@string/text_select1"
-            android:textColor="@color/black"
-            android:textFontWeight="700"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView2_select2"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="219dp"
-            android:text="@string/text_select2_bold"
-            android:textColor="@color/black"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView2_select1"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView_content"
-            android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="232dp"
-            android:text="@string/text_content"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView2_select1" />
-
-        <EditText
-            android:id="@+id/editText_content"
-            android:layout_width="0dp"
-            android:layout_height="240dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/drawable_edit_text_background"
-            android:text="@{registerViewModel.content}"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_content" />
-
-        <TextView
-            android:id="@+id/textView_postImage"
-            android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="275dp"
-            android:text="@string/text_postImage"
-            android:textColor="@color/black1"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText_content" />
-
-        <ImageButton
-            android:id="@+id/imageButton_postImage"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/img_btn_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_postImage" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_before"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:background="@drawable/drawable_btn_background"
-            android:text="@string/text_before"
-            android:textColor="@color/primary"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_complete"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_complete"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:background="@drawable/drawable_btn_primary"
-            android:text="@string/text_complete"
-            android:textColor="@color/white"
-            android:textFontWeight="400"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_before" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
