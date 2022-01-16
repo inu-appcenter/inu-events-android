@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintTop_toBottomOf="@+id/include"/>
 
         <ImageButton
             android:layout_width="40dp"
@@ -41,6 +41,7 @@
             android:src="@drawable/ic_pencil"
             android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{()->mainViewModel.onClickPost()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

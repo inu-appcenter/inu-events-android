@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)  //데이터 바인딩
 
         homeModel = ViewModelProvider(this).get(HomeViewModel::class.java)    //뷰모델에서 데이터 가져옴
+        binding.mainViewModel = homeModel
+        binding.lifecycleOwner = this
 
         binding.homeRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)   //리사이클러뷰 매니저 설정
@@ -32,11 +34,22 @@ class MainActivity : AppCompatActivity() {
 
         // 임시
         clickImageView()
+        setupButtons()
     }
 
     private fun clickImageView(){
         imageView.setOnClickListener {
             startActivity(Intent(this,RegisterEventsActivity::class.java))
         }
+    }
+
+    fun setupButtons() {
+        homeModel.postClickEvent.observe(
+            this,
+            {
+                val intent = Intent(this,RegisterEventsActivity::class.java)
+                startActivity(intent)
+            }
+        )
     }
 }

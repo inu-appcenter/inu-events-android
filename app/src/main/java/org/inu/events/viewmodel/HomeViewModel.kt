@@ -1,10 +1,12 @@
 package org.inu.events.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
 import org.inu.events.data.HomeData
+import org.inu.events.util.SingleLiveEvent
 
 class HomeViewModel : ViewModel() {
     private val _homeDataList = MutableLiveData<ArrayList<HomeData>>()
@@ -12,6 +14,8 @@ class HomeViewModel : ViewModel() {
         get() = _homeDataList
 
     private var homeData = ArrayList<HomeData>()
+
+    val postClickEvent = SingleLiveEvent<Any>()
 
     init{
         homeData = loadHomeData()
@@ -40,5 +44,9 @@ class HomeViewModel : ViewModel() {
             R.drawable.drawable_home_board_date_ongoing_background
         ))
         return homeDataList
+    }
+
+    fun onClickPost() {
+        postClickEvent.call()
     }
 }
