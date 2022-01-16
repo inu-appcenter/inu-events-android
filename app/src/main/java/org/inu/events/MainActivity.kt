@@ -3,48 +3,39 @@ package org.inu.events
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import org.inu.events.adapter.HomeAdapter
 import org.inu.events.databinding.ActivityMainBinding
 import org.inu.events.viewmodel.HomeViewModel
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var homeModel: HomeViewModel
-
-    private val imageView: ImageView by lazy {
-        findViewById(R.id.imageView)
-    }
+    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_InuEvents)
+        setTheme(R.style.Theme_InuEvents) // 이것도 지울 수 있을 것 같아요.
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)  //데이터 바인딩
-
-        homeModel = ViewModelProvider(this).get(HomeViewModel::class.java)    //뷰모델에서 데이터 가져옴
-        binding.mainViewModel = homeModel
-        binding.lifecycleOwner = this
-
-        binding.homeRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)   //리사이클러뷰 매니저 설정
-            adapter = HomeAdapter(homeModel.homeDataList)   //데이터를 아답터에 전달
-        }
-
-        // 임시
-        clickImageView()
+        initBinding()
+        setupRecyclerView()
         setupButtons()
     }
 
-    private fun clickImageView(){
-        imageView.setOnClickListener {
-            startActivity(Intent(this,RegisterEventsActivity::class.java))
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding.mainViewModel = viewModel
+        binding.lifecycleOwner = this
+    }
+
+    private fun setupRecyclerView() {
+        binding.homeRecyclerView.apply {
+            adapter = HomeAdapter(viewModel.homeDataList)   //데이터를 아답터에 전달
         }
     }
 
-    fun setupButtons() {
-        homeModel.postClickEvent.observe(
+    private fun setupButtons() {
+        viewModel.postClickEvent.observe(
             this,
             {
                 val intent = Intent(this,RegisterEventsActivity::class.java)
