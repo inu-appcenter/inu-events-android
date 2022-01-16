@@ -23,9 +23,10 @@
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
             <include
                 android:id="@+id/toolbar_register1"
-                layout="@layout/event_register_toolbar"
+                layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title='@{"행사"}'/>
             <TextView
                 android:id="@+id/textView_select1"
                 android:layout_width="wrap_content"
@@ -257,9 +258,10 @@
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
             <include
                 android:id="@+id/toolbar_register2"
-                layout="@layout/event_register_toolbar"
+                layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:title='@{"행사"}' />
 
             <TextView
                 android:id="@+id/textView2_select1"
