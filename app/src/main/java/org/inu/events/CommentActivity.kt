@@ -21,31 +21,38 @@ class CommentActivity : AppCompatActivity() ,LoginDialog.LoginDialog{
 
         commentViewModel = ViewModelProvider(this)[CommentViewModel::class.java]
         commentBinding = DataBindingUtil.setContentView(this,R.layout.activity_comment)
+        commentBinding.commentViewModel = commentViewModel
+        commentBinding.lifecycleOwner = this
 
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = CommentAdapter(commentViewModel.commentList)
         }
 
-        initViews()
+        setupButtons()
+    }
+
+    private fun setupButtons(){
+        commentViewModel.btnClickEvent.observe(
+            this,
+            {
+                isLogin()
+            }
+        )
     }
 
 
-    private fun initViews(){
-        commentBinding.commentEnrollButton.setOnClickListener {
-            isLogin()
-        }
-    }
 
-    private fun isLogin(){
+    // dialog
+    private fun isLogin(){      // 로그인 다이어로그 보여주기
         LoginDialog().show(this,{  onOk() } , { onCancel() })
     }
 
-    override fun onOk() {
+    override fun onOk() {   // 로그인 확인을 눌렀을 때
         Log.d(TAG, "onOk: ")
     }
 
-    override fun onCancel() {
+    override fun onCancel() {   // 로그인 취소를 눌렀을 때
         Toast.makeText(this,"로그인을 하셔야 댓글 작성이 가능합니다",Toast.LENGTH_SHORT).show()
     }
 

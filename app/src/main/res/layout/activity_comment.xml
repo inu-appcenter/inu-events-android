@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="commentViewModel"
             type="org.inu.events.viewmodel.CommentViewModel" />
@@ -67,6 +66,7 @@
                 android:text="등록"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
+                android:onClick="@{()->commentViewModel.onClickBtn()}"
                 tools:ignore="HardcodedText" />
 
 
