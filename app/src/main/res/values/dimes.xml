@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- textSize -->
+    <dimen name="header1">24sp</dimen>
+    <dimen name="header2">20sp</dimen>
+    <dimen name="body1">18sp</dimen>
+    <dimen name="body2">15sp</dimen>
+    <dimen name="body3">12sp</dimen>
+
+    <!-- margin -->
+    <dimen name="horizontal_margin">16dp</dimen>
+</resources>
