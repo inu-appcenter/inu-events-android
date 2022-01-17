@@ -40,13 +40,13 @@ class RegisterEventsActivity:AppCompatActivity() {
                 }
             }
         })
+
+        setupToolbar()
+
     }
-
-
-
-
-
-
-
+    private fun setupToolbar(){
+        binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
+        binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
+    }
 
 }
