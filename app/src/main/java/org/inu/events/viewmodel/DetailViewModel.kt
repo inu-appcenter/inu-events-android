@@ -5,7 +5,6 @@ import org.inu.events.util.SingleLiveEvent
 
 class DetailViewModel : ViewModel() {
 
-
     val commentClickEvent = SingleLiveEvent<Any>()
 
     fun onClickComment() {

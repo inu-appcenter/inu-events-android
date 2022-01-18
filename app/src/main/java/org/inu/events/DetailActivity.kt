@@ -16,7 +16,10 @@ class DetailActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initBinding()
         setupButtons()
+        setupToolbar()
     }
+
+
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_detail)
@@ -32,5 +35,10 @@ class DetailActivity: AppCompatActivity() {
                 startActivity(intent)
             }
         )
+    }
+
+    private fun setupToolbar(){
+        binding.detailToolbar.toolbarRegister.inflateMenu(R.menu.event_toolbar_menu)
+        binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
     }
 }
