@@ -26,7 +26,7 @@
                 layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title='@{"행사"}'/>
+                app:title='@{@string/event}'/>
             <TextView
                 android:id="@+id/textView_select1"
                 android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                 layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title='@{"행사"}' />
+                app:title='@{@string/event}' />
 
             <TextView
                 android:id="@+id/textView2_select1"
