@@ -26,7 +26,7 @@ class HomeAdapter(private var homeDataList: LiveData<ArrayList<HomeData>>):Recyc
         holder.bind(homeDataList.value!!.get(position))
     }
 
-    override fun getItemCount() = homeDataList.value!!.size
+    override fun getItemCount() = homeDataList.value?.size ?: 0
 
     inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root),View.OnClickListener {
