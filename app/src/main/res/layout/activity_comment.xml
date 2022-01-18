@@ -19,7 +19,8 @@
             layout="@layout/toolbar_sample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/comment}"/>
+            app:title="@{@string/comment}"
+            />
 
 
         <TextView

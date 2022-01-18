@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout>
     <data>
+
         <variable
             name="detailViewModel"
             type="org.inu.events.viewmodel.DetailViewModel" />
@@ -9,15 +9,18 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
         <include
-            layout="@layout/event_toolbar"
+            layout="@layout/toolbar_sample"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:title="@{@string/event}"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -219,4 +222,3 @@
     </LinearLayout>
 
 </layout>
-
