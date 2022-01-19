@@ -19,10 +19,8 @@ import org.inu.events.viewmodel.RegisterEventsViewModel
 
 class RegisterEventsActivity : AppCompatActivity() {
     // todo : 수연 - 이후 다른 파일로 빼기
-    private val GALLERY = 1
     private val PERMISSION_ALBUM = 101
     private val REQUEST_STORAGE = 1000
-    private val imageUriList: MutableList<Uri> = mutableListOf()
 
     private lateinit var registerModel: RegisterEventsViewModel
     private lateinit var binding: RegisterEventsBinding
@@ -65,7 +63,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                 else -> {
                     requestPermissions(
                         arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                        1000
+                        REQUEST_STORAGE
                     )
                     Log.i("BUTTON", "else")
                 }
@@ -104,7 +102,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            1000 -> {
+            REQUEST_STORAGE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // todo 권한이 부여된 것입니다.
                     navigatePhotos()
