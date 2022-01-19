@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +21,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     // todo : 수연 - 이후 다른 파일로 빼기
     private val GALLERY = 1
     private val PERMISSION_ALBUM = 101
+    private val REQUEST_STORAGE = 1000
     private val imageUriList: MutableList<Uri> = mutableListOf()
 
     private lateinit var registerModel: RegisterEventsViewModel
@@ -80,22 +82,16 @@ class RegisterEventsActivity : AppCompatActivity() {
         }
 
         when (requestCode) {
-            2000 -> {
+            REQUEST_STORAGE -> {
                 val selectedImageUri: Uri? = data?.data
                 if (selectedImageUri != null) {
-
-                    if (imageUriList.size == 6) {
-                        Toast.makeText(this, "이미 사진이 꽉 찼습니다.", Toast.LENGTH_SHORT).show()
-                        return
+                    selectedImageUri?.let { uri ->
+                        //imageview.setImageURI(uri)
                     }
 
-                    imageUriList.add(selectedImageUri)
-                } else {
-                    Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
                 }
-            }
-            else -> {
-                Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -125,7 +121,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, 2000)
+        startActivityForResult(intent, REQUEST_STORAGE)
     }
 
     private fun showPermissionContextPopup() {
