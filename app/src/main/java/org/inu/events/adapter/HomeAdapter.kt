@@ -15,7 +15,7 @@ import org.inu.events.databinding.HomeRecyclerviewItemBinding
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 
 
-class HomeAdapter(private var homeDataList: LiveData<ArrayList<HomeData>>):RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(private var homeDataList: LiveData<List<HomeData>>):RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = HomeRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)

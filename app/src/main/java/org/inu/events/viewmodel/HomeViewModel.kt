@@ -12,24 +12,23 @@ import org.inu.events.di.AppConfigs
 import org.inu.events.util.SingleLiveEvent
 
 class HomeViewModel : ViewModel() {
-    private val _homeDataList = MutableLiveData<ArrayList<HomeData>>()
-    val homeDataList : LiveData<ArrayList<HomeData>>
+    private val _homeDataList = MutableLiveData<List<HomeData>>()
+    val homeDataList : LiveData<List<HomeData>>
         get() = _homeDataList
 
-    private var homeData = ArrayList<HomeData>()
+    private var homeData = emptyList<HomeData>()
 
     val postClickEvent = SingleLiveEvent<Any>()
 
-    val eventService: EventService = AppConfigs.eventService
+    private val eventService: EventService = AppConfigs.eventService
 
     init{
         homeData = loadHomeData()
         _homeDataList.value = homeData
     }
 
-    //TODO("서버나오면 수정해야 할 부분")
-    //일단은 데이터가 없으니까 임시로 넣어줌
-    private fun loadHomeData(): ArrayList<HomeData> {
+    //TODO 지금은 임시 데이터
+    private fun loadHomeData(): List<HomeData> {
         return eventService.fetchEvent()
     }
 

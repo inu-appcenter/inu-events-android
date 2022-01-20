@@ -1,6 +1,5 @@
 package org.inu.events.data
 
-import android.view.View
 
 data class RegisterEventData(
     val title: String = "",

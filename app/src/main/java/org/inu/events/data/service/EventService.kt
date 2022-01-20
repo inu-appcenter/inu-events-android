@@ -4,5 +4,5 @@ import org.inu.events.data.HomeData
 import retrofit2.http.GET
 
 interface EventService {
-    fun fetchEvent() : ArrayList<HomeData>
+    fun fetchEvent() : List<HomeData>
 }
