@@ -11,11 +11,12 @@ import org.inu.events.DetailActivity
 import org.inu.events.data.HomeData
 import org.inu.events.viewmodel.HomeViewModel
 import org.inu.events.R
+import org.inu.events.data.model.Article
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 
 
-class HomeAdapter(private var homeDataList: LiveData<List<HomeData>>):RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         val binding = HomeRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -23,7 +24,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<HomeData>>):RecyclerVi
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        holder.bind(homeDataList.value!!.get(position))
+        holder.bind(homeDataList.value!![position])
     }
 
     override fun getItemCount() = homeDataList.value?.size ?: 0
@@ -33,7 +34,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<HomeData>>):RecyclerVi
         init{
             itemView.setOnClickListener(this)
         }
-        fun bind(homeData: HomeData) {
+        fun bind(homeData: Article) {
             binding.homeData = homeData
         }
 

@@ -2,26 +2,17 @@ package org.inu.events.data.service
 
 import org.inu.events.R
 import org.inu.events.data.HomeData
+import org.inu.events.data.model.Article
 
 class DummyEventService : EventService {
-    override fun fetchEvent(): List<HomeData> {
+    override fun fetchEvent(): List<Article> {
         return listOf(
-            HomeData("뭐라구?앱센터 13기 신입 멤버를 모집한다구?","마감","동아리",
-                R.drawable.img_home_board_sample_image1,
-                R.drawable.drawable_home_board_date_deadline_background
-            ),
-            HomeData("뭐라구?앱센터 13기 신입 멤버를 모집한다구?","D-12","동아리",
-                R.drawable.img_home_board_sample_image2,
-                R.drawable.drawable_home_board_date_deadline_background
-            ),
-            HomeData("배고파요","마감","동아리",
-                R.drawable.img_profile,
-                R.drawable.drawable_home_board_date_ongoing_background
-            ),
-            HomeData("앱센터 13기 모집","D-12","동아리",
-                R.drawable.img_home_board_sample_image1,
-                R.drawable.drawable_home_board_date_deadline_background
-            )
+            Article(0,"앱센터","동아리","뭐라구?앱센터 13기 신입 멤버를 모집한다구?","위하여 물방아 작고 옷을 청춘 따뜻한 낙원을 이상의 피부가 봄바람이다. 인도하겠다는 할지니, 몸이 청춘에서만 튼튼하며, 발휘하기 천고에 끝까지 것이다. 대중을 인류의 살았으며, 같은 유소년에게서 반짝이는 보라. 용기가 그들에게 꽃 소담스러운 위하여 광야에서 능히 칼이다. 곧 생의 꾸며 수 쓸쓸하랴? 눈에 없으면 소금이라 이것은 아름다우냐? 끓는 들어 대고, 밝은 있는 있으랴? 같은 속에 꽃 곧 할지니, 생명을 사막이다. 이상을 열락의 이성은 없는 인간이 사랑의 피는 보내는 아니다. 이상의 인류의 반짝이는 능히 가진 노래하며 위하여 것이다. 있는 따뜻한 곳으로 수 끓는다.\n" +
+                    "\n" +
+                    "있음으로써 풀이 길지 오직 위하여서. 천고에 희망의 갑 싶이 같은 동력은 피고, 봄바람이다. 착목한는 관현악이며, 굳세게 힘차게 싶이 가진 철환하였는가? 사랑의 수 얼마나 길지 청춘의 꽃이 있으랴? 뜨고, 열매를 되려니와, 아름답고 가슴에 운다. 목숨이 하여도 일월과 무엇을 이성은 봄날의 것이 할지라도 천자만홍이 교향악이다. 아름답고 온갖 위하여서 수 길을 쓸쓸하랴? 시들어 속에서 원질이 것이 생의 그들에게 뜨거운지라, 온갖 것이다. 오아이스도 그것을 피가 철환하였는가? 청춘의 뛰노는 앞이 청춘의 아니다. 인간은 피고 쓸쓸한 청춘의 피가 있는가?\n" +
+                    "\n" +
+                    "용감하고 예수는 심장은 그들은 것이다. 품었기 피어나기 하였으며, 때문이다. 인생을 갑 싸인 현저하게 품에 있다. 그들은 뜨거운지라, 군영과 충분히 노래하며 끓는다. 황금시대를 길을 것은 평화스러운 얼음이 그들은 가치를 꽃이 하는 아니다. 청춘의 찾아 관현악이며, 그들을 쓸쓸하랴? 싸인 예수는 발휘하기 바이며, 때문이다. 우리의 구하기 살 그들을 위하여, 봄바람이다. 온갖 찬미를 생명을 꾸며 피어나는 것이다.",
+                    R.drawable.img_home_board_sample_image1,"2021.03.22","2021.03.26","2021.03.14",717)
         )
     }
 }
