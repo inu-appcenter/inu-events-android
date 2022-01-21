@@ -42,8 +42,10 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupToolbar()
         setupButtons()
         setupCurrentDate()
-        setupDatePicker()
-        setupTimePicker()
+        setupStartDatePicker()
+        setupStartTimePicker()
+        setupEndDatePicker()
+        setupEndTimePicker()
         initAddPhotoButton()
     }
 
@@ -71,12 +73,11 @@ class RegisterEventsActivity : AppCompatActivity() {
         )
     }
 
-    private fun setupDatePicker() {
-        registerModel.datePickerClickEvent.observe(this, {
+    private fun setupStartDatePicker() {
+        registerModel.startDatePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
-                    //Toast.makeText(this, "$y-$m-$d", Toast.LENGTH_SHORT).show()
                     registerModel.start_date_period.value = "$y.${m+1}.$d"
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
@@ -84,14 +85,49 @@ class RegisterEventsActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupTimePicker() {
-        registerModel.timePickerClickEvent.observe(this, {
+    private fun setupStartTimePicker() {
+        registerModel.startTimePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
             TimePickerDialog(this,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
-                //Toast.makeText(this, "$h:$m", Toast.LENGTH_SHORT).show()
-                  //registerModel.start_time_period.value = "$h:$m"
+                var am_pm: String = ""
+                if (h > 11) {
+                    am_pm = "오후"
+                }
+                else{
+                    am_pm = "오전"
+                }
+                  registerModel.start_time_period.value = "$h:$m $am_pm"
                 },
-                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true).show()
+                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+        })
+    }
+
+    private fun setupEndDatePicker() {
+        registerModel.endDatePickerClickEvent.observe(this, {
+            val cal = Calendar.getInstance()
+            DatePickerDialog(
+                this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
+                    registerModel.end_date_period.value = "$y.${m+1}.$d"
+                },
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
+            ).show()
+        })
+    }
+
+    private fun setupEndTimePicker() {
+        registerModel.endTimePickerClickEvent.observe(this, {
+            val cal = Calendar.getInstance()
+            TimePickerDialog(this,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                var am_pm: String = ""
+                if (h > 11) {
+                    am_pm = "오후"
+                }
+                else{
+                    am_pm = "오전"
+                }
+                registerModel.end_time_period.value = "$h:$m $am_pm"
+            },
+                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
         })
     }
 

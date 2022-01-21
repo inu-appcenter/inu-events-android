@@ -34,8 +34,10 @@ class RegisterEventsViewModel : ViewModel() {
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
-    val datePickerClickEvent = SingleLiveEvent<Any>()
-    val timePickerClickEvent = SingleLiveEvent<Any>()
+    val startDatePickerClickEvent = SingleLiveEvent<Any>()
+    val startTimePickerClickEvent = SingleLiveEvent<Any>()
+    val endDatePickerClickEvent = SingleLiveEvent<Any>()
+    val endTimePickerClickEvent = SingleLiveEvent<Any>()
 
     fun onCancelClick() {
         startHomeActivityClickEvent.call()
@@ -60,19 +62,19 @@ class RegisterEventsViewModel : ViewModel() {
     }
 
     fun onStartDateClick() {
-        datePickerClickEvent.call()
+        startDatePickerClickEvent.call()
     }
 
     fun onStartTimeClick() {
-        timePickerClickEvent.call()
+        startTimePickerClickEvent.call()
     }
 
     fun onEndDateClick() {
-        datePickerClickEvent.call()
+        endDatePickerClickEvent.call()
     }
 
     fun onEndTimeClick() {
-        timePickerClickEvent.call()
+        endTimePickerClickEvent.call()
     }
 
 }
