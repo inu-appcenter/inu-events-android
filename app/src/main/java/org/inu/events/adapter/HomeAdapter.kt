@@ -4,13 +4,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.DetailActivity
-import org.inu.events.data.HomeData
-import org.inu.events.viewmodel.HomeViewModel
-import org.inu.events.R
 import org.inu.events.data.model.Article
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
@@ -39,9 +35,9 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
         }
 
         override fun onClick(v: View) {
-            val homeBoardInfo = 0   //TODO 서버 나온 후 바꾸기
+            //TODO - 홈에서 클릭한 게시글이 무엇인지
             Intent(binding.root.context, DetailActivity::class.java).apply {
-                putExtra(HOME_BOARD_INFO,homeBoardInfo)
+                putExtra(HOME_BOARD_INFO,homeDataList.value!![position].id)
             }.run{binding.root.context.startActivity(this)}
         }
     }

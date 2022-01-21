@@ -2,10 +2,14 @@ package org.inu.events
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.viewmodel.DetailViewModel
 
 class DetailActivity: AppCompatActivity() {
@@ -17,9 +21,14 @@ class DetailActivity: AppCompatActivity() {
         initBinding()
         setupButtons()
         setupToolbar()
+
+        var extras = intent.extras?:null
+        if(intent.hasExtra(HOME_BOARD_INFO)){
+            var id:Int? = extras?.getInt(HOME_BOARD_INFO)
+            Log.d("tag","게시글의 id는 $id")
+            viewModel.eventIndex = MutableLiveData(id)
+        }
     }
-
-
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_detail)
@@ -38,7 +47,11 @@ class DetailActivity: AppCompatActivity() {
     }
 
     private fun setupToolbar(){
-        binding.detailToolbar.toolbarRegister.inflateMenu(R.menu.event_toolbar_menu)
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
+
+        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
+        if(viewModel.isMyWriting()){
+            binding.detailToolbar.toolbarRegister.inflateMenu(R.menu.event_toolbar_menu)
+        }
     }
 }
