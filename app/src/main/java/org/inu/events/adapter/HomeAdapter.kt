@@ -35,7 +35,6 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
         }
 
         override fun onClick(v: View) {
-            //TODO - 홈에서 클릭한 게시글이 무엇인지
             Intent(binding.root.context, DetailActivity::class.java).apply {
                 putExtra(HOME_BOARD_INFO,homeDataList.value!![position].id)
             }.run{binding.root.context.startActivity(this)}
