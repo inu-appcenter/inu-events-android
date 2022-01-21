@@ -3,11 +3,13 @@ package org.inu.events.viewmodel
 import android.util.Log
 import androidx.databinding.*
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
 import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
+import org.inu.events.util.SingleLiveEvent
 
 //ViewModel()
-class RegisterEventsViewModel : RegisterEventBaseViewModel() {
+class RegisterEventsViewModel : ViewModel() {
 
     val title = MutableLiveData("")
     val organization = MutableLiveData("")
@@ -27,23 +29,27 @@ class RegisterEventsViewModel : RegisterEventBaseViewModel() {
 //            registerEventData = registerEventData.copy(selectedItemPosition = value)
 //        }
 
-    fun onCancelClick() = viewEvent(EVENT_START_MAIN_ACTIVITY)
+    val startHomeActivityClickEvent = SingleLiveEvent<Any>()
+    val startGalleryClickEvent = SingleLiveEvent<Any>()
+    fun onCancelClick() {
+        startHomeActivityClickEvent.call()
+    }
+
+    fun onImageButtonClick() {
+        startGalleryClickEvent.call()
+    }
 
     fun onNextClick() {
         Log.i("BUTTON", "다음 버튼 클릭")
-        //registerEventData = registerEventData.copy(phase = 2)
         phase.value = 2
     }
 
     fun onBeforeClick() {
         Log.i("BUTTON", "이전 버튼 클릭")
-        //registerEventData = registerEventData.copy(phase = 1)
         phase.value = 1
     }
 
     fun onCompleteClick() {
     }
-
-    fun onImageButtonClick() = viewEvent(EVENT_START_GALLERY)
 
 }
