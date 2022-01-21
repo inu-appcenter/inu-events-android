@@ -19,6 +19,7 @@
         <item name="android:editTextColor">@color/black1</item>
 
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:timePickerStyle">@style/MyTimePickerTheme</item>
     </style>
 
         <!--  Splash theme  -->
@@ -26,5 +27,9 @@
         <item name="android:windowBackground">@drawable/drawable_splash</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <!--  TimePicker theme  -->
+    <style name="MyTimePickerTheme" parent="android:Widget.Material.Light.TimePicker">
+        <item name="android:timePickerMode">spinner</item>
     </style>
 </resources>

@@ -1,24 +1,32 @@
 package org.inu.events
 
 import android.app.Activity
+import android.app.AlertDialog.THEME_HOLO_LIGHT
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
 import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 import org.inu.events.viewmodel.RegisterEventsViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 class RegisterEventsActivity : AppCompatActivity() {
-    // todo : 수연 - 이후 다른 파일로 빼기
     private val PERMISSION_ALBUM = 101
     private val REQUEST_STORAGE = 1000
 
@@ -33,8 +41,26 @@ class RegisterEventsActivity : AppCompatActivity() {
 
         setupToolbar()
         setupButtons()
+        setupCurrentDate()
+        setupDatePicker()
+        setupTimePicker()
         initAddPhotoButton()
     }
+
+    private fun setupCurrentDate() {
+        val now: Long = System.currentTimeMillis()
+        val formatDate = SimpleDateFormat("yyyy.MM.dd",Locale("ko","KR")).format(now).toString()
+        val formatTime = SimpleDateFormat("h:mm a").format(now).toString()
+        registerModel.start_date_period.value = formatDate
+        registerModel.start_time_period.value = formatTime
+        registerModel.end_date_period.value = formatDate
+        registerModel.end_time_period.value = formatTime
+        binding.editTextStartDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding.editTextStartTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding.editTextEndDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding.editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    }
+
 
     private fun setupButtons() {
         registerModel.startHomeActivityClickEvent.observe(
@@ -43,6 +69,30 @@ class RegisterEventsActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         )
+    }
+
+    private fun setupDatePicker() {
+        registerModel.datePickerClickEvent.observe(this, {
+            val cal = Calendar.getInstance()
+            DatePickerDialog(
+                this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
+                    //Toast.makeText(this, "$y-$m-$d", Toast.LENGTH_SHORT).show()
+                    registerModel.start_date_period.value = "$y.${m+1}.$d"
+                },
+                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
+            ).show()
+        })
+    }
+
+    private fun setupTimePicker() {
+        registerModel.timePickerClickEvent.observe(this, {
+            val cal = Calendar.getInstance()
+            TimePickerDialog(this,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                //Toast.makeText(this, "$h:$m", Toast.LENGTH_SHORT).show()
+                  //registerModel.start_time_period.value = "$h:$m"
+                },
+                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true).show()
+        })
     }
 
     private fun initAddPhotoButton() {
@@ -87,8 +137,8 @@ class RegisterEventsActivity : AppCompatActivity() {
                         //imageview.setImageURI(uri)
                     }
 
-                }else{
-                    Toast.makeText(this,"사진을 가져오지 못했습니다.",Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
