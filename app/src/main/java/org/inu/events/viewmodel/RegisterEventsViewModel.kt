@@ -14,15 +14,8 @@ import org.inu.events.util.SingleLiveEvent
 //ViewModel()
 class RegisterEventsViewModel : ViewModel() {
 
-    val title = MutableLiveData("")
-    val organization = MutableLiveData("")
-
     // todo - 수연 : selectedItemPosition부분 어떻게 수정할지
     val selectedItemPosition = MutableLiveData(0)
-    val period = MutableLiveData("")
-    val target = MutableLiveData("")
-    val content = MutableLiveData("")
-    val imageResId = MutableLiveData(1)
     val phase = MutableLiveData(1)
 
     //서버통신
