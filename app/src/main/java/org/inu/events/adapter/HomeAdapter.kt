@@ -40,7 +40,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
         }
         fun bind(homeData: Article) {
             binding.homeData = homeData
-            binding.boardDate.text = dday(homeData.end_at)
+            binding.boardDate.text = whenDay(homeData.end_at)
             binding.boardDate.background = ContextCompat.getDrawable(binding.root.context,isDeadline())
             Log.d("tag","homeData bind")
         }
@@ -51,7 +51,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
             }.run{binding.root.context.startActivity(this)}
         }
 
-        fun dday(end_at: String?): String {
+        private fun whenDay(end_at: String?): String {
             if(end_at == null) return "D-??"
 
             val dateFormat = SimpleDateFormat("yyyy.MM.dd")
@@ -74,7 +74,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
             return "D-$dDay"
         }
 
-        fun isDeadline(): Int = if (checkDeadline) {R.drawable.drawable_home_board_date_deadline_background}
+        private fun isDeadline(): Int = if (checkDeadline) {R.drawable.drawable_home_board_date_deadline_background}
                                 else {R.drawable.drawable_home_board_date_ongoing_background}
     }
 }
