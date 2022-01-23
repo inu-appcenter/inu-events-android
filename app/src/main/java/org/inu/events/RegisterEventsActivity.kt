@@ -51,8 +51,8 @@ class RegisterEventsActivity : AppCompatActivity() {
 
     private fun setupCurrentDate() {
         val now: Long = System.currentTimeMillis()
-        val formatDate = SimpleDateFormat("yyyy.MM.dd",Locale("ko","KR")).format(now).toString()
-        val formatTime = SimpleDateFormat("h:mm a").format(now).toString()
+        val formatDate = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(now).toString()
+        val formatTime = SimpleDateFormat("h:mm a", Locale("en", "US")).format(now).toString()
         registerModel.start_date_period.value = formatDate
         registerModel.start_time_period.value = formatTime
         registerModel.end_date_period.value = formatDate
@@ -78,7 +78,10 @@ class RegisterEventsActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
-                    registerModel.start_date_period.value = "$y.${m+1}.$d"
+                    cal.set(y, m, d)
+                    registerModel.start_date_period.value =
+                        SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(cal.time)
+                            .toString()
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
@@ -88,17 +91,15 @@ class RegisterEventsActivity : AppCompatActivity() {
     private fun setupStartTimePicker() {
         registerModel.startTimePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
-                var am_pm: String = ""
-                if (h > 11) {
-                    am_pm = "오후"
-                }
-                else{
-                    am_pm = "오전"
-                }
-                  registerModel.start_time_period.value = "$h:$m $am_pm"
+            TimePickerDialog(
+                this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                    cal.set(Calendar.HOUR_OF_DAY,h)
+                    cal.set(Calendar.MINUTE,m)
+                    registerModel.start_time_period.value =
+                        SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
                 },
-                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
+            ).show()
         })
     }
 
@@ -107,7 +108,10 @@ class RegisterEventsActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
-                    registerModel.end_date_period.value = "$y.${m+1}.$d"
+                    cal.set(y, m, d)
+                    registerModel.end_date_period.value =
+                        SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(cal.time)
+                            .toString()
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
@@ -117,17 +121,15 @@ class RegisterEventsActivity : AppCompatActivity() {
     private fun setupEndTimePicker() {
         registerModel.endTimePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
-            TimePickerDialog(this,TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
-                var am_pm: String = ""
-                if (h > 11) {
-                    am_pm = "오후"
-                }
-                else{
-                    am_pm = "오전"
-                }
-                registerModel.end_time_period.value = "$h:$m $am_pm"
-            },
-                cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), false).show()
+            TimePickerDialog(
+                this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                    cal.set(Calendar.HOUR_OF_DAY,h)
+                    cal.set(Calendar.MINUTE,m)
+                    registerModel.end_time_period.value =
+                        SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
+                },
+                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
+            ).show()
         })
     }
 
@@ -169,10 +171,9 @@ class RegisterEventsActivity : AppCompatActivity() {
             REQUEST_STORAGE -> {
                 val selectedImageUri: Uri? = data?.data
                 if (selectedImageUri != null) {
-                    selectedImageUri?.let { uri ->
+                    selectedImageUri.let { uri ->
                         //imageview.setImageURI(uri)
                     }
-
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }

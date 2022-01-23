@@ -13,8 +13,6 @@ class RegisterEventsViewModel : ViewModel() {
 
     val title = MutableLiveData("")
     val organization = MutableLiveData("")
-
-    // todo - 수연 : selectedItemPosition부분 어떻게 수정할지
     val selectedItemPosition = MutableLiveData(0)
     val start_date_period = MutableLiveData("")
     val start_time_period = MutableLiveData("")
@@ -24,13 +22,6 @@ class RegisterEventsViewModel : ViewModel() {
     val content = MutableLiveData("")
     val imageResId = MutableLiveData(1)
     val phase = MutableLiveData(1)
-
-
-//    var selectedItemPosition: Int
-//        get() = registerEventData.selectedItemPosition
-//        set(value){
-//            registerEventData = registerEventData.copy(selectedItemPosition = value)
-//        }
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
