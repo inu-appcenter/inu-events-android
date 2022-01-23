@@ -1,6 +1,7 @@
 package org.inu.events.data.service
 
 import org.inu.events.data.model.Article
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,4 +11,7 @@ interface EventService {
 
     @GET("/events/{eventId}")
     fun getEventDetail(@Path("eventId") eventId: Int?) : Article
+
+    @DELETE("/events/{eventId}")
+    fun deleteEvent(@Path("eventId") eventId: Int?)
 }

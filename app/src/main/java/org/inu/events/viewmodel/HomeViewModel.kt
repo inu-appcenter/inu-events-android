@@ -17,8 +17,6 @@ class HomeViewModel : ViewModel() {
     val homeDataList : LiveData<List<Article>>
         get() = _homeDataList
 
-    var dDay = "마감일까?"
-
     val postClickEvent = SingleLiveEvent<Any>()
 
     private val eventService: EventService = AppConfigs.eventService

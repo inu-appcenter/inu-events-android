@@ -46,6 +46,10 @@ class RegisterEventsViewModel : ViewModel() {
         return eventService.getEventDetail(eventIndex.value)
     }
 
+    private fun spinnerSelected(){
+
+    }
+
     fun onCancelClick() {
         startHomeActivityClickEvent.call()
     }

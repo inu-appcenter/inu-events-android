@@ -81,6 +81,9 @@ class DetailActivity: AppCompatActivity() {
             }
             R.id.deleteToolbarMenu -> {
                 Log.d("tag","deleteToolbarMenu menu clicked!")
+                viewModel.deleteWriting()
+                Intent(this,MainActivity::class.java).
+                run{binding.root.context.startActivity(this)}
                 true
             }
             else -> super.onOptionsItemSelected(item)

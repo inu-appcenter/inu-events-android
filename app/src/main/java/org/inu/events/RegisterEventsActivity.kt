@@ -36,7 +36,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupButtons()
         initAddPhotoButton()
         getEventId()
-        setEditEvent()
     }
 
     private fun initBinding() {
@@ -159,10 +158,6 @@ class RegisterEventsActivity : AppCompatActivity() {
             Log.d("tag","게시글의 id는 $id")
             registerModel.eventIndex = MutableLiveData(id)
         }
-    }
-
-    private fun setEditEvent() {
-
     }
 
 }

@@ -14,8 +14,9 @@ object AppConfigs {
 
 fun getService() : EventService {
     return Retrofit.Builder()
-        .baseUrl("baseUrl")
+        .baseUrl("http://uniletter.inuappcenter.kr/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(EventService::class.java)
 }
+
