@@ -1,5 +1,6 @@
 package org.inu.events.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,6 +30,8 @@ class RegisterEventsViewModel : ViewModel() {
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
 
+    val selectedImageUri = MutableLiveData<Uri>()
+
     fun onCancelClick() {
         startHomeActivityClickEvent.call()
     }
@@ -49,6 +52,10 @@ class RegisterEventsViewModel : ViewModel() {
 
     fun onCompleteClick() {
 
+    }
+
+    fun onImageSelected(uri: Uri) {
+        selectedImageUri.value = uri
     }
 
     fun onStartDateClick() {

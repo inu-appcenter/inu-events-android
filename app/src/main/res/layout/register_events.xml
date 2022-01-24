@@ -12,7 +12,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,12 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
+
             <include
                 android:id="@+id/toolbar_register1"
                 layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title='@{@string/event}'/>
+                app:title='@{@string/event}' />
+
             <TextView
                 android:id="@+id/textView_select1"
                 android:layout_width="wrap_content"
@@ -178,12 +179,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onStartDateClick()}"
+                android:paddingHorizontal="12dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
-                android:paddingHorizontal="12dp"
-                android:textColor="@color/black1"
                 android:text="@{registerViewModel.start_date_period}"
-                android:onClick="@{ () -> registerViewModel.onStartDateClick()}"
+                android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -196,12 +197,12 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
+                android:paddingHorizontal="12dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
-                android:paddingHorizontal="12dp"
-                android:textColor="@color/black1"
                 android:text="@{registerViewModel.start_time_period}"
-                android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
+                android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/editText_start_date_period"
@@ -227,12 +228,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
+                android:paddingHorizontal="12dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
-                android:paddingHorizontal="12dp"
-                android:textColor="@color/black1"
                 android:text="@{registerViewModel.end_date_period}"
-                android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
+                android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -245,12 +246,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
+                android:paddingHorizontal="12dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
-                android:paddingHorizontal="12dp"
-                android:textColor="@color/black1"
                 android:text="@{registerViewModel.end_time_period}"
-                android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
+                android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toEndOf="@+id/editText_end_date_period"
@@ -294,11 +295,11 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:background="@drawable/drawable_btn_background"
+                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
                 android:text="@string/text_cancel"
                 android:textColor="@color/primary"
                 android:textFontWeight="400"
                 android:textSize="15sp"
-                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -323,6 +324,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
+
             <include
                 android:id="@+id/toolbar_register2"
                 layout="@layout/toolbar_sample"
@@ -408,6 +410,8 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/img_btn_background"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
+                android:src="@{registerViewModel.selectedImageUri}"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_postImage" />
 

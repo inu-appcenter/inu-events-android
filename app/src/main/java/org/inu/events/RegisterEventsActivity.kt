@@ -9,24 +9,44 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
 
+
 class RegisterEventsActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_ALBUM = 101
+
+        @JvmStatic
+        @BindingAdapter("android:src")
+        fun setImageUri(view: ImageButton, imageUri: Uri?) {
+            imageUri?.let(view::setImageURI)
+        }
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
     private lateinit var binding: RegisterEventsBinding
+
+    private val selectImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode != Activity.RESULT_OK) {
+                return@registerForActivityResult
+            }
+
+            it.data?.data?.let { uri ->
+                viewModel.onImageSelected(uri)
+            } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,18 +210,7 @@ class RegisterEventsActivity : AppCompatActivity() {
             type = "image/*"
         }
 
-        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode != Activity.RESULT_OK) {
-                return@registerForActivityResult
-            }
-
-            it.data?.data?.let { uri ->
-
-                //imageview.setImageURI(uri)
-            } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
-        }
-
-        launcher.launch(intent)
+        selectImageLauncher.launch(intent)
     }
 
     private fun showPermissionContextPopup() {
