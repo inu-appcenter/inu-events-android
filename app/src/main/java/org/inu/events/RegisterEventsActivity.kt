@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,6 @@ import java.util.*
 class RegisterEventsActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_ALBUM = 101
-        private const val REQUEST_STORAGE = 1000
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
@@ -113,7 +113,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupEndTimePicker() {
-        viewModel.endTimePickerClickEvent.observe(this, {
+        viewModel.endTimePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, { _, h, m ->
@@ -123,56 +123,44 @@ class RegisterEventsActivity : AppCompatActivity() {
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()
-        })
+        }
     }
 
     private fun initAddPhotoButton() {
-        viewModel.startGalleryClickEvent.observe(this, {
-            Log.i("BUTTON", "initAdd")
-            when {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED -> {
+        viewModel.startGalleryClickEvent.observe(this) {
+            Log.i("BUTTON", "initAddPhotoButton")
+
+            val permissionStatus = ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+
+            when (permissionStatus) {
+                PackageManager.PERMISSION_GRANTED -> {
                     navigatePhotos()
-                    Log.i("BUTTON", "navigate")
+                    Log.i("BUTTON", "gogogogogogogogo")
                 }
-                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                    showPermissionContextPopup()
-                    Log.i("BUTTON", "showpermission")
-                }
-                else -> {
-                    requestPermissions(
-                        arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                        REQUEST_STORAGE
+
+                PackageManager.PERMISSION_DENIED -> {
+                    val userDenied = shouldShowRequestPermissionRationale(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
                     )
-                    Log.i("BUTTON", "else")
-                }
-            }
 
-        }
-        )
-    }
+                    if (userDenied) {
+                        Log.i("BUTTON", "user denied :(")
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
+                        showPermissionContextPopup()
+                    } else {
+                        Log.i("BUTTON", "request permission!")
 
-        when (requestCode) {
-            REQUEST_STORAGE -> {
-                val selectedImageUri: Uri? = data?.data
-                if (selectedImageUri != null) {
-                    selectedImageUri.let { uri ->
-                        //imageview.setImageURI(uri)
+                        requestPermissions(
+                            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                            PERMISSION_ALBUM
+                        )
                     }
-                } else {
-                    Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -181,8 +169,9 @@ class RegisterEventsActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when (requestCode) {
-            REQUEST_STORAGE -> {
+            PERMISSION_ALBUM -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // todo 권한이 부여된 것입니다.
                     navigatePhotos()
@@ -191,15 +180,28 @@ class RegisterEventsActivity : AppCompatActivity() {
                 }
             }
             else -> {
-
+                Log.wtf("OOOOH", "what is this?")
             }
         }
     }
 
     private fun navigatePhotos() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_STORAGE)
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+        }
+
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode != Activity.RESULT_OK) {
+                return@registerForActivityResult
+            }
+
+            it.data?.data?.let { uri ->
+
+                //imageview.setImageURI(uri)
+            } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        launcher.launch(intent)
     }
 
     private fun showPermissionContextPopup() {
