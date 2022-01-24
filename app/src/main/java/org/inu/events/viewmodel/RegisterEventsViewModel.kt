@@ -51,7 +51,7 @@ class RegisterEventsViewModel : ViewModel() {
     }
 
     fun onCompleteClick() {
-
+        // TODO 이미지 업로드 후 uuid 받고 dto 채워서 포스트
     }
 
     fun onImageSelected(uri: Uri) {
