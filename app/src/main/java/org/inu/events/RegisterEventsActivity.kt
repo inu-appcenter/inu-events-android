@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.viewmodel.RegisterEventsViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterEventsActivity : AppCompatActivity() {
@@ -25,6 +24,7 @@ class RegisterEventsActivity : AppCompatActivity() {
 
     private lateinit var registerModel: RegisterEventsViewModel
     private lateinit var binding: RegisterEventsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_events)
@@ -43,17 +43,21 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupCurrentDate() {
-        val now: Long = System.currentTimeMillis()
-        val formatDate = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(now).toString()
-        val formatTime = SimpleDateFormat("h:mm a", Locale("en", "US")).format(now).toString()
-        registerModel.start_date_period.value = formatDate
-        registerModel.start_time_period.value = formatTime
-        registerModel.end_date_period.value = formatDate
-        registerModel.end_time_period.value = formatTime
-        binding.editTextStartDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        binding.editTextStartTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        binding.editTextEndDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        binding.editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        val date = Date()
+
+        with(registerModel) {
+            setStartDate(date)
+            setStartTime(date)
+            setEndDate(date)
+            setEndTime(date)
+        }
+
+        with(binding) {
+            editTextStartDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextStartTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        }
     }
 
     private fun setupButtons() {
@@ -66,59 +70,53 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupStartDatePicker() {
-        registerModel.startDatePickerClickEvent.observe(this, {
+        registerModel.startDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
-                this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
+                this, { _, y, m, d ->
                     cal.set(y, m, d)
-                    registerModel.start_date_period.value =
-                        SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(cal.time)
-                            .toString()
+                    registerModel.setStartDate(cal.time)
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
-        })
+        }
     }
 
     private fun setupStartTimePicker() {
-        registerModel.startTimePickerClickEvent.observe(this, {
+        registerModel.startTimePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             TimePickerDialog(
-                this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    registerModel.start_time_period.value =
-                        SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
+                    registerModel.setStartTime(cal.time)
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()
-        })
+        }
     }
 
     private fun setupEndDatePicker() {
-        registerModel.endDatePickerClickEvent.observe(this, {
+        registerModel.endDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
-                this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
+                this, { _, y, m, d ->
                     cal.set(y, m, d)
-                    registerModel.end_date_period.value =
-                        SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR")).format(cal.time)
-                            .toString()
+                    registerModel.setEndDate(cal.time)
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
-        })
+        }
     }
 
     private fun setupEndTimePicker() {
         registerModel.endTimePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
             TimePickerDialog(
-                this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    registerModel.end_time_period.value =
-                        SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
+                    registerModel.setEndTime(cal.time)
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()

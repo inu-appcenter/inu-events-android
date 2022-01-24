@@ -1,12 +1,11 @@
 package org.inu.events.viewmodel
 
 import android.util.Log
-import androidx.databinding.*
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
-import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 import org.inu.events.util.SingleLiveEvent
+import java.text.SimpleDateFormat
+import java.util.*
 
 //ViewModel()
 class RegisterEventsViewModel : ViewModel() {
@@ -68,4 +67,27 @@ class RegisterEventsViewModel : ViewModel() {
         endTimePickerClickEvent.call()
     }
 
+    fun setStartDate(date: Date) {
+        start_date_period.value = formatDate(date)
+    }
+
+    fun setStartTime(date: Date) {
+        start_time_period.value = formatTime(date)
+    }
+
+    fun setEndDate(date: Date) {
+        end_date_period.value = formatDate(date)
+    }
+
+    fun setEndTime(date: Date) {
+        end_time_period.value = formatTime(date)
+    }
+
+    private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
+        .format(date)
+        .toString()
+
+    private fun formatTime(date: Date) = SimpleDateFormat("h:mm a", Locale("en", "US"))
+        .format(date)
+        .toString()
 }
