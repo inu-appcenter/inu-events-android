@@ -12,10 +12,9 @@ import com.google.android.gms.tasks.Task
 import org.inu.events.objects.ClientInformation
 
 class LoginGoogle(context: Context) {
-    lateinit var accessToken:String
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(ClientInformation.CLIENT_ID)
-        .requestServerAuthCode(ClientInformation.CLIENT_SECRET)
+        .requestServerAuthCode(ClientInformation.CLIENT_ID)
         .requestEmail()
         .build()
 
