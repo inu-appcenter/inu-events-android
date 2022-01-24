@@ -14,10 +14,10 @@ class RegisterEventsViewModel : ViewModel() {
     val title = MutableLiveData("")
     val organization = MutableLiveData("")
     val selectedItemPosition = MutableLiveData(0)
-    val start_date_period = MutableLiveData("")
-    val start_time_period = MutableLiveData("")
-    val end_date_period = MutableLiveData("")
-    val end_time_period = MutableLiveData("")
+    val startDatePeriod = MutableLiveData("")
+    val startTimePeriod = MutableLiveData("")
+    val endDatePeriod = MutableLiveData("")
+    val endTimePeriod = MutableLiveData("")
     val target = MutableLiveData("")
     val content = MutableLiveData("")
     val imageResId = MutableLiveData(1)
@@ -75,19 +75,19 @@ class RegisterEventsViewModel : ViewModel() {
     }
 
     fun setStartDate(date: Date) {
-        start_date_period.value = formatDate(date)
+        startDatePeriod.value = formatDate(date)
     }
 
     fun setStartTime(date: Date) {
-        start_time_period.value = formatTime(date)
+        startTimePeriod.value = formatTime(date)
     }
 
     fun setEndDate(date: Date) {
-        end_date_period.value = formatDate(date)
+        endDatePeriod.value = formatDate(date)
     }
 
     fun setEndTime(date: Date) {
-        end_time_period.value = formatTime(date)
+        endTimePeriod.value = formatTime(date)
     }
 
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
