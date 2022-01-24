@@ -1,14 +1,14 @@
 package org.inu.events.login
 
 import android.util.Log
-import org.inu.events.login.dao.LoginGoogleRequest
-import org.inu.events.login.dao.LoginGoogleResponse
+import org.inu.events.login.api.LoginService
+import org.inu.events.login.dao.LoginGoogleRequestModel
+import org.inu.events.login.dao.LoginGoogleResponseModel
+import org.inu.events.login.dao.SendAccessTokenModel
 import org.inu.events.objects.ClientInformation
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginRepository {
 
@@ -16,37 +16,35 @@ class LoginRepository {
     private val sendAccessTokenBaseUrl = "http://uniletter.inuappcenter.kr"
 
     fun getAccessToken(authCode:String) {
-        LoginRetrofitClient().retrofit(getAccessTokenBaseUrl).getAccessToken(
-            request = LoginGoogleRequest(
+        LoginService.loginRetrofit(getAccessTokenBaseUrl).getAccessToken(
+            request = LoginGoogleRequestModel(
                 grant_type = "authorization_code",
                 client_id = ClientInformation.CLIENT_ID,
                 client_secret = ClientInformation.CLIENT_SECRET,
                 code = authCode.orEmpty()
             )
-        ).enqueue(object : Callback<LoginGoogleResponse> {
-            override fun onResponse(call: Call<LoginGoogleResponse>, response: Response<LoginGoogleResponse>) {
+        ).enqueue(object : Callback<LoginGoogleResponseModel> {
+            override fun onResponse(call: Call<LoginGoogleResponseModel>, response: Response<LoginGoogleResponseModel>) {
                 if(response.isSuccessful) {
                     val accessToken = response.body()?.access_token.orEmpty()
-                    Log.d(TAG, "get: $accessToken")
+                    Log.d(TAG, "getOnResponse: $accessToken")
                     sendAccessToken(accessToken)
                 }
             }
-            override fun onFailure(call: Call<LoginGoogleResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginGoogleResponseModel>, t: Throwable) {
                 Log.e(TAG, "getOnFailure: ",t.fillInStackTrace() )
             }
         })
     }
 
     fun sendAccessToken(accessToken:String){
-        LoginRetrofitClient().retrofit(sendAccessTokenBaseUrl).sendAccessToken(
-            accessToken = accessToken
+        LoginService.loginRetrofit(sendAccessTokenBaseUrl).sendAccessToken(
+            accessToken = SendAccessTokenModel(accessToken)
         ).enqueue(object :Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful){
-                    Log.d(TAG, "onResponse: ${response.body()}")
+                    Log.d(TAG, "sendOnResponse: ${response.body()}")
                 }
-                Log.d(TAG, "send accessToken?: $accessToken")
-                Log.d(TAG, "onResponse: ${response.message()}")
             }
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )

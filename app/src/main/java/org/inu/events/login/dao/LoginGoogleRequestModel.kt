@@ -2,7 +2,7 @@ package org.inu.events.login.dao
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginGoogleRequest(
+data class LoginGoogleRequestModel(
         @SerializedName("grant_type")
         private val grant_type: String,
         @SerializedName("client_id")

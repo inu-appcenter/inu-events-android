@@ -80,7 +80,4 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         }
     }
-    companion object {
-        const val TAG = "LoginActivity"
-    }
 }

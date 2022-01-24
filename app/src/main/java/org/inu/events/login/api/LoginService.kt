@@ -1,24 +1,42 @@
 package org.inu.events.login.api
 
-import org.inu.events.login.dao.LoginGoogleRequest
-import org.inu.events.login.dao.LoginGoogleResponse
+import com.google.gson.GsonBuilder
+import org.inu.events.login.dao.LoginGoogleRequestModel
+import org.inu.events.login.dao.LoginGoogleResponseModel
+import org.inu.events.login.dao.SendAccessTokenModel
 import retrofit2.Call
-import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface LoginService {
     @POST("oauth2/v4/token")
     fun getAccessToken(
-        @Body request: LoginGoogleRequest
+        @Body request: LoginGoogleRequestModel
     ):
-            Call<LoginGoogleResponse>
+            Call<LoginGoogleResponseModel>
 
-    @Headers("Content-Type: application/json")
+
     @POST("login")
+    @Headers("content-type: application/json")
     fun sendAccessToken(
-        @Body accessToken:String
+        @Body accessToken:SendAccessTokenModel
     ):Call<String>
+
+    companion object {
+
+        private val gson = GsonBuilder().setLenient().create()
+
+        fun loginRetrofit(baseUrl: String): LoginService {
+            return Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+                .create(LoginService::class.java)
+        }
+    }
 }
