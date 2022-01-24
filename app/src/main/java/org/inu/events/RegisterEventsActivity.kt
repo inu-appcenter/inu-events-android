@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,17 +20,19 @@ import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
 
 class RegisterEventsActivity : AppCompatActivity() {
-    private val PERMISSION_ALBUM = 101
-    private val REQUEST_STORAGE = 1000
+    companion object {
+        private const val PERMISSION_ALBUM = 101
+        private const val REQUEST_STORAGE = 1000
+    }
 
-    private lateinit var registerModel: RegisterEventsViewModel
+    private val viewModel: RegisterEventsViewModel by viewModels()
     private lateinit var binding: RegisterEventsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.register_events)
-        registerModel = RegisterEventsViewModel()
-        binding.registerViewModel = registerModel
+        binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
 
         setupToolbar()
@@ -45,7 +48,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     private fun setupCurrentDate() {
         val date = Date()
 
-        with(registerModel) {
+        with(viewModel) {
             setStartDate(date)
             setStartTime(date)
             setEndDate(date)
@@ -61,7 +64,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        registerModel.startHomeActivityClickEvent.observe(
+        viewModel.startHomeActivityClickEvent.observe(
             this, {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -70,12 +73,12 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupStartDatePicker() {
-        registerModel.startDatePickerClickEvent.observe(this) {
+        viewModel.startDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this, { _, y, m, d ->
                     cal.set(y, m, d)
-                    registerModel.setStartDate(cal.time)
+                    viewModel.setStartDate(cal.time)
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
@@ -83,13 +86,13 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupStartTimePicker() {
-        registerModel.startTimePickerClickEvent.observe(this) {
+        viewModel.startTimePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    registerModel.setStartTime(cal.time)
+                    viewModel.setStartTime(cal.time)
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()
@@ -97,12 +100,12 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupEndDatePicker() {
-        registerModel.endDatePickerClickEvent.observe(this) {
+        viewModel.endDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this, { _, y, m, d ->
                     cal.set(y, m, d)
-                    registerModel.setEndDate(cal.time)
+                    viewModel.setEndDate(cal.time)
                 },
                 cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
             ).show()
@@ -110,13 +113,13 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupEndTimePicker() {
-        registerModel.endTimePickerClickEvent.observe(this, {
+        viewModel.endTimePickerClickEvent.observe(this, {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    registerModel.setEndTime(cal.time)
+                    viewModel.setEndTime(cal.time)
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()
@@ -124,7 +127,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun initAddPhotoButton() {
-        registerModel.startGalleryClickEvent.observe(this, {
+        viewModel.startGalleryClickEvent.observe(this, {
             Log.i("BUTTON", "initAdd")
             when {
                 ContextCompat.checkSelfPermission(
