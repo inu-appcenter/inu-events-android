@@ -8,7 +8,6 @@ import org.inu.events.util.SingleLiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
-//ViewModel()
 class RegisterEventsViewModel : ViewModel() {
 
     val title = MutableLiveData("")
@@ -20,7 +19,7 @@ class RegisterEventsViewModel : ViewModel() {
     val endTimePeriod = MutableLiveData("")
     val target = MutableLiveData("")
     val content = MutableLiveData("")
-    val imageResId = MutableLiveData(1)
+    val selectedImageUri = MutableLiveData<Uri>()
     val phase = MutableLiveData(1)
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
@@ -29,8 +28,6 @@ class RegisterEventsViewModel : ViewModel() {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
-
-    val selectedImageUri = MutableLiveData<Uri>()
 
     fun onCancelClick() {
         startHomeActivityClickEvent.call()
