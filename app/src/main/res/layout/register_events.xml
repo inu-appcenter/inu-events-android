@@ -434,6 +434,7 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:background="@drawable/drawable_btn_primary"
+                android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
                 android:textFontWeight="400"
