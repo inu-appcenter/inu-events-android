@@ -1,7 +1,6 @@
 package org.inu.events
 
 import android.app.Activity
-import android.app.AlertDialog.THEME_HOLO_LIGHT
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -9,21 +8,15 @@ import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.RegisterEventsBinding
-import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
-import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 class RegisterEventsActivity : AppCompatActivity() {
@@ -63,7 +56,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     }
 
-
     private fun setupButtons() {
         registerModel.startHomeActivityClickEvent.observe(
             this, {
@@ -93,8 +85,8 @@ class RegisterEventsActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
-                    cal.set(Calendar.HOUR_OF_DAY,h)
-                    cal.set(Calendar.MINUTE,m)
+                    cal.set(Calendar.HOUR_OF_DAY, h)
+                    cal.set(Calendar.MINUTE, m)
                     registerModel.start_time_period.value =
                         SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
                 },
@@ -123,8 +115,8 @@ class RegisterEventsActivity : AppCompatActivity() {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
-                    cal.set(Calendar.HOUR_OF_DAY,h)
-                    cal.set(Calendar.MINUTE,m)
+                    cal.set(Calendar.HOUR_OF_DAY, h)
+                    cal.set(Calendar.MINUTE, m)
                     registerModel.end_time_period.value =
                         SimpleDateFormat("h:mm a", Locale("en", "US")).format(cal.time).toString()
                 },
@@ -228,5 +220,4 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
     }
-
 }
