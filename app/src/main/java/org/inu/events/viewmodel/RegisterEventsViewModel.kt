@@ -28,6 +28,7 @@ class RegisterEventsViewModel : ViewModel() {
             field = value
             field.value = value.value
             _detailDataList.value = loadDetailData()
+            spinnerSelected()
         }
 
     //디테일엑티비티에서 자신의 글인 경우 수정 버튼을 눌렀을 때 기존의 글을 불러와서 데이터 저장하기 위함
@@ -47,6 +48,18 @@ class RegisterEventsViewModel : ViewModel() {
     }
 
     private fun spinnerSelected(){
+        when(_detailDataList.value!!.category){
+            "선택없음"->selectedItemPosition.value = 0
+            "동아리"->selectedItemPosition.value = 1
+            "소모임"->selectedItemPosition.value = 2
+            "간식나눔"->selectedItemPosition.value = 3
+            "대회 공모전"->selectedItemPosition.value = 4
+            "인턴"->selectedItemPosition.value = 5
+            "기타"->selectedItemPosition.value = 6
+            else->selectedItemPosition.value = 0
+        }
+        Log.d("tag","category = ${detailDataList.value?.category}," +
+                "position = ${selectedItemPosition.value}")
 
     }
 

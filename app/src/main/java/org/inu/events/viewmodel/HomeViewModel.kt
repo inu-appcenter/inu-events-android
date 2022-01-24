@@ -1,16 +1,12 @@
 package org.inu.events.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.inu.events.R
 import org.inu.events.data.model.Article
 import org.inu.events.data.service.EventService
 import org.inu.events.di.AppConfigs
 import org.inu.events.util.SingleLiveEvent
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HomeViewModel : ViewModel() {
     private val _homeDataList = MutableLiveData<List<Article>>()
