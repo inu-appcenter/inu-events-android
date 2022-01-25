@@ -1,9 +1,9 @@
 package org.inu.events.login.api
 
 import com.google.gson.GsonBuilder
-import org.inu.events.login.dao.LoginGoogleRequestModel
-import org.inu.events.login.dao.LoginGoogleResponseModel
-import org.inu.events.login.dao.SendAccessTokenModel
+import org.inu.events.login.model.LoginGoogleRequestModel
+import org.inu.events.login.model.LoginGoogleResponseModel
+import org.inu.events.login.model.SendAccessTokenModel
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

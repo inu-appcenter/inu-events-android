@@ -20,10 +20,9 @@ import org.inu.events.viewmodel.CommentViewModel
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private val commentViewModel: CommentViewModel by viewModels()
     private lateinit var commentBinding: ActivityCommentBinding
-    private lateinit var loginService : LoginGoogle
+    private lateinit var loginService: LoginGoogle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         initBinding()
         setupButtons()
@@ -32,10 +31,15 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupButtons() {
+        loginService = LoginGoogle(this)
         commentViewModel.btnClickEvent.observe(
             this,
             {
-                isLogin()
+                if (loginService.isLogin(this)) {
+                    Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
+                } else {
+                    isLogin()
+                }
             }
         )
     }
@@ -64,7 +68,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     // 로그인 확인을 눌렀을 때
     override fun onOk() {
-        loginService = LoginGoogle(this)
         loginService.signIn(this)
     }
 

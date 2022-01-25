@@ -2,9 +2,9 @@ package org.inu.events.login
 
 import android.util.Log
 import org.inu.events.login.api.LoginService
-import org.inu.events.login.dao.LoginGoogleRequestModel
-import org.inu.events.login.dao.LoginGoogleResponseModel
-import org.inu.events.login.dao.SendAccessTokenModel
+import org.inu.events.login.model.LoginGoogleRequestModel
+import org.inu.events.login.model.LoginGoogleResponseModel
+import org.inu.events.login.model.SendAccessTokenModel
 import org.inu.events.objects.ClientInformation
 import retrofit2.Call
 import retrofit2.Callback
