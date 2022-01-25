@@ -284,7 +284,6 @@
                 android:paddingVertical="7dp"
                 android:paddingStart="16dp"
                 android:text="이부분은 아마 삭제?"
-                tools:ignore="HardcodedText"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"

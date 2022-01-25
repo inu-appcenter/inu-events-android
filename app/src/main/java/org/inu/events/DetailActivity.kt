@@ -6,19 +6,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
-import org.inu.events.login.LoginGoogle
 import org.inu.events.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {

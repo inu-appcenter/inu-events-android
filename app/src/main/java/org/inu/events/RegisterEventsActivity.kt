@@ -33,11 +33,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_ALBUM = 101
 
-        @JvmStatic
-        @BindingAdapter("android:src")
-        fun setImageUri(view: ImageButton, imageUri: Uri?) {
-            imageUri?.let(view::setImageURI)
-        }
+
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
@@ -249,7 +245,7 @@ class RegisterEventsActivity : AppCompatActivity() {
         if(intent.hasExtra(IntentMessage.POST_EDIT_INFO)){
             var id:Int? = extras?.getInt(IntentMessage.POST_EDIT_INFO)
             Log.d("tag","게시글의 id는 $id")
-            registerModel.eventIndex = MutableLiveData(id)
+            viewModel.eventIndex = MutableLiveData(id)
         }
     }
 
