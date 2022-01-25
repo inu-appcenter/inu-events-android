@@ -2,13 +2,22 @@ package org.inu.events
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
+import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
 import org.inu.events.login.LoginGoogle
 import org.inu.events.viewmodel.DetailViewModel
 
@@ -21,9 +30,18 @@ class DetailActivity : AppCompatActivity() {
         initBinding()
         setupButtons()
         setupToolbar()
+        getEventId()
+
     }
 
-
+    private fun getEventId() {
+        val extras = intent.extras?:null
+        if(intent.hasExtra(HOME_BOARD_INFO)){
+            var id:Int? = extras?.getInt(HOME_BOARD_INFO)
+            Log.d("tag","게시글의 id는 $id")
+            viewModel.eventIndex = MutableLiveData(id)
+        }
+    }
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_detail)
@@ -41,11 +59,13 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-
-    private fun setupToolbar() {
-        setSupportActionBar(binding.detailToolbar.toolbarRegister)
+    private fun setupToolbar(){
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
+        if(viewModel.isMyWriting()){
+            setSupportActionBar(binding.detailToolbar.toolbarRegister)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,17 +75,22 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.signOutToolbarMenu -> {
-                LoginGoogle(this).signOut(this)
-
+        return when (item.itemId) {
+            R.id.fixToolbarMenu -> {
+                Log.d("tag","fixToolbarMenu menu clicked!")
+                Intent(this,RegisterEventsActivity::class.java).apply {
+                    putExtra(POST_EDIT_INFO,viewModel.eventIndex.value)
+                }.run{binding.root.context.startActivity(this)}
+                true
             }
+            R.id.deleteToolbarMenu -> {
+                Log.d("tag","deleteToolbarMenu menu clicked!")
+//                viewModel.deleteWriting()
+//                Intent(this,MainActivity::class.java).
+//                run{binding.root.context.startActivity(this)}
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = LoginGoogle(this).isLogin(this)
-        return super.onPrepareOptionsMenu(menu)
     }
 }

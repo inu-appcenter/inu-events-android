@@ -1,5 +1,6 @@
 package org.inu.events.objects
 
 object IntentMessage {
-    val HOME_BOARD_INFO = "org.int.events.homeInfo"
+    const val HOME_BOARD_INFO = "org.int.events.homeInfo"
+    const val POST_EDIT_INFO = "org.int.events.postEdit"
 }

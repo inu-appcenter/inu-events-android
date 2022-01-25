@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classification">
-        <item>선택없음</item>
+        <item id = "0">선택없음</item>
         <item>동아리</item>
         <item>소모임</item>
         <item>간식나눔</item>

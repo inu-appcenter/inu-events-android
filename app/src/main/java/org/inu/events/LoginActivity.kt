@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         initViews()
     }
 
-
     private fun initViews() {
         googleLoginButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))

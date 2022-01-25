@@ -8,6 +8,9 @@
         <variable
             name="detailViewModel"
             type="org.inu.events.viewmodel.DetailViewModel" />
+        <variable
+            name="article"
+            type="org.inu.events.data.model.Article" />
     </data>
 
     <LinearLayout
@@ -54,10 +57,10 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/roboto"
-                    android:text="앱센터 13기 신입멤버 모집"
+                    android:text="@{detailViewModel.detailDataList.title}"
+                    tools:text="앱센터 13기 신입멤버 모집"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    tools:ignore="HardcodedText" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,7 +71,7 @@
 
                     <TextView
                         android:layout_width="80dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="단체"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />
@@ -76,7 +79,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="앱센터 | 동아리"
+                        tools:text="앱센터 | 동아리"
+                        android:text="@{@string/group(detailViewModel.detailDataList.host,detailViewModel.detailDataList.category)}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />
@@ -99,7 +103,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="2021.03.22 ~ 2021.03.26"
+                        android:text="@{@string/event_period(detailViewModel.detailDataList.start_at,detailViewModel.detailDataList.end_at)}"
+                        tools:text="2021.03.22 ~ 2021.03.26"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />
@@ -173,7 +178,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/detail_content"
+                    tools:text="@string/detail_content"
+                    android:text="@{detailViewModel.detailDataList.body}"
                     android:textColor="@color/black1"
                     android:textSize="15sp" />
 
@@ -219,6 +225,6 @@
             android:text="알림 받기"
             android:textColor="@color/white"
             android:textSize="15sp"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
 </layout>

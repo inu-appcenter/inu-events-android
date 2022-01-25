@@ -13,12 +13,18 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.RegisterEventsBinding
+import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
+import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
+import org.inu.events.objects.IntentMessage
+import org.inu.events.viewmodel.DetailViewModel
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
 
@@ -51,10 +57,8 @@ class RegisterEventsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.register_events)
-        binding.registerViewModel = viewModel
-        binding.lifecycleOwner = this
 
+        initBinding()
         setupToolbar()
         setupButtons()
         setupCurrentDate()
@@ -63,6 +67,13 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupEndDatePicker()
         setupEndTimePicker()
         initAddPhotoButton()
+        getEventId()
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.register_events)
+        binding.registerViewModel = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun setupCurrentDate() {
@@ -232,4 +243,14 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
     }
+
+    private fun getEventId() {
+        val extras = intent.extras?:null
+        if(intent.hasExtra(IntentMessage.POST_EDIT_INFO)){
+            var id:Int? = extras?.getInt(IntentMessage.POST_EDIT_INFO)
+            Log.d("tag","게시글의 id는 $id")
+            registerModel.eventIndex = MutableLiveData(id)
+        }
+    }
+
 }
