@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.login.LoginGoogle
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
 import org.inu.events.viewmodel.DetailViewModel
@@ -56,10 +57,13 @@ class DetailActivity : AppCompatActivity() {
     private fun setupToolbar(){
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
-        if(viewModel.isMyWriting()){
-            setSupportActionBar(binding.detailToolbar.toolbarRegister)
-            supportActionBar?.setDisplayShowTitleEnabled(false)
+        if(LoginGoogle(this).isLogin(this)){
+            if(viewModel.isMyWriting()){
+                setSupportActionBar(binding.detailToolbar.toolbarRegister)
+                supportActionBar?.setDisplayShowTitleEnabled(false)
+            }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

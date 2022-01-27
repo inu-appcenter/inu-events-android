@@ -32,8 +32,6 @@ import java.util.*
 class RegisterEventsActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_ALBUM = 101
-
-
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
@@ -52,7 +50,6 @@ class RegisterEventsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         initBinding()
         setupToolbar()

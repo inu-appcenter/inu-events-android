@@ -37,6 +37,7 @@ class RegisterEventsViewModel : ViewModel() {
             field.value = value.value
             _detailDataList.value = loadDetailData()
             spinnerSelected()
+            //onImageSelected(_detailDataList.value.image_uuid)
         }
 
     //디테일엑티비티에서 자신의 글인 경우 수정 버튼을 눌렀을 때 기존의 글을 불러와서 데이터 저장하기 위함
@@ -44,9 +45,6 @@ class RegisterEventsViewModel : ViewModel() {
     val detailDataList : MutableLiveData<Article>
         get() = _detailDataList
 
-    init{
-        _detailDataList.value = loadDetailData()
-    }
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -73,7 +71,6 @@ class RegisterEventsViewModel : ViewModel() {
         }
         Log.d("tag","category = ${detailDataList.value?.category}," +
                 "position = ${selectedItemPosition.value}")
-
     }
 
     fun onCancelClick() {
