@@ -6,25 +6,18 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.RegisterEventsBinding
-import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
-import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 import org.inu.events.objects.IntentMessage
-import org.inu.events.viewmodel.DetailViewModel
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
 
@@ -45,6 +38,7 @@ class RegisterEventsActivity : AppCompatActivity() {
 
             it.data?.data?.let { uri ->
                 viewModel.onImageSelected(uri)
+                Log.d("tag","$uri")
             } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
         }
 
@@ -103,9 +97,12 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this, { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setStartDate(cal.time)
+                    Log.d("tag","${viewModel.startDatePeriod.value}")
+                    Log.d("tag","${viewModel.datePickerValueStartMonth}")
                 },
-                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
+                viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth-1, viewModel.datePickerValueStartDay
             ).show()
+
         }
     }
 
@@ -117,6 +114,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
                     viewModel.setStartTime(cal.time)
+                    Log.d("tag","${viewModel.startTimePeriod.value}")
                 },
                 cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
             ).show()
@@ -131,7 +129,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(y, m, d)
                     viewModel.setEndDate(cal.time)
                 },
-                cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)
+                viewModel.datePickerValueEndYear, viewModel.datePickerValueEndMonth-1, viewModel.datePickerValueEndDay
             ).show()
         }
     }

@@ -7,15 +7,13 @@ import androidx.lifecycle.ViewModel
 import org.inu.events.data.model.Article
 import org.inu.events.data.service.EventService
 import org.inu.events.di.AppConfigs
-import org.inu.events.objects.EventNumber.EVENT_START_GALLERY
-import org.inu.events.objects.EventNumber.EVENT_START_MAIN_ACTIVITY
 import org.inu.events.util.SingleLiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterEventsViewModel : ViewModel() {
 
-    // todo - 수연 : selectedItemPosition부분 어떻게 수정할지
+    // todo - 수연 : selectedItemPosition 부분 어떻게 수정할지
     val selectedItemPosition = MutableLiveData(0)
     val startDatePeriod = MutableLiveData("")
     val startTimePeriod = MutableLiveData("")
@@ -25,6 +23,15 @@ class RegisterEventsViewModel : ViewModel() {
     val content = MutableLiveData("")
     val selectedImageUri = MutableLiveData<Uri>()
     val phase = MutableLiveData(1)
+
+    //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
+    private val cal = Calendar.getInstance()
+    var datePickerValueStartYear:Int = cal.get(Calendar.YEAR)
+    var datePickerValueStartMonth:Int = cal.get(Calendar.MONTH)
+    var datePickerValueStartDay:Int = cal.get(Calendar.DATE)
+    var datePickerValueEndYear:Int = cal.get(Calendar.YEAR)
+    var datePickerValueEndMonth:Int = cal.get(Calendar.MONTH)
+    var datePickerValueEndDay:Int = cal.get(Calendar.DATE)
 
     //서버통신
     private val eventService: EventService = AppConfigs.eventService
@@ -37,8 +44,23 @@ class RegisterEventsViewModel : ViewModel() {
             field.value = value.value
             _detailDataList.value = loadDetailData()
             spinnerSelected()
-            //onImageSelected(_detailDataList.value.image_uuid)
+            val startYear = _detailDataList.value!!.start_at.slice(IntRange(0,3))
+            val startMonth = _detailDataList.value!!.start_at.slice(IntRange(5,6))
+            val startDay = _detailDataList.value!!.start_at.slice(IntRange(8,9))
+            val endYear = _detailDataList.value!!.end_at.slice(IntRange(0,3))
+            val endMonth = _detailDataList.value!!.end_at.slice(IntRange(5,6))
+            val endDay = _detailDataList.value!!.end_at.slice(IntRange(8,9))
+            startDatePeriod.value = dateFormat(startYear,startMonth,startDay)
+            endDatePeriod.value = dateFormat(endYear,endMonth,endDay)
+            datePickerValueStartYear = startYear.toInt()
+            datePickerValueStartMonth = startMonth.toInt()
+            datePickerValueStartDay = startDay.toInt()
+            datePickerValueEndYear = endYear.toInt()
+            datePickerValueEndMonth = endMonth.toInt()
+            datePickerValueEndDay = endDay.toInt()
         }
+
+    private fun dateFormat(year:String, month:String, day:String) = "%s.%s.%s".format(year,month,day)
 
     //디테일엑티비티에서 자신의 글인 경우 수정 버튼을 눌렀을 때 기존의 글을 불러와서 데이터 저장하기 위함
     private val _detailDataList = MutableLiveData<Article>()
