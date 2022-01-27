@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.login.LoginGoogle
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
 import org.inu.events.viewmodel.DetailViewModel
@@ -84,7 +85,16 @@ class DetailActivity : AppCompatActivity() {
 //                run{binding.root.context.startActivity(this)}
                 true
             }
+            R.id.signOutToolbarMenu->{
+                LoginGoogle(this).signOut()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = LoginGoogle(this).isLogin()
+        return super.onPrepareOptionsMenu(menu)
     }
 }

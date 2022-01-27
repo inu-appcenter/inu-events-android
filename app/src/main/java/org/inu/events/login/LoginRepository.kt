@@ -1,6 +1,8 @@
 package org.inu.events.login
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import org.inu.events.login.api.LoginService
 import org.inu.events.login.model.LoginGoogleRequestModel
 import org.inu.events.login.model.LoginGoogleResponseModel
@@ -10,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginRepository {
+class LoginRepository(val context: Context) {
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
     private val sendAccessTokenBaseUrl = "http://uniletter.inuappcenter.kr"
@@ -44,6 +46,7 @@ class LoginRepository {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful){
                     Log.d(TAG, "sendOnResponse: ${response.body()}")
+                    Toast.makeText(context, "로그인 되셨습니다~!", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<String>, t: Throwable) {

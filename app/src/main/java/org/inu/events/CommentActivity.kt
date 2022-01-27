@@ -35,10 +35,10 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         commentViewModel.btnClickEvent.observe(
             this,
             {
-                if (loginService.isLogin(this)) {
+                if (loginService.isLogin()) {
                     Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
                 } else {
-                    isLogin()
+                    showDialog()
                 }
             }
         )
@@ -62,25 +62,18 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     // dialog
-    private fun isLogin() {      // 로그인 다이어로그 보여주기
+    private fun showDialog() {      // 로그인 다이어로그 보여주기
         LoginDialog().show(this, { onOk() }, { onCancel() })
     }
 
     // 로그인 확인을 눌렀을 때
     override fun onOk() {
-        loginService.signIn(this)
+        startActivity(Intent(this,LoginActivity::class.java))
     }
 
     // 로그인 취소를 눌렀을 때
     override fun onCancel() {
         Toast.makeText(this, "로그인을 하셔야 댓글 작성이 가능합니다", Toast.LENGTH_SHORT).show()
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1000){
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            loginService.handleSignInResult(task)
 
-        }
-    }
 }
