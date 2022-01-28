@@ -32,6 +32,10 @@ class RegisterEventsViewModel : ViewModel() {
     var datePickerValueEndYear:Int = cal.get(Calendar.YEAR)
     var datePickerValueEndMonth:Int = cal.get(Calendar.MONTH)
     var datePickerValueEndDay:Int = cal.get(Calendar.DATE)
+    var timePickerValueStartTime:Int = cal.get(Calendar.HOUR_OF_DAY)
+    var timePickerValueStartMinute:Int = cal.get(Calendar.MINUTE)
+    var timePickerValueEndTime:Int = cal.get(Calendar.HOUR_OF_DAY)
+    var timePickerValueEndMinute:Int = cal.get(Calendar.MINUTE)
 
     //서버통신
     private val eventService: EventService = AppConfigs.eventService
@@ -44,23 +48,10 @@ class RegisterEventsViewModel : ViewModel() {
             field.value = value.value
             _detailDataList.value = loadDetailData()
             spinnerSelected()
-            val startYear = _detailDataList.value!!.start_at.slice(IntRange(0,3))
-            val startMonth = _detailDataList.value!!.start_at.slice(IntRange(5,6))
-            val startDay = _detailDataList.value!!.start_at.slice(IntRange(8,9))
-            val endYear = _detailDataList.value!!.end_at.slice(IntRange(0,3))
-            val endMonth = _detailDataList.value!!.end_at.slice(IntRange(5,6))
-            val endDay = _detailDataList.value!!.end_at.slice(IntRange(8,9))
-            startDatePeriod.value = dateFormat(startYear,startMonth,startDay)
-            endDatePeriod.value = dateFormat(endYear,endMonth,endDay)
-            datePickerValueStartYear = startYear.toInt()
-            datePickerValueStartMonth = startMonth.toInt()
-            datePickerValueStartDay = startDay.toInt()
-            datePickerValueEndYear = endYear.toInt()
-            datePickerValueEndMonth = endMonth.toInt()
-            datePickerValueEndDay = endDay.toInt()
+            datePickerSelect()
+            timePickerSelect()
         }
 
-    private fun dateFormat(year:String, month:String, day:String) = "%s.%s.%s".format(year,month,day)
 
     //디테일엑티비티에서 자신의 글인 경우 수정 버튼을 눌렀을 때 기존의 글을 불러와서 데이터 저장하기 위함
     private val _detailDataList = MutableLiveData<Article>()
@@ -160,4 +151,45 @@ class RegisterEventsViewModel : ViewModel() {
     private fun formatTime(date: Date) = SimpleDateFormat("h:mm a", Locale("en", "US"))
         .format(date)
         .toString()
+
+    private fun dateFormat(year:String, month:String, day:String) = "%s.%s.%s".format(year,month,day)
+
+    private fun timeFormat(hour:String, minute:String) =
+                                "%s:%s %s".format(if(hour.toInt() > 12) (hour.toInt()-12).toString() else hour,
+                                minute,
+                                if(hour.toInt() > 12) "PM" else "AM")
+
+
+    private fun datePickerSelect(){
+        val startYear = _detailDataList.value!!.start_at.slice(IntRange(0,3))
+        val startMonth = _detailDataList.value!!.start_at.slice(IntRange(5,6))
+        val startDay = _detailDataList.value!!.start_at.slice(IntRange(8,9))
+        val endYear = _detailDataList.value!!.end_at.slice(IntRange(0,3))
+        val endMonth = _detailDataList.value!!.end_at.slice(IntRange(5,6))
+        val endDay = _detailDataList.value!!.end_at.slice(IntRange(8,9))
+        startDatePeriod.value = dateFormat(startYear,startMonth,startDay)
+        endDatePeriod.value = dateFormat(endYear,endMonth,endDay)
+        datePickerValueStartYear = startYear.toInt()
+        datePickerValueStartMonth = startMonth.toInt()
+        datePickerValueStartDay = startDay.toInt()
+        datePickerValueEndYear = endYear.toInt()
+        datePickerValueEndMonth = endMonth.toInt()
+        datePickerValueEndDay = endDay.toInt()
+    }
+
+    private fun timePickerSelect(){
+        val startHour = _detailDataList.value!!.start_at.slice(IntRange(11,12))
+        val startMinute = _detailDataList.value!!.start_at.slice(IntRange(14,15))
+        val endHour = _detailDataList.value!!.end_at.slice(IntRange(11,12))
+        val endMinute = _detailDataList.value!!.end_at.slice(IntRange(14,15))
+        startTimePeriod.value = timeFormat(startHour,startMinute)
+        endTimePeriod.value = timeFormat(endHour, endMinute)
+        timePickerValueStartTime = startHour.toInt()
+        timePickerValueStartMinute = startMinute.toInt()
+        timePickerValueEndTime = endHour.toInt()
+        timePickerValueEndMinute= endMinute.toInt()
+    }
+
+
+
 }

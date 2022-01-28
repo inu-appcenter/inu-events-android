@@ -116,7 +116,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                     viewModel.setStartTime(cal.time)
                     Log.d("tag","${viewModel.startTimePeriod.value}")
                 },
-                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
+                viewModel.timePickerValueStartTime, viewModel.timePickerValueStartMinute, false
             ).show()
         }
     }
@@ -143,7 +143,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(Calendar.MINUTE, m)
                     viewModel.setEndTime(cal.time)
                 },
-                cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false
+                viewModel.timePickerValueEndTime, viewModel.timePickerValueEndMinute, false
             ).show()
         }
     }
