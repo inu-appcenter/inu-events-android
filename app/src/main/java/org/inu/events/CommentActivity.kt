@@ -53,7 +53,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun setupRecyclerView() {
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CommentAdapter(commentViewModel.commentList)
+            adapter = CommentAdapter(commentViewModel.commentDataList)
         }
     }
 

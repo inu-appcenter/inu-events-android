@@ -1,15 +1,13 @@
 package org.inu.events.di
 
-import org.inu.events.data.service.DummyEventService
-import org.inu.events.data.service.DummyUserService
-import org.inu.events.data.service.EventService
-import org.inu.events.data.service.UserService
+import org.inu.events.data.service.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object AppConfigs {
     val eventService: EventService = DummyEventService()
     val userService: UserService = DummyUserService()
+    val commentService: CommentService = DummyCommentService()
 }
 
 fun getService() : EventService {
