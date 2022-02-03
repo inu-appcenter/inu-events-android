@@ -42,7 +42,6 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
             binding.homeData = homeData
             binding.boardDate.text = whenDay(homeData.end_at)
             binding.boardDate.background = ContextCompat.getDrawable(binding.root.context,isDeadline())
-            Log.d("tag","homeData bind")
         }
 
         override fun onClick(v: View) {
@@ -65,7 +64,6 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
             }.time.time
 
             var dDay = (endDate-today) / (24*60*60*1000)
-            Log.d("tag","D-$dDay")
 
             if(dDay < 0){
                 checkDeadline = true

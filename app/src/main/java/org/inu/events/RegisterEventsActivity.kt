@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import org.inu.events.data.model.Article
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.IntentMessage
 import org.inu.events.viewmodel.RegisterEventsViewModel
@@ -54,7 +55,16 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupEndDatePicker()
         setupEndTimePicker()
         initAddPhotoButton()
+        addEvent()
         getEventId()
+    }
+
+    private fun addEvent() {
+        viewModel.completeButtonClickEvent.observe(
+            this, {
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        )
     }
 
     private fun initBinding() {
@@ -97,8 +107,6 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this, { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setStartDate(cal.time)
-                    Log.d("tag","${viewModel.startDatePeriod.value}")
-                    Log.d("tag","${viewModel.datePickerValueStartMonth}")
                 },
                 viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth-1, viewModel.datePickerValueStartDay
             ).show()
@@ -114,7 +122,6 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
                     viewModel.setStartTime(cal.time)
-                    Log.d("tag","${viewModel.startTimePeriod.value}")
                 },
                 viewModel.timePickerValueStartTime, viewModel.timePickerValueStartMinute, false
             ).show()
@@ -211,7 +218,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
         }
-
         selectImageLauncher.launch(intent)
     }
 

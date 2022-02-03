@@ -17,7 +17,7 @@ class DetailViewModel : ViewModel() {
 
     var eventIndex = MutableLiveData<Int>()
         set(value){
-            Log.d("tag","eventIndex set $eventIndex")
+            Log.d("tag","eventIndex set ${eventIndex.value}")
             field = value
             field.value = value.value
             _detailDataList.value = loadDetailData()

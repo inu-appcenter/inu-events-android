@@ -88,6 +88,10 @@ class DetailActivity : AppCompatActivity() {
 //                run{binding.root.context.startActivity(this)}
                 true
             }
+            R.id.signOutToolbarMenu -> {
+                LoginGoogle(this).signOut(this)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

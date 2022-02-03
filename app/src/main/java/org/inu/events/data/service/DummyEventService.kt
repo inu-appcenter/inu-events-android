@@ -28,4 +28,8 @@ class DummyEventService : EventService {
     override fun deleteEvent(eventId: Int?) {
         if(eventId != null) eventList.removeAt(eventId)
     }
+
+    override fun postEvent(event: Article) {
+        eventList.add(event)
+    }
 }
