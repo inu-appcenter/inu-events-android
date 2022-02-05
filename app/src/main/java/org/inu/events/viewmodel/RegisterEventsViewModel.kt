@@ -23,6 +23,9 @@ class RegisterEventsViewModel : ViewModel() {
     val content = MutableLiveData("")
     val selectedImageUri = MutableLiveData<Uri>()
     val phase = MutableLiveData(1)
+    val title = MutableLiveData("")
+    val body = MutableLiveData("")
+    val host = MutableLiveData("")
 
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
     private val cal = Calendar.getInstance()
@@ -46,6 +49,9 @@ class RegisterEventsViewModel : ViewModel() {
             field = value
             field.value = value.value
             _detailDataList.value = loadDetailData()
+            title.value = _detailDataList.value?.title
+            body.value = _detailDataList.value?.body
+            host.value = _detailDataList.value?.host
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
@@ -69,6 +75,7 @@ class RegisterEventsViewModel : ViewModel() {
         return eventService.getEventDetail(eventIndex.value)
     }
 
+    //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
     private fun spinnerSelected(){
         when(_detailDataList.value!!.category){
             "선택없음"->selectedItemPosition.value = 0
@@ -80,6 +87,26 @@ class RegisterEventsViewModel : ViewModel() {
             "기타"->selectedItemPosition.value = 6
             else->selectedItemPosition.value = 0
         }
+    }
+
+    //행사 수정한 값을 반영할 때 스피너 값에 따라서 문자열 선택하는 함수
+    private fun spinnerToHost(){
+        when(selectedItemPosition.value){
+            0->_detailDataList.value?.category = "선택없음"
+            1->_detailDataList.value?.category = "동아리"
+            2->_detailDataList.value?.category = "소모임"
+            3->_detailDataList.value?.category = "간식나눔"
+            4->_detailDataList.value?.category = "대회 공모전"
+            5->_detailDataList.value?.category = "인턴"
+            6->_detailDataList.value?.category = "기타"
+            else->_detailDataList.value?.category = "선택없음"
+        }
+    }
+
+    private fun timeDateSave(){
+        _detailDataList.value?.start_at = formatDateForServer(startDatePeriod.value!! + startTimePeriod.value!!)
+        _detailDataList.value?.end_at = formatDateForServer(endDatePeriod.value!! + endTimePeriod.value!!)
+        Log.d("tag","게시글 수정시 서버에 저장되는 시작날짜값 ${_detailDataList.value?.start_at}")
     }
 
     fun onCancelClick() {
@@ -104,9 +131,11 @@ class RegisterEventsViewModel : ViewModel() {
         // TODO 이미지 업로드 후 uuid 받고 dto 채워서 포스트
         //입력하지 않은 정보가 있으면 등록되면 안됨
         completeButtonClickEvent.call()
-        Log.d("tag","startDatePeriod = ${startDatePeriod.value}")
-        Log.d("tag","startTimePeriod = ${startTimePeriod.value}")
-        Log.d("tag","title = ${_detailDataList.value?.title}")
+        spinnerToHost()
+        timeDateSave()
+        _detailDataList.value?.title = title.value!!
+        _detailDataList.value?.body = body.value!!
+        _detailDataList.value?.host = host.value!!
     }
 
     fun onImageSelected(uri: Uri) {
@@ -149,14 +178,27 @@ class RegisterEventsViewModel : ViewModel() {
         .format(date)
         .toString()
 
-    private fun formatTime(date: Date) = SimpleDateFormat("h:mm a", Locale("en", "US"))
+    private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
         .format(date)
         .toString()
+
+    private fun formatDateForServer(date: String): String{
+        Log.d("tag","date = $date")
+        val year = date.slice(IntRange(0,3))
+        val month = date.slice(IntRange(5,6))
+        val day = date.slice(IntRange(8,9))
+        val amPm = date.slice(IntRange(16,17))
+        val hour = date.slice(IntRange(10,11))
+        val hourStr = if(amPm=="PM") (hour.toInt()+12) else hour
+        val minute = date.slice(IntRange(13,14))
+        val second = "00"
+        return "%s-%s-%sT%s:%s:%s".format(year,month,day,hourStr,minute,second)
+    }
 
     private fun dateFormat(year:String, month:String, day:String) = "%s.%s.%s".format(year,month,day)
 
     private fun timeFormat(hour:String, minute:String) =
-                                "%s:%s %s".format(if(hour.toInt() > 12) (hour.toInt()-12).toString() else hour,
+                                "%s:%s %s".format(if(hour.toInt() > 12) "0"+(hour.toInt()-12).toString() else hour,
                                 minute,
                                 if(hour.toInt() > 12) "PM" else "AM")
 

@@ -53,7 +53,7 @@ class HomeAdapter(private var homeDataList: LiveData<List<Article>>):RecyclerVie
         private fun whenDay(end_at: String?): String {
             if(end_at == null) return "D-??"
 
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
             val endDate = dateFormat.parse(end_at).time
             val today = Calendar.getInstance().apply {

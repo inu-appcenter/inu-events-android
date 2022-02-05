@@ -15,12 +15,17 @@ class DetailViewModel : ViewModel() {
     val detailDataList : MutableLiveData<Article>
         get() = _detailDataList
 
+    var startDate = MutableLiveData("")
+    var endDate = MutableLiveData("")
+
     var eventIndex = MutableLiveData<Int>()
         set(value){
             Log.d("tag","eventIndex set ${eventIndex.value}")
             field = value
             field.value = value.value
             _detailDataList.value = loadDetailData()
+            startDate.value = dateFormat(_detailDataList.value!!.start_at)
+            endDate.value = dateFormat(_detailDataList.value!!.end_at)
         }
 
     val commentClickEvent = SingleLiveEvent<Any>()
@@ -32,6 +37,8 @@ class DetailViewModel : ViewModel() {
     init{
         _detailDataList.value = loadDetailData()
     }
+
+    private fun dateFormat(date:String) = "%s.%s.%s".format(date.slice(IntRange(0,3)),date.slice(IntRange(5,6)),date.slice(IntRange(8,9)))
 
     //현재 표시할 게시물의 데이터를 가져옴
     private fun loadDetailData(): Article{

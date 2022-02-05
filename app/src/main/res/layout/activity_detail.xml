@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{@string/event_period(detailViewModel.detailDataList.start_at,detailViewModel.detailDataList.end_at)}"
+                        android:text="@{@string/event_period(detailViewModel.startDate, detailViewModel.endDate)}"
                         tools:text="2021.03.22 ~ 2021.03.26"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
