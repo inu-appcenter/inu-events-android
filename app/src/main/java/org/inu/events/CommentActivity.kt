@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task
 import org.inu.events.adapter.CommentAdapter
 import org.inu.events.databinding.ActivityCommentBinding
 import org.inu.events.login.LoginGoogle
+import org.inu.events.objects.IntentMessage
 import org.inu.events.viewmodel.CommentViewModel
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
@@ -37,6 +38,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             {
                 if (loginService.isLogin(this)) {
                     Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
+                    commentViewModel.postComment()
                 } else {
                     isLogin()
                 }
@@ -82,5 +84,17 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             loginService.handleSignInResult(task)
 
         }
+    }
+    private fun extractEventIdAndLoad() {
+        val extras = intent.extras ?: return
+        if (intent.hasExtra(IntentMessage.EVENT_ID)) {
+            val id = extras.getInt(IntentMessage.EVENT_ID)
+            Log.d("tag", "게시글의 id는 $id")
+            commentViewModel.load(id)
+        }
+    }
+    override fun onStart() {
+        super.onStart()
+        extractEventIdAndLoad()
     }
 }
