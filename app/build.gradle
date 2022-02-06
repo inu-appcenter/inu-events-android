@@ -6,12 +6,12 @@ plugins {
 
 android {
 
-    dataBinding{
+    dataBinding {
         enabled true
     }
 
-    viewBinding{
-        enabled= true
+    viewBinding {
+        enabled = true
     }
 
     compileSdk 31
@@ -71,4 +71,7 @@ dependencies {
     // Kotlin Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+
+    // DI(Koin)
+    implementation "io.insert-koin:koin-android:3.1.5"
 }
