@@ -24,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="장희직"
             android:textColor="@color/black1"
             android:textFontWeight="500"
             android:textSize="15sp"
@@ -36,7 +35,6 @@
             android:id="@+id/commentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="맥도날드 vs 롯데리아"
             app:layout_constraintStart_toStartOf="@id/nickNameTextView"
             app:layout_constraintTop_toBottomOf="@id/nickNameTextView"
             tools:ignore="HardcodedText" />
