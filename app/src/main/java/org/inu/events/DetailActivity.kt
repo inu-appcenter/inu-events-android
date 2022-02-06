@@ -88,11 +88,16 @@ class DetailActivity : AppCompatActivity() {
 //                run{binding.root.context.startActivity(this)}
                 true
             }
-            R.id.signOutToolbarMenu -> {
-                LoginGoogle(this).signOut(this)
+            R.id.signOutToolbarMenu->{
+                LoginGoogle(this).signOut()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = LoginGoogle(this).isLogin()
+        return super.onPrepareOptionsMenu(menu)
     }
 }

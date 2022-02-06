@@ -12,7 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import org.inu.events.objects.ClientInformation
 
-class LoginGoogle(context: Context) {
+class LoginGoogle(val context: Context) {
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(ClientInformation.CLIENT_ID)
         .requestServerAuthCode(ClientInformation.CLIENT_ID)
@@ -25,7 +25,7 @@ class LoginGoogle(context: Context) {
         try {
             val authCode: String? =
                 completedTask.getResult(ApiException::class.java)?.serverAuthCode
-            LoginRepository().getAccessToken(authCode!!)
+            LoginRepository(context).getAccessToken(authCode!!)
         } catch (e: ApiException) {
             Log.w(TAG, "handleSignInResult: error" + e.statusCode)
         }
@@ -37,14 +37,14 @@ class LoginGoogle(context: Context) {
 
     }
 
-    fun signOut(context: Context) {
+    fun signOut() {
         googleSignInClient.signOut()
             .addOnCompleteListener {
                 Toast.makeText(context, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()
             }
     }
 
-    fun isLogin(context: Context): Boolean {
+    fun isLogin(): Boolean {
         val account = GoogleSignIn.getLastSignedInAccount(context)
         return if (account == null) false else (true)
     }
