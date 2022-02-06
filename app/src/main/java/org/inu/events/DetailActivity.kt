@@ -57,7 +57,7 @@ class DetailActivity : AppCompatActivity() {
     private fun setupToolbar(){
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
-        if(LoginGoogle(this).isLogin(this)){
+        if(LoginGoogle(this).isLogin()){
             if(viewModel.isMyWriting()){
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
