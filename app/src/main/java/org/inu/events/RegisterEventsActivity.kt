@@ -57,7 +57,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupEndTimePicker()
         initAddPhotoButton()
         addEvent()
-        extractEventIdAndLoad()
 
         Log.d("tag", "${viewModel.eventIndex}")
         Log.d("tag", viewModel.currentEvent.title)
@@ -247,6 +246,11 @@ class RegisterEventsActivity : AppCompatActivity() {
     private fun setupToolbar() {
         binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        extractEventIdAndLoad()
     }
 
     private fun extractEventIdAndLoad() {

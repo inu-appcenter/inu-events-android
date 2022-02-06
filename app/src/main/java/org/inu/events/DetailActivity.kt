@@ -42,13 +42,6 @@ class DetailActivity : AppCompatActivity() {
         setupToolbar()
     }
 
-    private fun extractEventIdAndLoad() {
-        val id = getIntExtra(EVENT_ID) ?: return
-
-        Log.d("tag", "게시글의 id는 $id")
-        viewModel.load(id)
-    }
-
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         binding.detailViewModel = viewModel
@@ -109,5 +102,12 @@ class DetailActivity : AppCompatActivity() {
         super.onStart()
 
         extractEventIdAndLoad()
+    }
+
+    private fun extractEventIdAndLoad() {
+        val id = getIntExtra(EVENT_ID) ?: return
+
+        Log.d("tag", "게시글의 id는 $id")
+        viewModel.load(id)
     }
 }
