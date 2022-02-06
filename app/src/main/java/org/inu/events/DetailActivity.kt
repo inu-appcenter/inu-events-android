@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.login.LoginGoogle
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.objects.IntentMessage.POST_EDIT_INFO

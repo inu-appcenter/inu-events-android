@@ -16,16 +16,8 @@ class DetailViewModel : ViewModel() {
 
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
-
-    var eventIndex = MutableLiveData<Int>()
-        set(value){
-            Log.d("tag","eventIndex set ${eventIndex.value}")
-            field = value
-            field.value = value.value
-            _detailDataList.value = loadDetailData()
-            startDate.value = dateFormat(_detailDataList.value!!.start_at)
-            endDate.value = dateFormat(_detailDataList.value!!.end_at)
-        }
+    var eventIndex = -1
+        private set
 
     val commentClickEvent = SingleLiveEvent<Int>()
 
@@ -43,6 +35,8 @@ class DetailViewModel : ViewModel() {
     //현재 표시할 게시물의 데이터를 가져옴
     private fun loadDetailData() {
         _detailDataList.value = eventService.getEventDetail(eventIndex)
+        startDate.value = dateFormat(_detailDataList.value!!.start_at)
+        endDate.value = dateFormat(_detailDataList.value!!.end_at)
     }
 
     //댓글버튼 클릭했을 때 이벤트

@@ -78,8 +78,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         Toast.makeText(this, "로그인을 하셔야 댓글 작성이 가능합니다", Toast.LENGTH_SHORT).show()
     }
 
-        }
-    }
     private fun extractEventIdAndLoad() {
         val extras = intent.extras ?: return
         if (intent.hasExtra(IntentMessage.EVENT_ID)) {
