@@ -4,7 +4,9 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.inu.events.R
 import org.inu.events.data.model.Article
+import org.inu.events.data.service.DummyEventService
 import org.inu.events.data.service.EventService
 import org.inu.events.di.AppConfigs
 import org.inu.events.util.SingleLiveEvent
@@ -26,6 +28,7 @@ class RegisterEventsViewModel : ViewModel() {
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData("")
+    val check = MutableLiveData(0)
 
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
     private val cal = Calendar.getInstance()
@@ -55,7 +58,6 @@ class RegisterEventsViewModel : ViewModel() {
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
-            Log.d("tag","eventIndex set ${eventIndex.value}")
         }
 
     //디테일엑티비티에서 자신의 글인 경우 수정 버튼을 눌렀을 때 기존의 글을 불러와서 데이터 저장하기 위함
@@ -72,6 +74,7 @@ class RegisterEventsViewModel : ViewModel() {
     val completeButtonClickEvent = SingleLiveEvent<Any>()
 
     private fun loadDetailData(): Article{
+        Log.d("tag","eventIndex set ${eventIndex.value}")
         return eventService.getEventDetail(eventIndex.value)
     }
 
@@ -109,6 +112,15 @@ class RegisterEventsViewModel : ViewModel() {
         Log.d("tag","게시글 수정시 서버에 저장되는 시작날짜값 ${_detailDataList.value?.start_at}")
     }
 
+    private fun addEvent(){
+        eventService.postEvent(_detailDataList.value!!)
+    }
+
+    private fun initEvent(){
+        _detailDataList.value = Article(DummyEventService().getEventId(),"","","","", R.drawable.img_home_board_sample_image2,"","","",23)
+
+    }
+
     fun onCancelClick() {
         startHomeActivityClickEvent.call()
     }
@@ -129,13 +141,19 @@ class RegisterEventsViewModel : ViewModel() {
 
     fun onCompleteClick() {
         // TODO 이미지 업로드 후 uuid 받고 dto 채워서 포스트
-        //입력하지 않은 정보가 있으면 등록되면 안됨
+        if(check.value == 1){
+            initEvent()
+        }
         completeButtonClickEvent.call()
         spinnerToHost()
         timeDateSave()
         _detailDataList.value?.title = title.value!!
         _detailDataList.value?.body = body.value!!
         _detailDataList.value?.host = host.value!!
+        Log.d("tag","${_detailDataList.value?.title}")
+        if(check.value == 1){
+            addEvent()
+        }
     }
 
     fun onImageSelected(uri: Uri) {

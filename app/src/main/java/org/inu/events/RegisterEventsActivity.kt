@@ -57,6 +57,9 @@ class RegisterEventsActivity : AppCompatActivity() {
         initAddPhotoButton()
         addEvent()
         getEventId()
+
+        Log.d("tag","${viewModel.eventIndex.value}")
+        Log.d("tag","${viewModel.detailDataList.value?.title}")
     }
 
     private fun addEvent() {
@@ -245,8 +248,11 @@ class RegisterEventsActivity : AppCompatActivity() {
         val extras = intent.extras?:null
         if(intent.hasExtra(IntentMessage.POST_EDIT_INFO)){
             var id:Int? = extras?.getInt(IntentMessage.POST_EDIT_INFO)
-            Log.d("tag","게시글의 id는 $id")
-            viewModel.eventIndex = MutableLiveData(id)
+            if(id == -1) viewModel.check.value = 1
+            else{
+                Log.d("tag","게시글의 id는 $id")
+                viewModel.eventIndex = MutableLiveData(id)
+            }
         }
     }
 

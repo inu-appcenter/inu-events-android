@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task
 import org.inu.events.adapter.HomeAdapter
 import org.inu.events.databinding.ActivityMainBinding
 import org.inu.events.login.LoginGoogle
+import org.inu.events.objects.IntentMessage
 import org.inu.events.viewmodel.HomeViewModel
 
 class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
@@ -46,7 +47,10 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             this
         ) {
             if(loginService.isLogin(this)){
-                startActivity(Intent(this, RegisterEventsActivity::class.java))
+                //startActivity(Intent(this, RegisterEventsActivity::class.java))
+                Intent(this,RegisterEventsActivity::class.java).apply {
+                    putExtra(IntentMessage.POST_EDIT_INFO,-1)
+                }.run{binding.root.context.startActivity(this)}
             }
             else{
                 isLogin()

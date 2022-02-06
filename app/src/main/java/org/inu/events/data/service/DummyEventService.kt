@@ -32,4 +32,6 @@ class DummyEventService : EventService {
     override fun postEvent(event: Article) {
         eventList.add(event)
     }
+
+    fun getEventId() = eventList.size
 }
