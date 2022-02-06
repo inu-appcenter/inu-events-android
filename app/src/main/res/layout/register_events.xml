@@ -12,7 +12,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,12 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
+
             <include
                 android:id="@+id/toolbar_register1"
                 layout="@layout/toolbar_sample"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title='@{@string/event}'/>
+                app:title='@{@string/event}' />
+
             <TextView
                 android:id="@+id/textView_select1"
                 android:layout_width="wrap_content"
@@ -77,7 +78,7 @@
                 android:maxLines="1"
                 android:paddingVertical="7dp"
                 android:paddingStart="16dp"
-                android:text="@{registerViewModel.title}"
+                android:text="@={registerViewModel.title}"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,8 +89,7 @@
                 android:id="@+id/textView_organization"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_margin="16dp"
                 android:text="@string/text_organiztion"
                 android:textColor="@color/black1"
                 android:textFontWeight="400"
@@ -121,7 +121,7 @@
                 android:maxLines="1"
                 android:paddingVertical="7dp"
                 android:paddingStart="16dp"
-                android:text="@{registerViewModel.organization}"
+                android:text="@={registerViewModel.host}"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,36 +159,103 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
 
             <TextView
-                android:id="@+id/textView_period"
+                android:id="@+id/textView_start_period"
                 android:layout_width="0dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/text_period"
+                android:text="@string/text_start_period"
                 android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/spinner_classification" />
 
-            <!--   이 부분은 결정 후 수정-->
-            <EditText
-                android:id="@+id/editText_period"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/editText_start_date_period"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onStartDateClick()}"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:text="@={registerViewModel.startDatePeriod}"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_start_period" />
+
+            <TextView
+                android:id="@+id/editText_start_time_period"
+                android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingVertical="7dp"
-                android:paddingStart="16dp"
-                android:text="@{registerViewModel.period}"
+                android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:text="@={registerViewModel.startTimePeriod}"
+                android:textColor="@color/black1"
                 android:textFontWeight="400"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/editText_start_date_period"
+                app:layout_constraintTop_toBottomOf="@+id/textView_start_period" />
+
+            <TextView
+                android:id="@+id/textView_end_period"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_end_period"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_period" />
+                app:layout_constraintTop_toBottomOf="@id/editText_start_date_period" />
+
+            <TextView
+                android:id="@+id/editText_end_date_period"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:text="@={registerViewModel.endDatePeriod}"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_end_period" />
+
+            <TextView
+                android:id="@+id/editText_end_time_period"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:text="@={registerViewModel.endTimePeriod}"
+                android:textColor="@color/black1"
+                android:textFontWeight="400"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/editText_end_date_period"
+                app:layout_constraintTop_toBottomOf="@+id/textView_end_period" />
+
 
             <TextView
                 android:id="@+id/textView_target"
@@ -201,7 +268,7 @@
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText_period" />
+                app:layout_constraintTop_toBottomOf="@+id/editText_end_date_period" />
 
             <EditText
                 android:id="@+id/editText_target"
@@ -215,7 +282,7 @@
                 android:maxLines="1"
                 android:paddingVertical="7dp"
                 android:paddingStart="16dp"
-                android:text="@{registerViewModel.target}"
+                android:text="이부분은 아마 삭제?"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -227,11 +294,11 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:background="@drawable/drawable_btn_background"
+                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
                 android:text="@string/text_cancel"
                 android:textColor="@color/primary"
                 android:textFontWeight="400"
                 android:textSize="15sp"
-                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_next"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -256,6 +323,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
+
             <include
                 android:id="@+id/toolbar_register2"
                 layout="@layout/toolbar_sample"
@@ -309,11 +377,10 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/drawable_edit_text_background"
-                android:inputType="text"
-                android:maxLines="1"
+                android:inputType="textMultiLine"
                 android:paddingVertical="7dp"
                 android:paddingStart="16dp"
-                android:text="@{registerViewModel.content}"
+                android:text="@={registerViewModel.body}"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -341,6 +408,8 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/img_btn_background"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
+                android:src="@{registerViewModel.selectedImageUri}"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_postImage" />
 
@@ -363,6 +432,7 @@
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:background="@drawable/drawable_btn_primary"
+                android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
                 android:textFontWeight="400"

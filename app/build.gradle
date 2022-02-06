@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -66,6 +67,7 @@ dependencies {
 
     // retrofit2
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // Kotlin Coroutines
@@ -74,4 +76,12 @@ dependencies {
 
     // DI(Koin)
     implementation "io.insert-koin:koin-android:3.1.5"
+
+    // google login
+    implementation 'com.google.android.gms:play-services-auth:20.0.1'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
