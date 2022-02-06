@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         viewModel.postClickEvent.observe(
             this
         ) {
-            if(loginService.isLogin(this)){
+            if(loginService.isLogin()){
                 //startActivity(Intent(this, RegisterEventsActivity::class.java))
                 Intent(this,RegisterEventsActivity::class.java).apply {
                     putExtra(IntentMessage.POST_EDIT_INFO,-1)
