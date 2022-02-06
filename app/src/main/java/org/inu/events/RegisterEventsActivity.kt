@@ -3,44 +3,46 @@ package org.inu.events
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.getIntExtra
+import org.inu.events.common.extension.observe
+import org.inu.events.common.extension.registerForActivityResult
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.IntentMessage
+import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
-
 
 class RegisterEventsActivity : AppCompatActivity() {
     companion object {
         private const val PERMISSION_ALBUM = 101
+
+        fun callingIntent(context: Context, eventId: Int = -1) =
+            Intent(context, RegisterEventsActivity::class.java).apply {
+                putExtra(EVENT_ID, eventId)
+            }
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
     private lateinit var binding: RegisterEventsBinding
 
-    private val selectImageLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode != Activity.RESULT_OK) {
-                return@registerForActivityResult
-            }
-
-            it.data?.data?.let { uri ->
-                viewModel.onImageSelected(uri)
-                Log.d("tag", "$uri")
-            } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
-        }
+    private val selectImageLauncher = registerForActivityResult {
+        it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
+            viewModel.onImageSelected(uri)
+            Log.d("tag", "$uri")
+        } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,12 +96,10 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        viewModel.startHomeActivityClickEvent.observe(
-            this, {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-        )
+        observe(viewModel.startHomeActivityClickEvent) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupStartDatePicker() {
@@ -250,9 +250,8 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun extractEventIdAndLoad() {
-        val id = getIntExtra(IntentMessage.POST_EDIT_INFO) ?: -1
+        val id = getIntExtra(EVENT_ID) ?: -1
 
         viewModel.load(id)
     }
-
 }

@@ -52,9 +52,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         }
 
         override fun onClick(v: View) {
-            Intent(binding.root.context, DetailActivity::class.java).apply {
-                putExtra(HOME_BOARD_INFO, binding.homeData!!.id)
-            }.run { binding.root.context.startActivity(this) }
+            with(binding.root.context) {
+                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id))
+            }
         }
 
         private fun whenDay(end_at: String?): String {

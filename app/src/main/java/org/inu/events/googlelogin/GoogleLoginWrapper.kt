@@ -1,60 +1,56 @@
 package org.inu.events.googlelogin
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.util.Log
-import android.widget.Toast
+import androidx.activity.ComponentActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
+import org.inu.events.common.extension.registerForActivityResult
+import org.inu.events.common.extension.toast
 import org.inu.events.objects.ClientInformation
 
-class GoogleLoginWrapper(val context: Context) {
+class GoogleLoginWrapper(private val activity: ComponentActivity) {
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(ClientInformation.CLIENT_ID)
         .requestServerAuthCode(ClientInformation.CLIENT_ID)
         .requestEmail()
         .build()
 
-    private val googleSignInClient = GoogleSignIn.getClient(context, gso)
+    private val googleSignInClient by lazy { GoogleSignIn.getClient(activity, gso) }
 
-    fun signIn(activity: Activity) {
-        val signInIntent: Intent = googleSignInClient.signInIntent
-        activity.startActivityForResult(signInIntent, 1000)
+    private val launcher = activity.registerForActivityResult { result ->
+        if (result.resultCode != Activity.RESULT_OK) {
+            activity.toast("구글 로그인 실패!")
+            return@registerForActivityResult
+        }
 
-    }
-
-    fun handleSignInResult(
-        completedTask: Task<GoogleSignInAccount>,
-        onAccessTokenSecured: (String) -> Unit
-    ) {
-        try {
-            val authCode: String? =
-                completedTask.getResult(ApiException::class.java)?.serverAuthCode
-            TokenExchanger(context).getAccessToken(authCode!!) {
-                onAccessTokenSecured(it)
-            }
+        val account = try {
+            GoogleSignIn
+                .getSignedInAccountFromIntent(result.data)
+                .getResult(ApiException::class.java)
         } catch (e: ApiException) {
-            Log.w(TAG, "handleSignInResult: error" + e.statusCode)
+            e.printStackTrace()
+            activity.toast("로그인된 구글 계정 가져오는 데에 실패함")
+            return@registerForActivityResult
+        }
+
+        TokenExchanger().getAccessToken(account.serverAuthCode!!, onAccessTokenSecured) {
+            it.printStackTrace()
+            activity.toast("Access token을 가져오는 데에 실패함")
         }
     }
 
+    private lateinit var onAccessTokenSecured: (String) -> Unit
+
+    fun signIn(onAccessTokenSecured: (String) -> Unit) {
+        this.onAccessTokenSecured = onAccessTokenSecured
+
+        launcher.launch(googleSignInClient.signInIntent)
+    }
+
     fun signOut() {
-        googleSignInClient.signOut()
-            .addOnCompleteListener {
-                Toast.makeText(context, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    fun isLogin(): Boolean {
-        val account = GoogleSignIn.getLastSignedInAccount(context)
-        return if (account == null) false else (true)
-    }
-
-    companion object {
-        const val TAG = "GoogleLoginService"
+        googleSignInClient.signOut().addOnCompleteListener {
+            activity.toast("로그아웃 되셨습니다!")
+        }
     }
 }

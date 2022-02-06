@@ -1,5 +1,6 @@
 package org.inu.events
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,20 +11,29 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.getIntExtra
+import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
-import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
 
 class DetailActivity : AppCompatActivity() {
+    companion object {
+        fun callingIntent(context: Context, eventId: Int = -1) =
+            Intent(context, DetailActivity::class.java).apply {
+                putExtra(EVENT_ID, eventId)
+            }
+    }
+
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
 
     private lateinit var binding: ActivityDetailBinding
+
+    private val googleLogin = GoogleLoginWrapper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun extractEventIdAndLoad() {
-        val id = getIntExtra(HOME_BOARD_INFO) ?: return
+        val id = getIntExtra(EVENT_ID) ?: return
 
         Log.d("tag", "게시글의 id는 $id")
         viewModel.load(id)
@@ -46,15 +56,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-        viewModel.commentClickEvent.observe(
-            this
-        ) {
-            it ?: return@observe
-            
-            val intent = Intent(this, CommentActivity::class.java).apply {
-                putExtra(EVENT_ID, it)
-            }
-            startActivity(intent)
+        observeNonNull(viewModel.commentClickEvent) {
+            startActivity(CommentActivity.callingIntent(this, it))
         }
     }
 
@@ -67,7 +70,6 @@ class DetailActivity : AppCompatActivity() {
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,9 +82,7 @@ class DetailActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.fixToolbarMenu -> {
                 Log.d("tag", "fixToolbarMenu menu clicked!")
-                Intent(this, RegisterEventsActivity::class.java).apply {
-                    putExtra(POST_EDIT_INFO, viewModel.eventIndex)
-                }.run { binding.root.context.startActivity(this) }
+                startActivity(RegisterEventsActivity.callingIntent(this, viewModel.eventIndex))
                 true
             }
             R.id.deleteToolbarMenu -> {
@@ -93,7 +93,7 @@ class DetailActivity : AppCompatActivity() {
                 true
             }
             R.id.signOutToolbarMenu -> {
-                GoogleLoginWrapper(this).signOut()
+                googleLogin.signOut()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -1,8 +1,8 @@
 package org.inu.events
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,14 +10,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.inu.events.adapter.CommentAdapter
 import org.inu.events.common.extension.getIntExtra
+import org.inu.events.common.extension.observe
+import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityCommentBinding
-import org.inu.events.googlelogin.GoogleLoginWrapper
-import org.inu.events.objects.IntentMessage
+import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
 import org.koin.android.ext.android.inject
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
+    companion object {
+        fun callingIntent(context: Context, eventId: Int = -1) =
+            Intent(context, CommentActivity::class.java).apply {
+                putExtra(EVENT_ID, eventId)
+            }
+    }
+
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
 
@@ -33,9 +41,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupButtons() {
-        commentViewModel.btnClickEvent.observe(
-            this
-        ) {
+        observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
                 commentViewModel.postComment()
@@ -59,8 +65,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             adapter = theAdapter
         }
 
-        commentViewModel.commentList.observe(this) {
-            it ?: return@observe
+        observeNonNull(commentViewModel.commentList) {
             theAdapter.commentList = it
         }
     }
@@ -90,7 +95,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun extractEventIdAndLoad() {
-        val id = getIntExtra(IntentMessage.EVENT_ID) ?: return
+        val id = getIntExtra(EVENT_ID) ?: return
 
         commentViewModel.load(id)
     }
