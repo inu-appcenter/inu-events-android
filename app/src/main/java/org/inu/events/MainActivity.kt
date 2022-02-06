@@ -1,25 +1,29 @@
 package org.inu.events
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import org.inu.events.adapter.HomeAdapter
 import org.inu.events.databinding.ActivityMainBinding
-import org.inu.events.login.LoginGoogle
+import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage
+import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.HomeViewModel
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
+    private val loginService: LoginService by inject()
     private val viewModel: HomeViewModel by viewModels()
+
     private lateinit var binding: ActivityMainBinding
-    private lateinit var loginService: LoginGoogle
+
+    private lateinit var googleLogin: GoogleLoginWrapper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_InuEvents) // 이것도 지울 수 있을 것 같아요.
@@ -30,40 +34,44 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
     }
 
     private fun setupRecyclerView() {
+        val theAdapter = HomeAdapter()
+
         binding.homeRecyclerView.apply {
-            adapter = HomeAdapter(viewModel.homeDataList)   //데이터를 아답터에 전달
+            adapter = theAdapter  //데이터를 아답터에 전달
+        }
+
+        viewModel.homeDataList.observe(this) {
+            it ?: return@observe
+
+            theAdapter.homeDataList = it
         }
     }
 
     private fun setupButtons() {
-        loginService = LoginGoogle(this)
-        viewModel.postClickEvent.observe(
-            this
-        ) {
-            if(loginService.isLogin()){
+        viewModel.postClickEvent.observe(this) {
+            if (loginService.isLoggedIn) {
                 //startActivity(Intent(this, RegisterEventsActivity::class.java))
-                Intent(this,RegisterEventsActivity::class.java).apply {
-                    putExtra(IntentMessage.POST_EDIT_INFO,-1)
-                }.run{binding.root.context.startActivity(this)}
-            }
-            else{
-                isLogin()
+                Intent(this, RegisterEventsActivity::class.java).apply {
+                    putExtra(IntentMessage.POST_EDIT_INFO, -1)
+                }.run { binding.root.context.startActivity(this) }
+            } else {
+                askUserForLogin()
             }
         }
     }
 
-    private fun isLogin() {
+    private fun askUserForLogin() {
         LoginDialog().show(this, { onOk() }, { onCancel() })
     }
 
     override fun onOk() {
-        loginService.signIn(this)
+        googleLogin.signIn(this)
     }
 
     override fun onCancel() {
@@ -72,10 +80,17 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1000){
+        if (requestCode == 1000) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            loginService.handleSignInResult(task)
-
+            googleLogin.handleSignInResult(task) {
+                Toast.makeText(this, "구글 로그인 성공. 액세스 토큰: $it", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.load()
     }
 }

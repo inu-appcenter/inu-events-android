@@ -9,15 +9,20 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import org.inu.events.common.extension.getIntExtra
 import org.inu.events.databinding.ActivityDetailBinding
-import org.inu.events.login.LoginGoogle
+import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.objects.IntentMessage.POST_EDIT_INFO
+import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
+import org.koin.android.ext.android.inject
 
 class DetailActivity : AppCompatActivity() {
+    private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
+
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +33,10 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun extractEventIdAndLoad() {
-        val extras = intent.extras ?: return
-        if (intent.hasExtra(HOME_BOARD_INFO)) {
-            val id = extras.getInt(HOME_BOARD_INFO)
-            Log.d("tag", "게시글의 id는 $id")
-            viewModel.load(id)
-        }
+        val id = getIntExtra(HOME_BOARD_INFO) ?: return
+
+        Log.d("tag", "게시글의 id는 $id")
+        viewModel.load(id)
     }
 
     private fun initBinding() {
@@ -44,25 +47,22 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         viewModel.commentClickEvent.observe(
-            this,
-            {
-                it ?: return@observe
-                val intent = Intent(this, CommentActivity::class.java).apply {
-                    putExtra(
-                        EVENT_ID,
-                        it
-                    )
-                }
-                startActivity(intent)
+            this
+        ) {
+            it ?: return@observe
+            
+            val intent = Intent(this, CommentActivity::class.java).apply {
+                putExtra(EVENT_ID, it)
             }
-        )
+            startActivity(intent)
+        }
     }
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
-        if(LoginGoogle(this).isLogin()){
-            if(viewModel.isMyWriting()){
+        if (loginService.isLoggedIn) {
+            if (viewModel.isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
@@ -92,8 +92,8 @@ class DetailActivity : AppCompatActivity() {
 //                run{binding.root.context.startActivity(this)}
                 true
             }
-            R.id.signOutToolbarMenu->{
-                LoginGoogle(this).signOut()
+            R.id.signOutToolbarMenu -> {
+                GoogleLoginWrapper(this).signOut()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -101,11 +101,13 @@ class DetailActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = LoginGoogle(this).isLogin()
+        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = loginService.isLoggedIn
         return super.onPrepareOptionsMenu(menu)
-        }
+    }
+
     override fun onStart() {
         super.onStart()
+
         extractEventIdAndLoad()
     }
 }

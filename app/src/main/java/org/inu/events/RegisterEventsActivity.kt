@@ -15,8 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
-import org.inu.events.data.model.Article
+import org.inu.events.common.extension.getIntExtra
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.IntentMessage
 import org.inu.events.viewmodel.RegisterEventsViewModel
@@ -39,7 +38,7 @@ class RegisterEventsActivity : AppCompatActivity() {
 
             it.data?.data?.let { uri ->
                 viewModel.onImageSelected(uri)
-                Log.d("tag","$uri")
+                Log.d("tag", "$uri")
             } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
         }
 
@@ -56,18 +55,18 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupEndTimePicker()
         initAddPhotoButton()
         addEvent()
-        getEventId()
+        extractEventIdAndLoad()
 
-        Log.d("tag","${viewModel.eventIndex.value}")
-        Log.d("tag","${viewModel.detailDataList.value?.title}")
+        Log.d("tag", "${viewModel.eventIndex}")
+        Log.d("tag", viewModel.currentEvent.title)
     }
 
     private fun addEvent() {
-        viewModel.completeButtonClickEvent.observe(
-            this, {
-                startActivity(Intent(this, MainActivity::class.java))
-            }
-        )
+        viewModel.finishEvent.observe(
+            this
+        ) {
+            finish()
+        }
     }
 
     private fun initBinding() {
@@ -107,11 +106,14 @@ class RegisterEventsActivity : AppCompatActivity() {
         viewModel.startDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
-                this, { _, y, m, d ->
+                this,
+                { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setStartDate(cal.time)
                 },
-                viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth-1, viewModel.datePickerValueStartDay
+                viewModel.datePickerValueStartYear,
+                viewModel.datePickerValueStartMonth - 1,
+                viewModel.datePickerValueStartDay
             ).show()
 
         }
@@ -135,11 +137,14 @@ class RegisterEventsActivity : AppCompatActivity() {
         viewModel.endDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
-                this, { _, y, m, d ->
+                this,
+                { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setEndDate(cal.time)
                 },
-                viewModel.datePickerValueEndYear, viewModel.datePickerValueEndMonth-1, viewModel.datePickerValueEndDay
+                viewModel.datePickerValueEndYear,
+                viewModel.datePickerValueEndMonth - 1,
+                viewModel.datePickerValueEndDay
             ).show()
         }
     }
@@ -244,16 +249,10 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
     }
 
-    private fun getEventId() {
-        val extras = intent.extras?:null
-        if(intent.hasExtra(IntentMessage.POST_EDIT_INFO)){
-            var id:Int? = extras?.getInt(IntentMessage.POST_EDIT_INFO)
-            if(id == -1) viewModel.check.value = 1
-            else{
-                Log.d("tag","게시글의 id는 $id")
-                viewModel.eventIndex = MutableLiveData(id)
-            }
-        }
+    private fun extractEventIdAndLoad() {
+        val id = getIntExtra(IntentMessage.POST_EDIT_INFO) ?: -1
+
+        viewModel.load(id)
     }
 
 }

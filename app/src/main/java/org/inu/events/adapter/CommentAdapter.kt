@@ -2,19 +2,23 @@ package org.inu.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.inu.events.data.CommentData
+import org.inu.events.data.model.entity.Comment
 import org.inu.events.databinding.ItemCommentBinding
 
-class CommentAdapter(private var commentList: LiveData<List<CommentData>>) : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
-    inner class CommentItemViewHolder(private val binding: ItemCommentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(commentModel: CommentData) {
-            System.out.println("bind")
+class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
+
+    var commentList: List<Comment> = listOf()
+        set(v) {
+            field = v
+            notifyDataSetChanged()
+        }
+
+    inner class CommentItemViewHolder(private val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(commentModel: Comment) {
             binding.nickNameTextView.text = commentModel.nickName
-            binding.commentTextView.text = commentModel.comment
+            binding.commentTextView.text = commentModel.content
             // 프로필 이미지 삽입
             Glide
                 .with(binding.profileImageView.context)
@@ -30,9 +34,9 @@ class CommentAdapter(private var commentList: LiveData<List<CommentData>>) : Rec
     }
 
     override fun onBindViewHolder(holder: CommentAdapter.CommentItemViewHolder, position: Int) {
-        holder.bind(commentList.value!![position])
+        holder.bind(commentList[position])
     }
 
-    override fun getItemCount(): Int = commentList.value!!.size
+    override fun getItemCount(): Int = commentList.size
     //override fun getItemCount() = commentList.value?.size ?: 0
 }

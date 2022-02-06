@@ -7,21 +7,22 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
 import org.inu.events.adapter.CommentAdapter
+import org.inu.events.common.extension.getIntExtra
 import org.inu.events.databinding.ActivityCommentBinding
-import org.inu.events.login.LoginGoogle
+import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage
+import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
+import org.koin.android.ext.android.inject
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private val commentViewModel: CommentViewModel by viewModels()
+    private val loginService: LoginService by inject()
+
     private lateinit var commentBinding: ActivityCommentBinding
-    private lateinit var loginService: LoginGoogle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,18 +33,16 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupButtons() {
-        loginService = LoginGoogle(this)
         commentViewModel.btnClickEvent.observe(
-            this,
-            {
-                if (loginService.isLogin()) {
-                    Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
-                    commentViewModel.postComment()
-                } else {
-                    showDialog()
-                }
+            this
+        ) {
+            if (loginService.isLoggedIn) {
+                Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
+                commentViewModel.postComment()
+            } else {
+                showDialog()
             }
-        )
+        }
     }
 
     private fun initBinding() {
@@ -53,9 +52,16 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
+        val theAdapter = CommentAdapter()
+
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = CommentAdapter(commentViewModel.commentDataList)
+            adapter = theAdapter
+        }
+
+        commentViewModel.commentList.observe(this) {
+            it ?: return@observe
+            theAdapter.commentList = it
         }
     }
 
@@ -70,7 +76,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     // 로그인 확인을 눌렀을 때
     override fun onOk() {
-        startActivity(Intent(this,LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     // 로그인 취소를 눌렀을 때
@@ -78,16 +84,14 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         Toast.makeText(this, "로그인을 하셔야 댓글 작성이 가능합니다", Toast.LENGTH_SHORT).show()
     }
 
-    private fun extractEventIdAndLoad() {
-        val extras = intent.extras ?: return
-        if (intent.hasExtra(IntentMessage.EVENT_ID)) {
-            val id = extras.getInt(IntentMessage.EVENT_ID)
-            Log.d("tag", "게시글의 id는 $id")
-            commentViewModel.load(id)
-        }
-    }
     override fun onStart() {
         super.onStart()
         extractEventIdAndLoad()
+    }
+
+    private fun extractEventIdAndLoad() {
+        val id = getIntExtra(IntentMessage.EVENT_ID) ?: return
+
+        commentViewModel.load(id)
     }
 }
