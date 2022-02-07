@@ -1,5 +1,5 @@
 package org.inu.events.data.model.dto
 
-data class LoginParams(
+data class OAuthLoginParams(
     val accessToken: String
 )

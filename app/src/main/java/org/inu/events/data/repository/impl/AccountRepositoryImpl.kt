@@ -3,7 +3,7 @@ package org.inu.events.data.repository.impl
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.orThrow
 import org.inu.events.data.httpservice.AccountHttpService
-import org.inu.events.data.model.dto.LoginParams
+import org.inu.events.data.model.dto.OAuthLoginParams
 import org.inu.events.data.model.dto.LoginResult
 import org.inu.events.data.model.dto.RememberedLoginParams
 import org.inu.events.data.model.entity.Account
@@ -18,7 +18,7 @@ class AccountRepositoryImpl(
      * 액세스 토큰 가지고 서버에 로그인 요청 보내서 응답 받아오기.
      */
     override fun login(accessToken: String): LoginResult {
-        return httpService.login(LoginParams(accessToken = accessToken)).orThrow()!!
+        return httpService.login(OAuthLoginParams(accessToken = accessToken)).orThrow()!!
     }
 
     /**
@@ -27,8 +27,8 @@ class AccountRepositoryImpl(
     override fun login(savedAccount: Account): LoginResult {
         return httpService.login(
             RememberedLoginParams(
-                email = savedAccount.email,
-                rememberMeToken = savedAccount.rememberMeToken
+                id = savedAccount.id,
+                token = savedAccount.rememberMeToken
             )
         ).orThrow()!!
     }
@@ -38,7 +38,7 @@ class AccountRepositoryImpl(
      */
     override fun getSavedAccount(): Account? {
         return Account(
-            db.getString("email") ?: return null,
+            db.getInt("id", -1).takeIf { it != -1 } ?: return null,
             db.getString("rememberMeToken") ?: return null
         )
     }
@@ -47,7 +47,7 @@ class AccountRepositoryImpl(
      * 로컬에 사용자 정보(Account) 저장하기.
      */
     override fun saveAccount(account: Account) {
-        db.putString("email", account.email)
+        db.putInt("id", account.id)
         db.putString("rememberMeToken", account.rememberMeToken)
     }
 }

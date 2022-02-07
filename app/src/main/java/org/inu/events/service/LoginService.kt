@@ -23,7 +23,7 @@ class LoginService(
         execute {
             accountRepository.login(accessToken)
         }.then {
-            accountRepository.saveAccount(Account(it.email, it.rememberMeToken))
+            accountRepository.saveAccount(Account(it.id, it.rememberMeToken))
             _isLoggedIn.postValue(true)
         }.catch {
             Log.e("!!", it.toString())
