@@ -18,8 +18,8 @@ class CommentRepositoryImpl(
         httpService.addComment(params).execute()
     }
 
-    override fun updateComment(params: UpdateCommentParams) {
-        httpService.editComment(params).execute()
+    override fun updateComment(id: Int, params: UpdateCommentParams) {
+        httpService.editComment(id, params).execute()
     }
 
     override fun deleteComment(commentId: Int) {

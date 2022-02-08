@@ -63,7 +63,7 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
         TODO("Not yet implemented")
     }
 
-    override fun updateEvent(params: UpdateEventParams) {
+    override fun updateEvent(id: Int, params: UpdateEventParams) {
         TODO("Not yet implemented")
     }
 

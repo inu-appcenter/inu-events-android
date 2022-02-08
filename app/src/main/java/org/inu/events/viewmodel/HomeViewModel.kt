@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.common.threading.execute
+import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
-import org.inu.events.common.util.SingleLiveEvent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

@@ -7,6 +7,6 @@ import org.inu.events.data.model.entity.Comment
 interface CommentRepository {
     fun getComments(eventId: Int): List<Comment>
     fun postComment(params: AddCommentParams)
-    fun updateComment(params: UpdateCommentParams)
+    fun updateComment(id: Int, params: UpdateCommentParams)
     fun deleteComment(commentId: Int)
 }

@@ -8,6 +8,6 @@ interface EventRepository {
     fun getEvents(): List<Event>
     fun getEvent(eventId: Int): Event
     fun postEvent(params: AddEventParams)
-    fun updateEvent(params: UpdateEventParams)
+    fun updateEvent(id: Int, params: UpdateEventParams)
     fun deleteEvent(eventId: Int)
 }

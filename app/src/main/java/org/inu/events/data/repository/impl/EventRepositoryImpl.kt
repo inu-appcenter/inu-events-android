@@ -22,8 +22,8 @@ class EventRepositoryImpl(
         httpService.postEvent(params).execute()
     }
 
-    override fun updateEvent(params: UpdateEventParams) {
-        TODO("Not yet implemented")
+    override fun updateEvent(id: Int, params: UpdateEventParams) {
+        httpService.editEvent(id, params)
     }
 
     override fun deleteEvent(eventId: Int) {

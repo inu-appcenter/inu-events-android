@@ -12,8 +12,9 @@ interface CommentHttpService {
         @Body params: AddCommentParams
     ): Call<Unit>
 
-    @PUT("/comments/{commentId}")
+    @PATCH("/comments/{commentId}")
     fun editComment(
+        @Path("commentId") commentId: Int,
         @Body params: UpdateCommentParams
     ): Call<Unit>
 

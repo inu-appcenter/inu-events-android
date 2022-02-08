@@ -126,8 +126,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun updateEvent() {
         eventRepository.updateEvent(
+            currentEvent.id,
             UpdateEventParams(
-                id = currentEvent.id,
                 category = spinnerToCategory(),
                 startAt = datePickerToStartAt(),
                 endAt = datePickerToEndAt(),

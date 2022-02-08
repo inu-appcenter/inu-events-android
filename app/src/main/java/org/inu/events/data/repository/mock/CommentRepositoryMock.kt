@@ -50,8 +50,8 @@ class CommentRepositoryMock : CommentRepository {
         )
     }
 
-    override fun updateComment(params: UpdateCommentParams) {
-        val found = c.find { it.id == params.commentId } ?: return
+    override fun updateComment(id: Int, params: UpdateCommentParams) {
+        val found = c.find { it.id == id } ?: return
 
         c.remove(found)
 

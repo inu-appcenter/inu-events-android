@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     override fun onOk() {
         googleLogin.signIn {
             toast("구글 로그인 성공. 액세스 토큰: $it")
+            loginService.login(it)
         }
     }
 
