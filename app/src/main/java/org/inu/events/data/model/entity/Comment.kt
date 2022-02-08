@@ -6,5 +6,6 @@ data class Comment (
     val eventId: Int?,
     val nickName: String,
     val content: String,
-    val profile: String
+    val profile: String,
+    val wroteByMe: Boolean?
 )

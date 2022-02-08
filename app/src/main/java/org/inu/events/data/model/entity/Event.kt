@@ -11,4 +11,5 @@ data class Event(
     var endAt: String,
     var createdAt: String,
     var userId: Int,
+    val wroteByMe: Boolean?
 )
