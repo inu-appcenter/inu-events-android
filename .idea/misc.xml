@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_comment.xml" value="0.303125" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_login.xml" value="0.303125" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/activity_main.xml" value="0.303125" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/event_toolbar.xml" value="0.303125" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.303125" />
+        <entry key="..\:/Users/dustn/inu_events/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.303125" />
         <entry key="app/src/main/res/drawable/img_btn_background.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/activity_comment.xml" value="0.14375" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.2210144927536232" />

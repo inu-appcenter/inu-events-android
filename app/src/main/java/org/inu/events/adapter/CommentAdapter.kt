@@ -2,6 +2,7 @@ package org.inu.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.inu.events.data.model.entity.Comment
@@ -19,6 +20,8 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder
         fun bind(commentModel: Comment) {
             binding.nickNameTextView.text = commentModel.nickName
             binding.commentTextView.text = commentModel.content
+            binding.commentMoreButton.isVisible = commentModel.wroteByMe == true
+
             // 프로필 이미지 삽입
             Glide
                 .with(binding.profileImageView.context)
@@ -38,5 +41,4 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder
     }
 
     override fun getItemCount(): Int = commentList.size
-    //override fun getItemCount() = commentList.value?.size ?: 0
 }
