@@ -1,7 +1,5 @@
 package org.inu.events.adapter
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,6 @@ import org.inu.events.DetailActivity
 import org.inu.events.R
 import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
-import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,7 +18,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     var homeDataList: List<Event> = listOf()
         set(v) {
             field = v
-            notifyDataSetChanged()
+            notifyDataSetChanged()  //뷰 바뀜 리사이클러뷰한테 알려줌
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {

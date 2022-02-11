@@ -15,7 +15,6 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
-import org.inu.events.objects.IntentMessage.HOME_BOARD_INFO
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject

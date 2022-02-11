@@ -6,11 +6,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
+import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
+import org.inu.events.objects.IntentMessage
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
@@ -67,13 +69,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     fun load(eventId: Int) {
         eventIndex = eventId
 
-        loadCurrentEvent()
-        title.value = currentEvent.title
-        body.value = currentEvent.body
-        host.value = currentEvent.host
-        spinnerSelected()
-        datePickerSelect()
-        timePickerSelect()
+        if(!isItNew){
+            loadCurrentEvent()
+            title.value = currentEvent.title
+            body.value = currentEvent.body
+            host.value = currentEvent.host
+            spinnerSelected()
+            datePickerSelect()
+            timePickerSelect()
+        }
     }
 
     private fun loadCurrentEvent() {
@@ -158,6 +162,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
+        Log.d(IntentMessage.DEBUG,"$isItNew")
         if (isItNew) {
             addEvent()
         } else {
@@ -235,12 +240,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         )
 
     private fun datePickerSelect() {
-        val startYear = currentEvent!!.startAt.slice(IntRange(0, 3))
-        val startMonth = currentEvent!!.startAt.slice(IntRange(5, 6))
-        val startDay = currentEvent!!.startAt.slice(IntRange(8, 9))
-        val endYear = currentEvent!!.endAt.slice(IntRange(0, 3))
-        val endMonth = currentEvent!!.endAt.slice(IntRange(5, 6))
-        val endDay = currentEvent!!.endAt.slice(IntRange(8, 9))
+        val startYear = currentEvent.startAt.slice(IntRange(0, 3))
+        val startMonth = currentEvent.startAt.slice(IntRange(5, 6))
+        val startDay = currentEvent.startAt.slice(IntRange(8, 9))
+        val endYear = currentEvent.endAt.slice(IntRange(0, 3))
+        val endMonth = currentEvent.endAt.slice(IntRange(5, 6))
+        val endDay = currentEvent.endAt.slice(IntRange(8, 9))
         startDatePeriod.value = dateFormat(startYear, startMonth, startDay)
         endDatePeriod.value = dateFormat(endYear, endMonth, endDay)
         datePickerValueStartYear = startYear.toInt()
@@ -252,10 +257,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun timePickerSelect() {
-        val startHour = currentEvent!!.startAt.slice(IntRange(11, 12))
-        val startMinute = currentEvent!!.startAt.slice(IntRange(14, 15))
-        val endHour = currentEvent!!.endAt.slice(IntRange(11, 12))
-        val endMinute = currentEvent!!.endAt.slice(IntRange(14, 15))
+        val startHour = currentEvent.startAt.slice(IntRange(11, 12))
+        val startMinute = currentEvent.startAt.slice(IntRange(14, 15))
+        val endHour = currentEvent.endAt.slice(IntRange(11, 12))
+        val endMinute = currentEvent.endAt.slice(IntRange(14, 15))
         startTimePeriod.value = timeFormat(startHour, startMinute)
         endTimePeriod.value = timeFormat(endHour, endMinute)
         timePickerValueStartTime = startHour.toInt()

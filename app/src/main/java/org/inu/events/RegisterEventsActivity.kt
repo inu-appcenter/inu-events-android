@@ -20,6 +20,7 @@ import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.IntentMessage
+import org.inu.events.objects.IntentMessage.DEBUG
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
@@ -49,7 +50,7 @@ class RegisterEventsActivity : AppCompatActivity() {
 
         initBinding()
         setupToolbar()
-        setupButtons()
+        setupCancelButtons()
         setupCurrentDate()
         setupStartDatePicker()
         setupStartTimePicker()
@@ -58,8 +59,7 @@ class RegisterEventsActivity : AppCompatActivity() {
         initAddPhotoButton()
         addEvent()
 
-        Log.d("tag", "${viewModel.eventIndex}")
-        Log.d("tag", viewModel.currentEvent.title)
+        Log.d(DEBUG,"${getIntExtra(EVENT_ID)}")
     }
 
     private fun addEvent() {
@@ -94,10 +94,9 @@ class RegisterEventsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupButtons() {
+    private fun setupCancelButtons() {
         observe(viewModel.startHomeActivityClickEvent) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 
