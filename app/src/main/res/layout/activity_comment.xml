@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View"></import>
+
         <variable
             name="commentViewModel"
             type="org.inu.events.viewmodel.CommentViewModel" />
@@ -19,8 +22,7 @@
             layout="@layout/toolbar_sample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/comment}"
-            />
+            app:title="@{@string/comment}" />
 
 
         <TextView
@@ -40,7 +42,7 @@
             android:layout_marginTop="16dp"
             tools:listitem="@layout/item_comment" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -54,25 +56,40 @@
                 android:autofillHints="no"
                 android:background="@null"
                 android:hint="댓글을 입력하세요."
-                android:text="@{commentViewModel.content}"
                 android:inputType="text"
                 android:paddingVertical="10dp"
+                android:text="@{commentViewModel.content}"
                 android:textColor="@color/black1"
-                tools:ignore="HardcodedText" />
+                tools:ignore="MissingConstraints" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentEnrollButton"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/drawable_comment_btn"
+                android:onClick="@{()->commentViewModel.onClickBtn()}"
                 android:text="등록"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
+                android:visibility="@{commentViewModel.isLoggedIn() == true ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/commentLoginButton"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_comment_btn"
                 android:onClick="@{()->commentViewModel.onClickBtn()}"
-                tools:ignore="HardcodedText" />
+                android:text="로그인"
+                android:textColor="@color/white"
+                android:textSize="@dimen/body2"
+                android:visibility="@{commentViewModel.isLoggedIn() == false ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>

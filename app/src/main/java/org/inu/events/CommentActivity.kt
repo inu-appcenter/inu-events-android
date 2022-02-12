@@ -3,6 +3,10 @@ package org.inu.events
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +17,7 @@ import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityCommentBinding
+import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel

@@ -8,6 +8,7 @@ import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
 import org.inu.events.data.model.entity.Comment
 import org.inu.events.data.repository.CommentRepository
+import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -20,6 +21,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     val commentSizeText = MutableLiveData("댓글 5 >")
     val content = MutableLiveData("")
+    private val loginService: LoginService by inject()
+    val isLoggedIn = loginService.isLoggedInLiveData
 
     val btnClickEvent = SingleLiveEvent<Any>()
 
