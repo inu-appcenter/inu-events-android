@@ -59,7 +59,7 @@ class RegisterEventsActivity : AppCompatActivity() {
         addEvent()
 
         Log.d("tag", "${viewModel.eventIndex}")
-        Log.d("tag", viewModel.currentEvent.title)
+//        Log.d("tag", viewModel.currentEvent.title)
     }
 
     private fun addEvent() {
@@ -255,7 +255,7 @@ class RegisterEventsActivity : AppCompatActivity() {
 
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(EVENT_ID) ?: -1
-
+        Log.i("extractEventIdAndLoad",id.toString())
         viewModel.load(id)
     }
 }

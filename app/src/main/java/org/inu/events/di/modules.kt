@@ -1,17 +1,12 @@
 package org.inu.events.di
 
 import org.inu.events.common.db.SharedPreferenceWrapper
-import org.inu.events.data.httpservice.AccountHttpService
-import org.inu.events.data.httpservice.CommentHttpService
-import org.inu.events.data.httpservice.EventHttpService
-import org.inu.events.data.httpservice.UserHttpService
-import org.inu.events.data.repository.AccountRepository
-import org.inu.events.data.repository.CommentRepository
-import org.inu.events.data.repository.EventRepository
-import org.inu.events.data.repository.UserRepository
+import org.inu.events.data.httpservice.*
+import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
 import org.inu.events.data.repository.mock.CommentRepositoryMock
 import org.inu.events.data.repository.mock.EventRepositoryMock
+import org.inu.events.data.repository.mock.FcmRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
 import org.koin.dsl.module
@@ -43,6 +38,10 @@ val myModules = module {
         buildRetrofitService()
     }
 
+    single<FcmHttpService>{
+        buildRetrofitService()
+    }
+
     single<EventRepository> {
         //TODO 지금은 임시 데이터
         EventRepositoryMock()
@@ -56,6 +55,11 @@ val myModules = module {
     single<UserRepository> {
         //TODO 지금은 임시 데이터
         UserRepositoryMock()
+    }
+
+    single<FcmRepository>{
+        //TODO 지금은 임시 데이터
+        FcmRepositoryMock()
     }
 
     single<AccountRepository> {

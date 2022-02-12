@@ -67,13 +67,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     fun load(eventId: Int) {
         eventIndex = eventId
 
-        loadCurrentEvent()
-        title.value = currentEvent.title
-        body.value = currentEvent.body
-        host.value = currentEvent.host
-        spinnerSelected()
-        datePickerSelect()
-        timePickerSelect()
+        if(!isItNew) {
+            loadCurrentEvent()
+            title.value = currentEvent.title
+            body.value = currentEvent.body
+            host.value = currentEvent.host
+            spinnerSelected()
+            datePickerSelect()
+            timePickerSelect()
+        }
     }
 
     private fun loadCurrentEvent() {

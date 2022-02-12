@@ -23,7 +23,8 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
             "2021-03-22 07:00:01",
             "2021-03-26 07:12:01",
             "2021.03.14 07:00:01",
-            717
+            717,
+            false
         ),
         Event(
             1,
@@ -35,7 +36,8 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
             "2001-03-14 07:10:01",
             "2001-07-17 07:17:01",
             "2001.01.01 08:00:01",
-            123
+            123,
+            false
         ),
         Event(
             2,
@@ -47,7 +49,8 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
             "2022-01-25 18:26:01",
             "2022-02-28 20:00:01",
             "2022.01.23 07:00:01",
-            123
+            123,
+            false
         )
     )
 

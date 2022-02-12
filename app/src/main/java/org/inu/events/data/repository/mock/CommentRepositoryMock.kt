@@ -13,7 +13,8 @@ class CommentRepositoryMock : CommentRepository {
             3,
             "장희직",
             "롯데리아 vs 맘스터치",
-            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg"
+            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
+            false
         ),
         Comment(
             2,
@@ -21,7 +22,8 @@ class CommentRepositoryMock : CommentRepository {
             1,
             "연수연",
             "우하하",
-            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg"
+            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
+            false
         ),
         Comment(
             3,
@@ -29,7 +31,8 @@ class CommentRepositoryMock : CommentRepository {
             3,
             "먀먀먀",
             "키득키득",
-            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg"
+            "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
+            false
         )
     )
 
@@ -45,7 +48,8 @@ class CommentRepositoryMock : CommentRepository {
                 eventId = params.eventId,
                 nickName = "테스터",
                 content = params.content,
-                profile = "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg"
+                profile = "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
+                false
             )
         )
     }
@@ -62,7 +66,8 @@ class CommentRepositoryMock : CommentRepository {
                 eventId = found.eventId,
                 nickName = found.nickName,
                 content = params.content,
-                profile = found.profile
+                profile = found.profile,
+                wroteByMe = false
             )
         )
     }
