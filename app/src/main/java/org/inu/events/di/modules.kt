@@ -10,6 +10,8 @@ import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.UserRepository
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
+import org.inu.events.data.repository.impl.CommentRepositoryImpl
+import org.inu.events.data.repository.impl.EventRepositoryImpl
 import org.inu.events.data.repository.mock.CommentRepositoryMock
 import org.inu.events.data.repository.mock.EventRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
@@ -51,6 +53,7 @@ val myModules = module {
     single<CommentRepository> {
         //TODO 지금은 임시 데이터
         CommentRepositoryMock()
+        //CommentRepositoryImpl(get())
     }
 
     single<UserRepository> {

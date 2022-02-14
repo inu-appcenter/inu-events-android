@@ -43,6 +43,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupButtons()
         setupRecyclerView()
         setupToolbar()
+        showBottomSheet()
     }
 
     private fun setupButtons() {
@@ -63,7 +64,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = CommentAdapter()
+        val theAdapter = CommentAdapter(viewModel = commentViewModel)
 
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -103,5 +104,12 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         val id = getIntExtra(EVENT_ID) ?: return
 
         commentViewModel.load(id)
+    }
+
+    private fun showBottomSheet() {
+        observe(commentViewModel.plusBtnClickEvent) {
+            val bottomSheet = BottomSheet()
+            bottomSheet.show(supportFragmentManager,bottomSheet.tag)
+        }
     }
 }

@@ -3,6 +3,7 @@ package org.inu.events.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.inu.events.BottomSheet
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
@@ -19,12 +20,13 @@ class CommentViewModel : ViewModel(), KoinComponent {
     val commentList: LiveData<List<Comment>>
         get() = _commentDataList
 
-    val commentSizeText = MutableLiveData("댓글 5 >")
+    val commentSizeText = MutableLiveData("댓글 0 >")
     val content = MutableLiveData("")
     private val loginService: LoginService by inject()
     val isLoggedIn = loginService.isLoggedInLiveData
 
     val btnClickEvent = SingleLiveEvent<Any>()
+    val plusBtnClickEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
         private set
@@ -66,5 +68,9 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun onClickBtn() {
         btnClickEvent.call()
+    }
+
+    fun showBottomSheet() {
+        plusBtnClickEvent.call()
     }
 }
