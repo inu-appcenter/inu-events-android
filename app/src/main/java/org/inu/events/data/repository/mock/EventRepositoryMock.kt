@@ -63,7 +63,19 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
     }
 
     override fun postEvent(params: AddEventParams) {
-        TODO("Not yet implemented")
+        e.add(Event(
+            e.size,
+            params.host,
+            params.category,
+            params.title,
+            params.body,
+            params.imageUuid,
+            params.startAt,
+            params.endAt,
+            createdAt = "2001-07-17 07:35:00",       //임시
+            userId = 717,
+            wroteByMe = true
+        ))
     }
 
     override fun updateEvent(id: Int, params: UpdateEventParams) {
