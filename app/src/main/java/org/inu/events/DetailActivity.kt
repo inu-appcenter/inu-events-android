@@ -105,8 +105,6 @@ class DetailActivity : AppCompatActivity() {
 
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(EVENT_ID) ?: return
-
-        Log.d("tag", "게시글의 id는 $id")
         viewModel.load(id)
     }
 }

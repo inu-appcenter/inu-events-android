@@ -41,7 +41,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     private val selectImageLauncher = registerForActivityResult {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
             viewModel.onImageSelected(uri)
-            Log.d("tag", "$uri")
+            Log.d(DEBUG, "image uri = $uri")
         } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
@@ -58,8 +58,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupEndTimePicker()
         initAddPhotoButton()
         addEvent()
-
-        Log.d(DEBUG,"${getIntExtra(EVENT_ID)}")
     }
 
     private fun addEvent() {

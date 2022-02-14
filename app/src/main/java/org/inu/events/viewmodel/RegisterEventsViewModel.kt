@@ -3,6 +3,7 @@ package org.inu.events.viewmodel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
@@ -64,7 +65,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         get() = eventIndex == -1
 
     lateinit var currentEvent: Event
-    lateinit var imageUuid: String
+    private var imageUuid: String = R.drawable.img_default_card.toString()
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -77,11 +78,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
+            selectedImageUri.value = currentEvent.imageUuid.toUri()
         }
     }
 
     private fun loadCurrentEvent() {
         currentEvent = eventRepository.getEvent(eventIndex)
+        Log.d("tag", "${currentEvent.imageUuid}")
+        imageUuid = currentEvent.imageUuid
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
@@ -101,7 +105,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     //행사 수정한 값을 반영할 때 스피너 값에 따라서 문자열 선택하는 함수
     private fun spinnerToCategory(): String {
         val array = context.resources.getStringArray(R.array.classification)
-
         return array[selectedItemPosition.value!!]
     }
 
@@ -162,13 +165,11 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        Log.d(IntentMessage.DEBUG,"$isItNew")
         if (isItNew) {
             addEvent()
         } else {
             updateEvent()
         }
-
         finishEvent.call()
     }
 

@@ -5,7 +5,7 @@ data class AddEventParams(
     val category: String,
     val title: String,
     val body: String,
-    val imageUuid: String,
+    val imageUuid: String?,
     val startAt: String,
     val endAt: String,
 )
