@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def lifecycle_version = "2.4.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -84,4 +85,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // bottom sheet
+    implementation 'com.google.android.material:material:1.2.1'
 }
