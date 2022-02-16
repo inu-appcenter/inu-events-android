@@ -11,7 +11,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.getIntExtra
+import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
+import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -50,6 +52,11 @@ class DetailActivity : AppCompatActivity() {
     private fun setupButtons() {
         observeNonNull(viewModel.commentClickEvent) {
             startActivity(CommentActivity.callingIntent(this, it))
+        }
+        observe(viewModel.fcmClickEvent) {
+            if (!loginService.isLoggedIn) {
+                toast("로그인을 하셔야 알람을 사용하실 수 있습니다.")
+            }
         }
     }
 
