@@ -32,18 +32,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        
         <ImageView
             android:id="@+id/home_image"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:background="@drawable/drawable_home_board_image_background"
-            android:src="@{ContextCompat.getDrawable(context, Integer.parseInt(homeData.imageUuid))}"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@drawable/img_home_board_sample_image1" />
 
         <TextView

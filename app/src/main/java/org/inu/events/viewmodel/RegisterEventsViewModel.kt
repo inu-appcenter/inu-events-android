@@ -78,14 +78,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
-            selectedImageUri.value = currentEvent.imageUuid.toUri()
+            //selectedImageUri.value = currentEvent.imageUuid.toUri()
         }
     }
 
     private fun loadCurrentEvent() {
         currentEvent = eventRepository.getEvent(eventIndex)
-        Log.d("tag", "${currentEvent.imageUuid}")
-        imageUuid = currentEvent.imageUuid
+        //imageUuid = currentEvent.imageUuid
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수

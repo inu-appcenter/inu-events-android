@@ -29,4 +29,8 @@ class EventRepositoryImpl(
     override fun deleteEvent(eventId: Int) {
         httpService.deleteEvent(eventId).execute()
     }
+
+    override fun getImage(imageUuid: String) {
+        httpService.getImage(imageUuid).execute()
+    }
 }
