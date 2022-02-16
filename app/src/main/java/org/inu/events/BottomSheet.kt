@@ -61,7 +61,7 @@ class BottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
             R.id.deleteButton -> {
                 Log.i("Button","delete click")
                 // todo - 삭제 부분 commentId는 어떻게?
-                //commentViewModel.deleteComment(commentId = )
+                //commentViewModel.deleteComment(commentId =  )
             }
             R.id.cancelButton -> {
                 Log.i("Button","cancel click")

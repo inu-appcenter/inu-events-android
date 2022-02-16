@@ -7,6 +7,7 @@ import org.inu.events.BottomSheet
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
+import org.inu.events.data.model.dto.UpdateCommentParams
 import org.inu.events.data.model.entity.Comment
 import org.inu.events.data.repository.CommentRepository
 import org.inu.events.service.LoginService
@@ -40,6 +41,15 @@ class CommentViewModel : ViewModel(), KoinComponent {
         execute {
             commentRepository.deleteComment(commentId)
         }.then {
+            loadCommentList()
+        }.catch { }
+    }
+
+    fun updateComment(id: Int, params: UpdateCommentParams) {
+        execute {
+            commentRepository.updateComment(id,params)
+        }.then {
+            // todo - 이거 하는건지 체크
             loadCommentList()
         }.catch { }
     }
