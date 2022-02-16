@@ -44,7 +44,7 @@
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="24dp"
                     android:scaleType="centerCrop"
-                    android:src="@{detailViewModel.currentEvent != null ? ContextCompat.getDrawable(context, Integer.parseInt(detailViewModel.currentEvent.imageUuid)) : null}"
+                    app:imageFromUrl="@{detailViewModel.imageUrl}"
                     tools:src="@drawable/img_appcenter"
                     tools:ignore="ContentDescription" />
 
@@ -122,16 +122,17 @@
                     <TextView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="활동 내용"
+                        android:text="URL"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="앱 개발 스터디 및 프로젝트"
+                        android:text="@{detailViewModel.currentEvent.submissionUrl}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
+                        tools:text="https://github.com/inu-appcenter"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
 
@@ -146,7 +147,7 @@
                     <TextView
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="대상"
+                        android:text="모집 대상"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />
 

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.inu.events.DetailActivity
+import org.inu.events.MyApplication.Companion.bindImageFromUrl
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
@@ -60,10 +61,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
 
             imageUrl += homeData.imageUuid
-            Glide
-                .with(binding.homeImage.context)
-                .load(imageUrl)
-                .into(binding.homeImage)
+            bindImageFromUrl(binding.homeImage, imageUrl)
         }
 
         override fun onClick(v: View) {

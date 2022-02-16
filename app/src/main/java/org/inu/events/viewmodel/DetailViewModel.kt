@@ -1,7 +1,11 @@
 package org.inu.events.viewmodel
 
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
@@ -17,6 +21,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
+    var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
     var eventIndex = -1
@@ -52,11 +57,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     //todo - 자신이 작성한 글인 경우 true, 아닌경우 false 반환
-    //자신이 작성한 글인지 어떻게 알지?
-    //event 테이블에 user_id로 getUser 요청을 해서 그 안에 있는 게시글 리스트 중에 현재 이벤트 id와 동일한 것이 있으면됨
     fun isMyWriting(): Boolean{
-        //val currentEventUserIdGetUser = userService.getUser(_detailDataList.value?.user_id)
-        //if()
+
         return true
     }
 }
