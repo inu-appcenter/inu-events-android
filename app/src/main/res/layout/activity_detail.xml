@@ -221,12 +221,14 @@
         </ScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fcmToggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary"
+            android:background="@{ContextCompat.getColor(context,detailViewModel.fcmToggleButtonBackground)}"
             android:paddingVertical="15dp"
-            android:text="알림 받기"
-            android:textColor="@color/white"
+            android:text="@{detailViewModel.fcmToggleButtonText}"
+            android:onClick="@{()->detailViewModel.onClickFcm()}"
+            android:textColor="@{ContextCompat.getColor(context,detailViewModel.fcmToggleButtonTextColor)}"
             android:textSize="15sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
