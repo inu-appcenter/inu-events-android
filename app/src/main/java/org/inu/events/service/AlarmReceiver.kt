@@ -1,17 +1,17 @@
 package org.inu.events.service
 
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.inu.events.DetailActivity
 import org.inu.events.R
+import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.DetailViewModel
 import java.time.LocalDateTime
@@ -30,6 +30,7 @@ class AlarmReceiver : BroadcastReceiver() {
         getIntentValue(intent)
         createNotificationChannel(context)
         notifyNotification(context)
+        afterNotification(context)
     }
 
     private fun getIntentValue(intent: Intent) {
@@ -56,23 +57,29 @@ class AlarmReceiver : BroadcastReceiver() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(EVENT_ID,eventId)
         }
-          val pendingIntent: PendingIntent =
-          PendingIntent.getActivity(context, LocalDateTime.now().nano, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent: PendingIntent =
+        PendingIntent.getActivity(context, LocalDateTime.now().nano, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setContentIntent(pendingIntent)
                 .setContentTitle(title)
                 .setContentText("행사 5분 전입니다.!!")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
 
             notify(LocalDateTime.now().nano, build.build())
 
         }
     }
-    // todo 알림이 울리고 난 뒤 (1회성 이기에 이렇게만 해두어도 되지 않을까?), shared remove 까지 해줄까?
-    private fun afterNotification(){
-        DetailViewModel().loadOnOffButton(false)
+    // todo 알림이 울리고 난 뒤 shared remove 까지 해줄까?
+    private fun afterNotification(context: Context){
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            eventId,
+            Intent(context, AlarmReceiver::class.java),
+            PendingIntent.FLAG_NO_CREATE
+        )
+        pendingIntent.cancel()
     }
 }
