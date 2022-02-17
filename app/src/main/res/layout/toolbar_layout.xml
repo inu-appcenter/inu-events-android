@@ -5,6 +5,10 @@
         <variable
             name="title"
             type="String" />
+
+        <variable
+            name="listener"
+            type="org.inu.events.ToolbarListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +43,8 @@
                 android:layout_height="24dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_person" />
+                android:src="@drawable/ic_person"
+                android:onClick="@{(view)->listener.onClickMyPage(view)}"/>
 
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>

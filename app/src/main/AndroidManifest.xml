@@ -16,6 +16,9 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash">
@@ -46,6 +49,5 @@
             </intent-filter>
         </service>
     </application>
-
 
 </manifest>
