@@ -44,10 +44,10 @@ val myModules = module {
     }
 
     single<EventRepository> {
-       //EventRepositoryMock()
-        EventRepositoryImpl(
-            httpService = get()
-        )
+       EventRepositoryMock()
+//        EventRepositoryImpl(
+//            httpService = get()
+//        )
     }
 
     single<CommentRepository> {

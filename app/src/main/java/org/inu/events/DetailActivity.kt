@@ -34,10 +34,12 @@ class DetailActivity : AppCompatActivity() {
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
             }
+
+        private const val SHARED_PREFERENCES_NAME = "alarm"
     }
 
     // 전역 변수로 변경
-    private var id: Int = 0
+    private var id: Int = -1
 
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
@@ -45,7 +47,6 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private val googleLogin = GoogleLoginWrapper(this)
-    private val sharedPreference = SharedPreferenceWrapper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +54,9 @@ class DetailActivity : AppCompatActivity() {
         initBinding()
 
         initCommentButton()
+        initOnOffButton()
 
         setupToolbar()
-
-
     }
 
     private fun initBinding() {
@@ -71,6 +71,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    // onOffButton clickEvent
     private fun initOnOffButton() {
         observe(viewModel.alarmClickEvent) {
             val model = binding.onOffButton.tag as? AlarmDisplayModel ?: return@observe
@@ -80,17 +81,17 @@ class DetailActivity : AppCompatActivity() {
                 // On -> 알람 등록
                 val calendar = Calendar.getInstance().apply {
                     // todo 시간 알맞게
-                    val from =  "2022-02-17 02:06:00"
+                    val from = "2022-02-17 16:43:00"
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
                 }
                 val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(this, AlarmReceiver::class.java)
                 // todo AlarmReceiver 로 보낼 변수값 putExtra하기
+                intent.putExtra("value to receiver", binding.detailTitle.text)
                 val pendingIntent = PendingIntent.getBroadcast(
                     // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
                     this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
                 )
-
                 alarmManager.set(
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
@@ -105,7 +106,8 @@ class DetailActivity : AppCompatActivity() {
 
     // 각 게시글마다 저장된 onOff fetch
     private fun fetchDataFromSharedPreferences(): AlarmDisplayModel {
-        val onOffDBValue = sharedPreference.getBoolean(id.toString(),false)
+        val sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val onOffDBValue = sharedPreferences.getBoolean(id.toString(), false)
         val alarmModel = AlarmDisplayModel(
             onOff = onOffDBValue
         )
@@ -116,6 +118,7 @@ class DetailActivity : AppCompatActivity() {
             Intent(this, AlarmReceiver::class.java),
             PendingIntent.FLAG_NO_CREATE
         )
+        Log.d("TAG", "fetchDataFromSharedPreferences: $pendingIntent $id")
 
         if ((pendingIntent == null) and alarmModel.onOff) {
             // 알람은 꺼져있는데 데이터는 켜져있는 경우
@@ -128,14 +131,21 @@ class DetailActivity : AppCompatActivity() {
         return alarmModel
     }
 
+    // 알람버튼 클릭될때마다 onOff 저장
     private fun saveAlarmModel(onOff: Boolean): AlarmDisplayModel {
         val model = AlarmDisplayModel(
             onOff = onOff
         )
-        sharedPreference.getBoolean(id.toString(),model.onOff)
+        val sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean(id.toString(), model.onOff)
+            commit()
+        }
+
         return model
     }
 
+    // 알람 취소
     private fun cancelAlarm() {
         val pendingIntent = PendingIntent.getBroadcast(
             this,
@@ -146,6 +156,7 @@ class DetailActivity : AppCompatActivity() {
         pendingIntent?.cancel()
     }
 
+    // 알람 버튼 요소 변경
     private fun renderOnOffButton(model: AlarmDisplayModel) {
         viewModel.loadOnOffButton(onOff = model.onOff)
         binding.onOffButton.tag = model
@@ -196,6 +207,9 @@ class DetailActivity : AppCompatActivity() {
         super.onStart()
 
         extractEventIdAndLoad()
+
+        val model = fetchDataFromSharedPreferences()
+        renderOnOffButton(model)
     }
 
     private fun extractEventIdAndLoad() {

@@ -17,16 +17,18 @@ class AlarmReceiver : BroadcastReceiver() {
         const val NOTIFICATION_CHANNEL_ID = "1000"
         const val NOTIFICATION_CHANNEL_NAME = "UniLetter"
     }
+    private lateinit var title :String
+
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        getIntentValue()
+        getIntentValue(intent)
         createNotificationChannel(context)
         notifyNotification(context)
     }
 
-    private fun getIntentValue() {
-        // todo detailActivity 에서 전달해주는 intent 값을 받기
+    private fun getIntentValue(intent:Intent){
+        title =  intent.getStringExtra("value to receiver")!!
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -51,7 +53,7 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 //      .setContentIntent(pendingIntent)
-                .setContentTitle(/* getIntentValue 로 가져온 게시글 제목 표시 */ "안녕하세요~")
+                .setContentTitle(title)
                 .setContentText("새우버거 가져가세요~!!.")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

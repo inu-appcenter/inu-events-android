@@ -26,18 +26,15 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
-    val alarmClickEvent = SingleLiveEvent<Any>()
-    val onOffText = MutableLiveData<String>()
-    val onOffColor = MutableLiveData<Int>()
-    val onOffBackground = MutableLiveData<Int>()
-
 
     var eventIndex = -1
         private set
 
-    private var fcmBoolean = false
     val commentClickEvent = SingleLiveEvent<Int>()
-    val fcmClickEvent = SingleLiveEvent<Any>()
+    val alarmClickEvent = SingleLiveEvent<Any>()
+    val onOffText = MutableLiveData<String>()
+    val onOffColor = MutableLiveData<Int>()
+    val onOffBackground = MutableLiveData<Int>()
 
     fun load(eventId: Int) {
         eventIndex = eventId
