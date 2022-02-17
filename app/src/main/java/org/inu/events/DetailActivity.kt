@@ -1,5 +1,6 @@
 package org.inu.events
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
@@ -29,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
                 putExtra(EVENT_ID, eventId)
             }
     }
+
     // 전역 변수로 변경
     private var id: Int = 0
 
@@ -38,6 +41,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private val googleLogin = GoogleLoginWrapper(this)
+    private val sharedPreference = SharedPreferenceWrapper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,8 @@ class DetailActivity : AppCompatActivity() {
         initCommentButton()
 
         setupToolbar()
+
+
     }
 
     private fun initBinding() {
@@ -61,12 +67,20 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveAlarmModel(onOff: Boolean): AlarmDisplayModel {
+        val model = AlarmDisplayModel(
+            onOff = onOff
+        )
+        sharedPreference.getBoolean(id.toString(),model.onOff)
+        return model
+    }
+
     private fun renderOnOffButton(model: AlarmDisplayModel) {
         viewModel.loadOnOffButton(onOff = model.onOff)
         binding.onOffButton.tag = model
     }
 
-        private fun setupToolbar() {
+    private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
