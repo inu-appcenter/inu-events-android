@@ -36,7 +36,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
-        android:text="맥도날드사고싶은"/>
+        android:text="맥도날드사고싶은"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <View
         android:id="@+id/divider_my_page"
@@ -56,7 +58,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="4dp"
-        android:text="수정하기"/>
+        android:text="수정하기"
+        android:textColor="@color/black30"
+        android:textSize="13sp"/>
 
     <LinearLayout
         android:id="@+id/my_history"
@@ -71,12 +75,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="내가 쓴 글"
+            android:textColor="@color/primary120"
+            android:textSize="16sp"
             android:gravity="center"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="댓글 단 글"
+            android:textColor="@color/primary120"
+            android:textSize="16sp"
             android:gravity="center"/>
     </LinearLayout>
 
@@ -87,7 +95,9 @@
         app:layout_constraintTop_toBottomOf="@id/my_history"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="설정"/>
+        android:text="설정"
+        android:textColor="@color/black20"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/notification_setting"
@@ -96,7 +106,9 @@
         app:layout_constraintTop_toBottomOf="@id/settings"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="새로운 행사 알림"/>
+        android:text="새로운 행사 알림"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/toggle_notification"
@@ -114,7 +126,9 @@
         app:layout_constraintTop_toBottomOf="@id/notification_setting"
         android:layout_marginTop="24dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="이용안내"/>
+        android:text="이용안내"
+        android:textColor="@color/black20"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/privacy_policy"
@@ -123,7 +137,9 @@
         app:layout_constraintTop_toBottomOf="@id/information"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="개인정보 처리방침"/>
+        android:text="개인정보 처리방침"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/opensource_licence"
@@ -132,7 +148,9 @@
         app:layout_constraintTop_toBottomOf="@id/privacy_policy"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="오픈소스 라이센스"/>
+        android:text="오픈소스 라이센스"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/etc"
@@ -150,7 +168,9 @@
         app:layout_constraintTop_toBottomOf="@id/etc"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="로그아웃"/>
+        android:text="로그아웃"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/withdrawal"
@@ -159,7 +179,9 @@
         app:layout_constraintTop_toBottomOf="@id/logout"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:text="회원탈퇴"/>
+        android:text="회원탈퇴"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
