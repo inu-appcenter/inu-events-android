@@ -25,7 +25,7 @@
             android:id="@+id/photo"
             android:layout_width="78dp"
             android:layout_height="78dp"
-            android:background="@color/primary"/>
+            android:background="@drawable/default_profile_background"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/changing_nickname"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:background="@color/primary">
+        android:background="@drawable/history_background">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
