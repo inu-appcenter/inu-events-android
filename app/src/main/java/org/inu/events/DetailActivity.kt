@@ -81,13 +81,14 @@ class DetailActivity : AppCompatActivity() {
                 // On -> 알람 등록
                 val calendar = Calendar.getInstance().apply {
                     // todo 시간 알맞게
-                    val from = "2022-02-17 16:43:00"
+                    val from = "2022-02-17 17:18:00"
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
                 }
                 val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent(this, AlarmReceiver::class.java)
-                // todo AlarmReceiver 로 보낼 변수값 putExtra하기
-                intent.putExtra("value to receiver", binding.detailTitle.text)
+                val intent = Intent(this, AlarmReceiver::class.java).apply {
+                    putExtra("title to receiver", binding.detailTitle.text)
+                    putExtra("eventId to receiver", id)
+                }
                 val pendingIntent = PendingIntent.getBroadcast(
                     // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
                     this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
