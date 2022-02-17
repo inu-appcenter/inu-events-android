@@ -14,7 +14,6 @@ import org.koin.core.context.startKoin
 
 class MyApplication : Application() {
     companion object{
-        //Glide URL -> ImageView 데이터바인딩에서 사용하기 위한 메서드
         @BindingAdapter("imageFromUrl")
         @JvmStatic
         fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
@@ -22,7 +21,7 @@ class MyApplication : Application() {
                 Glide.with(view.context)
                     .load(imageUrl)
                     .error(R.drawable.img_default)
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.drawable.img_default)
                     .into(view)
             } else {
                 view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.img_default))

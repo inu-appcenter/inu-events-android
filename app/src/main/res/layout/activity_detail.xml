@@ -44,10 +44,10 @@
                     android:adjustViewBounds="true"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="24dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="center"
                     app:imageFromUrl="@{detailViewModel.imageUrl}"
-                    tools:src="@drawable/img_appcenter"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/img_appcenter" />
 
                 <View
                     android:layout_width="match_parent"
@@ -118,6 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -137,29 +138,6 @@
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="모집 대상"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="1년 이상 활동할 수 있는 인천대 학생"
-                        android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
