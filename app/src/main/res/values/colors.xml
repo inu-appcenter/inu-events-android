@@ -10,11 +10,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="black5">#FFF2F2F2</color>
+    <color name="black10">#FFE5E5E5</color>
+    <color name="black20">#FFBFBFBF</color>
+    <color name="black30">#FFB3B3B3</color>
+    <color name="black40">#FF808080</color>
+    <color name="black60">#FF4D4D4D</color>
+    <color name="black80">#FF333333</color>
+
     <color name="black1">#FF191919</color>
     <color name="black8">#FF808080</color>
-    <color name="black10">#FFE5E5E5</color>
     <color name="transparent">#00000000</color>
-    <color name="dividerF">#FFF2F2F2</color>
     <color name="dbdbdb">#DBDBDB</color>
     <color name="background">#F8F6FF</color>
 </resources>
