@@ -65,7 +65,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         get() = eventIndex == -1
 
     lateinit var currentEvent: Event
-    private var imageUuid: String = R.drawable.img_default_card.toString()
+    private var imageUuid: String = R.drawable.img_default.toString()
 
     fun load(eventId: Int) {
         eventIndex = eventId

@@ -1,16 +1,9 @@
 package org.inu.events.viewmodel
 
-import android.content.Context
-import android.graphics.Color
 import android.util.Log
-import androidx.core.content.ContextCompat
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
@@ -21,13 +14,12 @@ import org.koin.core.component.inject
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
 
-
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
-    var imageUrl = MutableLiveData("")
+    var imageUrl = MutableLiveData("http://uniletter.inuappcenter.kr/images/")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
     var fcmToggleButtonText = MutableLiveData("알람 받기")
@@ -56,6 +48,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
             _currentEvent.value = it
             startDate.value = dateFormat(it.startAt)
             endDate.value = dateFormat(it.endAt)
+            imageUrl.value += _currentEvent.value!!.imageUuid
+            Log.d("tag","${imageUrl.value}")
         }.catch {  }
     }
 

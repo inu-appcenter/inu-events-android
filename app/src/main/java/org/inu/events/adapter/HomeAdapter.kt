@@ -44,9 +44,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     override fun getItemCount() = homeDataList.size ?: 0
 
     inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener, KoinComponent {
-
-        private val eventRepository: EventRepository by inject()
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener{
+        
         var checkDeadline: Boolean = false
 
         init {

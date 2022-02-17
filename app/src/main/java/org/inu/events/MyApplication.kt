@@ -1,11 +1,13 @@
 package org.inu.events
 
 import android.app.Application
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.firebase.ktx.Firebase
 import org.inu.events.di.myModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -19,10 +21,11 @@ class MyApplication : Application() {
             if(!imageUrl.isNullOrEmpty()) {
                 Glide.with(view.context)
                     .load(imageUrl)
+                    .error(R.drawable.img_default)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(view)
             } else {
-                view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.img_default_card))
+                view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.img_default))
             }
         }
     }

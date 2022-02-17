@@ -8,10 +8,6 @@
         <import type="androidx.core.content.ContextCompat" />
 
         <variable
-            name="homeViewModel"
-            type="org.inu.events.viewmodel.HomeViewModel" />
-
-        <variable
             name="homeData"
             type="org.inu.events.data.model.entity.Event" />
     </data>
@@ -22,42 +18,41 @@
 
         <View
             android:id="@+id/view"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="72dp"
-            android:background="@drawable/drawable_home_board_image_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintDimensionRatio="H,1:1.414"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/board_title"
+            android:background="@drawable/drawable_home_board_image_background"
+            />
+
         <ImageView
             android:id="@+id/home_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/drawable_home_board_image_background"
             app:layout_constraintBottom_toBottomOf="@+id/view"
             app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/view"
-            app:layout_constraintVertical_bias="0.0"
             tools:srcCompat="@drawable/img_home_board_sample_image1" />
 
         <TextView
             android:id="@+id/board_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="4dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{homeData.title}"
             android:textColor="@color/black1"
-            android:textSize="15sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
@@ -66,15 +61,18 @@
         <TextView
             android:id="@+id/board_date"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:paddingHorizontal="5dp"
+            android:layout_height="23dp"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="58dp"
+            android:layout_marginBottom="16dp"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/board_title"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:background="@drawable/drawable_home_board_date_deadline_background"
             tools:text="마감" />
 
@@ -83,11 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="17dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="18dp"
             android:text="@{homeData.category}"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/board_date"
-            app:layout_constraintTop_toBottomOf="@+id/board_title"
+            android:textColor="@color/black8"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/board_date"
+            app:layout_constraintTop_toBottomOf="@+id/view"
             tools:text="동아리" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
