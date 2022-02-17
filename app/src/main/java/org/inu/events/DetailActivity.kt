@@ -14,6 +14,7 @@ import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
+import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -28,6 +29,8 @@ class DetailActivity : AppCompatActivity() {
                 putExtra(EVENT_ID, eventId)
             }
     }
+    // 전역 변수로 변경
+    private var id: Int = 0
 
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
@@ -38,8 +41,11 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         initBinding()
-        setupButtons()
+
+        initCommentButton()
+
         setupToolbar()
     }
 
@@ -49,18 +55,18 @@ class DetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
-    private fun setupButtons() {
+    private fun initCommentButton() {
         observeNonNull(viewModel.commentClickEvent) {
             startActivity(CommentActivity.callingIntent(this, it))
         }
-        observe(viewModel.fcmClickEvent) {
-            if (!loginService.isLoggedIn) {
-                toast("로그인을 하셔야 알람을 사용하실 수 있습니다.")
-            }
-        }
     }
 
-    private fun setupToolbar() {
+    private fun renderOnOffButton(model: AlarmDisplayModel) {
+        viewModel.loadOnOffButton(onOff = model.onOff)
+        binding.onOffButton.tag = model
+    }
+
+        private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
@@ -108,7 +114,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun extractEventIdAndLoad() {
-        val id = getIntExtra(EVENT_ID) ?: return
+        id = getIntExtra(EVENT_ID) ?: return
         viewModel.load(id)
     }
 }

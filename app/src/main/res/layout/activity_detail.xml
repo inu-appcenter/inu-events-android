@@ -220,14 +220,14 @@
         </ScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/fcmToggleButton"
+            android:id="@+id/onOffButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{ContextCompat.getColor(context,detailViewModel.fcmToggleButtonBackground)}"
+            android:background="@{ContextCompat.getColor(context,detailViewModel.onOffBackground)}"
             android:paddingVertical="15dp"
-            android:text="@{detailViewModel.fcmToggleButtonText}"
-            android:onClick="@{()->detailViewModel.onClickFcm()}"
-            android:textColor="@{ContextCompat.getColor(context,detailViewModel.fcmToggleButtonTextColor)}"
+            android:text="@{detailViewModel.onOffText}"
+            android:onClick="@{()->detailViewModel.onClickButton()}"
+            android:textColor="@{ContextCompat.getColor(context,detailViewModel.onOffColor)}"
             android:textSize="15sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
