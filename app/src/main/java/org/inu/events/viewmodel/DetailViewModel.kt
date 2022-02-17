@@ -26,9 +26,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
-    var fcmToggleButtonText = MutableLiveData("알람 받기")
-    var fcmToggleButtonBackground = MutableLiveData(R.color.primary)
-    var fcmToggleButtonTextColor = MutableLiveData(R.color.background)
+    val alarmClickEvent = SingleLiveEvent<Any>()
+    val onOffText = MutableLiveData<String>()
+    val onOffColor = MutableLiveData<Int>()
+    val onOffBackground = MutableLiveData<Int>()
+
 
     var eventIndex = -1
         private set
@@ -61,19 +63,15 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     // 알람버튼 클릭했을 때 이벤트
-    fun onClickFcm(){
-        fcmBoolean = !fcmBoolean
-        if (!fcmBoolean){
-            fcmToggleButtonText.value = "알람 받기"
-            fcmToggleButtonBackground.value = R.color.primary
-            fcmToggleButtonTextColor.value = R.color.background
-        }
-        else{
-            fcmToggleButtonText.value = "알람 취소하기"
-            fcmToggleButtonBackground.value = R.color.background
-            fcmToggleButtonTextColor.value = R.color.primary
-        }
-        fcmClickEvent.call()
+    fun onClickButton(){
+        alarmClickEvent.call()
+    }
+
+    // onOffBtn 요소 변경
+    fun loadOnOffButton(onOff:Boolean){
+        onOffText.value = if (onOff) "알람 취소하기" else "알람 받기"   // alarmOnOff textView(text)
+        onOffColor.value = if (onOff) R.color.primary else R.color.background   // alarmOnOff textView(textColor)
+        onOffBackground.value = if (onOff) R.color.background else R.color.primary  // alarmOnOff textView(background)
     }
 
     fun deleteWriting() {
