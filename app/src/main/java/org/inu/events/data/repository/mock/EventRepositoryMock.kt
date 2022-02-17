@@ -98,7 +98,4 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
         e.removeIf { it.id == eventId }
     }
 
-    override fun getImage(imageUuid: String) {
-        TODO("Not yet implemented")
-    }
 }

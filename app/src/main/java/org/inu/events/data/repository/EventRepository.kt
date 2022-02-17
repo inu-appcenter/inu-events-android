@@ -10,5 +10,4 @@ interface EventRepository {
     fun postEvent(params: AddEventParams)
     fun updateEvent(id: Int, params: UpdateEventParams)
     fun deleteEvent(eventId: Int)
-    fun getImage(imageUuid: String)
 }

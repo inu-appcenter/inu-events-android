@@ -3,7 +3,7 @@
     <!-- EditText가 포커스를 받을 때    -->
     <item android:state_focused="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-            <stroke android:width="2dp" android:color="@color/primary" />
+            <stroke android:width="2dp" android:color="@color/primary100" />
             <solid android:color="@color/white" />
             <corners android:radius="2dp" />
         </shape>
@@ -12,7 +12,7 @@
     <!-- EditText가 포커스를 받지 않을 때    -->
     <item android:state_focused="false">
         <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-            <stroke android:width="2dp" android:color="@color/dbdbdb" />
+            <stroke android:width="2dp" android:color="@color/black20" />
             <solid android:color="@color/white" />
             <corners android:radius="2dp" />
         </shape>

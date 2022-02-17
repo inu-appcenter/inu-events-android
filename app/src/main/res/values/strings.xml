@@ -6,7 +6,7 @@
     <string name="text_select1">필수정보</string>
     <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
     <string name="text_select2">내용 입력</string>
-    <string name="text_title">제목을 입력하세요.</string>
+    <string name="text_title">제목을 입력해주세요.</string>
     <string name="text_organiztion">소속된 단체를 입력하세요.</string>
     <string name="text_organization_example">(ex.총학생회,컴퓨터공학부)</string>
     <string name="text_classification">분류를 선택하세요.</string>
@@ -15,10 +15,12 @@
     <string name="text_target">행사 대상을 입력하세요.</string>
     <string name="text_cancel">취소</string>
     <string name="text_next">다음</string>
+    <string name="text_empty">없음</string>
+    <string name="text_same">위와 동일</string>
     <string name="text_content">내용을 입력해주세요.</string>
     <string name="text_before">이전</string>
     <string name="text_complete">완료</string>
-    <string name="text_postImage">이미지 첨부</string>
+    <string name="text_notice_max">800자 이내로 입력 가능합니다</string>
     <string name="text_edit">수정하기</string>
     <string name="text_delete">삭제하기</string>
 
@@ -32,7 +34,9 @@
     <string formatted="false" name="group">%s | %s</string>
 
     <string name="comment">댓글</string>
-    <string name="event">행사</string>
+    <string name="event_registration">레터등록</string>
+    <string name="event_read">읽어보기</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">댓글 메뉴</string>
+    <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
 </resources>

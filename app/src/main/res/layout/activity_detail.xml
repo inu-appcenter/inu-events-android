@@ -25,7 +25,7 @@
             layout="@layout/toolbar_sample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/event}"/>
+            app:title="@{@string/event_read}"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="24dp"
                     android:scaleType="center"
-                    app:imageFromUrl="@{detailViewModel.imageUrl}"
+                    imageFromUrl="@{detailViewModel.imageUrl}"
                     tools:ignore="ContentDescription"
                     tools:src="@drawable/img_appcenter" />
 

@@ -9,4 +9,6 @@
 
     <!-- margin -->
     <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="register_horizontal_margin">20dp</dimen>
+    <dimen name="register_top_margin">24dp</dimen>
 </resources>

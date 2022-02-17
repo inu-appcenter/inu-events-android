@@ -19,7 +19,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
-    var imageUrl = MutableLiveData("http://uniletter.inuappcenter.kr/images/")
+    var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
     var fcmToggleButtonText = MutableLiveData("알람 받기")
@@ -48,8 +48,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             _currentEvent.value = it
             startDate.value = dateFormat(it.startAt)
             endDate.value = dateFormat(it.endAt)
-            imageUrl.value += _currentEvent.value!!.imageUuid
-            Log.d("tag","${imageUrl.value}")
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/"+_currentEvent.value!!.imageUuid
         }.catch {  }
     }
 

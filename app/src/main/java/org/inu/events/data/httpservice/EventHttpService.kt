@@ -33,6 +33,4 @@ interface EventHttpService {
         @Part image: MultipartBody.Part
     ): Call<UploadImageResult>
 
-    @GET("/images/{imageUuid}")
-    fun getImage(@Path("imageUuid") imageUuid: String): Call<Image>
 }

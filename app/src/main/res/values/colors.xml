@@ -2,6 +2,7 @@
 <resources>
     <color name="primary">#00BAAE</color>
     <color name="primary_base">#CEF4F1</color>
+    <color name="primary100">#00BAAE</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -13,6 +14,9 @@
 
     <color name="black1">#FF191919</color>
     <color name="black8">#FF808080</color>
+    <color name="black10">#E5E5E5</color>
+    <color name="black20">#BFBFBF</color>
+    <color name="black40">#808080</color>
     <color name="transparent">#00000000</color>
     <color name="dividerF">#FFF2F2F2</color>
     <color name="dbdbdb">#DBDBDB</color>

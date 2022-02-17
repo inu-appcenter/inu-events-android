@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
 import org.inu.events.common.extension.getIntExtra
+import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
@@ -23,20 +24,21 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private val context: Context by inject()
     private val eventRepository: EventRepository by inject()
 
-    // todo - 수연 : selectedItemPosition 부분 어떻게 수정할지
     val selectedItemPosition = MutableLiveData(0)
     val startDatePeriod = MutableLiveData("")
     val startTimePeriod = MutableLiveData("")
     val endDatePeriod = MutableLiveData("")
     val endTimePeriod = MutableLiveData("")
-    val target = MutableLiveData("")
     val content = MutableLiveData("")
     val selectedImageUri = MutableLiveData<Uri>()
-    val phase = MutableLiveData(1)
+    val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData("")
+    val submissionUrl = MutableLiveData("")
+    val imageUuid = MutableLiveData("")
 
+    var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
     private val cal = Calendar.getInstance()
     var datePickerValueStartYear = cal.get(Calendar.YEAR)
@@ -64,32 +66,34 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private val isItNew: Boolean
         get() = eventIndex == -1
 
-    lateinit var currentEvent: Event
-    private var imageUuid: String = R.drawable.img_default.toString()
+    var currentEvent: Event? = null
 
     fun load(eventId: Int) {
         eventIndex = eventId
 
         if(!isItNew){
             loadCurrentEvent()
-            title.value = currentEvent.title
-            body.value = currentEvent.body
-            host.value = currentEvent.host
-            spinnerSelected()
-            datePickerSelect()
-            timePickerSelect()
-            //selectedImageUri.value = currentEvent.imageUuid.toUri()
         }
     }
 
     private fun loadCurrentEvent() {
-        currentEvent = eventRepository.getEvent(eventIndex)
-        //imageUuid = currentEvent.imageUuid
+        execute {
+            eventRepository.getEvent(eventIndex)
+        }.then{
+            currentEvent = it
+            title.value = currentEvent?.title
+            body.value = currentEvent?.body
+            host.value = currentEvent?.host
+            submissionUrl.value = currentEvent?.submissionUrl
+            spinnerSelected()
+            datePickerSelect()
+            timePickerSelect()
+        }.catch { }
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
     private fun spinnerSelected() {
-        when (currentEvent.category) {
+        when (currentEvent?.category) {
             "선택없음" -> selectedItemPosition.value = 0
             "동아리" -> selectedItemPosition.value = 1
             "소모임" -> selectedItemPosition.value = 2
@@ -119,28 +123,30 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private fun addEvent() {
         eventRepository.postEvent(
             AddEventParams(
+                host = host.value!!,
                 category = spinnerToCategory(),
-                startAt = datePickerToStartAt(),
-                endAt = datePickerToEndAt(),
                 title = title.value!!,
                 body = body.value!!,
-                host = host.value!!,
-                imageUuid = imageUuid
+                imageUuid = imageUuid.value!!,
+                submissionUrl = submissionUrl.value!!,
+                startAt = datePickerToStartAt(),
+                endAt = datePickerToEndAt(),
             )
         )
     }
 
     private fun updateEvent() {
         eventRepository.updateEvent(
-            currentEvent.id,
+            currentEvent!!.id,
             UpdateEventParams(
+                host = host.value!!,
                 category = spinnerToCategory(),
-                startAt = datePickerToStartAt(),
-                endAt = datePickerToEndAt(),
                 title = title.value!!,
                 body = body.value!!,
-                host = host.value!!,
-                imageUuid = imageUuid
+                imageUuid = imageUuid.value!!,
+                submissionUrl = submissionUrl.value!!,
+                startAt = datePickerToStartAt(),
+                endAt = datePickerToEndAt()
             )
         )
     }
@@ -155,12 +161,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun onNextClick() {
         Log.i("BUTTON", "다음 버튼 클릭")
-        phase.value = 2
+        btnIndex++
+        phase.value = btnIndex
     }
 
     fun onBeforeClick() {
         Log.i("BUTTON", "이전 버튼 클릭")
-        phase.value = 1
+        btnIndex--
+        phase.value = btnIndex
     }
 
     fun onCompleteClick() {
@@ -240,12 +248,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         )
 
     private fun datePickerSelect() {
-        val startYear = currentEvent.startAt.slice(IntRange(0, 3))
-        val startMonth = currentEvent.startAt.slice(IntRange(5, 6))
-        val startDay = currentEvent.startAt.slice(IntRange(8, 9))
-        val endYear = currentEvent.endAt.slice(IntRange(0, 3))
-        val endMonth = currentEvent.endAt.slice(IntRange(5, 6))
-        val endDay = currentEvent.endAt.slice(IntRange(8, 9))
+        val startYear = currentEvent!!.startAt.slice(IntRange(0, 3))
+        val startMonth = currentEvent!!.startAt.slice(IntRange(5, 6))
+        val startDay = currentEvent!!.startAt.slice(IntRange(8, 9))
+        val endYear = currentEvent!!.endAt.slice(IntRange(0, 3))
+        val endMonth = currentEvent!!.endAt.slice(IntRange(5, 6))
+        val endDay = currentEvent!!.endAt.slice(IntRange(8, 9))
         startDatePeriod.value = dateFormat(startYear, startMonth, startDay)
         endDatePeriod.value = dateFormat(endYear, endMonth, endDay)
         datePickerValueStartYear = startYear.toInt()
@@ -257,10 +265,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun timePickerSelect() {
-        val startHour = currentEvent.startAt.slice(IntRange(11, 12))
-        val startMinute = currentEvent.startAt.slice(IntRange(14, 15))
-        val endHour = currentEvent.endAt.slice(IntRange(11, 12))
-        val endMinute = currentEvent.endAt.slice(IntRange(14, 15))
+        val startHour = currentEvent!!.startAt.slice(IntRange(11, 12))
+        val startMinute = currentEvent!!.startAt.slice(IntRange(14, 15))
+        val endHour = currentEvent!!.endAt.slice(IntRange(11, 12))
+        val endMinute = currentEvent!!.endAt.slice(IntRange(14, 15))
         startTimePeriod.value = timeFormat(startHour, startMinute)
         endTimePeriod.value = timeFormat(endHour, endMinute)
         timePickerValueStartTime = startHour.toInt()
