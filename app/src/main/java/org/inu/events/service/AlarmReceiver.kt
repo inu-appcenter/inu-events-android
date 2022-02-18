@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import org.inu.events.DetailActivity
 import org.inu.events.R
 import org.inu.events.data.model.dto.AlarmDisplayModel
+import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.DetailViewModel
 import java.time.LocalDateTime
@@ -56,6 +57,8 @@ class AlarmReceiver : BroadcastReceiver() {
         //  flags =  Intent.FLAG_ACTIVITY_CLEAR_TASK
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(EVENT_ID,eventId)
+            putExtra(BACK_FROM_ALARM, true)
+
         }
         val pendingIntent: PendingIntent =
         PendingIntent.getActivity(context, LocalDateTime.now().nano, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT)

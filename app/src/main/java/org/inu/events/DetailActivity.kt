@@ -28,6 +28,7 @@ import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
+import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
@@ -53,6 +54,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
 
     private val googleLogin = GoogleLoginWrapper(this)
+    private var backFromAlarm = false
 
     private val dialog = AlarmDialog()
 
@@ -90,7 +92,7 @@ class DetailActivity : AppCompatActivity() {
                 // On -> 알람 등록
                 val calendar = Calendar.getInstance().apply {
                     // todo 시간 알맞게
-                    val from = "2022-02-17 17:18:00"
+                    val from = "2022-02-19 5:45:00"
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
                 }
                 val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -129,7 +131,6 @@ class DetailActivity : AppCompatActivity() {
             Intent(this, AlarmReceiver::class.java),
             PendingIntent.FLAG_NO_CREATE
         )
-        Log.d("TAG", "fetchDataFromSharedPreferences: $pendingIntent $id")
 
         if ((pendingIntent == null) and alarmModel.onOff) {
             // 알람은 꺼져있는데 데이터는 켜져있는 경우
@@ -174,7 +175,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
+        binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
             if (viewModel.isMyWriting()) {
@@ -223,8 +224,27 @@ class DetailActivity : AppCompatActivity() {
         renderOnOffButton(model)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        isFromAlarm()
+    }
+
     private fun extractEventIdAndLoad() {
         id = getIntExtra(EVENT_ID) ?: return
         viewModel.load(id)
+    }
+
+    // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~
+    private fun isFromAlarm(){
+        backFromAlarm = intent.getBooleanExtra(BACK_FROM_ALARM,false)
+        if (backFromAlarm) {
+
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
+        else{
+            finish()
+        }
     }
 }
