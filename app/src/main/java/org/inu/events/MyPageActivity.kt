@@ -11,6 +11,11 @@ class MyPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_my_page)
     }
 
+    fun onClickProfileUpdate(view: View) {
+        val intent = Intent(this, UpdateProfileActivity::class.java)
+        startActivity(intent)
+    }
+
     fun onClickPrivacyPolicy(view: View) {
         val intent = Intent(this, PrivacyPolicyActivity::class.java)
         startActivity(intent)
