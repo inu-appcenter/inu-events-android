@@ -204,12 +204,6 @@
                         android:onClick="@{()->detailViewModel.onClickComment()}"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" • 알림 5회"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
                 </LinearLayout>
 
                 <View

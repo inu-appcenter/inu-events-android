@@ -33,6 +33,9 @@
 
     <string name="comment">댓글</string>
     <string name="event">행사</string>
+
+    <string name="detailTitle">읽어보기</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">댓글 메뉴</string>
 </resources>

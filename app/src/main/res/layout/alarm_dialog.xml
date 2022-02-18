@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/drawable_alarm_dialog_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alarm_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:lineHeight="21dp"
+        android:layout_marginTop="12dp"
+        android:text="알람신청"
+        android:padding="1dp"
+        android:textColor="#B3B3B3"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/alarm_dialog_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="1dp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:lineHeight="23dp"
+        android:text="알림 신청이 완료 되었습니다\n행사 5분전에 푸쉬 드릴게요 :)"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/alarm_dialog_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/drawable_alarm_dialog_button"
+        android:text="확인"
+        android:textColor="@color/white" />
+
+</LinearLayout>
