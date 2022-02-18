@@ -62,6 +62,7 @@
             android:text="@{viewModel.inputText}"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:maxLength="10"
             android:gravity="center"/>
 
         <TextView
@@ -85,6 +86,19 @@
             app:layout_constraintBottom_toBottomOf="@id/nickname_update"
             android:layout_marginStart="-20dp"
             android:layout_marginBottom="12dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:background="@drawable/radius_6"
+            android:backgroundTint="@color/primary"
+            android:text="@string/text_complete"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:onClick="@{()->viewModel.onClickFinish()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

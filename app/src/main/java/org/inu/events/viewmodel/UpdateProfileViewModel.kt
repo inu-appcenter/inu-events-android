@@ -2,10 +2,12 @@ package org.inu.events.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.inu.events.common.util.SingleLiveEvent
 
 class UpdateProfileViewModel : ViewModel() {
     val inputText = MutableLiveData<String>("맥도날드사고싶다")
     val errorMessage = MutableLiveData<String>("")
+    val finishEvent = SingleLiveEvent<Any>()
 
     fun validateNickname() : Boolean {
         errorMessage.value = when {
@@ -24,5 +26,9 @@ class UpdateProfileViewModel : ViewModel() {
 
     private fun isSuitableLength() : Boolean {
         return inputText.value!!.length <= 8
+    }
+
+    fun onClickFinish() {
+        finishEvent.call()
     }
 }
