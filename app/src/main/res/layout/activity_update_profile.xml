@@ -64,6 +64,18 @@
             android:textSize="16sp"
             android:gravity="center"/>
 
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@id/nickname_update"
+            android:gravity="center"
+            android:text="@{viewModel.errorMessage}"
+            android:textColor="#DA1E28"
+            android:textSize="13sp"
+            tools:text="유효한 닉네임이 아닙니다."/>
+
         <View
             android:layout_width="16dp"
             android:layout_height="16dp"
