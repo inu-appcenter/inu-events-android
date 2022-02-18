@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrivacyPolicyActivity"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_sample"
+        app:title='@{"개인정보 처리방침"}'/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:text="맥을 사고 싶지만 돈이 없다."
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:text="위하여 물방아 작고 옷을 청춘 따뜻한 낙원을 이상의 피부가 봄바람이다. 인도하겠다는 할지니, 몸이 청춘에서만 튼튼하며, 발휘하기 천고에 끝까지 것이다. 대중을 인류의 살았으며, 같은 유소년에게서 반짝이는 보라. 용기가 그들에게 꽃 소담스러운 위하여 광야에서 능히 칼이다. 곧 생의 꾸며 수 쓸쓸하랴? 눈에 없으면 소금이라 이것은 아름다우냐? 끓는 들어 대고, 밝은 있는 있으랴? 같은 속에 꽃 곧 할지니, 생명을 사막이다. 이상을 열락의 이성은 없는 인간이 사랑의 피는 보내는 아니다. 이상의 인류의 반짝이는 능히 가진 노래하며 위하여 것이다. 있는 따뜻한 곳으로 수 끓는다."
+        android:textColor="@color/black1"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:text="앞으로 쇼핑을 작작 해야겠다."
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:text="위하여 물방아 작고 옷을 청춘 따뜻한 낙원을 이상의 피부가 봄바람이다. 인도하겠다는 할지니, 몸이 청춘에서만 튼튼하며, 발휘하기 천고에 끝까지 것이다. 대중을 인류의 살았으며, 같은 유소년에게서 반짝이는 보라. 용기가 그들에게 꽃 소담스러운 위하여 광야에서 능히 칼이다. 곧 생의 꾸며 수 쓸쓸하랴? 눈에 없으면 소금이라 이것은 아름다우냐? 끓는 들어 대고, 밝은 있는 있으랴? 같은 속에 꽃 곧 할지니, 생명을 사막이다. 이상을 열락의 이성은 없는 인간이 사랑의 피는 보내는 아니다. 이상의 인류의 반짝이는 능히 가진 노래하며 위하여 것이다. 있는 따뜻한 곳으로 수 끓는다."
+        android:textColor="@color/black1"
+        android:textSize="16sp"/>
+
+</LinearLayout>
