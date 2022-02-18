@@ -36,7 +36,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val body = MutableLiveData("")
     val host = MutableLiveData("")
     val submissionUrl = MutableLiveData("")
-    val imageUuid = MutableLiveData("")
+    val imageUrl = MutableLiveData("")
+    private var imageUuid: String? = ""
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
@@ -85,10 +86,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             body.value = currentEvent?.body
             host.value = currentEvent?.host
             submissionUrl.value = currentEvent?.submissionUrl
+            imageUuid = currentEvent?.imageUuid
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
+            loadImage()
         }.catch { }
+    }
+
+    private fun loadImage() {
+        imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
@@ -127,7 +134,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 category = spinnerToCategory(),
                 title = title.value!!,
                 body = body.value!!,
-                imageUuid = imageUuid.value!!,
+                imageUuid = imageUuid!!,
                 submissionUrl = submissionUrl.value!!,
                 startAt = datePickerToStartAt(),
                 endAt = datePickerToEndAt(),
@@ -143,7 +150,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 category = spinnerToCategory(),
                 title = title.value!!,
                 body = body.value!!,
-                imageUuid = imageUuid.value!!,
+                imageUuid = imageUuid!!,
                 submissionUrl = submissionUrl.value!!,
                 startAt = datePickerToStartAt(),
                 endAt = datePickerToEndAt()

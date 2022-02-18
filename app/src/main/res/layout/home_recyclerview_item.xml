@@ -77,7 +77,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:background="@drawable/drawable_home_board_date_deadline_background"
+            tools:background="@drawable/drawable_home_board_date_ongoing_background"
             tools:text="마감" />
 
         <TextView

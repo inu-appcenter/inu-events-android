@@ -48,7 +48,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             _currentEvent.value = it
             startDate.value = dateFormat(it.startAt)
             endDate.value = dateFormat(it.endAt)
-            imageUrl.value = "http://uniletter.inuappcenter.kr/images/"+_currentEvent.value!!.imageUuid
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
         }.catch {  }
     }
 

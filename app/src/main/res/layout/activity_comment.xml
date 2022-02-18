@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:autofillHints="no"
                 android:background="@null"
-                android:hint="댓글을 입력하세요."
+                android:hint="@string/text_input"
                 android:inputType="text"
                 android:paddingVertical="10dp"
                 android:text="@{commentViewModel.content}"

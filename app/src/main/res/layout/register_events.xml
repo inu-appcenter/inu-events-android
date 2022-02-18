@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
-                android:text="사진등록"
+                android:text="@string/text_picture_registration"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -54,11 +54,14 @@
                 android:background="@drawable/img_btn_background"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@{registerViewModel.selectedImageUri}"
+                imageFromUrl="@{registerViewModel.imageUrl}"
                 app:layout_constraintBottom_toTopOf="@+id/textView_Info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration"
+                android:contentDescription="@string/text_notice_a4" />
 
             <TextView
                 android:id="@+id/textView_Info"
@@ -66,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="50dp"
-                android:text="A4규격의 이미지를 등록해주세요"
+                android:text="@string/text_notice_a4"
                 android:textColor="@color/black20"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/button_before"
@@ -99,25 +102,26 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_complete"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="DuplicateClickableBoundsCheck" />
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_complete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/drawable_btn_background"
                 android:backgroundTint="@color/primary100"
                 android:onClick="@{ () -> registerViewModel.onNextClick()}"
                 android:text="@string/text_next"
                 android:textColor="@color/white"
-                android:textStyle="normal"
                 android:textSize="15sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button_before" />
+                app:layout_constraintStart_toEndOf="@+id/button_before"
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
             <include
                 android:id="@+id/three_dot0"
@@ -160,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/register_horizontal_margin"
                         android:layout_marginTop="24dp"
-                        android:text="레터입력"
+                        android:text="@string/text_letter_input"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -185,16 +189,20 @@
                         android:layout_height="0dp"
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="4dp"
+                        android:autofillHints="no"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-                        android:paddingStart="16dp"
                         android:text="@={registerViewModel.title}"
+                        android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView_title"
+                        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
                     <TextView
                         android:id="@+id/textView_organization"
@@ -207,7 +215,8 @@
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/editText_title"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/textView_organization_example"
@@ -216,11 +225,11 @@
                         android:layout_marginEnd="@dimen/register_horizontal_margin"
                         android:text="@string/text_organization_example"
                         android:textColor="@color/black8"
-                        android:textFontWeight="400"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_organization"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView_organization" />
+                        app:layout_constraintTop_toTopOf="@+id/textView_organization"
+                        tools:ignore="TextContrastCheck" />
 
                     <EditText
                         android:id="@+id/editText_organization"
@@ -229,15 +238,19 @@
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-                        android:paddingStart="16dp"
-                        android:text="@={registerViewModel.title}"
+                        android:text="@={registerViewModel.host}"
+                        android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView_organization" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView_organization"
+                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
                     <TextView
                         android:id="@+id/textView_classification"
@@ -250,7 +263,8 @@
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/editText_organization" />
+                        app:layout_constraintTop_toBottomOf="@+id/editText_organization"
+                        tools:ignore="TextContrastCheck" />
 
                     <Spinner
                         android:id="@+id/spinner_classification"
@@ -260,16 +274,16 @@
                         android:layout_marginTop="4dp"
                         android:background="@drawable/spinner_background"
                         android:entries="@array/classification"
+                        android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp"
-                        android:paddingStart="16dp"
                         android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/black1"
-                        android:textFontWeight="400"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView_classification"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                     <TextView
                         android:id="@+id/textView_start_period"
@@ -282,7 +296,8 @@
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinner_classification" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_classification"
+                        tools:ignore="TextContrastCheck" />
 
                     <TextView
                         android:id="@+id/editText_start_date_period"
@@ -449,15 +464,19 @@
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
-                        android:paddingStart="16dp"
-                        android:text="@={registerViewModel.title}"
+                        android:text="@={registerViewModel.submissionUrl}"
+                        android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView_target" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView_target"
+                        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
                     <include
                         android:id="@+id/three_dot1"
@@ -483,18 +502,18 @@
                         android:text="@string/text_before"
                         android:textColor="@color/primary100"
                         android:textSize="15sp"
-                        app:layout_constraintTop_toBottomOf="@+id/three_dot1"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/button_next1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        />
+                        app:layout_constraintTop_toBottomOf="@+id/three_dot1"
+                        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button_next1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
                         android:background="@drawable/drawable_btn_background"
@@ -504,11 +523,11 @@
                         android:text="@string/text_next"
                         android:textColor="@color/white"
                         android:textSize="15sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/three_dot1"
-                        app:layout_constraintStart_toEndOf="@id/button_before1"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/button_before1"
+                        app:layout_constraintTop_toBottomOf="@id/three_dot1"
+                        tools:ignore="TextContrastCheck" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -535,7 +554,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
-                android:text="상세레터"
+                android:text="@string/text_detail_letter"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -563,15 +582,18 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="295dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:hint="@string/text_input"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:paddingVertical="7dp"
-                android:paddingStart="16dp"
+                android:padding="16dp"
                 android:text="@={registerViewModel.body}"
+                android:textColorHint="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_content" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_content"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/textView_notice"
@@ -589,36 +611,38 @@
                 android:id="@+id/button_before2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/drawable_btn_background"
                 android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
+                android:paddingVertical="14dp"
                 android:text="@string/text_before"
                 android:textColor="@color/primary100"
-                android:textStyle="normal"
                 android:textSize="15sp"
-                android:paddingVertical="14dp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_complete2"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="TextContrastCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_complete2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/drawable_btn_background"
                 android:backgroundTint="@color/primary100"
                 android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
-                android:textStyle="normal"
                 android:textSize="15sp"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button_before2" />
+                app:layout_constraintStart_toEndOf="@+id/button_before2"
+                tools:ignore="TextContrastCheck" />
 
             <include
                 android:id="@+id/three_dot2"
