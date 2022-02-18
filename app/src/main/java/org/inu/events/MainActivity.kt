@@ -9,6 +9,7 @@ import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityMainBinding
+import org.inu.events.dialog.LoginDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.HomeViewModel

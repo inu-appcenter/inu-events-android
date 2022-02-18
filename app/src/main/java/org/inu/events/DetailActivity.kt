@@ -1,17 +1,23 @@
 package org.inu.events
 
 import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.getIntExtra
@@ -20,6 +26,7 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
+import org.inu.events.dialog.AlarmDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.AlarmReceiver
@@ -43,10 +50,11 @@ class DetailActivity : AppCompatActivity() {
 
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
-
     private lateinit var binding: ActivityDetailBinding
 
     private val googleLogin = GoogleLoginWrapper(this)
+
+    private val dialog = AlarmDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +86,7 @@ class DetailActivity : AppCompatActivity() {
             val newModel = saveAlarmModel(model.onOff.not())
             renderOnOffButton(newModel)
             if (newModel.onOff) {
+                dialog.showDialog(this,getString(R.string.alarm_on_title),getString(R.string.alarm_on_content))
                 // On -> 알람 등록
                 val calendar = Calendar.getInstance().apply {
                     // todo 시간 알맞게
@@ -99,6 +108,7 @@ class DetailActivity : AppCompatActivity() {
                     pendingIntent
                 )
             } else {
+                dialog.showDialog(this,getString(R.string.alarm_off_title),getString(R.string.alarm_off_content))
                 // Off -> 알람 제거
                 cancelAlarm()
             }

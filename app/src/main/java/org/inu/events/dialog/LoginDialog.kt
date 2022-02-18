@@ -1,4 +1,4 @@
-package org.inu.events
+package org.inu.events.dialog
 
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.Window
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
+import org.inu.events.R
 
 class LoginDialog {
     interface LoginDialog {

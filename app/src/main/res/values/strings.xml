@@ -38,4 +38,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">댓글 메뉴</string>
+
+
+    <string name="alarm_on_title">알림신청</string>
+    <string name="alarm_on_content">알림 신청이 완료 되었습니다\n행사 5분전에 푸쉬 드릴게요 :)</string>
+    <string name="alarm_off_title">알림취소</string>
+    <string name="alarm_off_content">알림을 정말 취소하시겠어요?\nㅠ0ㅠ"</string>
 </resources>
