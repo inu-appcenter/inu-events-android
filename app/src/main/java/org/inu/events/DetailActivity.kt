@@ -1,26 +1,18 @@
 package org.inu.events
 
 import android.app.AlarmManager
-import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.InsetDrawable
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
@@ -28,6 +20,7 @@ import org.inu.events.common.extension.toast
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
+import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -57,7 +50,8 @@ class DetailActivity : AppCompatActivity() {
     private val googleLogin = GoogleLoginWrapper(this)
     private var backFromAlarm = false
 
-    private val dialog = AlarmDialog()
+    private val bottomDialog = BottomSheetDialog()
+    private val alarmDialog = AlarmDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,34 +81,53 @@ class DetailActivity : AppCompatActivity() {
         observe(viewModel.alarmClickEvent) {
             val model = binding.onOffButton.tag as? AlarmDisplayModel ?: return@observe
             val newModel = saveAlarmModel(model.onOff.not())
-            renderOnOffButton(newModel)
-            if (newModel.onOff) {
-                dialog.showDialog(this,getString(R.string.alarm_on_title),getString(R.string.alarm_on_content))
-                // On -> 알람 등록
-                val calendar = Calendar.getInstance().apply {
-                    // todo 시간 알맞게
-                    val from = "2022-02-19 19:30:00"
-                    time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
-                }
-                val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent(this, AlarmReceiver::class.java).apply {
-                    putExtra("title to receiver", binding.detailTitle.text)
-                    putExtra("eventId to receiver", id)
-                }
-                val pendingIntent = PendingIntent.getBroadcast(
-                    // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
-                    this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
-                )
-                alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
-                )
-            } else {
-                dialog.showDialog(this,getString(R.string.alarm_off_title),getString(R.string.alarm_off_content))
-                // Off -> 알람 제거
-                cancelAlarm()
+
+            // 바텀싵 -> alarm 설정 -> renderOnOffButton
+            bottomDialog.show(this, {
+                registerOrCancelAlarm(newModel.onOff,true)
+                renderOnOffButton(newModel)
+            }, {
+                registerOrCancelAlarm(newModel.onOff,false)
+                renderOnOffButton(newModel)
+            }, {
+                return@show
+            })
+        }
+    }
+
+    // 알람 등록 및 취소
+    private fun registerOrCancelAlarm(onOff:Boolean, isBeforeStart:Boolean){
+        if (onOff) {
+            if (isBeforeStart){
+                alarmDialog.showDialog(this,getString(R.string.alarm_on_title_start),getString(R.string.alarm_on_content_start))
             }
+            else{
+                alarmDialog.showDialog(this,getString(R.string.alarm_on_title_last),getString(R.string.alarm_on_content_last))
+            }
+            // On -> 알람 등록
+            val calendar = Calendar.getInstance().apply {
+                // todo 시간 알맞게
+                val from = "2022-02-19 19:30:00"
+                time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
+            }
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(this, AlarmReceiver::class.java).apply {
+                putExtra("title to receiver", binding.detailTitle.text)
+                putExtra("eventId to receiver", id)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
+                this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                pendingIntent
+            )
+        } else {
+            alarmDialog.showDialog(this,getString(R.string.alarm_off_title),getString(R.string.alarm_off_content))
+            // Off -> 알람 제거
+            cancelAlarm()
         }
     }
 
@@ -246,4 +259,5 @@ class DetailActivity : AppCompatActivity() {
         }
         finish()
     }
+
 }

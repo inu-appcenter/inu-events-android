@@ -10,11 +10,6 @@ import androidx.appcompat.widget.AppCompatButton
 import org.inu.events.R
 
 class BottomSheetDialog {
-    interface BottomSheetInterface {
-        fun onFirst()
-        fun onSecond()
-        fun onCancel()
-    }
 
     fun show(context: Context, onFirst: () -> Unit, onSecond: () -> Unit, onCancel: () -> Unit) {
         val inflater: LayoutInflater =
