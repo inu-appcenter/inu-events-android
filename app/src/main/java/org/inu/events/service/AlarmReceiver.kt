@@ -4,13 +4,20 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.os.Build
+import android.os.PowerManager
 import android.util.Log
+import android.view.WindowManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.legacy.content.WakefulBroadcastReceiver
+import com.google.android.gms.stats.WakeLock
 import org.inu.events.DetailActivity
 import org.inu.events.R
+import org.inu.events.common.util.WakeLockUtil
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -26,7 +33,13 @@ class AlarmReceiver : BroadcastReceiver() {
     private lateinit var title: String
     private var  eventId :Int = -1
 
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
+        // todo 디바이스 재부팅시 알람 꺼짐 해결
+
+        WakeLockUtil().acquireCpuWakeLock(context)
+
+        context.startService(Intent(context,AlarmService::class.java))
 
         getIntentValue(intent)
         createNotificationChannel(context)
@@ -54,8 +67,9 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun notifyNotification(context: Context) {
         //  todo 알람 클릭 처리
         val resultIntent = Intent(context, DetailActivity::class.java).apply {
-        //  flags =  Intent.FLAG_ACTIVITY_CLEAR_TASK
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            flags =  Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            flags = Intent.FLAG_ACTIVITY_NO_HISTORY
             putExtra(EVENT_ID,eventId)
             putExtra(BACK_FROM_ALARM, true)
 

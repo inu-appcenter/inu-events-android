@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.getIntExtra
@@ -92,7 +93,7 @@ class DetailActivity : AppCompatActivity() {
                 // On -> 알람 등록
                 val calendar = Calendar.getInstance().apply {
                     // todo 시간 알맞게
-                    val from = "2022-02-19 5:45:00"
+                    val from = "2022-02-19 19:30:00"
                     time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
                 }
                 val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -104,7 +105,7 @@ class DetailActivity : AppCompatActivity() {
                     // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
                     this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
                 )
-                alarmManager.set(
+                alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
                     AlarmManager.RTC_WAKEUP,
                     calendar.timeInMillis,
                     pendingIntent
@@ -239,12 +240,10 @@ class DetailActivity : AppCompatActivity() {
     private fun isFromAlarm(){
         backFromAlarm = intent.getBooleanExtra(BACK_FROM_ALARM,false)
         if (backFromAlarm) {
-
-            startActivity(Intent(this,MainActivity::class.java))
-            finish()
+            val intent = Intent(this,MainActivity::class.java)
+//                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
-        else{
-            finish()
-        }
+        finish()
     }
 }
