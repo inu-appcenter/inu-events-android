@@ -27,6 +27,7 @@ class Launcher<T>(private val job: Deferred<T>) {
             try {
                 onSuccess?.let { it(job.await()) }
             } catch (e: Throwable) {
+                e.printStackTrace()
                 onFailure?.let { it(e) }
             }
         }

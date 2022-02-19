@@ -65,7 +65,7 @@
                 android:hint="댓글을 입력하세요."
                 android:inputType="text"
                 android:paddingVertical="10dp"
-                android:text="@{commentViewModel.content}"
+                android:text="@={commentViewModel.content}"
                 android:textColor="@color/black1"
                 tools:ignore="MissingConstraints" />
 

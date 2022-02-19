@@ -1,5 +1,7 @@
 package org.inu.events.di
 
+import okhttp3.JavaNetCookieJar
+import okhttp3.OkHttpClient
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
@@ -14,11 +16,18 @@ import org.inu.events.service.LoginService
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.CookieManager
+
+val cookieJar = JavaNetCookieJar(CookieManager())
+val okHttpClient = OkHttpClient.Builder()
+    .cookieJar(cookieJar)
+    .build()
 
 inline fun <reified T> buildRetrofitService(): T {
     return Retrofit.Builder()
         .baseUrl("http://uniletter.inuappcenter.kr/")
         .addConverterFactory(GsonConverterFactory.create())
+        .client(okHttpClient)
         .build()
         .create(T::class.java)
 }

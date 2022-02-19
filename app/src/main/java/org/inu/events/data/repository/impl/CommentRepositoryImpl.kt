@@ -1,5 +1,6 @@
 package org.inu.events.data.repository.impl
 
+import android.util.Log
 import org.inu.events.data.httpservice.CommentHttpService
 import org.inu.events.data.model.dto.AddCommentParams
 import org.inu.events.data.model.dto.UpdateCommentParams
@@ -25,6 +26,6 @@ class CommentRepositoryImpl(
     }
 
     override fun deleteComment(commentId: Int) {
-        httpService.deleteComment(commentId)
+        httpService.deleteComment(commentId).execute()
     }
 }

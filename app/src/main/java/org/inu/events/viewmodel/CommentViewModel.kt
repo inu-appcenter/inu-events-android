@@ -41,11 +41,14 @@ class CommentViewModel : ViewModel(), KoinComponent {
     }
 
     fun deleteComment(callback: () -> Unit) {
+        Log.i("commentIndex",commentIndex.toString())
         execute {
+            Log.i("commentIndex2",commentIndex.toString())
             commentRepository.deleteComment(commentId = commentIndex)
         }.then {
             loadCommentList(callback)
-        }.catch { }
+        }.catch {
+        }
     }
 
     fun updateComment() {
@@ -61,6 +64,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun postComment() {
         execute {
+            Log.i("postComment",content.value.toString())
             commentRepository.postComment(
                 AddCommentParams(
                     eventId = eventIndex,
@@ -81,7 +85,6 @@ class CommentViewModel : ViewModel(), KoinComponent {
             _commentDataList.value = it
             commentSizeText.value = "댓글 ${it.size} >"
         }.catch {
-            it.printStackTrace()
         }
     }
 
@@ -91,6 +94,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun showBottomSheet(commentId: Int) {
         commentIndex = commentId
+        Log.i("commentIndex showBottom",commentIndex.toString())
         plusBtnClickEvent.call()
     }
 }
