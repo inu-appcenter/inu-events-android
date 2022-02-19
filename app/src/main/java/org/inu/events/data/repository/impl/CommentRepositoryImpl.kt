@@ -11,7 +11,9 @@ class CommentRepositoryImpl(
 ) : CommentRepository {
 
     override fun getComments(eventId: Int): List<Comment> {
+        // todo - 나중에 .map 부분 지워야함
         return httpService.fetchComments(eventId).execute().body()!!
+            .map { it.copy(wroteByMe = true) }
     }
 
     override fun postComment(params: AddCommentParams) {

@@ -4,6 +4,7 @@ import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
+import org.inu.events.data.repository.impl.CommentRepositoryImpl
 import org.inu.events.data.repository.impl.EventRepositoryImpl
 import org.inu.events.data.repository.mock.CommentRepositoryMock
 import org.inu.events.data.repository.mock.EventRepositoryMock
@@ -44,15 +45,16 @@ val myModules = module {
     }
 
     single<EventRepository> {
-       //EventRepositoryMock()
-        EventRepositoryImpl(
-            httpService = get()
-        )
+       EventRepositoryMock()
+//        EventRepositoryImpl(
+//            httpService = get()
+//        )
     }
 
     single<CommentRepository> {
         //TODO 지금은 임시 데이터
-        CommentRepositoryMock()
+        //CommentRepositoryMock()
+        CommentRepositoryImpl(httpService = get())
     }
 
     single<UserRepository> {

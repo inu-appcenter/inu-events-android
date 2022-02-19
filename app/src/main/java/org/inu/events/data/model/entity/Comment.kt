@@ -4,8 +4,8 @@ data class Comment (
     val id: Int,
     val userId: Int?,
     val eventId: Int?,
-    val nickName: String,
+    val nickname: String,
     val content: String,
-    val profile: String,
+    val profileImage: String,
     val wroteByMe: Boolean?
 )
