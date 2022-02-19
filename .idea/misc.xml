@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_alarm_dialog_background.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_alarm_dialog_button.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_background_bottom.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_background_top.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_button.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_login_dialog_background.xml" value="0.1685" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_login.xml" value="0.24974358974358973" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/alarm_dialog.xml" value="0.24974358974358973" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.24974358974358973" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/login_dialog.xml" value="0.4" />
         <entry key="..\:/Users/LInDaSoo/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/drawable_btn_background.xml" value="0.204" />
         <entry key="..\:/Users/LInDaSoo/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/drawable_edit_text_background.xml" value="0.453" />
         <entry key="..\:/Users/LInDaSoo/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/custom_checkbox.xml" value="0.453" />
