@@ -28,6 +28,7 @@ interface EventHttpService {
     @DELETE("/events/{eventId}")
     fun deleteEvent(@Path("eventId") eventId: Int?): Call<Unit>
 
+    @Multipart
     @POST("/images")
     fun uploadImage(
         @Part image: MultipartBody.Part

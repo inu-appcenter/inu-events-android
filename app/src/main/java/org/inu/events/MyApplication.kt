@@ -23,8 +23,6 @@ class MyApplication : Application() {
                     .error(R.drawable.img_default)
                     .placeholder(R.drawable.img_default)
                     .into(view)
-            } else {
-                view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.img_default))
             }
         }
     }

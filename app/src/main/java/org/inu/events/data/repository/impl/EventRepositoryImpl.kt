@@ -1,8 +1,10 @@
 package org.inu.events.data.repository.impl
 
+import okhttp3.MultipartBody
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
+import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 
@@ -30,4 +32,7 @@ class EventRepositoryImpl(
         httpService.deleteEvent(eventId).execute()
     }
 
+    override fun uploadImage(image: MultipartBody.Part): UploadImageResult {
+        return httpService.uploadImage(image).execute().body()!!
+    }
 }

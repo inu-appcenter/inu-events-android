@@ -7,15 +7,15 @@
             <corners android:radius="8dp" />
             <stroke
                 android:width="2dp"
-                android:color="@color/dbdbdb" />
+                android:color="@color/black20" />
 
         </shape>
     </item>
     <item
-        android:width="20dp"
-        android:height="20dp"
-        android:drawable="@drawable/ic_photo_camera"
-        android:gravity="right|bottom"
+        android:width="80dp"
+        android:height="80dp"
+        android:drawable="@drawable/ic_camera"
+        android:gravity="center"
         android:start="10dp"
-        android:top="1dp"/>
+        android:top="10dp"/>
 </layer-list>

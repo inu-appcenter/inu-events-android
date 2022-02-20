@@ -32,8 +32,7 @@
             android:layout_marginTop="24dp"
             android:text="@{commentViewModel.commentSizeText}"
             android:textColor="@color/black1"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="15sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRecyclerView"
@@ -59,8 +58,7 @@
                 android:inputType="text"
                 android:paddingVertical="10dp"
                 android:text="@{commentViewModel.content}"
-                android:textColor="@color/black1"
-                tools:ignore="MissingConstraints" />
+                android:textColor="@color/black1" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentEnrollButton"

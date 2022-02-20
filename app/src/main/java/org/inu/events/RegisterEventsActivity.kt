@@ -41,6 +41,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     private val selectImageLauncher = registerForActivityResult {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
             viewModel.onImageSelected(uri)
+            Log.d("tag","$uri")
         } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
@@ -84,10 +85,10 @@ class RegisterEventsActivity : AppCompatActivity() {
         }
 
         with(binding) {
-            editTextStartDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextStartTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextEndDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextStartDate.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextStartTime.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndDate.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndTime.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         }
     }
 

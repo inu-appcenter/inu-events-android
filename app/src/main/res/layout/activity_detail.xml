@@ -46,7 +46,6 @@
                     android:paddingVertical="24dp"
                     android:scaleType="center"
                     imageFromUrl="@{detailViewModel.imageUrl}"
-                    tools:ignore="ContentDescription"
                     tools:src="@drawable/img_appcenter" />
 
                 <View
@@ -76,8 +75,7 @@
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:text="단체"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,8 +83,7 @@
                         tools:text="앱센터 | 동아리"
                         android:text="@{@string/group(detailViewModel.currentEvent.host,detailViewModel.currentEvent.category)}"
                         android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -100,8 +97,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="모집기간"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,8 +105,7 @@
                         android:text="@{@string/event_period(detailViewModel.startDate, detailViewModel.endDate)}"
                         tools:text="2021.03.22 ~ 2021.03.26"
                         android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,8 +120,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="URL"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -134,8 +128,7 @@
                         android:text="@{detailViewModel.currentEvent.submissionUrl}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
-                        tools:text="https://github.com/inu-appcenter"
-                        tools:ignore="HardcodedText" />
+                        tools:text="https://github.com/inu-appcenter" />
                 </LinearLayout>
 
 
@@ -152,8 +145,7 @@
                     android:text="상세 내용"
                     android:textColor="@color/black1"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -180,15 +172,13 @@
                         android:layout_height="wrap_content"
                         android:text="댓글 2개"
                         android:textSize="15sp"
-                        android:onClick="@{()->detailViewModel.onClickComment()}"
-                        tools:ignore="HardcodedText" />
+                        android:onClick="@{()->detailViewModel.onClickComment()}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" • 알림 5회"
-                        android:textSize="15sp"
-                        tools:ignore="HardcodedText" />
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <View
@@ -208,7 +198,6 @@
             android:text="@{detailViewModel.fcmToggleButtonText}"
             android:onClick="@{()->detailViewModel.onClickFcm()}"
             android:textColor="@{ContextCompat.getColor(context,detailViewModel.fcmToggleButtonTextColor)}"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText,TextContrastCheck" />
+            android:textSize="15sp" />
     </LinearLayout>
 </layout>

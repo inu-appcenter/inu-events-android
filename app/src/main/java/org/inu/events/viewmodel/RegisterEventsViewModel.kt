@@ -6,6 +6,9 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.inu.events.R
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.threading.execute
@@ -17,6 +20,7 @@ import org.inu.events.data.repository.EventRepository
 import org.inu.events.objects.IntentMessage
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -128,6 +132,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun addEvent() {
+        uploadImage()
         eventRepository.postEvent(
             AddEventParams(
                 host = host.value!!,
@@ -156,6 +161,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 endAt = datePickerToEndAt()
             )
         )
+    }
+
+    private fun uploadImage(){
+        //이미지를 서버에 업로드하고 uuid를 받아와서
+        //imageUuid = 서버에서 받아온 uuid 저장
+        val file = File(selectedImageUri.value.toString())
+        val requestFile = RequestBody.create(MediaType.parse("image"), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        execute {
+            eventRepository.uploadImage(body)
+        }.then{
+            imageUuid = it.imageUuid
+        }.catch { }
     }
 
     fun onCancelClick() {
@@ -240,7 +258,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         val hour = date.slice(IntRange(10, 11))
         val hourStr = if (amPm == "PM") (hour.toInt() + 12) else hour
         val minute = date.slice(IntRange(13, 14))
-        val second = "00"
+        val second = "00.000000"
         return "%s-%s-%sT%s:%s:%s".format(year, month, day, hourStr, minute, second)
     }
 
