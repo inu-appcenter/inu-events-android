@@ -44,22 +44,22 @@
 
             <ImageView
                 android:id="@+id/imageButton_postImage"
+                imageFromUrl="@{registerViewModel.imageUrl}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="8dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/img_btn_background"
+                android:clickable="@{!registerViewModel.imageCheckBoxBoolean}"
+                android:contentDescription="@string/text_notice_a4"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
                 android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:src="@{registerViewModel.selectedImageUri}"
-                imageFromUrl="@{registerViewModel.imageUrl}"
                 app:layout_constraintBottom_toTopOf="@+id/textView_Info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration"
-                android:contentDescription="@string/text_notice_a4" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration" />
 
             <TextView
                 android:id="@+id/textView_Info"
@@ -73,16 +73,31 @@
                 app:layout_constraintBottom_toTopOf="@+id/button_before"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <include
-                android:id="@+id/checkBox"
-                layout="@layout/custom_checkbox_bundle"
+
+            <TextView
+                android:id="@+id/checkBox_image_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:layout_marginTop="8dp"
+                android:text="@string/text_empty"
+                android:textColor="@color/black7"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/checkBox_image"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
+
+            <CheckBox
+                android:id="@+id/checkBox_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_checkbox"
+                android:button="@null"
+                android:checked="@={registerViewModel.imageCheckBoxBoolean}"
+                android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage"
-                app:checkBoxText='@{@string/text_empty}' />
+                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before"
@@ -360,16 +375,31 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/editText_start_date" />
 
-                    <include
-                        android:id="@+id/checkBox1"
-                        layout="@layout/custom_checkbox_bundle"
+
+                    <TextView
+                        android:id="@+id/checkBox_time_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_same"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_time"
+                        app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:checked="@={registerViewModel.timeCheckBoxBoolean}"
+                        android:button="@null"
+                        android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView_end_period"
-                        app:checkBoxText='@{@string/text_same}' />
+                        app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
 
 
                     <TextView
@@ -385,6 +415,7 @@
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.startTimePeriod}"
+                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toStartOf="@+id/editText_end_time"
@@ -418,6 +449,7 @@
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.endTimePeriod}"
+                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -440,16 +472,30 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editText_start_time" />
 
-                    <include
-                        android:id="@+id/checkBox2"
-                        layout="@layout/custom_checkbox_bundle"
+                    <TextView
+                        android:id="@+id/checkBox_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_empty"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_target"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                        app:layout_constraintTop_toTopOf="@+id/textView_target" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:button="@null"
+                        android:checked="@={registerViewModel.urlCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_target"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView_target"
-                        app:checkBoxText='@{@string/text_empty}' />
+                        app:layout_constraintTop_toTopOf="@+id/textView_target" />
 
 
                     <EditText
@@ -466,6 +512,7 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.submissionUrl}"
+                        android:enabled="@{!registerViewModel.urlCheckBoxBoolean}"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"

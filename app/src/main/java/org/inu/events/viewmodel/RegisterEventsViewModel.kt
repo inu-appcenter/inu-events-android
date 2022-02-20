@@ -34,13 +34,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val endDatePeriod = MutableLiveData("")
     val endTimePeriod = MutableLiveData("")
     val content = MutableLiveData("")
-    val selectedImageUri = MutableLiveData<Uri>()
     val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData("")
     val submissionUrl = MutableLiveData("")
     val imageUrl = MutableLiveData("")
+    val imageCheckBoxBoolean = MutableLiveData(false)
+    val timeCheckBoxBoolean = MutableLiveData(false)
+    val urlCheckBoxBoolean = MutableLiveData(false)
     private var imageUuid: String? = ""
 
     var btnIndex = 0
@@ -132,48 +134,51 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun addEvent() {
         //uploadImage()
-        eventRepository.postEvent(
-            AddEventParams(
-                host = host.value!!,
-                category = spinnerToCategory(),
-                title = title.value!!,
-                body = body.value!!,
-                imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
-                submissionUrl = submissionUrl.value!!,
-                startAt = datePickerToStartAt(),
-                endAt = datePickerToEndAt(),
+        execute {
+            eventRepository.postEvent(
+                AddEventParams(
+                    host = host.value ?: "",
+                    category = spinnerToCategory(),
+                    title = title.value ?: "",
+                    body = body.value ?: "",
+                    imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
+                    submissionUrl = submissionUrl.value ?: "",
+                    startAt = datePickerToStartAt(),
+                    endAt = datePickerToEndAt()
+                )
             )
-        )
+        }.then{ }.catch{ }
     }
 
     private fun updateEvent() {
-        Log.d("tag","${title.value!!}")
-        eventRepository.updateEvent(
-            currentEvent!!.id,
-            UpdateEventParams(
-                host = host.value!!,
-                category = spinnerToCategory(),
-                title = title.value!!,
-                body = body.value!!,
-                imageUuid = currentEvent!!.imageUuid,
-                submissionUrl = submissionUrl.value!!,
-                startAt = datePickerToStartAt(),
-                endAt = datePickerToEndAt()
+        execute {
+            eventRepository.updateEvent(
+                currentEvent!!.id,
+                UpdateEventParams(
+                    host = host.value ?: "",
+                    category = spinnerToCategory(),
+                    title = title.value ?: "",
+                    body = body.value ?: "",
+                    imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
+                    submissionUrl = submissionUrl.value ?: "",
+                    startAt = datePickerToStartAt(),
+                    endAt = datePickerToEndAt()
+                )
             )
-        )
+        }.then{ }.catch{ }
     }
 
     private fun uploadImage(){
         //이미지를 서버에 업로드하고 uuid를 받아와서
         //imageUuid = 서버에서 받아온 uuid 저장
-        val file = File(selectedImageUri.value.toString())
-        val requestFile = RequestBody.create(MediaType.parse("image"), file)
-        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        execute {
-            eventRepository.uploadImage(body)
-        }.then{
-            imageUuid = it.imageUuid
-        }.catch { }
+//        val file = File(selectedImageUri.value.toString())
+//        val requestFile = RequestBody.create(MediaType.parse("image"), file)
+//        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+//        execute {
+//            eventRepository.uploadImage(body)
+//        }.then{
+//            imageUuid = it.imageUuid
+//        }.catch { }
     }
 
     fun onCancelClick() {
@@ -200,15 +205,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if (isItNew) {
             addEvent()
         } else {
-            Log.d("tag","currentEvent!!.imageUuid = ${currentEvent!!.imageUuid}")
-            Log.d("tag","currentEvent!!.id = ${currentEvent!!.id}")
             updateEvent()
         }
         finishEvent.call()
     }
 
     fun onImageSelected(uri: Uri) {
-        selectedImageUri.value = uri
+        imageUrl.value = uri.toString()
     }
 
     fun onStartDateClick() {
@@ -225,6 +228,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun onEndTimeClick() {
         endTimePickerClickEvent.call()
+    }
+
+    fun onCheckBoxClick(){
+        if(imageCheckBoxBoolean.value!!){
+            imageUrl.value = ""
+        }
+        if(timeCheckBoxBoolean.value!!){
+            startTimePeriod.value = "00:00 AM"
+            endTimePeriod.value = "11:59 PM"
+        }
+        if(urlCheckBoxBoolean.value!!){
+            submissionUrl.value = ""
+        }
     }
 
     fun setStartDate(date: Date) {
@@ -269,7 +285,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun timeFormat(hour: String, minute: String) =
         "%s:%s %s".format(
-            if (hour.toInt() > 12) "0" + (hour.toInt() - 12).toString() else hour,
+            if (hour.toInt() > 12) (hour.toInt() - 12).toString() else hour,
             minute,
             if (hour.toInt() > 12) "PM" else "AM"
         )

@@ -25,7 +25,7 @@ class EventRepositoryImpl(
     }
 
     override fun updateEvent(id: Int, params: UpdateEventParams) {
-        httpService.editEvent(id, params)
+        httpService.editEvent(id, params).execute()
     }
 
     override fun deleteEvent(eventId: Int) {
