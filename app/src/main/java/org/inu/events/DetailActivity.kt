@@ -2,8 +2,10 @@ package org.inu.events
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
@@ -82,54 +84,54 @@ class DetailActivity : AppCompatActivity() {
             val model = binding.onOffButton.tag as? AlarmDisplayModel ?: return@observe
             val newModel = saveAlarmModel(model.onOff.not())
 
-            // 바텀싵 -> alarm 설정 -> renderOnOffButton
-            bottomDialog.show(this, {
-                registerOrCancelAlarm(newModel.onOff,true)
+            if (newModel.onOff){
+                bottomDialog.show(this, {
+                    registerAlarm(true)
+                    renderOnOffButton(newModel)
+                }, {
+                    registerAlarm(false)
+                    renderOnOffButton(newModel)
+                }, {
+                    return@show
+                })
+            }
+            else{
+                alarmDialog.showDialog(this, title = getString(R.string.alarm_off_title), content =getString(R.string.alarm_off_content))
+                cancelAlarm()
                 renderOnOffButton(newModel)
-            }, {
-                registerOrCancelAlarm(newModel.onOff,false)
-                renderOnOffButton(newModel)
-            }, {
-                return@show
-            })
+            }
         }
     }
 
     // 알람 등록 및 취소
-    private fun registerOrCancelAlarm(onOff:Boolean, isBeforeStart:Boolean){
-        if (onOff) {
-            if (isBeforeStart){
-                alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_start), content = getString(R.string.alarm_on_content_start))
-            }
-            else{
-                alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_last), content = getString(R.string.alarm_on_content_last))
-            }
-            // On -> 알람 등록
-            val calendar = Calendar.getInstance().apply {
-                // todo 시간 알맞게
-                val from = "2022-02-21 02:33:00"
-                time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
-            }
-            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(this, AlarmReceiver::class.java).apply {
-                putExtra("title to receiver", binding.detailTitle.text)
-                putExtra("content to receiver", isBeforeStart)
-                putExtra("eventId to receiver", id)
-            }
-            val pendingIntent = PendingIntent.getBroadcast(
-                // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
-                this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
-            )
-        } else {
-            alarmDialog.showDialog(this, title = getString(R.string.alarm_off_title), content =getString(R.string.alarm_off_content))
-            // Off -> 알람 제거
-            cancelAlarm()
+    private fun registerAlarm(isBeforeStart:Boolean){
+        if (isBeforeStart){
+            alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_start), content = getString(R.string.alarm_on_content_start))
         }
+        else{
+            alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_last), content = getString(R.string.alarm_on_content_last))
+        }
+        // On -> 알람 등록
+        val calendar = Calendar.getInstance().apply {
+            // todo 시간 알맞게
+            val from = "2022-02-21 05:37:00"
+            time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
+        }
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java).apply {
+            putExtra("title to receiver", binding.detailTitle.text)
+            putExtra("content to receiver", isBeforeStart)
+            putExtra("eventId to receiver", id)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
+            this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
     }
 
     // 알람 버튼 요소 변경

@@ -34,7 +34,6 @@ class AlarmReceiver : BroadcastReceiver() {
     private var isBeforeStart: Boolean = false
     private var  eventId :Int = -1
 
-    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
         // todo 디바이스 재부팅시 알람 꺼짐 해결
         context.startService(Intent(context,AlarmService::class.java))
