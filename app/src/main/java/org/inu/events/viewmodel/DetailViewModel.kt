@@ -22,6 +22,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
+    var startTime = MutableLiveData("")
+    var endTime = MutableLiveData("")
     var fcmToggleButtonText = MutableLiveData("알람 받기")
     var fcmToggleButtonBackground = MutableLiveData(R.color.primary)
     var fcmToggleButtonTextColor = MutableLiveData(R.color.background)
@@ -39,6 +41,15 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     private fun dateFormat(date:String) = "%s.%s.%s".format(date.slice(IntRange(0,3)),date.slice(IntRange(5,6)),date.slice(IntRange(8,9)))
+    private fun timeFormat(time:String): String{
+        val hour = time.slice(IntRange(11,12))
+        val minute = time.slice(IntRange(14,15))
+        return "%s:%s %s".format(
+            if (hour.toInt() > 12) (hour.toInt() - 12).toString() else hour,
+            minute,
+            if (hour.toInt() > 12) "PM" else "AM"
+        )
+    }
 
     //현재 표시할 게시물의 데이터를 가져옴
     private fun loadDetailData() {
@@ -48,6 +59,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
             _currentEvent.value = it
             startDate.value = dateFormat(it.startAt)
             endDate.value = dateFormat(it.endAt)
+            startTime.value = timeFormat(it.startAt)
+            endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
         }.catch {  }
     }

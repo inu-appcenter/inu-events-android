@@ -128,18 +128,17 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun datePickerToEndAt(): String {
         return formatDateForServer(endDatePeriod.value!! + endTimePeriod.value!!)
-
     }
 
     private fun addEvent() {
-        uploadImage()
+        //uploadImage()
         eventRepository.postEvent(
             AddEventParams(
                 host = host.value!!,
                 category = spinnerToCategory(),
                 title = title.value!!,
                 body = body.value!!,
-                imageUuid = imageUuid!!,
+                imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
                 submissionUrl = submissionUrl.value!!,
                 startAt = datePickerToStartAt(),
                 endAt = datePickerToEndAt(),
@@ -148,6 +147,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun updateEvent() {
+        Log.d("tag","${title.value!!}")
         eventRepository.updateEvent(
             currentEvent!!.id,
             UpdateEventParams(
@@ -155,7 +155,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 category = spinnerToCategory(),
                 title = title.value!!,
                 body = body.value!!,
-                imageUuid = imageUuid!!,
+                imageUuid = currentEvent!!.imageUuid,
                 submissionUrl = submissionUrl.value!!,
                 startAt = datePickerToStartAt(),
                 endAt = datePickerToEndAt()
@@ -200,6 +200,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if (isItNew) {
             addEvent()
         } else {
+            Log.d("tag","currentEvent!!.imageUuid = ${currentEvent!!.imageUuid}")
+            Log.d("tag","currentEvent!!.id = ${currentEvent!!.id}")
             updateEvent()
         }
         finishEvent.call()
@@ -250,7 +252,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         .toString()
 
     private fun formatDateForServer(date: String): String {
-        Log.d("tag", "date = $date")
+        Log.d("tag", "사용자에게 입력받은 date = $date")
         val year = date.slice(IntRange(0, 3))
         val month = date.slice(IntRange(5, 6))
         val day = date.slice(IntRange(8, 9))
@@ -258,8 +260,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         val hour = date.slice(IntRange(10, 11))
         val hourStr = if (amPm == "PM") (hour.toInt() + 12) else hour
         val minute = date.slice(IntRange(13, 14))
-        val second = "00.000000"
-        return "%s-%s-%sT%s:%s:%s".format(year, month, day, hourStr, minute, second)
+        val second = "00"
+        return "%s-%s-%s %s:%s:%s".format(year, month, day, hourStr, minute, second)
     }
 
     private fun dateFormat(year: String, month: String, day: String) =

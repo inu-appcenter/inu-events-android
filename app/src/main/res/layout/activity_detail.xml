@@ -74,14 +74,14 @@
                     <TextView
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
-                        android:text="단체"
+                        android:text="카테고리"
                         android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        tools:text="앱센터 | 동아리"
-                        android:text="@{@string/group(detailViewModel.currentEvent.host,detailViewModel.currentEvent.category)}"
+                        tools:text="category | host"
+                        android:text="@{@string/group(detailViewModel.currentEvent.category,detailViewModel.currentEvent.host)}"
                         android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -113,6 +113,72 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="진행시간"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@{@string/event_period(detailViewModel.startTime, detailViewModel.endTime)}"
+                        tools:text="6:00PM - 10:00PM"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="모집대상"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="서버에 필드가 없어용"
+                        tools:text="1년이상 활동 가능한 사람"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="문의사항"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="서버에 필드가 없어용"
+                        tools:text="카톡"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="24dp"
                     android:orientation="horizontal">
 
@@ -126,6 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{detailViewModel.currentEvent.submissionUrl}"
+                        android:autoLink="web"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         tools:text="https://github.com/inu-appcenter" />
