@@ -31,6 +31,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private lateinit var title: String
+    private var isBeforeStart: Boolean = false
     private var  eventId :Int = -1
 
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
@@ -49,6 +50,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun getIntentValue(intent: Intent) {
         title = intent.getStringExtra("title to receiver")!!
+        isBeforeStart = intent.getBooleanExtra("content to receiver",false)
         eventId = intent.getIntExtra("eventId to receiver",-1)
     }
 
@@ -79,7 +81,7 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(title)
-                .setContentText("행사 5분 전입니다.!!")
+                .setContentText( if (isBeforeStart) "행사 시작 5분 전입니다!!~" else "행사 마감 하루 전입니다!!~")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)

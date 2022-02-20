@@ -99,20 +99,21 @@ class DetailActivity : AppCompatActivity() {
     private fun registerOrCancelAlarm(onOff:Boolean, isBeforeStart:Boolean){
         if (onOff) {
             if (isBeforeStart){
-                alarmDialog.showDialog(this,getString(R.string.alarm_on_title_start),getString(R.string.alarm_on_content_start))
+                alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_start), content = getString(R.string.alarm_on_content_start))
             }
             else{
-                alarmDialog.showDialog(this,getString(R.string.alarm_on_title_last),getString(R.string.alarm_on_content_last))
+                alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_last), content = getString(R.string.alarm_on_content_last))
             }
             // On -> 알람 등록
             val calendar = Calendar.getInstance().apply {
                 // todo 시간 알맞게
-                val from = "2022-02-19 19:30:00"
+                val from = "2022-02-21 02:07:00"
                 time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
             }
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(this, AlarmReceiver::class.java).apply {
                 putExtra("title to receiver", binding.detailTitle.text)
+                putExtra("content to receiver", isBeforeStart)
                 putExtra("eventId to receiver", id)
             }
             val pendingIntent = PendingIntent.getBroadcast(
@@ -125,10 +126,16 @@ class DetailActivity : AppCompatActivity() {
                 pendingIntent
             )
         } else {
-            alarmDialog.showDialog(this,getString(R.string.alarm_off_title),getString(R.string.alarm_off_content))
+            alarmDialog.showDialog(this, title = getString(R.string.alarm_off_title), content =getString(R.string.alarm_off_content))
             // Off -> 알람 제거
             cancelAlarm()
         }
+    }
+
+    // 알람 버튼 요소 변경
+    private fun renderOnOffButton(model: AlarmDisplayModel) {
+        viewModel.loadOnOffButton(onOff = model.onOff)
+        binding.onOffButton.tag = model
     }
 
     // 각 게시글마다 저장된 onOff fetch
@@ -182,11 +189,6 @@ class DetailActivity : AppCompatActivity() {
         pendingIntent?.cancel()
     }
 
-    // 알람 버튼 요소 변경
-    private fun renderOnOffButton(model: AlarmDisplayModel) {
-        viewModel.loadOnOffButton(onOff = model.onOff)
-        binding.onOffButton.tag = model
-    }
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
