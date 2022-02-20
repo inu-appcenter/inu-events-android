@@ -86,8 +86,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
         fcmClickEvent.call()
     }
 
-    fun deleteWriting() {
-        return eventRepository.deleteEvent(eventIndex)
+    fun onDeleteClickEvent() {
+        execute {
+            eventRepository.deleteEvent(eventIndex)
+        }.then {  }. catch {  }
+
     }
 
     //todo - 자신이 작성한 글인 경우 true, 아닌경우 false 반환

@@ -23,6 +23,10 @@ class MyApplication : Application() {
                     .error(R.drawable.img_default)
                     .placeholder(R.drawable.img_default)
                     .into(view)
+            }else{
+                Glide.with(view.context)
+                    .load(imageUrl)
+                    .into(view)
             }
         }
     }

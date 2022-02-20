@@ -65,6 +65,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
+    val checkBoxClickEvent = SingleLiveEvent<Any>()
     val finishEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
@@ -242,6 +243,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(urlCheckBoxBoolean.value!!){
             submissionUrl.value = ""
         }
+        checkBoxClickEvent.call()
     }
 
     fun setStartDate(date: Date) {

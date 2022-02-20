@@ -81,12 +81,12 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.fixToolbarMenu -> {
-                Log.d("tag", "fixToolbarMenu menu clicked!")
                 startActivity(RegisterEventsActivity.callingIntent(this, viewModel.eventIndex))
                 true
             }
             R.id.deleteToolbarMenu -> {
-                Log.d("tag", "deleteToolbarMenu menu clicked!")
+                viewModel.onDeleteClickEvent()
+                finish()
                 true
             }
             R.id.signOutToolbarMenu -> {
