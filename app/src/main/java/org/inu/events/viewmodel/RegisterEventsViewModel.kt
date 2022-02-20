@@ -108,15 +108,11 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
     private fun spinnerSelected() {
-        when (currentEvent?.category) {
-            "선택없음" -> selectedItemPosition.value = 0
-            "동아리" -> selectedItemPosition.value = 1
-            "소모임" -> selectedItemPosition.value = 2
-            "간식나눔" -> selectedItemPosition.value = 3
-            "대회 공모전" -> selectedItemPosition.value = 4
-            "인턴" -> selectedItemPosition.value = 5
-            "기타" -> selectedItemPosition.value = 6
-            else -> selectedItemPosition.value = 0
+        val array = context.resources.getStringArray(R.array.classification)
+        for (i in array.indices){
+            if(currentEvent?.category == array[i]){
+                selectedItemPosition.value = i
+            }
         }
     }
 

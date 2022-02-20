@@ -90,7 +90,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         execute {
             eventRepository.deleteEvent(eventIndex)
         }.then {  }. catch {  }
-
     }
 
     //todo - 자신이 작성한 글인 경우 true, 아닌경우 false 반환
