@@ -101,7 +101,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadImage() {
-        imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+        if(imageUrl.value == "")
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
