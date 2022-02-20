@@ -107,7 +107,7 @@ class DetailActivity : AppCompatActivity() {
             // On -> 알람 등록
             val calendar = Calendar.getInstance().apply {
                 // todo 시간 알맞게
-                val from = "2022-02-21 02:07:00"
+                val from = "2022-02-21 02:33:00"
                 time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
             }
             val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager

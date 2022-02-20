@@ -54,6 +54,7 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <service android:name=".service.AlarmService"/>
     </application>
 
 

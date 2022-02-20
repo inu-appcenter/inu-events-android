@@ -37,11 +37,8 @@ class AlarmReceiver : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
         // todo 디바이스 재부팅시 알람 꺼짐 해결
-
-        WakeLockUtil().acquireCpuWakeLock(context)
-
         context.startService(Intent(context,AlarmService::class.java))
-
+        context.stopService(Intent(context,AlarmService::class.java))
         getIntentValue(intent)
         createNotificationChannel(context)
         notifyNotification(context)

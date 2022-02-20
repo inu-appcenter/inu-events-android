@@ -2,6 +2,7 @@ package org.inu.events.common.util
 
 import android.content.Context
 import android.os.PowerManager
+import android.util.Log
 import android.view.WindowManager
 
 class WakeLockUtil {
@@ -11,7 +12,7 @@ class WakeLockUtil {
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         wLock = pm.newWakeLock(10 or PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.ON_AFTER_RELEASE, "myapp:TAG")
         //
-        wLock!!.acquire(1000)
+        wLock!!.acquire(0)
     }
 
     fun releaseCpuWakeLock(){
