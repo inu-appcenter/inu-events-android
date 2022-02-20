@@ -1,5 +1,6 @@
 package org.inu.events.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,23 +32,30 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     var eventIndex = -1
         private set
+    var commentIndex = -1
+        private set
 
     fun load(eventId: Int) {
         eventIndex = eventId
         loadCommentList()
     }
 
-    fun deleteComment(commentId: Int) {
+    fun deleteComment(callback: () -> Unit) {
+        Log.i("commentIndex",commentIndex.toString())
         execute {
-            commentRepository.deleteComment(commentId)
+            Log.i("commentIndex2",commentIndex.toString())
+            commentRepository.deleteComment(commentId = commentIndex)
         }.then {
-            loadCommentList()
-        }.catch { }
+            loadCommentList(callback)
+        }.catch {
+        }
     }
 
-    fun updateComment(id: Int, params: UpdateCommentParams) {
+    fun updateComment() {
         execute {
-            commentRepository.updateComment(id,params)
+            commentRepository.updateComment(id = commentIndex,
+                UpdateCommentParams(content = content.value ?: "")
+            )
         }.then {
             // todo - 이거 하는건지 체크
             loadCommentList()
@@ -56,6 +64,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun postComment() {
         execute {
+            Log.i("postComment",content.value.toString())
             commentRepository.postComment(
                 AddCommentParams(
                     eventId = eventIndex,
@@ -67,20 +76,25 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.catch { }
     }
 
-    private fun loadCommentList() {
+    private fun loadCommentList(callback: () -> Unit = {}) {
         execute {
             commentRepository.getComments(eventIndex)
         }.then {
+            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ",it.map { it.toString() }.joinToString(", "))
+            callback()
             _commentDataList.value = it
             commentSizeText.value = "댓글 ${it.size} >"
-        }.catch { }
+        }.catch {
+        }
     }
 
     fun onClickBtn() {
         btnClickEvent.call()
     }
 
-    fun showBottomSheet() {
+    fun showBottomSheet(commentId: Int) {
+        commentIndex = commentId
+        Log.i("commentIndex showBottom",commentIndex.toString())
         plusBtnClickEvent.call()
     }
 }

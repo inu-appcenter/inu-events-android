@@ -18,6 +18,7 @@ import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityCommentBinding
 import org.inu.events.googlelogin.GoogleLoginWrapper
+import org.inu.events.objects.IntentMessage.COMMENT_ID
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
@@ -102,7 +103,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(EVENT_ID) ?: return
-
         commentViewModel.load(id)
     }
 
