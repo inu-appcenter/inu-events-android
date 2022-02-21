@@ -209,12 +209,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        if (isItNew) {
-            addEvent()
-        } else {
-            updateEvent()
+        if(errorMessageString()){
+            if (isItNew) {
+                addEvent()
+            } else {
+                updateEvent()
+            }
+            finishEvent.call()
         }
-        finishEvent.call()
     }
 
     fun onStartDateClick() {
