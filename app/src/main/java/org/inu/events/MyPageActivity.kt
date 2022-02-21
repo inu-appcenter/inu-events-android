@@ -17,4 +17,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>() {
         super.dataBinding()
         binding.viewModel = viewModel
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchData()
+    }
 }

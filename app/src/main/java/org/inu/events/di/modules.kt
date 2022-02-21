@@ -2,12 +2,14 @@ package org.inu.events.di
 
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
 import org.inu.events.data.repository.impl.CommentRepositoryImpl
 import org.inu.events.data.repository.impl.EventRepositoryImpl
+import org.inu.events.data.repository.impl.UserRepositoryImpl
 import org.inu.events.data.repository.mock.FcmRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
@@ -17,16 +19,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
 
-val cookieJar = JavaNetCookieJar(CookieManager())
-val okHttpClient = OkHttpClient.Builder()
-    .cookieJar(cookieJar)
-    .build()
-
 inline fun <reified T> buildRetrofitService(): T {
     return Retrofit.Builder()
         .baseUrl("http://uniletter.inuappcenter.kr/")
         .addConverterFactory(GsonConverterFactory.create())
-        .client(okHttpClient)
+        .client(OkHttpClientFactory.create())
         .build()
         .create(T::class.java)
 }
@@ -66,8 +63,8 @@ val myModules = module {
     }
 
     single<UserRepository> {
-        //TODO 지금은 임시 데이터
-        UserRepositoryMock()
+        UserRepositoryImpl(get())
+//        UserRepositoryMock()
     }
 
     single<FcmRepository>{
@@ -94,5 +91,25 @@ val myModules = module {
 
     single<UserService> {
         UserService(userRepository = get())
+    }
+}
+
+class OkHttpClientFactory {
+    companion object {
+        private val cookieJar = JavaNetCookieJar(CookieManager())
+
+        fun create() : OkHttpClient {
+            return OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .addInterceptor(createLoggingInterceptor())
+                .build()
+        }
+
+        private fun createLoggingInterceptor() : HttpLoggingInterceptor {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            return interceptor
+        }
     }
 }

@@ -18,9 +18,9 @@ class MyPageViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
     val user = MutableLiveData<User>()
 
-    init {
+    fun fetchData() {
         CoroutineScope(Dispatchers.Main).launch {
-            user.value = userService.getUserInfo()
+            user.postValue(userService.getUserInfo())
         }
     }
 
