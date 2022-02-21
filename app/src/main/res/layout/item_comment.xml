@@ -13,8 +13,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/img_profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,19 +35,20 @@
             android:id="@+id/commentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/nickNameTextView"
-            app:layout_constraintTop_toBottomOf="@id/nickNameTextView"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileImageView"
             tools:ignore="HardcodedText" />
 
         <ImageButton
             android:id="@+id/commentMoreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/ic_baseline_more_vert_24"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/profileImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="5dp" />
+            app:layout_constraintTop_toTopOf="@id/profileImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -88,4 +88,7 @@ dependencies {
 
     // bottom sheet
     implementation 'com.google.android.material:material:1.2.1'
+
+    /** Persistent Cookie Jar */
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
 }

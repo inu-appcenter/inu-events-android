@@ -46,9 +46,9 @@ class CommentRepositoryMock : CommentRepository {
                 id = c.maxOf { it.id },
                 userId = 1,
                 eventId = params.eventId,
-                nickName = "테스터",
+                nickname = "테스터",
                 content = params.content,
-                profile = "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
+                profileImage = "https://bimage.interpark.com/partner/goods_image/5/3/7/5/354285375h.jpg",
                 wroteByMe = true
             )
         )
@@ -64,9 +64,9 @@ class CommentRepositoryMock : CommentRepository {
                 id = found.id,
                 userId = found.userId,
                 eventId = found.eventId,
-                nickName = found.nickName,
+                nickname = found.nickname,
                 content = params.content,
-                profile = found.profile,
+                profileImage = found.profileImage,
                 wroteByMe = found.wroteByMe
             )
         )

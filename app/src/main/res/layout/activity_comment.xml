@@ -12,7 +12,7 @@
             type="org.inu.events.viewmodel.CommentViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -22,45 +22,77 @@
             layout="@layout/toolbar_sample"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
             app:title="@{@string/comment}" />
 
-
         <TextView
+            android:id="@+id/howManyCommentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:text="@{commentViewModel.commentSizeText}"
             android:textColor="@color/black1"
             android:textSize="15sp"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentToolbar"
+            tools:ignore="HardcodedText"
+            tools:text="댓글 2" />
+
+        <ImageButton
+            android:id="@+id/arrowDownImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_keyboard_arrow_down"
+            android:onClick="@{() -> commentViewModel.onClickArrowDownBtn()}"
+            android:visibility="@{commentViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/howManyCommentTextView"
+            app:layout_constraintStart_toEndOf="@id/howManyCommentTextView"
+            app:layout_constraintTop_toTopOf="@id/howManyCommentTextView" />
+
+        <ImageButton
+            android:id="@+id/arrowUpImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
+            android:onClick="@{() -> commentViewModel.onClickArrowUpBtn()}"
+            android:visibility="@{commentViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/howManyCommentTextView"
+            app:layout_constraintStart_toEndOf="@id/howManyCommentTextView"
+            app:layout_constraintTop_toTopOf="@id/howManyCommentTextView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:visibility="@{commentViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/bottomBar"
+            app:layout_constraintTop_toBottomOf="@id/howManyCommentTextView"
             tools:listitem="@layout/item_comment" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:orientation="horizontal">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
                 android:id="@+id/commentEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:layout_weight="1"
                 android:autofillHints="no"
                 android:background="@null"
                 android:hint="댓글을 입력하세요."
                 android:inputType="text"
                 android:paddingVertical="10dp"
-                android:text="@{commentViewModel.content}"
+                android:text="@={commentViewModel.content}"
                 android:textColor="@color/black1"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentEnrollButton"
@@ -72,8 +104,9 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
                 android:visibility="@{commentViewModel.isLoggedIn() == true ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/commentEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/commentEditText" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentLoginButton"
@@ -85,13 +118,14 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
                 android:visibility="@{commentViewModel.isLoggedIn() == false ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="@id/commentEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/commentEditText" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

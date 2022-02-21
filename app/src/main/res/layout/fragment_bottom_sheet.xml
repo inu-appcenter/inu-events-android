@@ -16,12 +16,6 @@
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/editButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_edit"/>
-
-    <Button
         android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
