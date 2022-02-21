@@ -34,6 +34,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffText = MutableLiveData<String>()
     val onOffColor = MutableLiveData<Int>()
     val onOffBackground = MutableLiveData<Int>()
+    val subMissionUrlNull = MutableLiveData(false)
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -62,7 +63,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
+            if(_currentEvent.value?.submissionUrl == "") subMissionUrlNull.value = true
         }.catch {  }
+
     }
 
     //댓글버튼 클릭했을 때 이벤트

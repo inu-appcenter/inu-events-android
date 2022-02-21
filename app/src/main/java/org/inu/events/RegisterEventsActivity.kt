@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -22,9 +21,7 @@ import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
 import org.inu.events.common.util.URIPathHelper
-import org.inu.events.databinding.RegisterEventsBinding
-import org.inu.events.objects.IntentMessage
-import org.inu.events.objects.IntentMessage.DEBUG
+import org.inu.events.databinding.ActivityRegisterEventsBinding
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
@@ -40,7 +37,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
-    private lateinit var binding: RegisterEventsBinding
+    private lateinit var binding: ActivityRegisterEventsBinding
 
     private val selectImageLauncher = registerForActivityResult {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
@@ -88,7 +85,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.register_events)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register_events)
         binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
     }
