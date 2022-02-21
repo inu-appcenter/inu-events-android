@@ -1,5 +1,6 @@
 package org.inu.events.data.repository.impl
 
+import android.util.Log
 import okhttp3.MultipartBody
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.dto.AddEventParams
@@ -33,6 +34,7 @@ class EventRepositoryImpl(
     }
 
     override fun uploadImage(image: MultipartBody.Part): UploadImageResult {
+        Log.d("tag","이미지 업로드 함수 호출")
         return httpService.uploadImage(image).execute().body()!!
     }
 }

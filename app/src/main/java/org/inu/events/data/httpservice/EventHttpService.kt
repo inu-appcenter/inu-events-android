@@ -1,6 +1,5 @@
 package org.inu.events.data.httpservice
 
-import android.media.Image
 import okhttp3.MultipartBody
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams

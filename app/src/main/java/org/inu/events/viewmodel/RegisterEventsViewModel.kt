@@ -7,8 +7,10 @@ import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.inu.events.R
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.threading.execute
@@ -131,8 +133,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun addEvent() {
-        //uploadImage()
         execute {
+            //uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
                     host = host.value ?: "",
@@ -150,6 +152,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun updateEvent() {
         execute {
+            uploadImage()
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
@@ -157,26 +160,23 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     category = spinnerToCategory(),
                     title = title.value ?: "",
                     body = body.value ?: "",
-                    imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
+                    imageUuid = imageUuid ?: "",
                     submissionUrl = submissionUrl.value ?: "",
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt()
                 )
             )
+            Log.d("tag","서버에 데이터 넣기")
         }.then{ }.catch{ }
     }
 
     private fun uploadImage(){
-        //이미지를 서버에 업로드하고 uuid를 받아와서
-        //imageUuid = 서버에서 받아온 uuid 저장
-//        val file = File(selectedImageUri.value.toString())
-//        val requestFile = RequestBody.create(MediaType.parse("image"), file)
-//        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-//        execute {
-//            eventRepository.uploadImage(body)
-//        }.then{
-//            imageUuid = it.imageUuid
-//        }.catch { }
+        val file = File(imageUrl.value.toString())
+        val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+        val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        Log.d("tag","이미지 업로드 전")
+        imageUuid = eventRepository.uploadImage(image).imageUuid
+        Log.d("tag","이미지 업로드 후")
     }
 
     fun onCancelClick() {
@@ -206,10 +206,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             updateEvent()
         }
         finishEvent.call()
-    }
-
-    fun onImageSelected(uri: Uri) {
-        imageUrl.value = uri.toString()
     }
 
     fun onStartDateClick() {
