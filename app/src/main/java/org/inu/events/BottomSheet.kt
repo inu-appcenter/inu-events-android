@@ -13,8 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.inu.events.databinding.FragmentBottomSheetBinding
 import org.inu.events.viewmodel.CommentViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 

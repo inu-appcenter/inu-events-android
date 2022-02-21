@@ -24,11 +24,15 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     val commentSizeText = MutableLiveData("댓글 0 >")
     val content = MutableLiveData("")
+    val phase = MutableLiveData(1)
     private val loginService: LoginService by inject()
     val isLoggedIn = loginService.isLoggedInLiveData
 
     val btnClickEvent = SingleLiveEvent<Any>()
     val plusBtnClickEvent = SingleLiveEvent<Any>()
+    val postCommentClickEvent = SingleLiveEvent<Any>()
+    val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
+    val arrowUpBtnClickEvent = SingleLiveEvent<Any> ()
 
     var eventIndex = -1
         private set
@@ -41,9 +45,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
     }
 
     fun deleteComment(callback: () -> Unit) {
-        Log.i("commentIndex",commentIndex.toString())
         execute {
-            Log.i("commentIndex2",commentIndex.toString())
             commentRepository.deleteComment(commentId = commentIndex)
         }.then {
             loadCommentList(callback)
@@ -57,7 +59,6 @@ class CommentViewModel : ViewModel(), KoinComponent {
                 UpdateCommentParams(content = content.value ?: "")
             )
         }.then {
-            // todo - 이거 하는건지 체크
             loadCommentList()
         }.catch { }
     }
@@ -74,6 +75,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.then {
             loadCommentList()
         }.catch { }
+        postCommentClickEvent.call()
     }
 
     private fun loadCommentList(callback: () -> Unit = {}) {
@@ -83,7 +85,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
             Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ",it.map { it.toString() }.joinToString(", "))
             callback()
             _commentDataList.value = it
-            commentSizeText.value = "댓글 ${it.size} >"
+            commentSizeText.value = "댓글 ${it.size} "
         }.catch {
         }
     }
@@ -96,5 +98,15 @@ class CommentViewModel : ViewModel(), KoinComponent {
         commentIndex = commentId
         Log.i("commentIndex showBottom",commentIndex.toString())
         plusBtnClickEvent.call()
+    }
+
+    fun onClickArrowDownBtn() {
+        arrowDownBtnClickEvent.call()
+        phase.value = 2
+    }
+
+    fun onClickArrowUpBtn() {
+        arrowUpBtnClickEvent.call()
+        phase.value = 1
     }
 }
