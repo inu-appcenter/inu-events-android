@@ -6,21 +6,29 @@
     <string name="text_select1">필수정보</string>
     <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
     <string name="text_select2">내용 입력</string>
-    <string name="text_title">제목을 입력하세요.</string>
+    <string name="text_title">제목을 입력해주세요.</string>
     <string name="text_organiztion">소속된 단체를 입력하세요.</string>
     <string name="text_organization_example">(ex.총학생회,컴퓨터공학부)</string>
     <string name="text_classification">분류를 선택하세요.</string>
-    <string name="text_start_period">행사 시작 시간을 입력하세요.</string>
-    <string name="text_end_period">행사 종료 시간을 입력하세요.</string>
+    <string name="text_date">모집기간을 선택해주세요</string>
+    <string name="text_time">진행시간을 선택해주세요</string>
     <string name="text_target">행사 대상을 입력하세요.</string>
     <string name="text_cancel">취소</string>
     <string name="text_next">다음</string>
+    <string name="text_empty">없음</string>
+    <string name="text_same">위와 동일</string>
     <string name="text_content">내용을 입력해주세요.</string>
     <string name="text_before">이전</string>
     <string name="text_complete">완료</string>
-    <string name="text_postImage">이미지 첨부</string>
+    <string name="text_notice_max">800자 이내로 입력 가능합니다</string>
     <string name="text_edit">수정하기</string>
     <string name="text_delete">삭제하기</string>
+    <string name="text_input">입력란</string>
+    <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
+    <string name="text_notice_a4">A4규격의 이미지를 등록해주세요</string>
+    <string name="text_letter_input">레터입력</string>
+    <string name="text_detail_letter">상세레터</string>
+    <string name="text_picture_registration">사진등록</string>
 
     <string name="detail_content">위하여 물방아 작고 옷을 청춘 따뜻한 낙원을 이상의 피부가 봄바람이다. 인도하겠다는 할지니, 몸이 청춘에서만 튼튼하며, 발휘하기 천고에 끝까지 것이다. 대중을 인류의 살았으며, 같은 유소년에게서 반짝이는 보라. 용기가 그들에게 꽃 소담스러운 위하여 광야에서 능히 칼이다. 곧 생의 꾸며 수 쓸쓸하랴? 눈에 없으면 소금이라 이것은 아름다우냐? 끓는 들어 대고, 밝은 있는 있으랴? 같은 속에 꽃 곧 할지니, 생명을 사막이다. 이상을 열락의 이성은 없는 인간이 사랑의 피는 보내는 아니다. 이상의 인류의 반짝이는 능히 가진 노래하며 위하여 것이다. 있는 따뜻한 곳으로 수 끓는다.
 \n
@@ -28,14 +36,13 @@
 \n
 \n용감하고 예수는 심장은 그들은 것이다. 품었기 피어나기 하였으며, 때문이다. 인생을 갑 싸인 현저하게 품에 있다. 그들은 뜨거운지라, 군영과 충분히 노래하며 끓는다. 황금시대를 길을 것은 평화스러운 얼음이 그들은 가치를 꽃이 하는 아니다. 청춘의 찾아 관현악이며, 그들을 쓸쓸하랴? 싸인 예수는 발휘하기 바이며, 때문이다. 우리의 구하기 살 그들을 위하여, 봄바람이다. 온갖 찬미를 생명을 꾸며 피어나는 것이다.</string>
 
-    <string name="event_period" formatted="false">%s ~ %s</string>
-    <string name="group" formatted="false">%s | %s</string>
+    <string formatted="false" name="event_period">%s - %s</string>
+    <string formatted="false" name="event_time">%s - %s</string>
+    <string formatted="false" name="group">%s | %s</string>
 
     <string name="comment">댓글</string>
-    <string name="event">행사</string>
-
-    <string name="detailTitle">읽어보기</string>
-
+    <string name="event_registration">레터등록</string>
+    <string name="event_read">읽어보기</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">댓글 메뉴</string>
 

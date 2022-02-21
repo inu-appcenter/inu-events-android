@@ -8,8 +8,6 @@ import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
 import org.inu.events.data.repository.impl.CommentRepositoryImpl
 import org.inu.events.data.repository.impl.EventRepositoryImpl
-import org.inu.events.data.repository.mock.CommentRepositoryMock
-import org.inu.events.data.repository.mock.EventRepositoryMock
 import org.inu.events.data.repository.mock.FcmRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
@@ -54,10 +52,10 @@ val myModules = module {
     }
 
     single<EventRepository> {
-       EventRepositoryMock()
-//        EventRepositoryImpl(
-//            httpService = get()
-//        )
+        //EventRepositoryMock()
+        EventRepositoryImpl(
+            httpService = get()
+        )
     }
 
     single<CommentRepository> {

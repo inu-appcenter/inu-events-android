@@ -1,7 +1,9 @@
 package org.inu.events.data.repository
 
+import okhttp3.MultipartBody
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
+import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
 
 interface EventRepository {
@@ -10,5 +12,5 @@ interface EventRepository {
     fun postEvent(params: AddEventParams)
     fun updateEvent(id: Int, params: UpdateEventParams)
     fun deleteEvent(eventId: Int)
-    fun getImage(imageUuid: String)
+    fun uploadImage(image: MultipartBody.Part): UploadImageResult
 }

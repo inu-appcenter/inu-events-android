@@ -1,14 +1,19 @@
 package org.inu.events.adapter
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat.setTint
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.color.MaterialColors.getColor
 import org.inu.events.DetailActivity
+import org.inu.events.MyApplication.Companion.bindImageFromUrl
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
@@ -43,9 +48,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     override fun getItemCount() = homeDataList.size ?: 0
 
     inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener, KoinComponent {
-
-        private val eventRepository: EventRepository by inject()
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener{
+        
         var checkDeadline: Boolean = false
 
         init {
@@ -58,12 +62,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             binding.boardDate.text = whenDay(homeData.endAt)
             binding.boardDate.background =
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
-
             imageUrl += homeData.imageUuid
-            Glide
-                .with(binding.homeImage.context)
-                .load(imageUrl)
-                .into(binding.homeImage)
+            bindImageFromUrl(binding.homeImage, imageUrl)
         }
 
         override fun onClick(v: View) {

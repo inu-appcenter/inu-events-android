@@ -1,6 +1,5 @@
 package org.inu.events.data.httpservice
 
-import android.media.Image
 import okhttp3.MultipartBody
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
@@ -28,11 +27,10 @@ interface EventHttpService {
     @DELETE("/events/{eventId}")
     fun deleteEvent(@Path("eventId") eventId: Int?): Call<Unit>
 
+    @Multipart
     @POST("/images")
     fun uploadImage(
         @Part image: MultipartBody.Part
     ): Call<UploadImageResult>
 
-    @GET("/images/{imageUuid}")
-    fun getImage(@Path("imageUuid") imageUuid: String): Call<Image>
 }

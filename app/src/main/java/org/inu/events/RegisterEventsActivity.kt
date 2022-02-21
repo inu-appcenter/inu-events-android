@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -18,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
+import org.inu.events.common.util.URIPathHelper
 import org.inu.events.databinding.RegisterEventsBinding
 import org.inu.events.objects.IntentMessage
 import org.inu.events.objects.IntentMessage.DEBUG
@@ -40,9 +42,10 @@ class RegisterEventsActivity : AppCompatActivity() {
 
     private val selectImageLauncher = registerForActivityResult {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
-            viewModel.onImageSelected(uri)
-            Log.d(DEBUG, "image uri = $uri")
-        } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
+            val uriPathHelper = URIPathHelper()
+            val filePath = uriPathHelper.getPath(this, uri)
+            viewModel.imageUrl.value = filePath
+        }?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,10 +88,10 @@ class RegisterEventsActivity : AppCompatActivity() {
         }
 
         with(binding) {
-            editTextStartDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextStartTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextEndDatePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-            editTextEndTimePeriod.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextStartDate.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextStartTime.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndDate.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            editTextEndTime.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         }
     }
 
@@ -241,6 +244,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
+        binding.toolbarRegister0.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
     }

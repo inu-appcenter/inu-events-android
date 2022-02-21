@@ -15,6 +15,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import org.inu.events.MyApplication.Companion.bindImageFromUrl
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
@@ -212,12 +213,12 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.fixToolbarMenu -> {
-                Log.d("tag", "fixToolbarMenu menu clicked!")
                 startActivity(RegisterEventsActivity.callingIntent(this, viewModel.eventIndex))
                 true
             }
             R.id.deleteToolbarMenu -> {
-                Log.d("tag", "deleteToolbarMenu menu clicked!")
+                viewModel.onDeleteClickEvent()
+                finish()
                 true
             }
             R.id.signOutToolbarMenu -> {

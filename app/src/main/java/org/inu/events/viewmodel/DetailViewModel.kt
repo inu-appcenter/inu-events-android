@@ -1,9 +1,6 @@
 package org.inu.events.viewmodel
 
-import android.content.Context
-import android.graphics.Color
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
@@ -15,7 +12,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class DetailViewModel : ViewModel(), KoinComponent {
-    private val context: Context by inject()
     private val eventRepository: EventRepository by inject()
 
 
@@ -24,8 +20,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
+    var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
+    var startTime = MutableLiveData("")
+    var endTime = MutableLiveData("")
 
     var eventIndex = -1
         private set
@@ -42,6 +41,15 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     private fun dateFormat(date:String) = "%s.%s.%s".format(date.slice(IntRange(0,3)),date.slice(IntRange(5,6)),date.slice(IntRange(8,9)))
+    private fun timeFormat(time:String): String{
+        val hour = time.slice(IntRange(11,12))
+        val minute = time.slice(IntRange(14,15))
+        return "%s:%s %s".format(
+            if (hour.toInt() > 12) (hour.toInt() - 12).toString() else hour,
+            minute,
+            if (hour.toInt() > 12) "PM" else "AM"
+        )
+    }
 
     //현재 표시할 게시물의 데이터를 가져옴
     private fun loadDetailData() {
@@ -51,6 +59,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             _currentEvent.value = it
             startDate.value = dateFormat(it.startAt)
             endDate.value = dateFormat(it.endAt)
+            startTime.value = timeFormat(it.startAt)
+            endTime.value = timeFormat(it.endAt)
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
         }.catch {  }
     }
 
@@ -71,16 +82,14 @@ class DetailViewModel : ViewModel(), KoinComponent {
         onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary_100  // alarmOnOff textView(background)
     }
 
-    fun deleteWriting() {
-        return eventRepository.deleteEvent(eventIndex)
+    fun onDeleteClickEvent() {
+        execute {
+            eventRepository.deleteEvent(eventIndex)
+        }.then {  }. catch {  }
     }
 
-    //todo - 자신이 작성한 글인 경우 true, 아닌경우 false 반환
-    //자신이 작성한 글인지 어떻게 알지?
-    //event 테이블에 user_id로 getUser 요청을 해서 그 안에 있는 게시글 리스트 중에 현재 이벤트 id와 동일한 것이 있으면됨
     fun isMyWriting(): Boolean{
-        //val currentEventUserIdGetUser = userService.getUser(_detailDataList.value?.user_id)
-        //if()
+
         return true
     }
 }

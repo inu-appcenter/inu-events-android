@@ -1,8 +1,11 @@
 package org.inu.events.data.repository.impl
 
+import android.util.Log
+import okhttp3.MultipartBody
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
+import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 
@@ -23,14 +26,15 @@ class EventRepositoryImpl(
     }
 
     override fun updateEvent(id: Int, params: UpdateEventParams) {
-        httpService.editEvent(id, params)
+        httpService.editEvent(id, params).execute()
     }
 
     override fun deleteEvent(eventId: Int) {
         httpService.deleteEvent(eventId).execute()
     }
 
-    override fun getImage(imageUuid: String) {
-        httpService.getImage(imageUuid).execute()
+    override fun uploadImage(image: MultipartBody.Part): UploadImageResult {
+        Log.d("tag","이미지 업로드 함수 호출")
+        return httpService.uploadImage(image).execute().body()!!
     }
 }

@@ -18,7 +18,7 @@
     <item
         android:width="20dp"
         android:height="20dp"
-        android:drawable="@drawable/ic_photo_camera"
+        android:drawable="@drawable/ic_camera"
         android:gravity="right|bottom"
         android:start="10dp"
         android:top="1dp"/>

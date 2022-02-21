@@ -6,6 +6,7 @@ data class UpdateEventParams(
     val title: String,
     val body: String,
     val imageUuid: String,
+    val submissionUrl: String,
     val startAt: String,
     val endAt: String,
 )
