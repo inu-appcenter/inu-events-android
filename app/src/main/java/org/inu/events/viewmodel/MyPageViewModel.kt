@@ -2,11 +2,28 @@ package org.inu.events.viewmodel
 
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.inu.events.PrivacyPolicyActivity
 import org.inu.events.UpdateProfileActivity
+import org.inu.events.data.model.entity.User
+import org.inu.events.service.UserService
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MyPageViewModel : ViewModel() {
+class MyPageViewModel : ViewModel(), KoinComponent {
+    private val userService: UserService by inject()
+    val user = MutableLiveData<User>()
+
+    init {
+        CoroutineScope(Dispatchers.Main).launch {
+            user.value = userService.getUserInfo()
+        }
+    }
+
     fun onClickProfileUpdate(view: View) {
         val intent = Intent(view.context, UpdateProfileActivity::class.java)
         view.context.startActivity(intent)

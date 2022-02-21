@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import org.inu.events.base.BaseActivity
+import org.inu.events.databinding.ActivityMyPageBinding
 import org.inu.events.viewmodel.MyPageViewModel
 
-class MyPageActivity : AppCompatActivity() {
+class MyPageActivity : BaseActivity<ActivityMyPageBinding>() {
+    override val layoutResourceId = R.layout.activity_my_page
     private val viewModel: MyPageViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_page)
+    override fun dataBinding() {
+        super.dataBinding()
+        binding.viewModel = viewModel
     }
 }

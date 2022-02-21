@@ -1,0 +1,12 @@
+package org.inu.events.service
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.inu.events.data.model.entity.User
+import org.inu.events.data.repository.UserRepository
+
+class UserService(private val userRepository: UserRepository) {
+    suspend fun getUserInfo() : User = withContext(Dispatchers.IO) {
+        userRepository.getMe()
+    }
+}

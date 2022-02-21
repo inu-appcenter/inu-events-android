@@ -5,5 +5,5 @@ import org.inu.events.data.model.entity.User
 
 interface UserRepository {
     fun getUser(userId: Int): User
-    fun getMe(): User
+    suspend fun getMe(): User
 }

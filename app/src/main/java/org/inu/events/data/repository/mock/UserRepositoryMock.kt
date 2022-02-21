@@ -14,7 +14,7 @@ class UserRepositoryMock : UserRepository {
         return u.find { it.id == userId }!!
     }
 
-    override fun getMe(): User {
+    override suspend fun getMe(): User {
         return u[0]
     }
 }

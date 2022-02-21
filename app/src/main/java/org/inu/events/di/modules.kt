@@ -11,6 +11,7 @@ import org.inu.events.data.repository.impl.EventRepositoryImpl
 import org.inu.events.data.repository.mock.FcmRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
+import org.inu.events.service.UserService
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -89,5 +90,9 @@ val myModules = module {
 
     single<SharedPreferenceWrapper> {
         SharedPreferenceWrapper(context = get())
+    }
+
+    single<UserService> {
+        UserService(userRepository = get())
     }
 }
