@@ -20,6 +20,15 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UpdateProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash">
@@ -59,6 +68,5 @@
         </receiver>
         <service android:name=".service.AlarmService"/>
     </application>
-
 
 </manifest>
