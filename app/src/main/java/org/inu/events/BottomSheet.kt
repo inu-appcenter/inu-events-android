@@ -45,17 +45,12 @@ class BottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     }
 
     private fun initButton() {
-        binding.editButton.setOnClickListener(this)
         binding.deleteButton.setOnClickListener(this)
         binding.cancelButton.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.editButton -> {
-                Log.i("Button", "edit click")
-                commentViewModel.updateComment()
-            }
             R.id.deleteButton -> {
                 Log.i("Button", "delete click")
                 commentViewModel.deleteComment{

@@ -44,11 +44,11 @@
             android:id="@+id/commentMoreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/ic_baseline_more_vert_24"
-            app:layout_constraintTop_toTopOf="@id/profileImageView"
             app:layout_constraintBottom_toBottomOf="@id/profileImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" />
+            app:layout_constraintTop_toTopOf="@id/profileImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
