@@ -78,8 +78,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     // onOffBtn 요소 변경
     fun loadOnOffButton(onOff:Boolean){
         onOffText.value = if (onOff) "알람 취소" else "알람 신청"   // alarmOnOff textView(text)
-        onOffColor.value = if (onOff) R.color.primary_100 else R.color.white   // alarmOnOff textView(textColor)
-        onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary_100  // alarmOnOff textView(background)
+        onOffColor.value = if (onOff) R.color.primary100 else R.color.white   // alarmOnOff textView(textColor)
+        onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary100  // alarmOnOff textView(background)
     }
 
     fun onDeleteClickEvent() {
