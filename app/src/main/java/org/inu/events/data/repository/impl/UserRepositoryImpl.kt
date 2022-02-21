@@ -18,20 +18,22 @@ class UserRepositoryImpl(
     override suspend fun getMe(): User {
         try {
             val response = httpService.getMe().execute()
-            return response.body()!!
-        }
-        catch (e: Exception) {
+            if(response.isSuccessful) {
+                return response.body()!!
+            } else {
+                Log.e("네트워크 요청", "실패했다...")
+            }
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        throw Exception("")
+        throw Exception("error code 1")
     }
 
     override suspend fun updateUser(user: UpdateUserParams) {
         try {
             httpService.updateUser(user).execute()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
