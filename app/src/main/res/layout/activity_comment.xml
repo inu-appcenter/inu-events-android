@@ -70,7 +70,11 @@
             app:layout_constraintBottom_toTopOf="@id/bottomBar"
             app:layout_constraintTop_toBottomOf="@id/howManyCommentTextView"
             tools:listitem="@layout/item_comment" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerF"
+            app:layout_constraintBottom_toTopOf="@id/bottomBar"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"

@@ -22,8 +22,8 @@
     <string name="text_complete">완료</string>
     <string name="text_notice_max">800자 이내로 입력 가능합니다</string>
     <string name="text_edit">수정하기</string>
-    <string name="text_delete">삭제하기</string>
-    <string name="text_input">입력란</string>
+    <string name="text_delete">삭제</string>
+    <string name="text_input">댓글을 입력해주세요. </string>
     <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
     <string name="text_notice_a4">A4규격의 이미지를 등록해주세요</string>
     <string name="text_letter_input">레터입력</string>
