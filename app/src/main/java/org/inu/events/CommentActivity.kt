@@ -27,15 +27,13 @@ import org.koin.android.ext.android.inject
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1, eventWroteByMe: Boolean = false) =
+        fun callingIntent(context: Context, eventId: Int = -1) =
             Intent(context, CommentActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
-                putExtra(EVENT_WROTE_BY_ME, eventWroteByMe)
             }
     }
 
     private val commentViewModel: CommentViewModel by viewModels()
-    private val detailViewModel: DetailViewModel by viewModels()
     private val loginService: LoginService by inject()
 
     private lateinit var commentBinding: ActivityCommentBinding
@@ -68,7 +66,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = CommentAdapter(viewModel = commentViewModel, detailViewModel = detailViewModel)
+        val theAdapter = CommentAdapter(viewModel = commentViewModel)
 
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -106,9 +104,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(EVENT_ID) ?: return
-        val eventWroteByMe = getBooleanExtra(IntentMessage.EVENT_WROTE_BY_ME) ?: return
-        commentViewModel.load(id,eventWroteByMe)
-        System.out.println("CommentActivity extract"+eventWroteByMe)
+        commentViewModel.load(id)
     }
 
     private fun showBottomSheet() {

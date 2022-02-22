@@ -40,9 +40,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val subMissionUrlNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
 
-    fun load(eventId: Int, eventWroteByMe: Boolean) {
+    fun load(eventId: Int) {
         eventIndex = eventId
-        eventWroteByMeBoolean = eventWroteByMe
         loadDetailData()
     }
 
@@ -69,6 +68,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
             if(_currentEvent.value?.submissionUrl == "") subMissionUrlNull.value = true
+            eventWroteByMeBoolean = it.wroteByMe ?:false
         }.catch {  }
 
         execute {

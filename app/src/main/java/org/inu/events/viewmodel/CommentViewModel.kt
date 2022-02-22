@@ -10,17 +10,24 @@ import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
 import org.inu.events.data.model.dto.UpdateCommentParams
 import org.inu.events.data.model.entity.Comment
+import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.CommentRepository
+import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class CommentViewModel : ViewModel(), KoinComponent {
+    private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
 
     private val _commentDataList = MutableLiveData<List<Comment>>()
     val commentList: LiveData<List<Comment>>
         get() = _commentDataList
+
+    private val _currentEvent = MutableLiveData<Event>()
+    val currentEvent: MutableLiveData<Event>
+        get() = _currentEvent
 
     val commentSizeText = MutableLiveData("댓글 0 >")
     val content = MutableLiveData("")
@@ -38,13 +45,19 @@ class CommentViewModel : ViewModel(), KoinComponent {
         private set
     var commentIndex = -1
         private set
-    var eventWroteByMeBoolean = false
-        private set
 
-    fun load(eventId: Int, eventWroteByMe: Boolean) {
+    fun load(eventId: Int) {
         eventIndex = eventId
-        eventWroteByMeBoolean = eventWroteByMe
-        loadCommentList()
+        loadEventsAndComments()
+    }
+
+    fun loadEventsAndComments() {
+        execute {
+            eventRepository.getEvent(eventIndex)
+        }.then {
+            _currentEvent.value = it
+            loadCommentList()
+        }.catch {  }
     }
 
     fun deleteComment(callback: () -> Unit) {
@@ -91,6 +104,14 @@ class CommentViewModel : ViewModel(), KoinComponent {
             commentSizeText.value = "댓글 ${it.size} "
         }.catch {
         }
+    }
+
+    private fun loadDetailData() {
+        execute {
+            eventRepository.getEvent(eventIndex)
+        }.then {
+            _currentEvent.value = it
+        }.catch {  }
     }
 
     fun onClickBtn() {

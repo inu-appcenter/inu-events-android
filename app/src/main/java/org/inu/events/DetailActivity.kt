@@ -33,10 +33,9 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1, eventWroteByMe: Boolean? = null) =
+        fun callingIntent(context: Context, eventId: Int = -1) =
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
-                putExtra(EVENT_WROTE_BY_ME,eventWroteByMe)
             }
 
         private const val SHARED_PREFERENCES_NAME = "alarm"
@@ -44,7 +43,6 @@ class DetailActivity : AppCompatActivity() {
 
     // 전역 변수로 변경
     private var id: Int = -1
-    private var eventWroteByMe: Boolean = false
 
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
@@ -192,7 +190,6 @@ class DetailActivity : AppCompatActivity() {
         pendingIntent?.cancel()
     }
 
-
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
@@ -251,9 +248,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun extractEventIdAndLoad() {
         id = getIntExtra(EVENT_ID) ?: return
-        eventWroteByMe = getBooleanExtra(EVENT_WROTE_BY_ME) ?: return
-        viewModel.load(id,eventWroteByMe)
-        System.out.println("detail extract"+eventWroteByMe)
+        viewModel.load(id)
     }
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~

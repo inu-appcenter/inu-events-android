@@ -13,7 +13,7 @@ import org.inu.events.databinding.ItemCommentBinding
 import org.inu.events.viewmodel.CommentViewModel
 import org.inu.events.viewmodel.DetailViewModel
 
-class CommentAdapter(private val viewModel: CommentViewModel, private val detailViewModel: DetailViewModel) : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
+class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
 
     var commentList: List<Comment> = listOf()
         set(v) {
@@ -27,8 +27,8 @@ class CommentAdapter(private val viewModel: CommentViewModel, private val detail
             binding.nickNameTextView.text = commentModel.nickname
             binding.commentTextView.text = commentModel.content
             binding.commentMoreButton.isVisible = commentModel.wroteByMe == true
-            // todo - writerTextView eventModel.wroteByMe가 true일때만 visible하도록, eventModel 변수를 어디에 해야할지? 새로 만들어야할지, 데이터를 가져와야할지
-            binding.writerTextView.isVisible = detailViewModel.eventWroteByMeBoolean == true
+            binding.writerTextView.isVisible = viewModel.currentEvent.value!!.userId == commentModel.userId
+            Log.i("ViewModel DSMFLKsmdkfmlSDMlfkmSLKDMfkSMDLKFMAKLFMKAMDKFMKLADFMA","${viewModel.currentEvent.value!!.userId.toString()} ${commentModel.userId.toString()}")
             // 프로필 이미지 삽입
             Glide
                 .with(binding.profileImageView.context)
@@ -42,7 +42,6 @@ class CommentAdapter(private val viewModel: CommentViewModel, private val detail
                 Log.i("CLICK",viewModel.commentIndex.toString())
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentItemViewHolder {

@@ -30,13 +30,19 @@
             app:layout_constraintStart_toEndOf="@id/profileImageView"
             app:layout_constraintTop_toTopOf="@id/profileImageView"
             tools:ignore="HardcodedText,UnusedAttribute" />
+
         <TextView
             android:id="@+id/writerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="글쓴이"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/drawable_textview_writer_background"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="1dp"
+            android:text="@string/text_writer"
+            android:textColor="@color/primary100"
             app:layout_constraintStart_toEndOf="@id/nickNameTextView"
-            app:layout_constraintTop_toTopOf="@id/profileImageView"/>
+            app:layout_constraintTop_toTopOf="@id/profileImageView" />
 
         <TextView
             android:id="@+id/commentTextView"
