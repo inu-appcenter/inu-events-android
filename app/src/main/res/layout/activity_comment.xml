@@ -79,12 +79,11 @@
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
                 android:id="@+id/commentEditText"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:layout_weight="1"
@@ -95,6 +94,8 @@
                 android:paddingVertical="10dp"
                 android:text="@={commentViewModel.content}"
                 android:textColor="@color/black1"
+                android:layout_marginVertical="18dp"
+                android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -107,10 +108,12 @@
                 android:text="등록"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
+                android:layout_marginStart="4dp"
                 android:visibility="@{commentViewModel.isLoggedIn() == true ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/commentEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/commentEditText" />
+                app:layout_constraintTop_toTopOf="@id/commentEditText"
+                app:layout_constraintStart_toEndOf="@id/commentEditText"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentLoginButton"
@@ -121,11 +124,12 @@
                 android:text="로그인"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
+                android:layout_marginStart="4dp"
                 android:visibility="@{commentViewModel.isLoggedIn() == false ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/commentEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/commentEditText" />
-
+                app:layout_constraintTop_toTopOf="@id/commentEditText"
+                app:layout_constraintStart_toEndOf="@id/commentEditText"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
