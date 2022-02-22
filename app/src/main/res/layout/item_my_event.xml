@@ -31,6 +31,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginStart="20dp"
             tools:text="카페에서 디자인 스터디 하실 분 구해요. 같이하자"
+            android:text="@{item.title}"
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="@color/black1"
@@ -58,6 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/horizontal_margin"
             android:layout_marginTop="4dp"
+            android:text="@{item.body}"
             tools:text="카페에서 같이 디자인 스터디 하실분 구해요! 제가 취업준비생이라 같이 취업준비하시는 분들과 같이 진행하면 좋을 것 같아요. 근데 이거보다 더 길게 써야 ...이 생기든 말든 할텐데"
             android:textSize="13sp"
             android:maxLines="3"
@@ -74,5 +76,12 @@
             android:textSize="13sp"
             android:textColor="@color/black40"/>
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/poster"
+            android:layout_marginTop="16dp"
+            android:background="@color/black10"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
