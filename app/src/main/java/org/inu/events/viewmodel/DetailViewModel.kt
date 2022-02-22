@@ -28,6 +28,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     var eventIndex = -1
         private set
+    var eventWroteByMeBoolean = false
+        private set
 
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Any>()
@@ -35,8 +37,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffColor = MutableLiveData<Int>()
     val onOffBackground = MutableLiveData<Int>()
 
-    fun load(eventId: Int) {
+    fun load(eventId: Int, eventWroteByMe: Boolean) {
         eventIndex = eventId
+        eventWroteByMeBoolean = eventWroteByMe
         loadDetailData()
     }
 

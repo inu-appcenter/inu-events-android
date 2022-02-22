@@ -16,10 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.MyApplication.Companion.bindImageFromUrl
-import org.inu.events.common.extension.getIntExtra
-import org.inu.events.common.extension.observe
-import org.inu.events.common.extension.observeNonNull
-import org.inu.events.common.extension.toast
+import org.inu.events.common.extension.*
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
@@ -27,6 +24,7 @@ import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
+import org.inu.events.objects.IntentMessage.EVENT_WROTE_BY_ME
 import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
@@ -35,9 +33,10 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1) =
+        fun callingIntent(context: Context, eventId: Int = -1, eventWroteByMe: Boolean? = null) =
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
+                putExtra(EVENT_WROTE_BY_ME,eventWroteByMe)
             }
 
         private const val SHARED_PREFERENCES_NAME = "alarm"
@@ -45,6 +44,7 @@ class DetailActivity : AppCompatActivity() {
 
     // 전역 변수로 변경
     private var id: Int = -1
+    private var eventWroteByMe: Boolean = false
 
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
@@ -251,7 +251,9 @@ class DetailActivity : AppCompatActivity() {
 
     private fun extractEventIdAndLoad() {
         id = getIntExtra(EVENT_ID) ?: return
-        viewModel.load(id)
+        eventWroteByMe = getBooleanExtra(EVENT_WROTE_BY_ME) ?: return
+        viewModel.load(id,eventWroteByMe)
+        System.out.println("detail extract"+eventWroteByMe)
     }
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~

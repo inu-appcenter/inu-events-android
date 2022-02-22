@@ -38,9 +38,12 @@ class CommentViewModel : ViewModel(), KoinComponent {
         private set
     var commentIndex = -1
         private set
+    var eventWroteByMeBoolean = false
+        private set
 
-    fun load(eventId: Int) {
+    fun load(eventId: Int, eventWroteByMe: Boolean) {
         eventIndex = eventId
+        eventWroteByMeBoolean = eventWroteByMe
         loadCommentList()
     }
 

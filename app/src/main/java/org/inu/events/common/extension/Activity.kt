@@ -19,6 +19,16 @@ fun Activity.getIntExtra(name: String): Int? {
     }
 }
 
+fun Activity.getBooleanExtra(name: String): Boolean? {
+    val extras = intent.extras ?: return null
+
+    return if (intent.hasExtra(name)) {
+        extras.getBoolean(name, false).takeIf { it != null }
+    } else {
+        null
+    }
+}
+
 fun ComponentActivity.registerForActivityResult(onResult: (ActivityResult) -> Unit): ActivityResultLauncher<Intent> {
     return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         onResult(it)

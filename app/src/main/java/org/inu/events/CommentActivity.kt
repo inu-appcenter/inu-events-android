@@ -9,27 +9,33 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.inu.events.adapter.CommentAdapter
+import org.inu.events.common.extension.getBooleanExtra
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.databinding.ActivityCommentBinding
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
+import org.inu.events.objects.IntentMessage
 import org.inu.events.objects.IntentMessage.COMMENT_ID
 import org.inu.events.objects.IntentMessage.EVENT_ID
+import org.inu.events.objects.IntentMessage.EVENT_WROTE_BY_ME
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
+import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1) =
+        fun callingIntent(context: Context, eventId: Int = -1, eventWroteByMe: Boolean = false) =
             Intent(context, CommentActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
+                putExtra(EVENT_WROTE_BY_ME, eventWroteByMe)
             }
     }
 
     private val commentViewModel: CommentViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels()
     private val loginService: LoginService by inject()
 
     private lateinit var commentBinding: ActivityCommentBinding
@@ -62,7 +68,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = CommentAdapter(viewModel = commentViewModel)
+        val theAdapter = CommentAdapter(viewModel = commentViewModel, detailViewModel = detailViewModel)
 
         commentBinding.commentRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -100,7 +106,9 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(EVENT_ID) ?: return
-        commentViewModel.load(id)
+        val eventWroteByMe = getBooleanExtra(IntentMessage.EVENT_WROTE_BY_ME) ?: return
+        commentViewModel.load(id,eventWroteByMe)
+        System.out.println("CommentActivity extract"+eventWroteByMe)
     }
 
     private fun showBottomSheet() {

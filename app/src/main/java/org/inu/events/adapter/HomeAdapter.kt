@@ -68,7 +68,8 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
         override fun onClick(v: View) {
             with(binding.root.context) {
-                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id))
+                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id, binding.homeData!!.wroteByMe))
+                System.out.println("onclick안에"+binding.homeData!!.wroteByMe)
             }
         }
 
