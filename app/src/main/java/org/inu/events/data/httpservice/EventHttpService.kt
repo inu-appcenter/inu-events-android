@@ -30,7 +30,7 @@ interface EventHttpService {
     @Multipart
     @POST("/images")
     fun uploadImage(
-        @Part image: MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Call<UploadImageResult>
 
 }

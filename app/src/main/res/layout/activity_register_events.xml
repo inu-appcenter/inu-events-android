@@ -55,7 +55,7 @@
                 android:clickable="@{!registerViewModel.imageCheckBoxBoolean}"
                 android:contentDescription="@string/text_notice_a4"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 app:layout_constraintBottom_toTopOf="@+id/textView_Info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

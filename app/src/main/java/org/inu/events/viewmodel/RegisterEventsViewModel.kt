@@ -183,9 +183,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         val file = File(imageUrl.value.toString())
         val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
         val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        Log.d("tag","이미지 업로드 전")
-        imageUuid = eventRepository.uploadImage(image).imageUuid
-        Log.d("tag","이미지 업로드 후")
+        imageUuid = eventRepository.uploadImage(image).uuid
     }
 
     fun onCancelClick() {
@@ -236,8 +234,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCheckBoxClick(){
-        if(imageCheckBoxBoolean.value!!){
-            imageUrl.value = ""
+        if(!imageCheckBoxBoolean.value!!){
+            submissionUrl.value = ""
         }
         if(timeCheckBoxBoolean.value!!){
             startTimePeriod.value = "00:00 AM"
