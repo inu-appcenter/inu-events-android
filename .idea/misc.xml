@@ -12,6 +12,7 @@
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_home_board_image_background.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_login_dialog_background.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/history_background.xml" value="0.1695" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/outline_border_4.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/radius_6.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/switch_thumb.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/switch_track.xml" value="0.1695" />
@@ -25,6 +26,7 @@
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_privacy_policy.xml" value="0.2140625" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_update_profile.xml" value="0.33" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/home_recyclerview_item.xml" value="0.2140625" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_my_event.xml" value="0.234375" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.2140625" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_layout.xml" value="0.1537037037037037" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_sample.xml" value="0.1537037037037037" />
