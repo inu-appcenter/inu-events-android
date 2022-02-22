@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#00BAAE</color>
     <color name="primary_base">#CEF4F1</color>
     <color name="primary100">#00BAAE</color>
+    <color name="primary80">#FF45CCC3</color>
+    <color name="primary">#FF00BAAE</color>
+    <color name="primary120">#FF03968D</color>
+    <color name="base">#FFCEF4F1</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -12,15 +15,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="black5">#FFF2F2F2</color>
+    <color name="black10">#FFE5E5E5</color>
+    <color name="black20">#FFBFBFBF</color>
+    <color name="black30">#FFB3B3B3</color>
+    <color name="black40">#FF808080</color>
+    <color name="black60">#FF4D4D4D</color>
+    <color name="black80">#FF333333</color>
+
     <color name="black1">#FF191919</color>
     <color name="black7">#FF757575</color>
     <color name="black8">#FF808080</color>
-    <color name="black10">#E5E5E5</color>
-    <color name="black20">#BFBFBF</color>
-    <color name="black40">#808080</color>
     <color name="transparent">#00000000</color>
-    <color name="dividerF">#FFF2F2F2</color>
     <color name="dbdbdb">#DBDBDB</color>
     <color name="background">#F8F6FF</color>
-    <color name="dividerB">#B3B3B3</color>
 </resources>
