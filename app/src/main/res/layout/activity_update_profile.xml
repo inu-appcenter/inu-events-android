@@ -26,8 +26,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="36dp"
-            app:cardElevation="0dp">
-            <View
+            app:cardElevation="0dp"
+            android:onClick="@{()->viewModel.onClickUpdatePhoto()}">
+            <ImageView
                 android:id="@+id/photo_update"
                 android:layout_width="78dp"
                 android:layout_height="78dp"

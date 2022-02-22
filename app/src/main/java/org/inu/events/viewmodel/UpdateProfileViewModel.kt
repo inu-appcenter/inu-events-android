@@ -1,20 +1,26 @@
 package org.inu.events.viewmodel
 
+import android.content.Intent
+import android.media.Image
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.UpdateUserParams
 import org.inu.events.data.model.entity.User
+import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.UserService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class UpdateProfileViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
+    private val eventRepository: EventRepository by inject()
     val user = MutableLiveData<User>()
+    val updatePhotoEvent = SingleLiveEvent<Any>()
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
@@ -55,6 +61,21 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
         CoroutineScope(Dispatchers.Main).launch {
             userService.updateUser(newUser)
             finishEvent.call()
+        }
+    }
+
+    fun onClickUpdatePhoto() {
+        updatePhotoEvent.call()
+    }
+
+    fun uploadImage(image: MultipartBody.Part) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val imageUuid = eventRepository.uploadImage(image).imageUuid
+            val newUser = UpdateUserParams(
+                nickname = null,
+                imageUuid = imageUuid
+            )
+            userService.updateUser(newUser)
         }
     }
 }
