@@ -1,72 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="20dp"
-    android:layout_marginHorizontal="@dimen/horizontal_margin">
+<layout>
+    <data>
+        <variable
+            name="item"
+            type="org.inu.events.data.model.entity.Event" />
+    </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="6dp">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_marginBottom="20dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="10dp">
+            android:layout_height="140dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="6dp">
 
-            <ImageView
-                android:id="@+id/poster"
-                android:layout_width="85dp"
-                android:layout_height="120dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/outline_border_4"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="10dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/poster"
-                app:layout_constraintStart_toEndOf="@id/poster"
-                app:layout_constraintEnd_toStartOf="@id/bookmark_icon"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                tools:text="현장체험 (인천십) 실습생 모집 공고 근데 더 길게 써야 한다."
-                android:ellipsize="end"
-                android:maxLines="1"/>
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="85dp"
+                    android:layout_height="120dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:background="@drawable/outline_border_4"/>
 
-            <View
-                android:id="@+id/bookmark_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:layout_constraintTop_toTopOf="@id/title"
-                app:layout_constraintBottom_toBottomOf="@id/title"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/purple_200"/>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/poster"
+                    app:layout_constraintStart_toEndOf="@id/poster"
+                    app:layout_constraintEnd_toStartOf="@id/bookmark_icon"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    tools:text="현장체험 (인천십) 실습생 모집 공고 근데 더 길게 써야 한다."
+                    android:text="@{item.title}"
+                    android:textColor="@color/black1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="4dp"
-                android:maxLines="3"
-                android:ellipsize="end"
-                tools:text="2021년 스타트업 현장체험(인턴십) 실습생 모집합니다. 인천대학교 창업지원단 홈페이지에서 양식을 다운받아 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단"/>
+                <View
+                    android:id="@+id/bookmark_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="@id/title"
+                    app:layout_constraintBottom_toBottomOf="@id/title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/ic_bookmark_filled"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintBottom_toBottomOf="@id/poster"
-                tools:text="댓글 12"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:text="@{item.body}"
+                    tools:text="2021년 스타트업 현장체험(인턴십) 실습생 모집합니다. 인천대학교 창업지원단 홈페이지에서 양식을 다운받아 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단 창업지원단"
+                    android:textSize="13sp"
+                    android:textColor="@color/black60"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/title"
+                    app:layout_constraintBottom_toBottomOf="@id/poster"
+                    tools:text="댓글 12"
+                    android:textSize="13sp"
+                    android:textColor="@color/black20"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -27,8 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="36dp"
-            app:cardElevation="0dp"
-            imageFromUrl="@{viewModel.user.}">
+            app:cardElevation="0dp">
             <ImageView
                 android:id="@+id/photo"
                 android:layout_width="78dp"
