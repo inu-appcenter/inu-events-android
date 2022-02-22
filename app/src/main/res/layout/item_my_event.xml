@@ -31,6 +31,9 @@
             android:layout_marginEnd="4dp"
             android:layout_marginStart="20dp"
             tools:text="카페에서 디자인 스터디 하실 분 구해요. 같이하자"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/black1"
             android:ellipsize="end"
             android:maxLines="1"/>
 
@@ -38,11 +41,13 @@
             android:id="@+id/day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="02/07"
             app:layout_constraintTop_toTopOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin" />
+            android:layout_marginEnd="@dimen/horizontal_margin"
+            tools:text="02/07"
+            android:textSize="13sp"
+            android:textColor="@color/black30" />
 
         <TextView
             android:id="@+id/content"
@@ -54,7 +59,9 @@
             android:layout_marginEnd="@dimen/horizontal_margin"
             android:layout_marginTop="4dp"
             tools:text="카페에서 같이 디자인 스터디 하실분 구해요! 제가 취업준비생이라 같이 취업준비하시는 분들과 같이 진행하면 좋을 것 같아요. 근데 이거보다 더 길게 써야 ...이 생기든 말든 할텐데"
+            android:textSize="13sp"
             android:maxLines="3"
+            android:textColor="@color/black60"
             android:ellipsize="end"/>
 
         <TextView
@@ -63,7 +70,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/poster"
             app:layout_constraintStart_toStartOf="@id/content"
-            tools:text="댓글 6"/>
+            tools:text="댓글 6"
+            android:textSize="13sp"
+            android:textColor="@color/black40"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
