@@ -45,6 +45,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
     val urlCheckBoxBoolean = MutableLiveData(false)
+    val errorMessage = MutableLiveData("")
     private var imageUuid: String? = ""
 
     var btnIndex = 0
@@ -84,6 +85,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(!isItNew){
             loadCurrentEvent()
         }
+    }
+
+    fun errorMessageString(): Boolean{
+        errorMessage.value = when{
+            title.value!!.isEmpty() -> "공백은 제목으로 설정하실 수 없습니다."
+            else -> ""
+        }
+        return errorMessage.value!!.isEmpty()
     }
 
     private fun loadCurrentEvent() {
@@ -174,9 +183,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         val file = File(imageUrl.value.toString())
         val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
         val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        Log.d("tag","이미지 업로드 전")
-        imageUuid = eventRepository.uploadImage(image).imageUuid
-        Log.d("tag","이미지 업로드 후")
+        imageUuid = eventRepository.uploadImage(image).uuid
     }
 
     fun onCancelClick() {
@@ -200,12 +207,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        if (isItNew) {
-            addEvent()
-        } else {
-            updateEvent()
+        if(errorMessageString()){
+            if (isItNew) {
+                addEvent()
+            } else {
+                updateEvent()
+            }
+            finishEvent.call()
         }
-        finishEvent.call()
     }
 
     fun onStartDateClick() {
@@ -225,8 +234,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCheckBoxClick(){
-        if(imageCheckBoxBoolean.value!!){
-            imageUrl.value = ""
+        if(!imageCheckBoxBoolean.value!!){
+            submissionUrl.value = ""
         }
         if(timeCheckBoxBoolean.value!!){
             startTimePeriod.value = "00:00 AM"
@@ -314,4 +323,5 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         timePickerValueEndTime = endHour.toInt()
         timePickerValueEndMinute = endMinute.toInt()
     }
+
 }

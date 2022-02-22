@@ -7,13 +7,14 @@ import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.repository.EventRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
-
+    private val commentRepository: CommentRepository by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
@@ -36,6 +37,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffText = MutableLiveData<String>()
     val onOffColor = MutableLiveData<Int>()
     val onOffBackground = MutableLiveData<Int>()
+    val subMissionUrlNull = MutableLiveData(false)
+    val commentSize = MutableLiveData("")
 
     fun load(eventId: Int, eventWroteByMe: Boolean) {
         eventIndex = eventId
@@ -65,7 +68,15 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
+            if(_currentEvent.value?.submissionUrl == "") subMissionUrlNull.value = true
         }.catch {  }
+
+        execute {
+            commentRepository.getComments(eventIndex)
+        }.then{
+            commentSize.value = "댓글 ${it.size}개"
+        }.catch {  }
+
     }
 
     //댓글버튼 클릭했을 때 이벤트
@@ -91,8 +102,5 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }.then {  }. catch {  }
     }
 
-    fun isMyWriting(): Boolean{
-
-        return true
-    }
+    fun isMyWriting() = true
 }
