@@ -73,7 +73,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/dividerF"
+            android:background="@color/black10"
             app:layout_constraintBottom_toTopOf="@id/bottomBar"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomBar"
