@@ -83,16 +83,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="내가 쓴 글"
-                android:textColor="@color/primary120"
+                android:text="저장목록"
+                android:textColor="@color/black80"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:gravity="center"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/black10"/>
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="댓글 단 글"
-                android:textColor="@color/primary120"
+                android:text="알림목록"
+                android:textColor="@color/black80"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 android:gravity="center"/>
         </LinearLayout>
@@ -119,20 +125,55 @@
             android:textColor="@color/black"
             android:textSize="16sp"/>
 
-        <androidx.appcompat.widget.SwitchCompat
+        <View
             android:id="@+id/toggle_notification"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             app:layout_constraintBottom_toBottomOf="@id/notification_setting"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/notification_setting"
-            android:layout_marginHorizontal="@dimen/horizontal_margin"/>
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:background="@drawable/ic_arrow_right"
+            android:backgroundTint="@color/black40"/>
+
+        <TextView
+            android:id="@+id/quick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/toggle_notification"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:text="바로가기"
+            android:textColor="@color/black40"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/my_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/quick"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:text="내가 쓴 글"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/my_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/my_event"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:text="댓글 단 글"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/notification_setting"
+            app:layout_constraintTop_toBottomOf="@id/my_comment"
             android:layout_marginTop="24dp"
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             android:text="이용안내"
