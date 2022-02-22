@@ -13,6 +13,18 @@ class SharedPreferenceWrapper(context: Context) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
+    fun putArrayString(key: String, arrayInt: Array<String>) {
+        preferences.edit {
+            putString(key, TextUtils.join("‚‗‚", arrayInt))
+        }
+    }
+
+    fun getArrayString(key: String): Array<String>? {
+        val record = preferences.getString(key, null) ?: return null
+
+        return TextUtils.split(record, "‚‗‚").map { it }.toTypedArray()
+    }
+
     fun putArrayInt(key: String, arrayInt: Array<Int>) {
         preferences.edit {
             putString(key, TextUtils.join("‚‗‚", arrayInt))
