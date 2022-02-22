@@ -7,8 +7,8 @@
     <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
     <string name="text_select2">내용 입력</string>
     <string name="text_title">제목을 입력해주세요.</string>
-    <string name="text_organiztion">소속된 단체를 입력하세요.</string>
-    <string name="text_organization_example">(ex.총학생회,컴퓨터공학부)</string>
+    <string name="text_host">소속된 단체를 입력하세요.</string>
+    <string name="text_host_example">(ex.총학생회,컴퓨터공학부)</string>
     <string name="text_classification">분류를 선택하세요.</string>
     <string name="text_date">모집기간을 선택해주세요</string>
     <string name="text_time">진행시간을 선택해주세요</string>
@@ -20,12 +20,12 @@
     <string name="text_content">내용을 입력해주세요.</string>
     <string name="text_before">이전</string>
     <string name="text_complete">완료</string>
-    <string name="text_notice_max">800자 이내로 입력 가능합니다</string>
+    <string name="text_notice_image">없음 선택시 기본이미지가 등록됩니다</string>
     <string name="text_edit">수정하기</string>
     <string name="text_delete">삭제하기</string>
     <string name="text_input">입력란</string>
-    <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
-    <string name="text_notice_a4">A4규격의 이미지를 등록해주세요</string>
+    <string name="text_location">신청 링크 또는 장소를 입력해 주세요</string>
+    <string name="text_notice_max">800자 이내로 입력 가능합니다.</string>
     <string name="text_letter_input">레터입력</string>
     <string name="text_detail_letter">상세레터</string>
     <string name="text_picture_registration">사진등록</string>

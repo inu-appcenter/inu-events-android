@@ -63,7 +63,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             binding.boardDate.background =
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
             imageUrl += homeData.imageUuid
-            bindImageFromUrl(binding.homeImage, imageUrl)
+            bindImageFromUrl(binding.homeImageView, imageUrl)
         }
 
         override fun onClick(v: View) {

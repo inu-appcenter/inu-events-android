@@ -40,10 +40,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData("")
+    val target = MutableLiveData("") //todo - 서버에 필드 추가되면 구현
     val submissionUrl = MutableLiveData("")
+    val ContactNumber = MutableLiveData("")
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
+    val ContactNumberCheckBoxBoolean = MutableLiveData(false)
     val urlCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
     private var imageUuid: String? = ""

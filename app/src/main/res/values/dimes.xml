@@ -13,4 +13,7 @@
     <dimen name="register_top_margin">24dp</dimen>
     <dimen name="detail_bottom_margin">24dp</dimen>
     <dimen name="detail_bottom_margin_null">0dp</dimen>
+
+    <!-- height -->
+    <dimen name="exitText_height">44dp</dimen>
 </resources>
