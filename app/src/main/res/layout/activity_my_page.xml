@@ -87,7 +87,8 @@
                 android:textColor="@color/black80"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:onClick="@{(view)->viewModel.onClickLikeList(view)}"/>
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -100,7 +101,8 @@
                 android:textColor="@color/black80"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:onClick="@{(view)->viewModel.onClickNotificationList(view)}"/>
         </LinearLayout>
 
         <TextView
@@ -156,7 +158,8 @@
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             android:text="내가 쓴 글"
             android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:onClick="@{(view)->viewModel.onClickMyEvent(view)}"/>
 
         <TextView
             android:id="@+id/my_comment"
@@ -167,7 +170,8 @@
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             android:text="댓글 단 글"
             android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:onClick="@{(view)->viewModel.onClickMyComment(view)}"/>
 
         <TextView
             android:id="@+id/information"
