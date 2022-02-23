@@ -13,9 +13,9 @@ class SharedPreferenceWrapper(context: Context) {
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun putArrayString(key: String, arrayInt: Array<String>) {
+    fun putArrayString(key: String, arrayString: Array<String>) {
         preferences.edit {
-            putString(key, TextUtils.join("‚‗‚", arrayInt))
+            putString(key, TextUtils.join("‚‗‚", arrayString))
         }
     }
 
@@ -36,6 +36,19 @@ class SharedPreferenceWrapper(context: Context) {
 
         return TextUtils.split(record, "‚‗‚").map { it.toInt() }.toTypedArray()
     }
+
+    fun putArrayBoolean(key: String, arrayBoolean: Array<Boolean>) {
+        preferences.edit {
+            putString(key, TextUtils.join("‚‗‚", arrayBoolean))
+        }
+    }
+
+    fun getArrayBoolean(key: String): Array<Boolean>? {
+        val record = preferences.getString(key, null) ?: return null
+
+        return TextUtils.split(record, "‚‗‚").map { it.toBoolean() }.toTypedArray()
+    }
+
 
     fun putString(key: String, value: String?) {
         preferences.edit {

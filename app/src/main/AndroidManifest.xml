@@ -58,14 +58,14 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <receiver android:name=".service.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:directBootAware="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
         <service android:name=".service.AlarmService"/>
     </application>
 
