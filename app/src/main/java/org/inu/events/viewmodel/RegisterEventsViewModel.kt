@@ -42,11 +42,11 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val host = MutableLiveData("")
     val target = MutableLiveData("") //todo - 서버에 필드 추가되면 구현
     val submissionUrl = MutableLiveData("")
-    val ContactNumber = MutableLiveData("")
+    val contactNumber = MutableLiveData("")
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
-    val ContactNumberCheckBoxBoolean = MutableLiveData(false)
+    val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val urlCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
     private var imageUuid: String? = ""
@@ -146,14 +146,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun addEvent() {
         execute {
-            //uploadImage()
+            uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
                     host = host.value ?: "",
                     category = spinnerToCategory(),
                     title = title.value ?: "",
                     body = body.value ?: "",
-                    imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
+                    imageUuid = imageUuid ?: "",
                     submissionUrl = submissionUrl.value ?: "",
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt()
@@ -238,11 +238,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun onCheckBoxClick(){
         if(!imageCheckBoxBoolean.value!!){
-            submissionUrl.value = ""
+            imageUrl.value = ""
         }
         if(timeCheckBoxBoolean.value!!){
-            startTimePeriod.value = "00:00 AM"
-            endTimePeriod.value = "11:59 PM"
+            endDatePeriod.value = startDatePeriod.value
+            endTimePeriod.value = endTimePeriod.value
+        }
+        if(contactNumberCheckBoxBoolean.value!!){
+            contactNumber.value = ""
         }
         if(urlCheckBoxBoolean.value!!){
             submissionUrl.value = ""

@@ -27,17 +27,20 @@ import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
+import org.inu.events.objects.IntentMessage.MY_WROTE
 import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
+import java.lang.Boolean.getBoolean
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1) =
+        fun callingIntent(context: Context, eventId: Int = -1, myWrote: Boolean? = false) =
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
+                putExtra(MY_WROTE, myWrote)
             }
 
         private const val SHARED_PREFERENCES_NAME = "alarm"
@@ -197,7 +200,7 @@ class DetailActivity : AppCompatActivity() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
         //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
-            if (viewModel.isMyWriting()) {
+            if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
@@ -253,6 +256,8 @@ class DetailActivity : AppCompatActivity() {
         id = getIntExtra(EVENT_ID) ?: return
         viewModel.load(id)
     }
+
+    private fun isMyWriting() = true
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~
     private fun isFromAlarm(){

@@ -386,7 +386,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/view2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_start_period"
-                        tools:text="2001.07.17" />
+                        tools:text="시작일 입력" />
 
                     <View
                         android:id="@+id/view2"
@@ -417,7 +417,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textView_start_period"
                         app:layout_constraintStart_toEndOf="@id/view2"
-                        tools:text="2001.07.17" />
+                        tools:text="시작시간 입력" />
 
                     <TextView
                         android:id="@+id/textView_end_period"
@@ -468,17 +468,17 @@
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/drawable_edit_text_background"
                         android:gravity="center"
-                        android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
+                        android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
-                        android:text="@={registerViewModel.startTimePeriod}"
+                        android:text="@={registerViewModel.endDatePeriod}"
                         android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toStartOf="@+id/view3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
-                        tools:text="7:35 AM" />
+                        tools:text="마감일 입력" />
 
                     <View
                         android:id="@+id/view3"
@@ -511,7 +511,7 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/view3"
                         app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
-                        tools:text="7:35 AM" />
+                        tools:text="마감시간 클릭" />
 
                     <TextView
                         android:id="@+id/textView_contact"
@@ -545,7 +545,7 @@
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
-                        android:checked="@={registerViewModel.ContactNumberCheckBoxBoolean}"
+                        android:checked="@={registerViewModel.contactNumberCheckBoxBoolean}"
                         android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -566,7 +566,7 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.ContactNumber}"
-                        android:enabled="@{!registerViewModel.ContactNumberCheckBoxBoolean}"
+                        android:enabled="@{!registerViewModel.contactNumberCheckBoxBoolean}"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"

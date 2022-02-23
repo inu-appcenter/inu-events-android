@@ -98,6 +98,4 @@ class DetailViewModel : ViewModel(), KoinComponent {
             eventRepository.deleteEvent(eventIndex)
         }.then {  }. catch {  }
     }
-
-    fun isMyWriting() = true
 }
