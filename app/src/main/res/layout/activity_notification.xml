@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.LikeViewModel" />
+            type="org.inu.events.viewmodel.NotificationViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LikeActivity">
+        tools:context=".NotificationActivity">
 
         <include
             android:id="@+id/toolbar"
@@ -22,10 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:listitem="@layout/item_favorite_event"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"/>
-
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
