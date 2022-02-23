@@ -65,6 +65,8 @@ class DetailActivity : AppCompatActivity() {
         initOnOffButton()
 
         setupToolbar()
+
+
     }
 
     private fun initBinding() {
@@ -98,7 +100,7 @@ class DetailActivity : AppCompatActivity() {
             }
             else{
                 alarmDialog.showDialog(this, title = getString(R.string.alarm_off_title), content =getString(R.string.alarm_off_content))
-                cancelAlarm()
+                AlarmForm(this, eventID = id).cancelAlarm()
                 renderOnOffButton(newModel)
             }
         }
@@ -113,26 +115,8 @@ class DetailActivity : AppCompatActivity() {
             alarmDialog.showDialog(this, title = getString(R.string.alarm_on_title_last), content = getString(R.string.alarm_on_content_last))
         }
         // On -> 알람 등록
-        val calendar = Calendar.getInstance().apply {
-            // todo 시간 알맞게
-            val from = "2022-02-21 05:37:00"
-            time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).parse(from)
-        }
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, AlarmReceiver::class.java).apply {
-            putExtra("title to receiver", binding.detailTitle.text)
-            putExtra("content to receiver", isBeforeStart)
-            putExtra("eventId to receiver", id)
-        }
-        val pendingIntent = PendingIntent.getBroadcast(
-            // 이렇게하면 계속 쌓이기에 ONOFF_KEY 로 하면 각 eventId에 맞게 업데이트
-            this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        alarmManager.setExactAndAllowWhileIdle(  //  절전모드일 때도 울리게 아니면 .setExact
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
+        AlarmForm(this, eventID = id).registerAlarmOnDetail(
+            title = binding.detailTitle.text.toString(), date = "2022-02-23 21:05:00", isBeforeStart = isBeforeStart)
     }
 
     // 알람 버튼 요소 변경
@@ -179,17 +163,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         return model
-    }
-
-    // 알람 취소
-    private fun cancelAlarm() {
-        val pendingIntent = PendingIntent.getBroadcast(
-            this,
-            id,
-            Intent(this, AlarmReceiver::class.java),
-            PendingIntent.FLAG_NO_CREATE
-        )
-        pendingIntent?.cancel()
     }
 
 
