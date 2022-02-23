@@ -16,10 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.MyApplication.Companion.bindImageFromUrl
-import org.inu.events.common.extension.getIntExtra
-import org.inu.events.common.extension.observe
-import org.inu.events.common.extension.observeNonNull
-import org.inu.events.common.extension.toast
+import org.inu.events.common.extension.*
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
@@ -42,7 +39,6 @@ class DetailActivity : AppCompatActivity() {
                 putExtra(EVENT_ID, eventId)
                 putExtra(MY_WROTE, myWrote)
             }
-
         private const val SHARED_PREFERENCES_NAME = "alarm"
     }
 
@@ -67,7 +63,6 @@ class DetailActivity : AppCompatActivity() {
         initCommentButton()
         initOnOffButton()
 
-        setupToolbar()
     }
 
     private fun initBinding() {
@@ -246,6 +241,11 @@ class DetailActivity : AppCompatActivity() {
         renderOnOffButton(model)
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupToolbar()
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
 
@@ -257,7 +257,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.load(id)
     }
 
-    private fun isMyWriting() = true
+    private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~
     private fun isFromAlarm(){
