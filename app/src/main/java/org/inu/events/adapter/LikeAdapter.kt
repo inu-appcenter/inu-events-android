@@ -7,13 +7,17 @@ import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemFavoriteEventBinding
 
 class LikeAdapter: RecyclerView.Adapter<LikeAdapter.ViewHolder>() {
-    var list: List<Event>? = null
+    private var list: List<Event>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list!![position])
     }
     override fun getItemCount() = list?.size ?: 0
+
+    fun submitList(list: List<Event>) {
+        this.list = list
+    }
 
     class ViewHolder private constructor(val binding: ItemFavoriteEventBinding) : RecyclerView.ViewHolder(binding.root) {
         companion object {

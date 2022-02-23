@@ -24,7 +24,8 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/item_favorite_event"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:likes="@{viewModel.eventList}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
