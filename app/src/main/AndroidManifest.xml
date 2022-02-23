@@ -20,6 +20,9 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LikeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyHistoryActivity"
             android:exported="false" />
         <activity
