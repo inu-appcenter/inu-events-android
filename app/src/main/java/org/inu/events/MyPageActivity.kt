@@ -21,5 +21,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>() {
     override fun onResume() {
         super.onResume()
         viewModel.fetchData()
+        binding.executePendingBindings()
     }
 }

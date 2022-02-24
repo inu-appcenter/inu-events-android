@@ -1,11 +1,10 @@
 package org.inu.events
 
 import android.app.Application
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
-import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import org.inu.events.di.myModules
@@ -14,21 +13,32 @@ import org.koin.core.context.startKoin
 
 
 class MyApplication : Application() {
-    companion object{
+    companion object {
         @BindingAdapter("imageFromUrl")
         @JvmStatic
         fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-            if(!imageUrl.isNullOrEmpty()) {
+            if (!imageUrl.isNullOrEmpty()) {
                 Glide.with(view.context)
                     .load(imageUrl)
                     .error(R.drawable.img_default)
                     .placeholder(R.drawable.img_default)
                     .into(view)
-            }else{
+            } else {
                 Glide.with(view.context)
                     .load(imageUrl)
                     .into(view)
             }
+        }
+
+        @BindingAdapter("app:photo_uuid")
+        @JvmStatic
+        fun setPhoto(view: ImageView, uuid: String?) {
+            Log.e("sdf", "http://uniletter.inuappcenter.kr/images/$uuid")
+            Glide.with(view.context)
+                .load("http://uniletter.inuappcenter.kr/images/$uuid")
+                .error(R.drawable.default_profile_background)
+                .placeholder(R.drawable.default_profile_background)
+                .into(view)
         }
 
         @BindingAdapter("layoutMarginBottom")
@@ -41,6 +51,7 @@ class MyApplication : Application() {
         }
 
     }
+
     override fun onCreate() {
         super.onCreate()
 

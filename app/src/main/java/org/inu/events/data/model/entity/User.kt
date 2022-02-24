@@ -6,5 +6,6 @@ data class User(
     val nickname:String,
     val oauthProvider:String,
     val oauthId:String,
-    val createdAt:String
+    val createdAt:String,
+    val imageUuid: String? = null
 )

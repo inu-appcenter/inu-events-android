@@ -70,7 +70,7 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
 
     fun uploadImage(image: MultipartBody.Part) {
         CoroutineScope(Dispatchers.IO).launch {
-            val imageUuid = eventRepository.uploadImage(image).imageUuid
+            val imageUuid = eventRepository.uploadImage(image).uuid
             val newUser = UpdateUserParams(
                 nickname = null,
                 imageUuid = imageUuid

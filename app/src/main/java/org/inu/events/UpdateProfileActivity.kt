@@ -17,6 +17,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.inu.events.base.BaseActivity
+import org.inu.events.common.util.URIPathHelper
 import org.inu.events.databinding.ActivityUpdateProfileBinding
 import org.inu.events.viewmodel.UpdateProfileViewModel
 import java.io.ByteArrayOutputStream
@@ -44,7 +45,9 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
                 val uri = result.data?.data
                 Glide.with(this).load(uri).into(binding.photoUpdate)
 
-                val file = uri!!.toFile()
+                val filePath = URIPathHelper().getPath(this, uri!!)
+                val file = File(filePath!!)
+
                 val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
                 val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
                 viewModel.uploadImage(image)
