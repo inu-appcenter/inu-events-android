@@ -24,7 +24,8 @@
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            tools:listitem="@layout/item_category"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
