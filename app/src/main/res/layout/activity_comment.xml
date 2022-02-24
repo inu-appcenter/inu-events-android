@@ -70,12 +70,15 @@
             app:layout_constraintBottom_toTopOf="@id/bottomBar"
             app:layout_constraintTop_toBottomOf="@id/howManyCommentTextView"
             tools:listitem="@layout/item_comment" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black10"
+            app:layout_constraintBottom_toTopOf="@id/bottomBar"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
@@ -83,45 +86,41 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:layout_weight="1"
                 android:autofillHints="no"
                 android:background="@null"
                 android:hint="@string/text_input"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:paddingVertical="10dp"
                 android:text="@={commentViewModel.content}"
                 android:textColor="@color/black1"
+                android:layout_marginVertical="18dp"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginEnd="4dp"
+                android:scrollHorizontally="false"
+                android:maxLines="3"
+                android:maxLength="300"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@id/commentEnrollButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/commentEnrollButton"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
                 android:background="@drawable/drawable_comment_btn"
                 android:onClick="@{()->commentViewModel.onClickBtn()}"
-                android:text="등록"
+                android:text='@{commentViewModel.isLoggedIn() ? "등록" : "로그인"}'
+                tools:text="등록"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
-                android:visibility="@{commentViewModel.isLoggedIn() == true ? View.VISIBLE : View.INVISIBLE}"
+                android:layout_marginEnd="@dimen/horizontal_margin"
                 app:layout_constraintBottom_toBottomOf="@id/commentEditText"
+                app:layout_constraintStart_toEndOf="@id/commentEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/commentEditText" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/commentLoginButton"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/drawable_comment_btn"
-                android:onClick="@{()->commentViewModel.onClickBtn()}"
-                android:text="로그인"
-                android:textColor="@color/white"
-                android:textSize="@dimen/body2"
-                android:visibility="@{commentViewModel.isLoggedIn() == false ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintBottom_toBottomOf="@id/commentEditText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/commentEditText" />
-
+                app:layout_constraintTop_toTopOf="@id/commentEditText"
+                android:minWidth="0dp"
+                android:paddingHorizontal="14dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

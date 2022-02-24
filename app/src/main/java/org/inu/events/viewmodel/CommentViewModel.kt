@@ -4,23 +4,29 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.inu.events.BottomSheet
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
 import org.inu.events.data.model.dto.UpdateCommentParams
 import org.inu.events.data.model.entity.Comment
+import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.CommentRepository
+import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class CommentViewModel : ViewModel(), KoinComponent {
+    private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
 
     private val _commentDataList = MutableLiveData<List<Comment>>()
     val commentList: LiveData<List<Comment>>
         get() = _commentDataList
+
+    private val _currentEvent = MutableLiveData<Event>()
+    val currentEvent: MutableLiveData<Event>
+        get() = _currentEvent
 
     val commentSizeText = MutableLiveData("댓글 0 >")
     val content = MutableLiveData("")
@@ -30,9 +36,9 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     val btnClickEvent = SingleLiveEvent<Any>()
     val plusBtnClickEvent = SingleLiveEvent<Any>()
-    val postCommentClickEvent = SingleLiveEvent<Any>()
+    //val postCommentClickEvent = SingleLiveEvent<Any>()
     val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
-    val arrowUpBtnClickEvent = SingleLiveEvent<Any> ()
+    val arrowUpBtnClickEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
         private set
@@ -41,7 +47,16 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun load(eventId: Int) {
         eventIndex = eventId
-        loadCommentList()
+        loadEventsAndComments()
+    }
+
+    fun loadEventsAndComments() {
+        execute {
+            eventRepository.getEvent(eventIndex)
+        }.then {
+            _currentEvent.value = it
+            loadCommentList()
+        }.catch { }
     }
 
     fun deleteComment(callback: () -> Unit) {
@@ -55,7 +70,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun updateComment() {
         execute {
-            commentRepository.updateComment(id = commentIndex,
+            commentRepository.updateComment(
+                id = commentIndex,
                 UpdateCommentParams(content = content.value ?: "")
             )
         }.then {
@@ -65,7 +81,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun postComment() {
         execute {
-            Log.i("postComment",content.value.toString())
+            Log.i("postComment", content.value.toString())
             commentRepository.postComment(
                 AddCommentParams(
                     eventId = eventIndex,
@@ -75,14 +91,13 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.then {
             loadCommentList()
         }.catch { }
-        postCommentClickEvent.call()
     }
 
     private fun loadCommentList(callback: () -> Unit = {}) {
         execute {
             commentRepository.getComments(eventIndex)
         }.then {
-            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ",it.map { it.toString() }.joinToString(", "))
+            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ", it.map { it.toString() }.joinToString(", "))
             callback()
             _commentDataList.value = it
             commentSizeText.value = "댓글 ${it.size} "
@@ -90,13 +105,25 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    private fun loadDetailData() {
+        execute {
+            eventRepository.getEvent(eventIndex)
+        }.then {
+            _currentEvent.value = it
+        }.catch { }
+    }
+
     fun onClickBtn() {
         btnClickEvent.call()
     }
 
+    fun deleteText() {
+        content.value = null
+    }
+
     fun showBottomSheet(commentId: Int) {
         commentIndex = commentId
-        Log.i("commentIndex showBottom",commentIndex.toString())
+        Log.i("commentIndex showBottom", commentIndex.toString())
         plusBtnClickEvent.call()
     }
 

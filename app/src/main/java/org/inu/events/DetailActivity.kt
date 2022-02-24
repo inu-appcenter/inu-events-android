@@ -29,7 +29,6 @@ import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
-import java.lang.Boolean.getBoolean
 import java.util.*
 
 class DetailActivity : AppCompatActivity() {
@@ -189,7 +188,6 @@ class DetailActivity : AppCompatActivity() {
         )
         pendingIntent?.cancel()
     }
-
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }

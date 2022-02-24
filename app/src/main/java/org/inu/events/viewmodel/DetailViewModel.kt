@@ -28,6 +28,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     var eventIndex = -1
         private set
+    var eventWroteByMeBoolean = false
+        private set
 
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Any>()
@@ -68,6 +70,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             if(_currentEvent.value?.submissionUrl == null) subMissionUrlNull.value = true
             if(_currentEvent.value?.contact == null)contactNull.value = true
             if(subMissionUrlNull.value!! and contactNull.value!!) bothNull.value = true
+            eventWroteByMeBoolean = it.wroteByMe ?:false
         }.catch {  }
     }
 

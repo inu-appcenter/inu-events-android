@@ -6,8 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 
 fun Activity.getIntExtra(name: String): Int? {
     val extras = intent.extras ?: return null
@@ -18,15 +16,17 @@ fun Activity.getIntExtra(name: String): Int? {
         null
     }
 }
+
 fun Activity.getBooleanExtra(name: String): Boolean? {
     val extras = intent.extras ?: return null
 
     return if (intent.hasExtra(name)) {
-        extras.getBoolean(name, false).takeIf { it != false }
+        extras.getBoolean(name, false).takeIf { it != null }
     } else {
         null
     }
 }
+
 fun ComponentActivity.registerForActivityResult(onResult: (ActivityResult) -> Unit): ActivityResultLauncher<Intent> {
     return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         onResult(it)
