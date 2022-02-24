@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+<!--            <ImageView-->
+<!--                android:layout_width=""-->
+<!--                android:layout_height=""-->
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+    
