@@ -33,7 +33,6 @@ class MyApplication : Application() {
         @BindingAdapter("app:photo_uuid")
         @JvmStatic
         fun setPhoto(view: ImageView, uuid: String?) {
-            Log.e("sdf", "http://uniletter.inuappcenter.kr/images/$uuid")
             Glide.with(view.context)
                 .load("http://uniletter.inuappcenter.kr/images/$uuid")
                 .error(R.drawable.default_profile_background)

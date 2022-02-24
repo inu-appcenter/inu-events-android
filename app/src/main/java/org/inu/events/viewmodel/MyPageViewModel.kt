@@ -30,6 +30,11 @@ class MyPageViewModel : ViewModel(), KoinComponent {
         view.context.startActivity(intent)
     }
 
+    fun onClickNotificationSetting(view: View) {
+        val intent = Intent(view.context, NotificationSettingActivity::class.java)
+        view.context.startActivity(intent)
+    }
+
     fun onClickPrivacyPolicy(view: View) {
         val intent = Intent(view.context, PrivacyPolicyActivity::class.java)
         view.context.startActivity(intent)

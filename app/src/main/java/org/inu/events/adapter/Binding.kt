@@ -10,3 +10,11 @@ fun setLikes(recyclerView: RecyclerView, list: List<Event>?) {
         (recyclerView.adapter as LikeAdapter).submitList(list)
     }
 }
+
+@BindingAdapter("app:categories")
+fun setCategories(recyclerView: RecyclerView, list: List<Category>?) {
+    println("아악!!")
+    list?.let {
+        (recyclerView.adapter as CategoryAdapter).submitList(list)
+    }
+}
