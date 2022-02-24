@@ -193,7 +193,6 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
-        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
             if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
@@ -257,7 +256,10 @@ class DetailActivity : AppCompatActivity() {
         viewModel.load(id)
     }
 
-    private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+    //private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+
+    //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
+    private fun isMyWriting() = true
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~
     private fun isFromAlarm(){

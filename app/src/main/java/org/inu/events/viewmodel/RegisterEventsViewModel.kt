@@ -149,14 +149,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
+                    title = title.value ?: "",
                     host = host.value ?: "",
                     category = spinnerToCategory(),
-                    title = title.value ?: "",
-                    body = body.value ?: "",
-                    imageUuid = imageUuid ?: "",
-                    submissionUrl = submissionUrl.value ?: "",
+                    target = target.value ?: "",
                     startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt()
+                    endAt = datePickerToEndAt(),
+                    contact = contactNumber.value ?: "",
+                    location = submissionUrl.value ?: "",
+                    body = body.value ?: "",
+                    imageUuid = imageUuid ?: ""
                 )
             )
         }.then{ }.catch{ }
@@ -168,14 +170,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
+                    title = title.value ?: "",
                     host = host.value ?: "",
                     category = spinnerToCategory(),
-                    title = title.value ?: "",
-                    body = body.value ?: "",
-                    imageUuid = imageUuid ?: "",
-                    submissionUrl = submissionUrl.value ?: "",
+                    target = target.value ?: "",
                     startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt()
+                    endAt = datePickerToEndAt(),
+                    contact = contactNumber.value ?: "",
+                    location = submissionUrl.value ?: "",
+                    body = body.value ?: "",
+                    imageUuid = imageUuid ?: ""
                 )
             )
             Log.d("tag","서버에 데이터 넣기")
@@ -183,10 +187,23 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun uploadImage(){
-        val file = File(imageUrl.value.toString())
-        val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-        val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        imageUuid = eventRepository.uploadImage(image).uuid
+        if(imageCheckBoxBoolean.value == false){
+            val file = File(imageUrl.value.toString())
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            imageUuid = eventRepository.uploadImage(image).uuid
+        }
+        else{
+            imageUuid = when(selectedItemPosition.value){
+                1->"1ec94c4d-284e-6b70-6eba-0ecc1b8dd491"
+                2->"1ec94c3f-2c9d-6590-1fd7-cb603aa85e1e"
+                3->"1ec94c15-ee15-6f30-8bdd-76769baf2a97"
+                4->"1ec94c15-786e-6520-ea08-df4f8c716b04"
+                5->"1ec94c49-4fd6-6ca0-1497-d8b902900844"
+                6->"1ec94c42-4e1a-6030-9859-6dc8e7afe7df"
+                else->""
+            }
+        }
     }
 
     fun onCancelClick() {
@@ -237,7 +254,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCheckBoxClick(){
-        if(!imageCheckBoxBoolean.value!!){
+        if(imageCheckBoxBoolean.value!!){
             imageUrl.value = ""
         }
         if(timeCheckBoxBoolean.value!!){
