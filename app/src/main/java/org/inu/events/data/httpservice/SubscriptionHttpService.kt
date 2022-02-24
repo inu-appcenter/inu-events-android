@@ -1,27 +1,27 @@
 package org.inu.events.data.httpservice
 
-import org.inu.events.data.model.dto.AddTopics
+import org.inu.events.data.model.dto.Topics
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 
-interface SubscribeHttpService {
-    @PUT("/subscribe/subscribing")
+interface SubscriptionHttpService {
+    @PUT("/subscription/subscribing")
     fun putSubscribing(
         @Body subscribing: Boolean
     ): Call<Unit>
 
-    @GET("/subscribe/subscribing")
+    @GET("/subscription/subscribing")
     fun getSubscribing(
     ) : Call<Boolean>
 
-    @PUT("subscribe/topics")
+    @PUT("subscription/topics")
     fun putTopics(
-        @Body param: AddTopics
+        @Body param: Topics
     ) : Call<Unit>
 
-    @GET("subscribe/topics")
+    @GET("subscription/topics")
     fun getTopics(
-    ) : Call<ArrayList<String>>
+    ) : Call<Topics>
 }

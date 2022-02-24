@@ -1,12 +1,12 @@
 package org.inu.events.data.repository.impl
 
-import org.inu.events.data.httpservice.SubscribeHttpService
-import org.inu.events.data.model.dto.AddTopics
-import org.inu.events.data.repository.SubscribeRepository
+import org.inu.events.data.httpservice.SubscriptionHttpService
+import org.inu.events.data.model.dto.Topics
+import org.inu.events.data.repository.SubscriptionRepository
 
-class SubscribeRepositoryImpl(
-    private val httpService: SubscribeHttpService
-) : SubscribeRepository{
+class SubscriptionRepositoryImpl(
+    private val httpService: SubscriptionHttpService
+) : SubscriptionRepository{
     override fun putSubscribing(subscribing: Boolean) {
         httpService.putSubscribing(subscribing).execute()
     }
@@ -15,11 +15,11 @@ class SubscribeRepositoryImpl(
         return httpService.getSubscribing().execute().body()!!
     }
 
-    override fun putTopics(param: AddTopics) {
+    override fun putTopics(param: Topics) {
         httpService.putTopics(param).execute()
     }
 
-    override fun getTopics(): ArrayList<String> {
+    override fun getTopics(): Topics {
         return httpService.getTopics().execute().body()!!
     }
 }
