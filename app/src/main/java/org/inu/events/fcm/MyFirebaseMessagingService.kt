@@ -11,30 +11,30 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.inu.events.MainActivity
 import org.inu.events.R
-import org.inu.events.data.model.entity.Fcm
-import org.inu.events.data.repository.FcmRepository
+import org.inu.events.data.repository.NotificationRepository
 import org.koin.android.ext.android.inject
 
 class MyFirebaseMessagingService:  FirebaseMessagingService(){
-    private val fcmRepository: FcmRepository by inject()
+    private val notificationRepository: NotificationRepository by inject()
 
     override fun onNewToken(p0: String) {
         Log.d("FCM TOKEN : ", p0)
 
         // todo 로그인 유무 확인후 token 값 서버로 전달
-        sendFcmToken(p0)
+//        sendFcmToken(p0)
         super.onNewToken(p0)
     }
 
-    private fun sendFcmToken(fcmToken:String){
-        fcmRepository.postFcmToken(
-            fcmToken
-        )
-    }
+//    private fun sendFcmToken(fcmToken:String){
+//        notificationRepository.postFcmToken(
+//            fcmToken
+//        )
+//    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -42,7 +42,7 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(){
         createNotificationChannel()
 
         val title = remoteMessage.data["title"]
-        val message = remoteMessage.data["message"]
+        val message = remoteMessage.data["body"]
 
 
         NotificationManagerCompat.from(this)
@@ -63,7 +63,8 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(){
 
         // todo 알람 디자인 나오면 수정
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setColor(ContextCompat.getColor(this,R.color.primary100))
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

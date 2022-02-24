@@ -3,18 +3,22 @@ package org.inu.events.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.common.api.ApiException
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.repository.CommentRepository
+import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
+import org.inu.events.data.repository.NotificationRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
+    private val notificationRepository: NotificationRepository by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
@@ -26,6 +30,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
+    val onOff = MutableLiveData(false)
+    private val setFor = MutableLiveData("")
 
     var eventIndex = -1
         private set
@@ -39,6 +45,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffBackground = MutableLiveData<Int>()
     val subMissionUrlNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
+
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -69,15 +76,29 @@ class DetailViewModel : ViewModel(), KoinComponent {
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
             if(_currentEvent.value?.submissionUrl == "") subMissionUrlNull.value = true
             eventWroteByMeBoolean = it.wroteByMe ?:false
-        }.catch {  }
+            onOff.value = it.notificationSetByMe ?: false
+            onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"
+            onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white
+            onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100
+            setFor.value = it.notificationSetFor ?: ""
+        }.catch {
+            Log.i("error: loadDetailData",it.stackTrace.toString())
+        }
 
         execute {
             commentRepository.getComments(eventIndex)
         }.then{
             commentSize.value = "댓글 ${it.size}개"
-        }.catch {  }
+        }.catch {}
 
     }
+
+    private fun loadNotificationButton(onOff:Boolean){
+        onOffText.value = if (onOff) "알람 취소" else "알람 신청"
+        onOffColor.value = if (onOff) R.color.primary100 else R.color.white
+        onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary100
+    }
+
 
     //댓글버튼 클릭했을 때 이벤트
     fun onClickComment() {
@@ -89,12 +110,52 @@ class DetailViewModel : ViewModel(), KoinComponent {
         alarmClickEvent.call()
     }
 
-    // onOffBtn 요소 변경
-    fun loadOnOffButton(onOff:Boolean){
-        onOffText.value = if (onOff) "알람 취소" else "알람 신청"   // alarmOnOff textView(text)
-        onOffColor.value = if (onOff) R.color.primary100 else R.color.white   // alarmOnOff textView(textColor)
-        onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary100  // alarmOnOff textView(background)
+
+    fun postNotification(setFor:String){
+        execute{
+            notificationRepository.postNotification(
+                NotificationParams(
+                    eventId = eventIndex,
+                    setFor = setFor
+                )
+            )
+        }.then {
+            onOff.value = true
+            this.setFor.value = setFor
+            Log.i("good: postNotification", onOff.value.toString())
+            loadNotificationButton(onOff.value!!)
+        }.catch {
+            Log.i("error: postNotification",it.stackTrace.toString())
+        }
     }
+
+    fun deleteNotification(){
+        execute {
+            Log.i("execute: deleteNotification","$eventIndex, ${setFor.value}")
+            notificationRepository.deleteNotification(
+                NotificationParams(
+                    eventId = eventIndex,
+                    setFor = setFor.value!!
+                )
+            )
+        }.then {
+            onOff.value = false
+            Log.i("good: deleteNotification", onOff.value.toString())
+            loadNotificationButton(onOff.value!!)
+        }.catch {
+            Log.i("error: deleteNotification",it.stackTrace.toString())
+        }
+    }
+
+    fun getNotifications(){
+        execute {
+            notificationRepository.getNotifications()
+        }.then {
+        }.catch {
+        }
+    }
+
+
 
     fun onDeleteClickEvent() {
         execute {

@@ -12,5 +12,7 @@ data class Event(
     var startAt: String,
     var endAt: String,
     var createdAt: String,
-    val wroteByMe: Boolean?
+    val wroteByMe: Boolean?,
+    val notificationSetByMe: Boolean?,
+    val notificationSetFor: String?
 )
