@@ -1,16 +1,17 @@
 package org.inu.events
 
 import android.app.Application
-import android.graphics.drawable.Drawable
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.firebase.ktx.Firebase
 import org.inu.events.di.myModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+
 
 class MyApplication : Application() {
     companion object{
@@ -29,6 +30,16 @@ class MyApplication : Application() {
                     .into(view)
             }
         }
+
+        @BindingAdapter("layoutMarginBottom")
+        @JvmStatic
+        fun setLayoutMarginBottom(view: View, dimen: Float) {
+            (view.layoutParams as ViewGroup.MarginLayoutParams).let {
+                it.bottomMargin = dimen.toInt()
+                view.layoutParams = it
+            }
+        }
+
     }
     override fun onCreate() {
         super.onCreate()

@@ -16,10 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.inu.events.MyApplication.Companion.bindImageFromUrl
-import org.inu.events.common.extension.getIntExtra
-import org.inu.events.common.extension.observe
-import org.inu.events.common.extension.observeNonNull
-import org.inu.events.common.extension.toast
+import org.inu.events.common.extension.*
 import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
@@ -27,6 +24,7 @@ import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
+import org.inu.events.objects.IntentMessage.EVENT_WROTE_BY_ME
 import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
@@ -191,7 +189,6 @@ class DetailActivity : AppCompatActivity() {
         )
         pendingIntent?.cancel()
     }
-
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }

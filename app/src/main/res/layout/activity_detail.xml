@@ -5,13 +5,12 @@
 
     <data>
         <import type="androidx.core.content.ContextCompat" />
+        <import type="android.view.View"/>
 
         <variable
             name="detailViewModel"
             type="org.inu.events.viewmodel.DetailViewModel" />
-        <variable
-            name="article"
-            type="org.inu.events.data.model.entity.Event" />
+
     </data>
 
     <LinearLayout
@@ -158,6 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -180,8 +180,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="24dp"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="@dimen/detail_bottom_margin"
+                    android:orientation="horizontal"
+                    android:visibility="@{detailViewModel.subMissionUrlNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:layout_width="80dp"
@@ -237,11 +238,12 @@
                         android:id="@+id/commentTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="댓글 2개"
+                        android:text="@{detailViewModel.commentSize}"
                         android:textSize="15sp"
                         android:onClick="@{()->detailViewModel.onClickComment()}" />
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" • 알림 5회"

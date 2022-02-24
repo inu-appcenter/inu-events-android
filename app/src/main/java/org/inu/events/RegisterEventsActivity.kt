@@ -8,7 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.os.Bundle
-import android.provider.OpenableColumns
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,9 +21,7 @@ import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
 import org.inu.events.common.util.URIPathHelper
-import org.inu.events.databinding.RegisterEventsBinding
-import org.inu.events.objects.IntentMessage
-import org.inu.events.objects.IntentMessage.DEBUG
+import org.inu.events.databinding.ActivityRegisterEventsBinding
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.viewmodel.RegisterEventsViewModel
 import java.util.*
@@ -38,7 +37,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private val viewModel: RegisterEventsViewModel by viewModels()
-    private lateinit var binding: RegisterEventsBinding
+    private lateinit var binding: ActivityRegisterEventsBinding
 
     private val selectImageLauncher = registerForActivityResult {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
@@ -48,6 +47,15 @@ class RegisterEventsActivity : AppCompatActivity() {
         }?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.title.value = s.toString()
+            viewModel.errorMessageString()
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,20 +67,25 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupStartTimePicker()
         setupEndDatePicker()
         setupEndTimePicker()
+        setupTitleErrorMessage()
         initAddPhotoButton()
         addEvent()
+    }
+
+    private fun setupTitleErrorMessage() {
+        binding.editTextTitle.addTextChangedListener(textWatcher)
     }
 
     private fun addEvent() {
         viewModel.finishEvent.observe(
             this
         ) {
-            finish()
+            if(viewModel.errorMessageString()) finish()
         }
     }
 
     private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.register_events)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register_events)
         binding.registerViewModel = viewModel
         binding.lifecycleOwner = this
     }
