@@ -1,12 +1,36 @@
 package org.inu.events.viewmodel
 
+import android.content.Intent
+import android.media.Image
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.UpdateUserParams
+import org.inu.events.data.model.entity.User
+import org.inu.events.data.repository.EventRepository
+import org.inu.events.service.UserService
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class UpdateProfileViewModel : ViewModel() {
-    val inputText = MutableLiveData<String>("맥도날드사고싶다")
-    val errorMessage = MutableLiveData<String>("")
+class UpdateProfileViewModel : ViewModel(), KoinComponent {
+    private val userService: UserService by inject()
+    private val eventRepository: EventRepository by inject()
+    val user = MutableLiveData<User>()
+    val updatePhotoEvent = SingleLiveEvent<Any>()
+
+    init {
+        CoroutineScope(Dispatchers.Main).launch {
+            user.value = userService.getUserInfo()
+            inputText.value = user.value!!.nickname
+        }
+    }
+
+    val inputText = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String>()
     val finishEvent = SingleLiveEvent<Any>()
 
     fun validateNickname() : Boolean {
@@ -29,6 +53,29 @@ class UpdateProfileViewModel : ViewModel() {
     }
 
     fun onClickFinish() {
-        finishEvent.call()
+        val newUser = UpdateUserParams(
+            nickname = inputText.value!!,
+            imageUuid = null
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            userService.updateUser(newUser)
+            finishEvent.call()
+        }
+    }
+
+    fun onClickUpdatePhoto() {
+        updatePhotoEvent.call()
+    }
+
+    fun uploadImage(image: MultipartBody.Part) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val imageUuid = eventRepository.uploadImage(image).uuid
+            val newUser = UpdateUserParams(
+                nickname = null,
+                imageUuid = imageUuid
+            )
+            userService.updateUser(newUser)
+        }
     }
 }

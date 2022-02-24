@@ -1,5 +1,6 @@
 package org.inu.events.data.repository.mock
 
+import org.inu.events.data.model.dto.UpdateUserParams
 import org.inu.events.data.model.entity.User
 import org.inu.events.data.repository.UserRepository
 
@@ -14,7 +15,11 @@ class UserRepositoryMock : UserRepository {
         return u.find { it.id == userId }!!
     }
 
-    override fun getMe(): User {
+    override suspend fun getMe(): User {
         return u[0]
+    }
+
+    override suspend fun updateUser(user: UpdateUserParams) {
+        TODO("Not yet implemented")
     }
 }

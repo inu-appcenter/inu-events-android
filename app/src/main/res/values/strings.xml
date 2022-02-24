@@ -7,8 +7,8 @@
     <string name="text_select2_bold">"<b>"내용 입력"</b>"</string>
     <string name="text_select2">내용 입력</string>
     <string name="text_title">제목을 입력해주세요.</string>
-    <string name="text_organiztion">소속된 단체를 입력하세요.</string>
-    <string name="text_organization_example">(ex.총학생회,컴퓨터공학부)</string>
+    <string name="text_host">소속된 단체를 입력하세요.</string>
+    <string name="text_host_example">(ex.총학생회,컴퓨터공학부)</string>
     <string name="text_classification">분류를 선택하세요.</string>
     <string name="text_date">모집기간을 선택해주세요</string>
     <string name="text_time">진행시간을 선택해주세요</string>
@@ -20,8 +20,10 @@
     <string name="text_content">내용을 입력해주세요.</string>
     <string name="text_before">이전</string>
     <string name="text_complete">완료</string>
-    <string name="text_notice_max">800자 이내로 입력 가능합니다</string>
+    <string name="text_notice_image">없음 선택시 기본이미지가 등록됩니다</string>
     <string name="text_edit">수정하기</string>
+    <string name="text_location">신청 링크 또는 장소를 입력해 주세요</string>
+    <string name="text_notice_max">800자 이내로 입력 가능합니다.</string>
     <string name="text_delete">삭제</string>
     <string name="text_input">댓글을 입력해주세요. </string>
     <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
@@ -37,9 +39,9 @@
 \n
 \n용감하고 예수는 심장은 그들은 것이다. 품었기 피어나기 하였으며, 때문이다. 인생을 갑 싸인 현저하게 품에 있다. 그들은 뜨거운지라, 군영과 충분히 노래하며 끓는다. 황금시대를 길을 것은 평화스러운 얼음이 그들은 가치를 꽃이 하는 아니다. 청춘의 찾아 관현악이며, 그들을 쓸쓸하랴? 싸인 예수는 발휘하기 바이며, 때문이다. 우리의 구하기 살 그들을 위하여, 봄바람이다. 온갖 찬미를 생명을 꾸며 피어나는 것이다.</string>
 
-    <string formatted="false" name="event_period">%s - %s</string>
-    <string formatted="false" name="event_time">%s - %s</string>
-    <string formatted="false" name="group">%s | %s</string>
+    <string name="event_period" formatted="false">%s - %s</string>
+    <string name="event_save_comments" formatted="false">저장%s • 댓글%s개</string>
+    <string name="group" formatted="false">%s | %s</string>
 
     <string name="comment">댓글</string>
     <string name="event_registration">레터등록</string>

@@ -11,6 +11,10 @@
     <dimen name="horizontal_margin">16dp</dimen>
     <dimen name="register_horizontal_margin">20dp</dimen>
     <dimen name="register_top_margin">24dp</dimen>
+    <dimen name="detail_horizontal_margin">20dp</dimen>
     <dimen name="detail_bottom_margin">24dp</dimen>
     <dimen name="detail_bottom_margin_null">0dp</dimen>
+
+    <!-- height -->
+    <dimen name="exitText_height">44dp</dimen>
 </resources>

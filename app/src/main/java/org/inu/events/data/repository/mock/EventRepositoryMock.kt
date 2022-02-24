@@ -8,7 +8,7 @@ import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.koin.core.component.KoinComponent
-
+/*
 class EventRepositoryMock() : EventRepository, KoinComponent {
     private val e: ArrayList<Event> = arrayListOf(
         Event(
@@ -112,4 +112,4 @@ class EventRepositoryMock() : EventRepository, KoinComponent {
         TODO("Not yet implemented")
     }
 
-}
+}*/
