@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="registerViewModel"
+            type="org.inu.events.viewmodel.RegisterEventsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 0 ? View.VISIBLE : View.INVISIBLE}">
+
+            <include
+                android:id="@+id/toolbar_register0"
+                layout="@layout/toolbar_sample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title='@{@string/event_registration}' />
+
+            <TextView
+                android:id="@+id/textView_image_registration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_picture_registration"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register0" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/imageButton_postImage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/black30"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="12dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/img_btn_background"
+                android:clickable="@{!registerViewModel.imageCheckBoxBoolean}"
+                android:contentDescription="@string/text_notice_image"
+                android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toTopOf="@+id/textView_Info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration">
+
+                <ImageView
+                    android:id="@+id/home_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:scaleType="centerCrop"
+                    imageFromUrl="@{registerViewModel.imageUrl}"
+                    app:layout_constraintBottom_toTopOf="@+id/cardview_member"
+                    app:layout_constraintEnd_toEndOf="@+id/cardview_member"
+                    app:layout_constraintStart_toStartOf="@+id/cardview_member"
+                    app:layout_constraintTop_toTopOf="@+id/cardview_member"
+                    tools:src="@drawable/img_home_board_sample_image1"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textView_Info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="50dp"
+                android:text="@string/text_notice_image"
+                android:textColor="@color/black7"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/button_before"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/checkBox_image_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_empty"
+                android:textColor="@color/black7"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@+id/checkBox_image"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
+
+            <CheckBox
+                android:id="@+id/checkBox_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/custom_checkbox"
+                android:button="@null"
+                android:checked="@={registerViewModel.imageCheckBoxBoolean}"
+                android:onClick="@{() -> registerViewModel.onImageCheckBoxClick()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_before"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary_base"
+                android:onClick="@{ () -> registerViewModel.onCancelClick()}"
+                android:paddingVertical="14dp"
+                android:text="@string/text_cancel"
+                android:textColor="@color/primary100"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_complete"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_complete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary100"
+                android:onClick="@{ () -> registerViewModel.onNextClick()}"
+                android:text="@string/text_next"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_before"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" >
+
+                    <include
+                        android:id="@+id/toolbar_register1"
+                        layout="@layout/toolbar_sample"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title='@{@string/event_registration}' />
+
+                    <TextView
+                        android:id="@+id/textView_letter_registration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/text_letter_input"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/toolbar_register1" />
+
+                    <TextView
+                        android:id="@+id/textView_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/register_horizontal_margin"
+                        android:text="@string/text_title"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_letter_registration" />
+
+                    <TextView
+                        android:id="@+id/error_message_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:text="@{registerViewModel.errorMessage}"
+                        android:textColor="#DA1E28"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_title"
+                        tools:text="공백은 제목으로 설정할 수 없습니다." />
+
+
+                    <EditText
+                        android:id="@+id/editText_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="4dp"
+                        android:autofillHints="no"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.title}"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_title"
+                        tools:ignore="DuplicateSpeakableTextCheck" />
+
+                    <TextView
+                        android:id="@+id/textView_host"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="@string/text_host"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+
+                    <TextView
+                        android:id="@+id/textView_host_example"
+                        android:layout_width="wrap_content"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="@dimen/register_horizontal_margin"
+                        android:text="@string/text_host_example"
+                        android:textColor="@color/black8"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_host"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_host" />
+
+                    <EditText
+                        android:id="@+id/editText_host"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.host}"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintDimensionRatio="H,1:0.1375"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_host" />
+
+
+                    <TextView
+                        android:id="@+id/textView_classification"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="@string/text_classification"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText_host" />
+
+                    <Spinner
+                        android:id="@+id/spinner_classification"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/spinner_background"
+                        android:entries="@array/classification"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="10dp"
+                        android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
+
+                    <TextView
+                        android:id="@+id/textView_target"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="모집대상을 입력해주세요"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_classification" />
+
+                    <EditText
+                        android:id="@+id/editText_target"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.target}"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_target" />
+
+                    <TextView
+                        android:id="@+id/textView_start_period"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="시작일을 입력해 주세요."
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText_target" />
+
+                    <TextView
+                        android:id="@+id/editText_start_date"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginStart="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:gravity="center"
+                        android:onClick="@{ () -> registerViewModel.onStartDateClick()}"
+                        android:paddingHorizontal="38dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.startDatePeriod}"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toStartOf="@+id/view2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_start_period"
+                        tools:text="시작일 입력" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="8dp"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginTop="26dp"
+                        android:background="@color/black7"
+                        app:layout_constraintTop_toBottomOf="@id/textView_start_period"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/editText_start_time"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:gravity="center"
+                        android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
+                        android:paddingHorizontal="38dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.startTimePeriod}"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView_start_period"
+                        app:layout_constraintStart_toEndOf="@id/view2"
+                        tools:text="시작시간 입력" />
+
+                    <TextView
+                        android:id="@+id/textView_end_period"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="종료일을 입력해 주세요."
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/editText_start_date" />
+
+
+                    <TextView
+                        android:id="@+id/checkBox_time_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_same"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_time"
+                        app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:checked="@={registerViewModel.timeCheckBoxBoolean}"
+                        android:button="@null"
+                        android:onClick="@{() -> registerViewModel.onTimeCheckBoxClick()}"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
+
+
+                    <TextView
+                        android:id="@+id/editText_end_date"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginStart="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:gravity="center"
+                        android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
+                        android:paddingHorizontal="38dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.endDatePeriod}"
+                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toStartOf="@+id/view3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
+                        tools:text="마감일 입력" />
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="8dp"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_marginTop="25dp"
+                        android:background="@color/black7"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_end_period" />
+
+                    <TextView
+                        android:id="@+id/editText_end_time"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="@dimen/register_horizontal_margin"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:gravity="center"
+                        android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
+                        android:paddingHorizontal="38dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.endTimePeriod}"
+                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/view3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
+                        tools:text="마감시간 클릭" />
+
+                    <TextView
+                        android:id="@+id/textView_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="문의사항시 연락방법을 입력해주세요."
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText_end_time" />
+
+                    <TextView
+                        android:id="@+id/checkBox_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_empty"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                        app:layout_constraintTop_toTopOf="@+id/textView_contact" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:button="@null"
+                        android:checked="@={registerViewModel.contactNumberCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onContactNumberCheckBoxClick()}"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_contact" />
+
+
+                    <EditText
+                        android:id="@+id/editText_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.ContactNumber}"
+                        android:enabled="@{!registerViewModel.contactNumberCheckBoxBoolean}"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_contact" />
+
+                    <TextView
+                        android:id="@+id/textView_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="@dimen/register_top_margin"
+                        android:text="@string/text_location"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText_contact" />
+
+                    <TextView
+                        android:id="@+id/checkBox_text_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_empty"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_location"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                        app:layout_constraintTop_toTopOf="@+id/textView_location" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:button="@null"
+                        android:checked="@={registerViewModel.locationCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onLocationCheckBoxClick()}"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_location" />
+
+                    <EditText
+                        android:id="@+id/editText_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/exitText_height"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="100dp"
+                        android:background="@drawable/drawable_edit_text_background"
+                        android:enabled="@{!registerViewModel.locationCheckBoxBoolean}"
+                        android:hint="@string/text_input"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="12dp"
+                        android:text="@={registerViewModel.location}"
+                        android:textColorHint="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_location" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_before1"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary_base"
+                android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
+                android:paddingVertical="14dp"
+                android:text="@string/text_before"
+                android:textColor="@color/primary100"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_next1"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_next1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary100"
+                android:onClick="@{ () -> registerViewModel.onNextClick()}"
+                android:paddingVertical="14dp"
+                android:text="@string/text_next"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/button_before1"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
+
+            <include
+                android:id="@+id/toolbar_register2"
+                layout="@layout/toolbar_sample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title='@{@string/event_registration}' />
+
+            <TextView
+                android:id="@+id/textView_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/text_detail_letter"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_register2" />
+
+
+            <TextView
+                android:id="@+id/textView_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                android:layout_marginTop="20dp"
+                android:text="@string/text_content"
+                android:textColor="@color/black1"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_detail" />
+
+            <EditText
+                android:id="@+id/editText_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="295dp"
+                android:background="@drawable/drawable_edit_text_background"
+                android:hint="@string/text_input"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
+                android:text="@={registerViewModel.body}"
+                android:textColorHint="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_content" />
+
+            <TextView
+                android:id="@+id/textView_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                android:layout_marginTop="12dp"
+                android:text="@string/text_notice_max"
+                android:textColor="@color/black7"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editText_content" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_before2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary_base"
+                android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
+                android:paddingVertical="14dp"
+                android:text="@string/text_before"
+                android:textColor="@color/primary100"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_complete2"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_complete2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary100"
+                android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
+                android:text="@string/text_complete"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_before2"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
