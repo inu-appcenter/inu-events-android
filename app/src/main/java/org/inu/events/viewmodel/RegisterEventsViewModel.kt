@@ -155,8 +155,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value ?: "",
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value ?: "",
-                    location = submissionUrl.value ?: "",
+                    contact = contactNumber.value,
+                    location = submissionUrl.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid ?: ""
                 )
@@ -176,8 +176,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value ?: "",
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value ?: "",
-                    location = submissionUrl.value ?: "",
+                    contact = contactNumber.value,
+                    location = submissionUrl.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid ?: ""
                 )
@@ -255,17 +255,17 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun onCheckBoxClick(){
         if(imageCheckBoxBoolean.value!!){
-            imageUrl.value = ""
+            imageUrl.value = null
         }
         if(timeCheckBoxBoolean.value!!){
             endDatePeriod.value = startDatePeriod.value
             endTimePeriod.value = endTimePeriod.value
         }
         if(contactNumberCheckBoxBoolean.value!!){
-            contactNumber.value = ""
+            contactNumber.value = null
         }
         if(urlCheckBoxBoolean.value!!){
-            submissionUrl.value = ""
+            submissionUrl.value = null
         }
         checkBoxClickEvent.call()
     }

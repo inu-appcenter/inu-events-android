@@ -7,8 +7,8 @@ data class AddEventParams(
     val target: String,
     val startAt: String,
     val endAt: String,
-    val contact: String,
-    val location: String,
+    val contact: String?,
+    val location: String?,
     val body: String,
-    val imageUuid: String,
+    val imageUuid: String?,
 )

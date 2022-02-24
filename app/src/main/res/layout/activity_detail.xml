@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.bothNull? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -184,7 +184,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="@dimen/detail_bottom_margin"
                     android:orientation="horizontal"
-                    android:visibility="@{detailViewModel.contactNull ? View.GONE : View.VISIBLE}">
+                    android:visibility="@{detailViewModel.subMissionUrlNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:layout_width="80dp"
