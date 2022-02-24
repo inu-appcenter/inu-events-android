@@ -5,7 +5,11 @@
       <map>
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_main.xml" value="0.24974358974358973" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/register_events.xml" value="0.24974358974358973" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/drawable_btn_background.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/default_profile_background.xml" value="0.1695" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_alarm_dialog_background.xml" value="0.1695" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_background_bottom.xml" value="0.1695" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_checkbox_check_background.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_comment_btn.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_home_board_date_deadline_background.xml" value="0.1695" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_home_board_date_ongoing_background.xml" value="0.1695" />
