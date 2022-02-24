@@ -2,6 +2,7 @@ package org.inu.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.databinding.ItemCategoryBinding
 
@@ -10,13 +11,11 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        println("빼애액!!")
         holder.bind(list!![position])
     }
     override fun getItemCount() = list?.size ?: 0
 
     fun submitList(list: List<Category>) {
-        println("빼애액!!!")
         this.list = list
     }
 
@@ -32,6 +31,8 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
         fun bind(item: Category) {
             binding.item = item
+            val drawable = ContextCompat.getDrawable(binding.root.context, item.imageSrc)
+            binding.card.setImageDrawable(drawable)
             binding.executePendingBindings()
         }
     }
