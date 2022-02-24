@@ -33,7 +33,8 @@
                 android:layout_width="78dp"
                 android:layout_height="78dp"
                 android:background="@drawable/default_profile_background"
-                app:photo_url="@{viewModel.user.imageUrl}"/>
+                app:photo_url="@{viewModel.user.imageUrl}"
+                android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
