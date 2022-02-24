@@ -7,5 +7,6 @@ data class User(
     val oauthProvider:String,
     val oauthId:String,
     val createdAt:String,
-    val imageUuid: String? = null
+    val imageUuid: String? = null,
+    val imageUrl: String? = null
 )

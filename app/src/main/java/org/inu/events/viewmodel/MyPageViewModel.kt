@@ -17,7 +17,6 @@ import org.koin.core.component.inject
 class MyPageViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
     val user = MutableLiveData<User>()
-    val imageUrl = "1ec958a9-cba8-6e20-8f57-39d024ced72d"
 
     fun fetchData() {
         CoroutineScope(Dispatchers.Main).launch {
