@@ -6,12 +6,12 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface NotificationHttpService {
-    @POST("/notification")
+    @POST("/notifications")
     fun postNotification(
         @Body params: NotificationParams
     ): Call<Unit>
 
-    @DELETE("/notification")
+    @HTTP(method ="DELETE", path = "/notifications", hasBody = true)
     fun deleteNotification(
         @Body params: NotificationParams
     ):Call<Unit>

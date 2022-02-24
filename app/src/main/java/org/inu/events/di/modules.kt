@@ -8,7 +8,9 @@ import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.AccountRepositoryImpl
 import org.inu.events.data.repository.impl.CommentRepositoryImpl
 import org.inu.events.data.repository.impl.EventRepositoryImpl
-import org.inu.events.data.repository.mock.FcmRepositoryMock
+import org.inu.events.data.repository.impl.NotificationRepositoryImpl
+import org.inu.events.data.repository.mock.EventRepositoryMock
+import org.inu.events.data.repository.mock.NotificationRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
 import org.koin.dsl.module
@@ -47,12 +49,12 @@ val myModules = module {
         buildRetrofitService()
     }
 
-    single<FcmHttpService>{
+    single<NotificationHttpService>{
         buildRetrofitService()
     }
 
     single<EventRepository> {
-        //EventRepositoryMock()
+//        EventRepositoryMock()
         EventRepositoryImpl(
             httpService = get()
         )
@@ -69,9 +71,9 @@ val myModules = module {
         UserRepositoryMock()
     }
 
-    single<FcmRepository>{
+    single<NotificationRepository>{
         //TODO 지금은 임시 데이터
-        FcmRepositoryMock()
+        NotificationRepositoryImpl(httpService = get())
     }
 
     single<AccountRepository> {

@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
+import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.BottomSheetDialog
@@ -47,7 +48,7 @@ class DetailActivity : AppCompatActivity() {
         initBinding()
 
         initCommentButton()
-//        initNotificationButton()
+        initNotificationButton()
 
         setupToolbar()
 
@@ -68,25 +69,27 @@ class DetailActivity : AppCompatActivity() {
 
     private fun initNotificationButton() {
         observe(viewModel.alarmClickEvent) {
-            if (viewModel.onOff.value == false) {
-                bottomDialog.show(
-                    this,
-                    {
-                        viewModel.postNotification("start")
-                        alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
-
-                    },
-                    {
-                        viewModel.postNotification("end")
-                        alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_last), resources.getString(R.string.alarm_on_content_last))
-                    },
-                    {
-                        // 취소 클릭
-                    })
+            if (loginService.isLoggedIn) {
+                if (viewModel.onOff.value == false) {
+                    bottomDialog.show(
+                        this,
+                        { viewModel.postNotification("start")
+                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
+                        },
+                        { viewModel.postNotification("end")
+                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_last), resources.getString(R.string.alarm_on_content_last))
+                        },
+                        {
+                            // 취소 클릭
+                        })
+                } else {
+                    viewModel.deleteNotification()
+                    alarmDialog.showDialog(this, resources.getString(R.string.alarm_off_title), resources.getString(R.string.alarm_off_content)
+                    )
+                }
             }
             else{
-                viewModel.deleteNotification()
-                alarmDialog.showDialog(this,resources.getString(R.string.alarm_off_title),resources.getString(R.string.alarm_off_content))
+                toast("로그인을 하셔야 알람을 받으실 수 있습니다!")
             }
         }
     }
