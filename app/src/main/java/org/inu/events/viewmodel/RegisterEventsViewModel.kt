@@ -47,9 +47,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
-    val urlCheckBoxBoolean = MutableLiveData(false)
+    val locationCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
     private var imageUuid: String? = ""
+    private var imageTmp: String? = ""
+    private var contactTmp: String? = ""
+    private var urlTmp: String? = ""
+    private var dateTmp: String? = ""
+    private var timeTmp: String? = ""
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
@@ -71,7 +76,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
-    val checkBoxClickEvent = SingleLiveEvent<Any>()
     val finishEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
@@ -112,7 +116,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             datePickerSelect()
             timePickerSelect()
             loadImage()
+            loadCheckBoxState()
         }.catch { }
+    }
+
+    private fun loadCheckBoxState() {
+        //todo - 이미지 수정 시 체크박스 상태도 불러오기
     }
 
     private fun loadImage() {
@@ -253,21 +262,49 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         endTimePickerClickEvent.call()
     }
 
-    fun onCheckBoxClick(){
-        if(imageCheckBoxBoolean.value!!){
-            imageUrl.value = null
+    fun onLocationCheckBoxClick(){
+        when{
+            locationCheckBoxBoolean.value!! ->{
+                urlTmp = location.value
+                location.value = null
+            }
+            !(locationCheckBoxBoolean.value!!) -> location.value = urlTmp
         }
-        if(timeCheckBoxBoolean.value!!){
-            endDatePeriod.value = startDatePeriod.value
-            endTimePeriod.value = endTimePeriod.value
+    }
+
+    fun onImageCheckBoxClick(){
+        when{
+            imageCheckBoxBoolean.value!! -> {
+                imageTmp = imageUrl.value!!
+                imageUrl.value = null
+            }
+            !(imageCheckBoxBoolean.value!!) -> imageUrl.value = imageTmp
         }
-        if(contactNumberCheckBoxBoolean.value!!){
-            contactNumber.value = null
+    }
+
+    fun onTimeCheckBoxClick(){
+        when{
+            timeCheckBoxBoolean.value!! -> {
+                dateTmp = endDatePeriod.value
+                timeTmp = endTimePeriod.value
+                endDatePeriod.value = startDatePeriod.value
+                endTimePeriod.value = startTimePeriod.value
+            }
+            !(timeCheckBoxBoolean.value!!) ->{
+                endDatePeriod.value = dateTmp
+                endTimePeriod.value = timeTmp
+            }
         }
-        if(urlCheckBoxBoolean.value!!){
-            location.value = null
+    }
+
+    fun onContactNumberCheckBoxClick() {
+        when {
+            contactNumberCheckBoxBoolean.value!! -> {
+                contactTmp = contactNumber.value
+                contactNumber.value = null
+            }
+            !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
         }
-        checkBoxClickEvent.call()
     }
 
     fun setStartDate(date: Date) {

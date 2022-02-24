@@ -41,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    android:paddingHorizontal="16dp"
+                    android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:paddingVertical="24dp"
                     android:scaleType="centerCrop"
                     imageFromUrl="@{detailViewModel.imageUrl}"
@@ -52,17 +52,46 @@
                     android:layout_height="8dp"
                     android:background="@color/black5" />
 
-                <TextView
-                    android:id="@+id/detailTitle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="24dp"
-                    android:fontFamily="@font/roboto"
-                    android:text="@{detailViewModel.currentEvent.title}"
-                    tools:text="앱센터 13기 신입멤버 모집"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/detailTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto"
+                        android:text="@{detailViewModel.currentEvent.title}"
+                        tools:text="앱센터 13기 신입멤버 모집"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        />
+
+                    <TextView
+                        android:id="@+id/board_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="d-day"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:background="@drawable/drawable_home_board_date_ongoing_background"
+                        tools:background="@drawable/drawable_home_board_date_ongoing_background"
+                        tools:text="마감" />
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -243,7 +272,7 @@
                         android:text="@{@string/event_save_comments(detailViewModel.currentEvent.likes,detailViewModel.currentEvent.comments)}"
                         android:textSize="15sp"
                         android:onClick="@{()->detailViewModel.onClickComment()}"
-                        tools:text = "댓글 0개"/>
+                        tools:text = "저장 71 • 댓글 7개"/>
 
 
                 </LinearLayout>

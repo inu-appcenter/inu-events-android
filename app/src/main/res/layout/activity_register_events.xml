@@ -113,7 +113,7 @@
                 android:background="@drawable/custom_checkbox"
                 android:button="@null"
                 android:checked="@={registerViewModel.imageCheckBoxBoolean}"
-                android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
+                android:onClick="@{() -> registerViewModel.onImageCheckBoxClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
 
@@ -453,7 +453,7 @@
                         android:background="@drawable/custom_checkbox"
                         android:checked="@={registerViewModel.timeCheckBoxBoolean}"
                         android:button="@null"
-                        android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
+                        android:onClick="@{() -> registerViewModel.onTimeCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
@@ -546,7 +546,7 @@
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
                         android:checked="@={registerViewModel.contactNumberCheckBoxBoolean}"
-                        android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
+                        android:onClick="@{() -> registerViewModel.onContactNumberCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView_contact" />
@@ -605,8 +605,8 @@
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
-                        android:checked="@={registerViewModel.urlCheckBoxBoolean}"
-                        android:onClick="@{() -> registerViewModel.onCheckBoxClick()}"
+                        android:checked="@={registerViewModel.locationCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onLocationCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_location"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView_location" />
@@ -619,7 +619,7 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginBottom="100dp"
                         android:background="@drawable/drawable_edit_text_background"
-                        android:enabled="@{!registerViewModel.urlCheckBoxBoolean}"
+                        android:enabled="@{!registerViewModel.locationCheckBoxBoolean}"
                         android:hint="@string/text_input"
                         android:importantForAutofill="no"
                         android:inputType="text"
