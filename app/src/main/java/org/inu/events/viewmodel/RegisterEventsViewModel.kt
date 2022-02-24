@@ -49,6 +49,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val locationCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
+
+    private val imageUuidList = listOf(null,"1ec94c4d-284e-6b70-6eba-0ecc1b8dd491",
+        "1ec94c3f-2c9d-6590-1fd7-cb603aa85e1e",
+        "1ec94c15-ee15-6f30-8bdd-76769baf2a97",
+        "1ec94c15-786e-6520-ea08-df4f8c716b04",
+        "1ec94c49-4fd6-6ca0-1497-d8b902900844",
+        "1ec94c42-4e1a-6030-9859-6dc8e7afe7df",
+        null
+    )
     private var imageUuid: String? = ""
     private var imageTmp: String? = ""
     private var contactTmp: String? = ""
@@ -121,7 +130,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadCheckBoxState() {
-        //todo - 이미지 수정 시 체크박스 상태도 불러오기
+        if(currentEvent?.location == null){
+            locationCheckBoxBoolean.value = true
+        }
+        if(currentEvent?.contact == null){
+            contactNumberCheckBoxBoolean.value = true
+        }
+        if(currentEvent?.startAt == currentEvent?.endAt){
+            timeCheckBoxBoolean.value = true
+        }
+        val booleanImageDefault = imageUuidList.contains(currentEvent?.imageUuid)
+        if(booleanImageDefault){
+            imageCheckBoxBoolean.value = true
+        }
     }
 
     private fun loadImage() {
@@ -203,15 +224,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             imageUuid = eventRepository.uploadImage(image).uuid
         }
         else{
-            imageUuid = when(selectedItemPosition.value){
-                1->"1ec94c4d-284e-6b70-6eba-0ecc1b8dd491"
-                2->"1ec94c3f-2c9d-6590-1fd7-cb603aa85e1e"
-                3->"1ec94c15-ee15-6f30-8bdd-76769baf2a97"
-                4->"1ec94c15-786e-6520-ea08-df4f8c716b04"
-                5->"1ec94c49-4fd6-6ca0-1497-d8b902900844"
-                6->"1ec94c42-4e1a-6030-9859-6dc8e7afe7df"
-                else->""
-            }
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
         }
     }
 
