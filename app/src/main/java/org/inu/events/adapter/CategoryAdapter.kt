@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import org.inu.events.R
 import org.inu.events.databinding.ItemCategoryBinding
 
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -34,12 +35,20 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
             val drawable = ContextCompat.getDrawable(binding.root.context, item.imageSrc)
             binding.card.setImageDrawable(drawable)
             binding.executePendingBindings()
+
+            binding.root.setOnClickListener {
+                item.isChecked = !item.isChecked
+                if(item.isChecked)
+                    it.background = ContextCompat.getDrawable(it.context, R.drawable.category_background_selected)
+                else
+                    it.background = ContextCompat.getDrawable(it.context, R.drawable.category_background)
+            }
         }
     }
 }
 
 data class Category(
     val name: String,
-    val isChecked: Boolean,
+    var isChecked: Boolean,
     val imageSrc: Int
 )
