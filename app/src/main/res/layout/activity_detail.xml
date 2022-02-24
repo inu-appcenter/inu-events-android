@@ -43,7 +43,7 @@
                     android:adjustViewBounds="true"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="24dp"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     imageFromUrl="@{detailViewModel.imageUrl}"
                     tools:src="@drawable/img_appcenter" />
 
