@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.inu.events.BottomSheet
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddCommentParams
@@ -37,9 +36,9 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     val btnClickEvent = SingleLiveEvent<Any>()
     val plusBtnClickEvent = SingleLiveEvent<Any>()
-    val postCommentClickEvent = SingleLiveEvent<Any>()
+    //val postCommentClickEvent = SingleLiveEvent<Any>()
     val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
-    val arrowUpBtnClickEvent = SingleLiveEvent<Any> ()
+    val arrowUpBtnClickEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
         private set
@@ -57,7 +56,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.then {
             _currentEvent.value = it
             loadCommentList()
-        }.catch {  }
+        }.catch { }
     }
 
     fun deleteComment(callback: () -> Unit) {
@@ -71,7 +70,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun updateComment() {
         execute {
-            commentRepository.updateComment(id = commentIndex,
+            commentRepository.updateComment(
+                id = commentIndex,
                 UpdateCommentParams(content = content.value ?: "")
             )
         }.then {
@@ -81,7 +81,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun postComment() {
         execute {
-            Log.i("postComment",content.value.toString())
+            Log.i("postComment", content.value.toString())
             commentRepository.postComment(
                 AddCommentParams(
                     eventId = eventIndex,
@@ -91,14 +91,13 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.then {
             loadCommentList()
         }.catch { }
-        postCommentClickEvent.call()
     }
 
     private fun loadCommentList(callback: () -> Unit = {}) {
         execute {
             commentRepository.getComments(eventIndex)
         }.then {
-            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ",it.map { it.toString() }.joinToString(", "))
+            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ", it.map { it.toString() }.joinToString(", "))
             callback()
             _commentDataList.value = it
             commentSizeText.value = "댓글 ${it.size} "
@@ -111,16 +110,20 @@ class CommentViewModel : ViewModel(), KoinComponent {
             eventRepository.getEvent(eventIndex)
         }.then {
             _currentEvent.value = it
-        }.catch {  }
+        }.catch { }
     }
 
     fun onClickBtn() {
         btnClickEvent.call()
     }
 
+    fun deleteText() {
+        content.value = null
+    }
+
     fun showBottomSheet(commentId: Int) {
         commentIndex = commentId
-        Log.i("commentIndex showBottom",commentIndex.toString())
+        Log.i("commentIndex showBottom", commentIndex.toString())
         plusBtnClickEvent.call()
     }
 

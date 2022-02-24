@@ -3,26 +3,22 @@ package org.inu.events
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.inu.events.adapter.CommentAdapter
-import org.inu.events.common.extension.getBooleanExtra
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
+import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
 import org.inu.events.dialog.LoginDialog
-import org.inu.events.googlelogin.GoogleLoginWrapper
-import org.inu.events.objects.IntentMessage
-import org.inu.events.objects.IntentMessage.COMMENT_ID
 import org.inu.events.objects.IntentMessage.EVENT_ID
-import org.inu.events.objects.IntentMessage.EVENT_WROTE_BY_ME
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
-import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
 
 class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
@@ -52,7 +48,14 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
-                commentViewModel.postComment()
+                execute {
+                    commentViewModel.postComment()
+                }.then {
+                    commentViewModel.deleteText()
+                    HideEditTextKeyBoard()
+                }.catch {
+                    it.printStackTrace()
+                }
             } else {
                 showDialog()
             }
@@ -110,7 +113,12 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun showBottomSheet() {
         observe(commentViewModel.plusBtnClickEvent) {
             val bottomSheet = BottomSheet()
-            bottomSheet.show(supportFragmentManager,bottomSheet.tag)
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
+    }
+
+    private fun HideEditTextKeyBoard() {
+        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(commentBinding.commentEditText.windowToken, 0)
     }
 }
