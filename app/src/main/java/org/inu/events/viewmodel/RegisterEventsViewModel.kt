@@ -41,7 +41,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val body = MutableLiveData("")
     val host = MutableLiveData("")
     val target = MutableLiveData("") //todo - 서버에 필드 추가되면 구현
-    val submissionUrl = MutableLiveData("")
+    val location = MutableLiveData("")
     val contactNumber = MutableLiveData("")
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
@@ -106,7 +106,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             title.value = currentEvent?.title
             body.value = currentEvent?.body
             host.value = currentEvent?.host
-            submissionUrl.value = currentEvent?.submissionUrl
+            location.value = currentEvent?.submissionUrl
             imageUuid = currentEvent?.imageUuid
             spinnerSelected()
             datePickerSelect()
@@ -156,7 +156,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
                     contact = contactNumber.value,
-                    location = submissionUrl.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid ?: ""
                 )
@@ -173,13 +173,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     title = title.value ?: "",
                     host = host.value ?: "",
                     category = spinnerToCategory(),
-                    target = target.value ?: "",
+                    //target = target.value ?: "",
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = submissionUrl.value,
+                    //contact = contactNumber.value,
+                    submissionUrl = location.value,
                     body = body.value ?: "",
-                    imageUuid = imageUuid ?: ""
+                    imageUuid = imageUuid
                 )
             )
             Log.d("tag","서버에 데이터 넣기")
@@ -265,7 +265,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             contactNumber.value = null
         }
         if(urlCheckBoxBoolean.value!!){
-            submissionUrl.value = null
+            location.value = null
         }
         checkBoxClickEvent.call()
     }
