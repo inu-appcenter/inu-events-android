@@ -70,18 +70,21 @@ class DetailViewModel : ViewModel(), KoinComponent {
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
             onOff.value = it.notificationSetByMe ?: false
-            Log.i("good: loadDetailData", "${it.id} ${it.notificationSetByMe.toString()}")
             onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"
             onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white
             onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100
             setFor.value = it.notificationSetFor ?: ""
-            Log.i("good: loadDetailData", it.notificationSetFor.toString())
-
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
-
         }
     }
+
+    private fun loadNotificationButton(onOff:Boolean){
+        onOffText.value = if (onOff) "알람 취소" else "알람 신청"
+        onOffColor.value = if (onOff) R.color.primary100 else R.color.white
+        onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary100
+    }
+
 
     //댓글버튼 클릭했을 때 이벤트
     fun onClickComment() {
@@ -93,12 +96,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         alarmClickEvent.call()
     }
 
-    // onOffBtn 요소 변경
-//    fun loadNotificationButton(){
-//        onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"   // alarmOnOff textView(text)
-//        onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white   // alarmOnOff textView(textColor)
-//        onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100  // alarmOnOff textView(background)
-//    }
 
     fun postNotification(setFor:String){
         execute{
@@ -110,11 +107,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             )
         }.then {
             onOff.value = true
-            Log.i("good: postNotification", onOff.value.toString())
             this.setFor.value = setFor
-            onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"   // alarmOnOff textView(text)
-            onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white   // alarmOnOff textView(textColor)
-            onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100  // alarmOnOff textView(background)
+            Log.i("good: postNotification", onOff.value.toString())
+            loadNotificationButton(onOff.value!!)
         }.catch {
             Log.i("error: postNotification",it.stackTrace.toString())
         }
@@ -132,9 +127,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }.then {
             onOff.value = false
             Log.i("good: deleteNotification", onOff.value.toString())
-            onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"   // alarmOnOff textView(text)
-            onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white   // alarmOnOff textView(textColor)
-            onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100  // alarmOnOff textView(background)
+            loadNotificationButton(onOff.value!!)
         }.catch {
             Log.i("error: deleteNotification",it.stackTrace.toString())
         }
