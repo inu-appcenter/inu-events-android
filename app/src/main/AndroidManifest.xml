@@ -20,6 +20,9 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NotificationSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
