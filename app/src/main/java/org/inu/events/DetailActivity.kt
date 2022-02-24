@@ -24,7 +24,7 @@ import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
-import org.inu.events.objects.IntentMessage.EVENT_WROTE_BY_ME
+import org.inu.events.objects.IntentMessage.MY_WROTE
 import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
@@ -33,11 +33,11 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     companion object {
-        fun callingIntent(context: Context, eventId: Int = -1) =
+        fun callingIntent(context: Context, eventId: Int = -1, myWrote: Boolean? = false) =
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
+                putExtra(MY_WROTE, myWrote)
             }
-
         private const val SHARED_PREFERENCES_NAME = "alarm"
     }
 
@@ -62,7 +62,6 @@ class DetailActivity : AppCompatActivity() {
         initCommentButton()
         initOnOffButton()
 
-        setupToolbar()
     }
 
     private fun initBinding() {
@@ -192,9 +191,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { isFromAlarm() }
-        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
-            if (viewModel.isMyWriting()) {
+            if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
@@ -240,6 +238,11 @@ class DetailActivity : AppCompatActivity() {
         renderOnOffButton(model)
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupToolbar()
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
 
@@ -250,6 +253,11 @@ class DetailActivity : AppCompatActivity() {
         id = getIntExtra(EVENT_ID) ?: return
         viewModel.load(id)
     }
+
+    //private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+
+    //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
+    private fun isMyWriting() = true
 
     // 이 액티비티가 알람에서 왔다면 뒤로가기 처리를 해주세요~
     private fun isFromAlarm(){

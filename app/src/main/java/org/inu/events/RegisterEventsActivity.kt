@@ -262,8 +262,8 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         extractEventIdAndLoad()
     }
 

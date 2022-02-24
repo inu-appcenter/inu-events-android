@@ -19,10 +19,6 @@ import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
-import org.inu.events.objects.IntentMessage.DEBUG
-import org.inu.events.viewmodel.HomeViewModel
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -63,12 +59,12 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             binding.boardDate.background =
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
             imageUrl += homeData.imageUuid
-            bindImageFromUrl(binding.homeImage, imageUrl)
+            bindImageFromUrl(binding.homeImageView, imageUrl)
         }
 
         override fun onClick(v: View) {
             with(binding.root.context) {
-                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id))
+                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id,binding.homeData!!.wroteByMe))
             }
         }
 

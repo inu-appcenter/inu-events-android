@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         super.onCreate(savedInstanceState)
 
         initBinding()
-        setupRecyclerView()
         setupButtons()
     }
 
@@ -75,9 +74,10 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         toast("로그인을 하셔야 게시글 작성이 가능합니다")
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    override fun onResume() {
+        super.onResume()
+        setupRecyclerView()
         viewModel.load()
     }
+
 }

@@ -40,13 +40,30 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData("")
-    val submissionUrl = MutableLiveData("")
+    val target = MutableLiveData("") //todo - 서버에 필드 추가되면 구현
+    val location = MutableLiveData("")
+    val contactNumber = MutableLiveData("")
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
-    val urlCheckBoxBoolean = MutableLiveData(false)
+    val contactNumberCheckBoxBoolean = MutableLiveData(false)
+    val locationCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
+
+    private val imageUuidList = listOf(null,"1ec94c4d-284e-6b70-6eba-0ecc1b8dd491",
+        "1ec94c3f-2c9d-6590-1fd7-cb603aa85e1e",
+        "1ec94c15-ee15-6f30-8bdd-76769baf2a97",
+        "1ec94c15-786e-6520-ea08-df4f8c716b04",
+        "1ec94c49-4fd6-6ca0-1497-d8b902900844",
+        "1ec94c42-4e1a-6030-9859-6dc8e7afe7df",
+        null
+    )
     private var imageUuid: String? = ""
+    private var imageTmp: String? = ""
+    private var contactTmp: String? = ""
+    private var urlTmp: String? = ""
+    private var dateTmp: String? = ""
+    private var timeTmp: String? = ""
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
@@ -68,7 +85,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
-    val checkBoxClickEvent = SingleLiveEvent<Any>()
     val finishEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
@@ -103,13 +119,30 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             title.value = currentEvent?.title
             body.value = currentEvent?.body
             host.value = currentEvent?.host
-            submissionUrl.value = currentEvent?.submissionUrl
+            location.value = currentEvent?.submissionUrl
             imageUuid = currentEvent?.imageUuid
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
             loadImage()
+            loadCheckBoxState()
         }.catch { }
+    }
+
+    private fun loadCheckBoxState() {
+        if(currentEvent?.location == null){
+            locationCheckBoxBoolean.value = true
+        }
+        if(currentEvent?.contact == null){
+            contactNumberCheckBoxBoolean.value = true
+        }
+        if(currentEvent?.startAt == currentEvent?.endAt){
+            timeCheckBoxBoolean.value = true
+        }
+        val booleanImageDefault = imageUuidList.contains(currentEvent?.imageUuid)
+        if(booleanImageDefault){
+            imageCheckBoxBoolean.value = true
+        }
     }
 
     private fun loadImage() {
@@ -143,17 +176,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun addEvent() {
         execute {
-            //uploadImage()
+            uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
+                    title = title.value ?: "",
                     host = host.value ?: "",
                     category = spinnerToCategory(),
-                    title = title.value ?: "",
-                    body = body.value ?: "",
-                    imageUuid = "1ec8d561-aa27-6100-12b7-85812b0d8e38",
-                    submissionUrl = submissionUrl.value ?: "",
+                    target = target.value ?: "",
                     startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt()
+                    endAt = datePickerToEndAt(),
+                    contact = contactNumber.value,
+                    location = location.value,
+                    body = body.value ?: "",
+                    imageUuid = imageUuid ?: ""
                 )
             )
         }.then{ }.catch{ }
@@ -165,14 +200,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
+                    title = title.value ?: "",
                     host = host.value ?: "",
                     category = spinnerToCategory(),
-                    title = title.value ?: "",
-                    body = body.value ?: "",
-                    imageUuid = imageUuid ?: "",
-                    submissionUrl = submissionUrl.value ?: "",
+                    //target = target.value ?: "",
                     startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt()
+                    endAt = datePickerToEndAt(),
+                    //contact = contactNumber.value,
+                    submissionUrl = location.value,
+                    body = body.value ?: "",
+                    imageUuid = imageUuid
                 )
             )
             Log.d("tag","서버에 데이터 넣기")
@@ -180,10 +217,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun uploadImage(){
-        val file = File(imageUrl.value.toString())
-        val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-        val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-        imageUuid = eventRepository.uploadImage(image).uuid
+        if(imageCheckBoxBoolean.value == false){
+            val file = File(imageUrl.value.toString())
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            imageUuid = eventRepository.uploadImage(image).uuid
+        }
+        else{
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
+        }
     }
 
     fun onCancelClick() {
@@ -233,18 +275,49 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         endTimePickerClickEvent.call()
     }
 
-    fun onCheckBoxClick(){
-        if(!imageCheckBoxBoolean.value!!){
-            submissionUrl.value = ""
+    fun onLocationCheckBoxClick(){
+        when{
+            locationCheckBoxBoolean.value!! ->{
+                urlTmp = location.value
+                location.value = null
+            }
+            !(locationCheckBoxBoolean.value!!) -> location.value = urlTmp
         }
-        if(timeCheckBoxBoolean.value!!){
-            startTimePeriod.value = "00:00 AM"
-            endTimePeriod.value = "11:59 PM"
+    }
+
+    fun onImageCheckBoxClick(){
+        when{
+            imageCheckBoxBoolean.value!! -> {
+                imageTmp = imageUrl.value!!
+                imageUrl.value = null
+            }
+            !(imageCheckBoxBoolean.value!!) -> imageUrl.value = imageTmp
         }
-        if(urlCheckBoxBoolean.value!!){
-            submissionUrl.value = ""
+    }
+
+    fun onTimeCheckBoxClick(){
+        when{
+            timeCheckBoxBoolean.value!! -> {
+                dateTmp = endDatePeriod.value
+                timeTmp = endTimePeriod.value
+                endDatePeriod.value = startDatePeriod.value
+                endTimePeriod.value = startTimePeriod.value
+            }
+            !(timeCheckBoxBoolean.value!!) ->{
+                endDatePeriod.value = dateTmp
+                endTimePeriod.value = timeTmp
+            }
         }
-        checkBoxClickEvent.call()
+    }
+
+    fun onContactNumberCheckBoxClick() {
+        when {
+            contactNumberCheckBoxBoolean.value!! -> {
+                contactTmp = contactNumber.value
+                contactNumber.value = null
+            }
+            !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
+        }
     }
 
     fun setStartDate(date: Date) {
