@@ -5,10 +5,7 @@ import okhttp3.OkHttpClient
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
-import org.inu.events.data.repository.impl.AccountRepositoryImpl
-import org.inu.events.data.repository.impl.CommentRepositoryImpl
-import org.inu.events.data.repository.impl.EventRepositoryImpl
-import org.inu.events.data.repository.impl.NotificationRepositoryImpl
+import org.inu.events.data.repository.impl.*
 import org.inu.events.data.repository.mock.EventRepositoryMock
 import org.inu.events.data.repository.mock.NotificationRepositoryMock
 import org.inu.events.data.repository.mock.UserRepositoryMock
@@ -17,6 +14,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
+import java.util.concurrent.Flow
 
 val cookieJar = JavaNetCookieJar(CookieManager())
 val okHttpClient = OkHttpClient.Builder()
@@ -53,6 +51,15 @@ val myModules = module {
         buildRetrofitService()
     }
 
+    single<LikeHttpService>{
+        buildRetrofitService()
+    }
+
+    single<SubscriptionHttpService>{
+        buildRetrofitService()
+    }
+
+
     single<EventRepository> {
 //        EventRepositoryMock()
         EventRepositoryImpl(
@@ -72,8 +79,15 @@ val myModules = module {
     }
 
     single<NotificationRepository>{
-        //TODO 지금은 임시 데이터
         NotificationRepositoryImpl(httpService = get())
+    }
+
+    single<LikeRepository>{
+        LikeRepositoryImpl(httpService = get())
+    }
+
+    single<SubscriptionRepository>{
+        SubscriptionRepositoryImpl(httpService = get())
     }
 
     single<AccountRepository> {
