@@ -14,7 +14,6 @@ import org.koin.core.component.inject
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
-    private val commentRepository: CommentRepository by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
@@ -36,7 +35,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffColor = MutableLiveData<Int>()
     val onOffBackground = MutableLiveData<Int>()
     val subMissionUrlNull = MutableLiveData(false)
-    val commentSize = MutableLiveData("")
+    val contactNull = MutableLiveData(false)
+    val bothNull = MutableLiveData(false)
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -65,15 +65,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
-            if(_currentEvent.value?.submissionUrl == "") subMissionUrlNull.value = true
+            if(_currentEvent.value?.submissionUrl == null) subMissionUrlNull.value = true
+            if(_currentEvent.value?.contact == null)contactNull.value = true
+            if(subMissionUrlNull.value!! and contactNull.value!!) bothNull.value = true
         }.catch {  }
-
-        execute {
-            commentRepository.getComments(eventIndex)
-        }.then{
-            commentSize.value = "댓글 ${it.size}개"
-        }.catch {  }
-
     }
 
     //댓글버튼 클릭했을 때 이벤트
