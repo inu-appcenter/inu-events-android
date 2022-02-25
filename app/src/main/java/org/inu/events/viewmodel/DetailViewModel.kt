@@ -10,6 +10,7 @@ import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
+import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -19,6 +20,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
     private val notificationRepository: NotificationRepository by inject()
+    private val likeRepository: LikeRepository by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
@@ -30,7 +32,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
-    val onOff = MutableLiveData(false)
+    val NotificationOnOff = MutableLiveData(false)
     private val setFor = MutableLiveData("")
 
     var eventIndex = -1
@@ -81,10 +83,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
             if(_currentEvent.value?.contact == null)contactNull.value = true
             if(subMissionUrlNull.value!! and contactNull.value!!) bothNull.value = true
             eventWroteByMeBoolean = it.wroteByMe ?:false
-            onOff.value = it.notificationSetByMe ?: false
-            onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"
-            onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white
-            onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100
+            NotificationOnOff.value = it.notificationSetByMe ?: false
+            onOffText.value = if (NotificationOnOff.value!!) "알람 취소" else "알람 신청"
+            onOffColor.value = if (NotificationOnOff.value!!) R.color.primary100 else R.color.white
+            onOffBackground.value = if (NotificationOnOff.value!!) R.color.primary_base else R.color.primary100
             setFor.value = it.notificationSetFor ?: ""
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
         }.catch {
@@ -132,6 +134,24 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun postLike(){
+        execute {
+            likeRepository.postLike(
+                eventId = eventIndex
+            )
+        }.then {
+        }.catch {  }
+    }
+
+    fun deleteLike(){
+        execute {
+            likeRepository.deleteLike(
+                eventId = eventIndex
+            )
+        }.then {
+        }.catch {  }
+    }
+
 
     fun postNotification(setFor:String){
         execute{
@@ -142,10 +162,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
                 )
             )
         }.then {
-            onOff.value = true
+            NotificationOnOff.value = true
             this.setFor.value = setFor
-            Log.i("good: postNotification", onOff.value.toString())
-            loadNotificationButton(onOff.value!!)
+            Log.i("good: postNotification", NotificationOnOff.value.toString())
+            loadNotificationButton(NotificationOnOff.value!!)
         }.catch {
             Log.i("error: postNotification",it.stackTrace.toString())
         }
@@ -161,9 +181,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
                 )
             )
         }.then {
-            onOff.value = false
-            Log.i("good: deleteNotification", onOff.value.toString())
-            loadNotificationButton(onOff.value!!)
+            NotificationOnOff.value = false
+            Log.i("good: deleteNotification", NotificationOnOff.value.toString())
+            loadNotificationButton(NotificationOnOff.value!!)
         }.catch {
             Log.i("error: deleteNotification",it.stackTrace.toString())
         }
