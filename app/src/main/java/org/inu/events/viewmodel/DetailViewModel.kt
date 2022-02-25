@@ -1,9 +1,11 @@
 package org.inu.events.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
+import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
@@ -13,6 +15,7 @@ import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
+import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.time.LocalDateTime
@@ -22,6 +25,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private val commentRepository: CommentRepository by inject()
     private val notificationRepository: NotificationRepository by inject()
     private val likeRepository: LikeRepository by inject()
+    private val loginService: LoginService by inject()
+    private val context: Context by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
     private val _currentEvent = MutableLiveData<Event>()
@@ -124,16 +129,21 @@ class DetailViewModel : ViewModel(), KoinComponent {
         alarmClickEvent.value = notificationQuarter.value
     }
 
+    // 좋아요버튼 클릭했을 때 이벤트
     fun onClickLike(){
-        if (likeOnOff.value == true){
-            deleteLike()
-            likeButtonSource.value = R.drawable.img_like_off
+        if (loginService.isLoggedIn) {
+            if (likeOnOff.value == true) {
+                deleteLike()
+                likeButtonSource.value = R.drawable.img_like_off
+            } else {
+                postLike()
+                likeButtonSource.value = R.drawable.img_like_on
+            }
+            likeOnOff.value = likeOnOff.value != true
         }
         else{
-            postLike()
-            likeButtonSource.value = R.drawable.img_like_on
+            context.toast("로그인을 하셔야 저장하실 수 있습니다~!!")
         }
-        likeOnOff.value = likeOnOff.value != true
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
