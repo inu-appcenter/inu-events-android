@@ -19,7 +19,7 @@
 
             <include
                 android:id="@+id/toolbar_my_page"
-                layout="@layout/toolbar_sample"
+                layout="@layout/toolbar_with_back_button"
                 app:title='@{"나의 레터"}'/>
 
             <androidx.cardview.widget.CardView
