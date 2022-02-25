@@ -2,12 +2,14 @@ package org.inu.events.viewmodel
 
 import android.content.Intent
 import android.media.Image
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import org.inu.events.BackButtonListener
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.UpdateUserParams
 import org.inu.events.data.model.entity.User
@@ -21,6 +23,12 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     val user = MutableLiveData<User>()
     val updatePhotoEvent = SingleLiveEvent<Any>()
+    val onClickBackEvent = SingleLiveEvent<Any>()
+    val backButtonListener = object : BackButtonListener {
+        override fun invoke(view: View) {
+            onClickBackEvent.call()
+        }
+    }
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
