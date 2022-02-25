@@ -1,8 +1,12 @@
 package org.inu.events
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.inu.events.adapter.CategoryAdapter
 import org.inu.events.base.BaseActivity
 import org.inu.events.databinding.ActivityNotificationSettingBinding
@@ -12,8 +16,17 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
     override val layoutResourceId = R.layout.activity_notification_setting
     private val viewModel: NotificationSettingViewModel by viewModels()
 
-    override fun afterDataBinding() {
+    override fun dataBinding() {
+        super.dataBinding()
         binding.viewModel = viewModel
         binding.categories.adapter = CategoryAdapter()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun afterDataBinding() {
+        viewModel.loadSubscription(binding.categories.adapter!! as CategoryAdapter)
+        viewModel.finishEvent.observe(this) {
+            finish()
+        }
     }
 }

@@ -35,7 +35,8 @@
             tools:text="동아리/소모임"
             android:text="@{item.name}"
             android:textColor="@color/black80"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:gravity="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

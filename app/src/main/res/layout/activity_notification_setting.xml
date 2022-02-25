@@ -49,6 +49,7 @@
             android:background="@drawable/radius_6"
             android:backgroundTint="@color/primary"
             android:text="선택 완료"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="@{()->viewModel.onClickFinish()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
