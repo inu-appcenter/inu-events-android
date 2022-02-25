@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                    layoutMarginBottom="@{detailViewModel.locationNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                    layoutMarginBottom="@{detailViewModel.locationNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:visibility="@{detailViewModel.contactNull ? View.GONE : View.VISIBLE}"
                 android:orientation="horizontal">
 
@@ -209,7 +209,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="@dimen/detail_bottom_margin"
                     android:orientation="horizontal"
-                    android:visibility="@{detailViewModel.subMissionUrlNull ? View.GONE : View.VISIBLE}">
+                    android:visibility="@{detailViewModel.locationNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:layout_width="80dp"
@@ -220,7 +220,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{detailViewModel.currentEvent.submissionUrl}"
+                        android:text="@{detailViewModel.currentEvent.location}"
                         android:autoLink="web"
                         android:textColor="@color/black1"
                         android:textSize="15sp"

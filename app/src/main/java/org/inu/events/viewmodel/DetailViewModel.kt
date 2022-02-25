@@ -42,7 +42,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffText = MutableLiveData<String>()
     val onOffColor = MutableLiveData<Int>(R.color.black80)
     val onOffBackground = MutableLiveData<Int>(R.color.white)
-    val subMissionUrlNull = MutableLiveData(false)
+    val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
 
     fun load(eventId: Int) {
@@ -71,9 +71,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             endDate.value = dateFormat(it.endAt)
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
-            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
-            if(_currentEvent.value?.submissionUrl == null) subMissionUrlNull.value = true
-            if(_currentEvent.value?.contact == null)contactNull.value = true
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
+            if(it.location == null) locationNull.value = true
+            if(it.contact == null)contactNull.value = true
             eventWroteByMeBoolean = it.wroteByMe ?:false
             onOff.value = it.notificationSetByMe ?: false
             onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"

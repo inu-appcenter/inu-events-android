@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.internal.UTC
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
@@ -18,9 +19,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -351,11 +350,11 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun serverTimeToString(time: String): String{
         val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "US")))
+        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
     }
 
     private fun formatDateForServer(date: String): String{
-        val serverDate:LocalDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "US")))
+        val serverDate = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "KO")))
         return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 
