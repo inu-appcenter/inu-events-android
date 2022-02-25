@@ -289,11 +289,11 @@
             android:id="@+id/NotificationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{ContextCompat.getColor(context,detailViewModel.onOffBackground)}"
+            android:background="@{ContextCompat.getColor(context,detailViewModel.notificationBackground)}"
             android:paddingVertical="15dp"
-            android:text="@{detailViewModel.onOffText}"
-            android:onClick="@{()->detailViewModel.onClickButton()}"
-            android:textColor="@{ContextCompat.getColor(context,detailViewModel.onOffColor)}"
+            android:text="@{detailViewModel.notificationText}"
+            android:onClick="@{()->detailViewModel.onClickNotification()}"
+            android:textColor="@{ContextCompat.getColor(context,detailViewModel.notificationColor)}"
             android:textSize="15sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
