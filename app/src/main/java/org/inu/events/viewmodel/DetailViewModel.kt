@@ -47,7 +47,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val contactNull = MutableLiveData(false)
     val bothNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
-    private var notificationQuarter = MutableLiveData(-1)
+    var notificationQuarter = MutableLiveData(-1)
 
 
     fun load(eventId: Int) {
@@ -86,7 +86,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white
             onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100
             setFor.value = it.notificationSetFor ?: ""
-            timeComparison(LocalDateTime.now().toString())
+            notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
@@ -114,18 +114,19 @@ class DetailViewModel : ViewModel(), KoinComponent {
     // 알람버튼 클릭했을 때 이벤트
     fun onClickButton(){
         alarmClickEvent.value = notificationQuarter.value
+        Log.i("msdklcmdsklcmkldsmclkdsmcd",notificationQuarter.value.toString())
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
-    private fun timeComparison(now:String){
-        notificationQuarter.value = when (startDate.value) {
-            endDate.value -> when {       // 시작시간과 마감시간이 같은 행사
-                now < startDate.value!! -> 1   // 지금이 시작 전이라면 시작 전 알림만
+    private fun timeComparison(now:String,startDate:String,endDate:String): Int{
+        return when (startDate) {
+            endDate -> when {       // 시작시간과 마감시간이 같은 행사
+                now < startDate -> 1   // 지금이 시작 전이라면 시작 전 알림만
                 else -> 0  // 지금이 시작한 후라면 비활성화
             }
             else -> when {   // 시작시간과 마감시간이 다른 행사
-                now < startDate.value!! -> 3     // 지금이 시작 전이라면 시작전과 마감알림 모두
-                startDate.value!! <= now && now < endDate.value!! -> 2// 지금이 행사 시작후, 마감 전이라면 마감 전 알림만
+                now < startDate -> 3     // 지금이 시작 전이라면 시작전과 마감알림 모두
+                startDate <= now && now < endDate -> 2  // 지금이 행사 시작후, 마감 전이라면 마감 전 알림만
                 else -> 0   // 지금이 마감뒤라면 비활성화
             }
         }
