@@ -52,14 +52,15 @@
                     android:ellipsize="end"
                     android:maxLines="1"/>
 
-                <View
+                <ImageButton
                     android:id="@+id/bookmark_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintTop_toTopOf="@id/title"
                     app:layout_constraintBottom_toBottomOf="@id/title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/ic_bookmark_filled"/>
+                    android:src="@drawable/ic_bell"
+                    android:background="@null" />
 
                 <TextView
                     android:layout_width="0dp"
