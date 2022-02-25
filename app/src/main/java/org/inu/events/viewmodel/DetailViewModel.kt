@@ -13,6 +13,7 @@ import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.NotificationRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.LocalDateTime
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
@@ -38,7 +39,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
         private set
 
     val commentClickEvent = SingleLiveEvent<Int>()
-    val alarmClickEvent = SingleLiveEvent<Any>()
+    val alarmClickEvent = SingleLiveEvent<Int>()
     val onOffText = MutableLiveData<String>()
     val onOffColor = MutableLiveData<Int>(R.color.black80)
     val onOffBackground = MutableLiveData<Int>(R.color.white)
@@ -46,7 +47,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val contactNull = MutableLiveData(false)
     val bothNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
-    var notificationQuarter = MutableLiveData(-1)
+    private var notificationQuarter = MutableLiveData(-1)
 
 
     fun load(eventId: Int) {
@@ -85,6 +86,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             onOffColor.value = if (onOff.value!!) R.color.primary100 else R.color.white
             onOffBackground.value = if (onOff.value!!) R.color.primary_base else R.color.primary100
             setFor.value = it.notificationSetFor ?: ""
+            timeComparison(LocalDateTime.now().toString())
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
@@ -115,7 +117,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
-    fun timeComparison(now:String){
+    private fun timeComparison(now:String){
         notificationQuarter.value = when (startDate.value) {
             endDate.value -> when {       // 시작시간과 마감시간이 같은 행사
                 now < startDate.value!! -> 1   // 지금이 시작 전이라면 시작 전 알림만
