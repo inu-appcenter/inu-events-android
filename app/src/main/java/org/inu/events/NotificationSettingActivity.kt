@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.inu.events.adapter.CategoryAdapter
+import org.inu.events.adapter.CategoryItemDecoration
 import org.inu.events.base.BaseActivity
 import org.inu.events.databinding.ActivityNotificationSettingBinding
 import org.inu.events.viewmodel.NotificationSettingViewModel
@@ -20,6 +21,7 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
         super.dataBinding()
         binding.viewModel = viewModel
         binding.categories.adapter = CategoryAdapter()
+        binding.categories.addItemDecoration(CategoryItemDecoration(2, 8, true))
     }
 
     @SuppressLint("NotifyDataSetChanged")
