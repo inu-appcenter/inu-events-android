@@ -85,30 +85,55 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:background="@drawable/history_background">
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="저장목록"
-                    android:textColor="@color/black80"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:onClick="@{(view)->viewModel.onClickLikeList(view)}"/>
+                    android:gravity="center">
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_bookmark_filled"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="저장목록"
+                        android:textColor="@color/black80"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:onClick="@{(view)->viewModel.onClickLikeList(view)}"/>
+                </LinearLayout>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/black10"/>
-                <TextView
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="알림목록"
-                    android:textColor="@color/black80"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:onClick="@{(view)->viewModel.onClickNotificationList(view)}"/>
+                    android:gravity="center">
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_bell"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="알림목록"
+                        android:textColor="@color/black80"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:onClick="@{(view)->viewModel.onClickNotificationList(view)}"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -201,7 +226,7 @@
                 android:text="개인정보 처리방침"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:onClick="@{(view)->viewModel.onClickPrivacyPolicy(view)"/>
+                android:onClick="@{(view)->viewModel.onClickPrivacyPolicy(view)}"/>
 
             <TextView
                 android:id="@+id/opensource_licence"
