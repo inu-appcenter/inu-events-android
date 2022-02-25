@@ -3,7 +3,6 @@ package org.inu.events.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.common.api.ApiException
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
@@ -47,6 +46,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val contactNull = MutableLiveData(false)
     val bothNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
+    var notificationQuarter = MutableLiveData(-1)
+
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -111,6 +112,21 @@ class DetailViewModel : ViewModel(), KoinComponent {
     // 알람버튼 클릭했을 때 이벤트
     fun onClickButton(){
         alarmClickEvent.call()
+    }
+
+    // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
+    fun timeComparison(now:String){
+        notificationQuarter.value = when (startDate.value) {
+            endDate.value -> when {       // 시작시간과 마감시간이 같은 행사
+                now < startDate.value!! -> 1   // 지금이 시작 전이라면 시작 전 알림만
+                else -> 0  // 지금이 시작한 후라면 비활성화
+            }
+            else -> when {   // 시작시간과 마감시간이 다른 행사
+                now < startDate.value!! -> 3     // 지금이 시작 전이라면 시작전과 마감알림 모두
+                startDate.value!! <= now && now < endDate.value!! -> 2// 지금이 행사 시작후, 마감 전이라면 마감 전 알림만
+                else -> 0   // 지금이 마감뒤라면 비활성화
+            }
+        }
     }
 
 
