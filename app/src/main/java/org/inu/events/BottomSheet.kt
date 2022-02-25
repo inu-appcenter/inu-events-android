@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.inu.events.databinding.FragmentBottomSheetBinding
 import org.inu.events.viewmodel.CommentViewModel
@@ -34,8 +33,7 @@ class BottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_sheet, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_sheet, container, false)
         return binding.root
     }
 
@@ -53,7 +51,7 @@ class BottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         when (v?.id) {
             R.id.deleteButton -> {
                 Log.i("Button", "delete click")
-                commentViewModel.deleteComment{
+                commentViewModel.deleteComment {
                     dismiss()
                 }
             }
