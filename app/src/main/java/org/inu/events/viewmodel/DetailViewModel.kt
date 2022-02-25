@@ -17,7 +17,6 @@ import org.koin.core.component.inject
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
-    private val commentRepository: CommentRepository by inject()
     private val notificationRepository: NotificationRepository by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
@@ -45,8 +44,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val onOffBackground = MutableLiveData<Int>(R.color.white)
     val subMissionUrlNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
-    val bothNull = MutableLiveData(false)
-    val commentSize = MutableLiveData("")
 
     fun load(eventId: Int) {
         eventIndex = eventId
@@ -77,7 +74,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${_currentEvent.value!!.imageUuid}"
             if(_currentEvent.value?.submissionUrl == null) subMissionUrlNull.value = true
             if(_currentEvent.value?.contact == null)contactNull.value = true
-            if(subMissionUrlNull.value!! and contactNull.value!!) bothNull.value = true
             eventWroteByMeBoolean = it.wroteByMe ?:false
             onOff.value = it.notificationSetByMe ?: false
             onOffText.value = if (onOff.value!!) "알람 취소" else "알람 신청"
@@ -88,12 +84,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
 
-        execute {
-            commentRepository.getComments(eventIndex)
-        }.then{
-            commentSize.value = "댓글 ${it.size}개"
-        }.catch {}
-
     }
 
     private fun loadNotificationButton(onOff:Boolean){
@@ -101,7 +91,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         onOffColor.value = if (onOff) R.color.primary100 else R.color.white
         onOffBackground.value = if (onOff) R.color.primary_base else R.color.primary100
     }
-
 
     //댓글버튼 클릭했을 때 이벤트
     fun onClickComment() {
@@ -112,7 +101,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     fun onClickButton(){
         alarmClickEvent.call()
     }
-
 
     fun postNotification(setFor:String){
         execute{
@@ -158,13 +146,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }
     }
 
-
-
     fun onDeleteClickEvent() {
+        println("왜져??")
         execute {
             eventRepository.deleteEvent(eventIndex)
         }.then {  }. catch {  }
     }
 
-    fun isMyWriting() = true
 }
