@@ -14,7 +14,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".MyPageActivity">
 
             <include
@@ -50,7 +50,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"
                 android:text="@{viewModel.user.nickname}"
-                tools:text="맥도날드사고싶은"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
