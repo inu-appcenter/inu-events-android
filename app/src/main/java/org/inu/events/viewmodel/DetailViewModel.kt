@@ -113,7 +113,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     // 알람버튼 클릭했을 때 이벤트
     fun onClickButton(){
-        alarmClickEvent.call()
+        alarmClickEvent.value = notificationQuarter.value
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
