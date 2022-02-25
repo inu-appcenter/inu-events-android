@@ -7,6 +7,7 @@ import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
@@ -27,6 +28,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
+
     var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
@@ -35,6 +37,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val notificationOnOff = MutableLiveData(false)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
+    val likeButtonSource = MutableLiveData(R.drawable.img_like_off)
 
     var eventIndex = -1
         private set
@@ -91,6 +94,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             notificationBackground.value = if (notificationOnOff.value!!) R.color.primary_base else R.color.primary100
             notificationSetFor.value = it.notificationSetFor ?: ""
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
+            likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
@@ -120,6 +124,18 @@ class DetailViewModel : ViewModel(), KoinComponent {
         alarmClickEvent.value = notificationQuarter.value
     }
 
+    fun onClickLike(){
+        if (likeOnOff.value == true){
+            deleteLike()
+            likeButtonSource.value = R.drawable.img_like_off
+        }
+        else{
+            postLike()
+            likeButtonSource.value = R.drawable.img_like_on
+        }
+        likeOnOff.value = likeOnOff.value != true
+    }
+
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
     private fun timeComparison(now:String,startDate:String,endDate:String): Int{
         return when (startDate) {
@@ -135,10 +151,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun postLike(){
+    private fun postLike(){
         execute {
             likeRepository.postLike(
-                eventId = eventIndex
+                LikeParam(eventId = eventIndex)
             )
         }.then {
         }.catch {  }
@@ -147,7 +163,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     fun deleteLike(){
         execute {
             likeRepository.deleteLike(
-                eventId = eventIndex
+                LikeParam(eventId = eventIndex)
             )
         }.then {
         }.catch {  }
