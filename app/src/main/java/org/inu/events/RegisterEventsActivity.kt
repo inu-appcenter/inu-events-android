@@ -51,11 +51,11 @@ class RegisterEventsActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             viewModel.title.value = s.toString()
-            viewModel.errorMessageString()
         }
 
         override fun afterTextChanged(s: Editable?) {}
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,12 +67,12 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupStartTimePicker()
         setupEndDatePicker()
         setupEndTimePicker()
-        setupTitleErrorMessage()
+        setupTextWatcher()
         initAddPhotoButton()
         addEvent()
     }
 
-    private fun setupTitleErrorMessage() {
+    private fun setupTextWatcher() {
         binding.editTextTitle.addTextChangedListener(textWatcher)
     }
 
@@ -80,7 +80,8 @@ class RegisterEventsActivity : AppCompatActivity() {
         viewModel.finishEvent.observe(
             this
         ) {
-            if(viewModel.errorMessageString()) finish()
+            if(viewModel.isRequiredInformationEntered()) finish()
+            else Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -46,15 +46,17 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val locationCheckBoxBoolean = MutableLiveData(false)
-    val errorMessage = MutableLiveData("")
+    val titleErrorMessage = MutableLiveData("")
+    val targetErrorMessage = MutableLiveData("")
 
-    private val imageUuidList = listOf(null,"1ec94c4d-284e-6b70-6eba-0ecc1b8dd491",
+    private val imageUuidList = listOf("1ec96f4e-970e-6780-792a-5dc26eec006c",
+        "1ec94c4d-284e-6b70-6eba-0ecc1b8dd491",
         "1ec94c3f-2c9d-6590-1fd7-cb603aa85e1e",
         "1ec94c15-ee15-6f30-8bdd-76769baf2a97",
         "1ec94c15-786e-6520-ea08-df4f8c716b04",
         "1ec94c49-4fd6-6ca0-1497-d8b902900844",
         "1ec94c42-4e1a-6030-9859-6dc8e7afe7df",
-        null
+        "1ec96f4e-970e-6780-792a-5dc26eec006c"
     )
     private var imageUuid: String? = ""
     private var imageTmp: String? = ""
@@ -100,14 +102,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(!isItNew){
             loadCurrentEvent()
         }
-    }
-
-    fun errorMessageString(): Boolean{
-        errorMessage.value = when{
-            title.value!!.isEmpty() -> "필수정보를 모두 입력해주세요"
-            else -> ""
-        }
-        return errorMessage.value!!.isEmpty()
     }
 
     private fun loadCurrentEvent() {
@@ -218,14 +212,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun uploadImage(){
+        if(imageUrl.value == ""){
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
+            return
+        }
         if(imageCheckBoxBoolean.value == false){
             val file = File(imageUrl.value.toString())
             val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
             val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
             imageUuid = eventRepository.uploadImage(image).uuid
-        }
-        else{
-            imageUuid = imageUuidList[selectedItemPosition.value!!]
+            return
         }
     }
 
@@ -250,14 +246,18 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        if(errorMessageString()){
+        if(isRequiredInformationEntered()){
             if (isItNew) {
                 addEvent()
             } else {
                 updateEvent()
             }
-            finishEvent.call()
+        }else{
+            onBeforeClick()
+            titleErrorMessage.value = "제목을 입력해주세요"
+            targetErrorMessage.value = "모집대상을 입력해주세요"
         }
+        finishEvent.call()
     }
 
     fun onStartDateClick() {
@@ -290,7 +290,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when{
             imageCheckBoxBoolean.value!! -> {
                 imageTmp = imageUrl.value!!
-                imageUrl.value = null
+                imageUrl.value = ""
             }
             !(imageCheckBoxBoolean.value!!) -> imageUrl.value = imageTmp
         }
@@ -346,6 +346,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     fun setEndTime(date: Date) {
         endTimePeriod.value = formatTime(date)
     }
+
+    fun isRequiredInformationEntered() = when{
+            title.value!!.isEmpty() -> false
+            target.value!!.isEmpty() -> false
+            else -> true
+        }
 
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
         .format(date)
