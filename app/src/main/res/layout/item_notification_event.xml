@@ -32,6 +32,7 @@
             android:elevation="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_wrap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingHorizontal="12dp">

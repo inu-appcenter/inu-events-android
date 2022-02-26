@@ -31,6 +31,10 @@ class NotificationEventAdapter(val viewModel: NotificationViewModel) : ListAdapt
             binding.notificationIcon.setOnClickListener {
                 viewModel.onClickNotificationIcon(item.id)
             }
+            binding.cardWrap.setOnClickListener {
+                viewModel.onClickDetail(it, item)
+            }
+            binding
             binding.executePendingBindings()
         }
     }
