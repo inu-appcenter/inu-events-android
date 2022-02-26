@@ -89,7 +89,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:onClick="@{(view)->viewModel.onClickLikeList(view)}">
                     <View
                         android:layout_width="24dp"
                         android:layout_height="24dp"
@@ -103,8 +104,7 @@
                         android:textColor="@color/black80"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:gravity="center"
-                        android:onClick="@{(view)->viewModel.onClickLikeList(view)}"/>
+                        android:gravity="center"/>
                 </LinearLayout>
 
                 <View
@@ -116,7 +116,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:onClick="@{(view)->viewModel.onClickNotificationList(view)}">
                     <View
                         android:layout_width="24dp"
                         android:layout_height="24dp"
@@ -130,8 +131,7 @@
                         android:textColor="@color/black80"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:gravity="center"
-                        android:onClick="@{(view)->viewModel.onClickNotificationList(view)}"/>
+                        android:gravity="center"/>
 
                 </LinearLayout>
             </LinearLayout>
