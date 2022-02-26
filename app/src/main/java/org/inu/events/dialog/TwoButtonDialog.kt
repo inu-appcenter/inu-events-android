@@ -1,14 +1,14 @@
-package org.inu.events
+package org.inu.events.dialog
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import org.inu.events.R
 
 class TwoButtonDialog(val title: String, val onOk: () -> Unit) {
     fun show(context: Context) {

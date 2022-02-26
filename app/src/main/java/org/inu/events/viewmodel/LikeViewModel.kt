@@ -9,7 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.inu.events.BackButtonListener
 import org.inu.events.DetailActivity
-import org.inu.events.TwoButtonDialog
+import org.inu.events.dialog.TwoButtonDialog
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
