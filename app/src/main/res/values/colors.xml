@@ -29,4 +29,7 @@
     <color name="transparent">#00000000</color>
     <color name="dbdbdb">#DBDBDB</color>
     <color name="background">#F8F6FF</color>
+
+    <color name="red2">#F1241A</color>
+
 </resources>

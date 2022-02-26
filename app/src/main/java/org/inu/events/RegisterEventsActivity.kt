@@ -47,15 +47,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         }?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.title.value = s.toString()
-            viewModel.errorMessageString()
-        }
-
-        override fun afterTextChanged(s: Editable?) {}
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,20 +58,18 @@ class RegisterEventsActivity : AppCompatActivity() {
         setupStartTimePicker()
         setupEndDatePicker()
         setupEndTimePicker()
-        setupTitleErrorMessage()
         initAddPhotoButton()
         addEvent()
+        extractEventIdAndLoad()
     }
 
-    private fun setupTitleErrorMessage() {
-        binding.editTextTitle.addTextChangedListener(textWatcher)
-    }
 
     private fun addEvent() {
         viewModel.finishEvent.observe(
             this
         ) {
-            if(viewModel.errorMessageString()) finish()
+            if(viewModel.isRequiredInformationEntered()) finish()
+            else Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -260,11 +249,6 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister0.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
         binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        extractEventIdAndLoad()
     }
 
     private fun extractEventIdAndLoad() {
