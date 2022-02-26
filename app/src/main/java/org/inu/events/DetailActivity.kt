@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -111,6 +112,8 @@ class DetailActivity : AppCompatActivity() {
             if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
+                binding.detailToolbar.likeImageView.visibility = View.INVISIBLE
+                binding.detailToolbar.iImageView.visibility = View.INVISIBLE
             }
         }
     }

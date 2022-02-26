@@ -138,9 +138,4 @@ class CommentViewModel : ViewModel(), KoinComponent {
         phase.value = 1
     }
 
-    fun errorMessageString(){
-        if (content.value!!.length >= 300) {
-            showToastEvent.call()
-        }
-    }
 }
