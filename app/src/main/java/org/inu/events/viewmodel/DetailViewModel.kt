@@ -18,7 +18,9 @@ import org.inu.events.data.repository.NotificationRepository
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()

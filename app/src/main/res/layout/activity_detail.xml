@@ -66,14 +66,13 @@
 
                     <TextView
                         android:id="@+id/detailTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/roboto"
                         android:text="@{detailViewModel.currentEvent.title}"
                         tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당"
                         android:gravity="center_vertical"
-                        android:text="@{detailViewModel.currentEvent.title}"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
