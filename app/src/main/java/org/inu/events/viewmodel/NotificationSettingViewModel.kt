@@ -47,11 +47,17 @@ class NotificationSettingViewModel : ViewModel(), KoinComponent {
         CoroutineScope(Dispatchers.Main).launch {
             val deferred = async(Dispatchers.IO) { subscriptionRepository.getTopics().topics }
             val topics = deferred.await()
-            categoryList.value!!.forEach {
+            val resultCategoryList = categoryList.value!!.map {
                 if( topics.contains(it.name) )
-                    it.isChecked = true
+                    Category(
+                        name = it.name,
+                        isChecked = true,
+                        imageSrc = it.imageSrc
+                    )
+                else
+                    it
             }
-            categoryList.postValue(categoryList.value!!)
+            categoryList.postValue(resultCategoryList)
         }
     }
 }

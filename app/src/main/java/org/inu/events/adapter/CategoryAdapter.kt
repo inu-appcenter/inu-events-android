@@ -1,6 +1,7 @@
 package org.inu.events.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -13,7 +14,7 @@ import org.inu.events.databinding.ItemCategoryBinding
 class CategoryAdapter : ListAdapter<Category, CategoryAdapter.ViewHolder>(CategoriesDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     class ViewHolder private constructor(val binding: ItemCategoryBinding, val adapter: ListAdapter<Category, ViewHolder>) : RecyclerView.ViewHolder(binding.root) {
@@ -26,15 +27,14 @@ class CategoryAdapter : ListAdapter<Category, CategoryAdapter.ViewHolder>(Catego
             }
         }
 
-        @SuppressLint("NotifyDataSetChanged")
-        fun bind(item: Category) {
+        fun bind(item: Category, position: Int) {
             binding.item = item
             val drawable = ContextCompat.getDrawable(binding.root.context, item.imageSrc)
             binding.card.setImageDrawable(drawable)
 
             binding.root.setOnClickListener {
                 item.isChecked = !item.isChecked
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemChanged(position)
             }
 
             if(item.isChecked)
@@ -55,10 +55,12 @@ data class Category(
 
 class CategoriesDiffUtil : DiffUtil.ItemCallback<Category>() {
     override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        Log.e("참조확인", "${oldItem.isChecked}, ${newItem.isChecked}")
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-        return oldItem == newItem
+        Log.e("으잉??", "${oldItem.isChecked}, ${newItem.isChecked}")
+        return oldItem.isChecked == newItem.isChecked
     }
 }
