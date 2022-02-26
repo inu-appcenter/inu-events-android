@@ -10,7 +10,6 @@ import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.LikeParam
-import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository

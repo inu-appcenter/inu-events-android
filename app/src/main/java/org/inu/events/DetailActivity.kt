@@ -71,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
     private fun initNotificationButton() {
         observe(viewModel.alarmClickEvent) {
             if (loginService.isLoggedIn) {
-                if (viewModel.onOff.value == false) {
+                if (viewModel.notificationOnOff.value == false) {
                     bottomDialog.show(
                         this,
                         { viewModel.postNotification("start")
