@@ -3,17 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/drawable_btn_background.xml" value="0.1775" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_background_top.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_splash.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/history_background.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/ic_arrow_back.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/ic_notification.xml" value="0.166" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/notification_off_btn_background.xml" value="0.1775" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/notification_on_btn_background.xml" value="0.1775" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/outline_border_4.xml" value="0.1775" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_comment.xml" value="0.20557197129590546" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_like.xml" value="0.20557197129590546" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_login.xml" value="0.24974358974358973" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_notification_setting.xml" value="0.10987601539119282" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_privacy_policy.xml" value="0.2" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/alarm_dialog.xml" value="0.24974358974358973" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.3680823680823681" />

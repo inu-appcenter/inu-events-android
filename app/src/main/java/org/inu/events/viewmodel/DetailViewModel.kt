@@ -50,10 +50,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val alarmClickEvent = SingleLiveEvent<Int>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
-    val notificationBackground = MutableLiveData<Int>(R.color.white)
-    val onOffText = MutableLiveData<String>()
-    val onOffColor = MutableLiveData<Int>(R.color.black80)
-    val onOffBackground = MutableLiveData<Int>(R.color.white)
+    val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
     val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
     var notificationQuarter = MutableLiveData(-1)
@@ -93,7 +90,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             likeOnOff.value = it.likedByMe ?: false
             notificationText.value = if (notificationOnOff.value!!) "알람 취소" else "알람 신청"
             notificationColor.value = if (notificationOnOff.value!!) R.color.primary100 else R.color.white
-            notificationBackground.value = if (notificationOnOff.value!!) R.color.primary_base else R.color.primary100
+            notificationBackground.value = if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background
             notificationSetFor.value = it.notificationSetFor ?: ""
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
@@ -106,7 +103,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private fun loadNotificationButton(onOff:Boolean){
         notificationText.value = if (onOff) "알람 취소" else "알람 신청"
         notificationColor.value = if (onOff) R.color.primary100 else R.color.white
-        notificationBackground.value = if (onOff) R.color.primary_base else R.color.primary100
+        notificationBackground.value = if (onOff) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background
     }
 
     //댓글버튼 클릭했을 때 이벤트

@@ -27,7 +27,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/oneButton"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="48dp"
         android:background="@drawable/drawable_bottom_sheet_dialog_background_bottom"
         android:padding="12dp"
         android:text="마감 전 알림"

@@ -285,13 +285,15 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/NotificationButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@{ContextCompat.getColor(context,detailViewModel.notificationBackground)}"
+            android:layout_height="52dp"
+            android:background="@{ContextCompat.getDrawable(context,detailViewModel.notificationBackground)}"
             android:paddingVertical="15dp"
             android:text="@{detailViewModel.notificationText}"
             android:onClick="@{()->detailViewModel.onClickNotification()}"
             android:textColor="@{ContextCompat.getColor(context,detailViewModel.notificationColor)}"
             android:textSize="15sp"
-            tools:ignore="HardcodedText,TextContrastCheck" />
+            tools:ignore="HardcodedText,TextContrastCheck"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="20dp"/>
     </LinearLayout>
 </layout>
