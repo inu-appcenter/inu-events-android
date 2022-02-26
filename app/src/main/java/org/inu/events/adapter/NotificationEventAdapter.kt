@@ -29,7 +29,7 @@ class NotificationEventAdapter(val viewModel: NotificationViewModel) : ListAdapt
             binding.item = item
             binding.viewModel = viewModel
             binding.notificationIcon.setOnClickListener {
-                viewModel.onClickNotificationIcon(item.id)
+                viewModel.onClickBookmarkIcon(item.id, it)
             }
             binding.cardWrap.setOnClickListener {
                 viewModel.onClickDetail(it, item)

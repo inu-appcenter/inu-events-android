@@ -9,6 +9,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.inu.events.BackButtonListener
 import org.inu.events.DetailActivity
+import org.inu.events.TwoButtonDialog
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
@@ -36,7 +37,11 @@ class LikeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onClickLikeIcon(eventId: Int) {
+    fun onClickLikeIcon(eventId: Int, view: View) {
+        TwoButtonDialog("저장을 취소하시겠어요?") { deleteLike(eventId) }.show(view.context)
+    }
+
+    private fun deleteLike(eventId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             val likeParam = LikeParam(eventId = eventId)
             likeRepository.deleteLike(likeParam)

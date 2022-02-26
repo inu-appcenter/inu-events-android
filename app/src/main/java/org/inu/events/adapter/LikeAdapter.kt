@@ -29,7 +29,7 @@ class LikeAdapter(val viewModel: LikeViewModel) : ListAdapter<Event, LikeAdapter
             binding.item = item
             binding.viewModel = viewModel
             binding.bookmarkIcon.setOnClickListener {
-                viewModel.onClickLikeIcon(item.id)
+                viewModel.onClickLikeIcon(item.id, it)
             }
             binding.cardWrap.setOnClickListener {
                 viewModel.onClickDetail(it, item)
