@@ -21,11 +21,12 @@
             android:id="@+id/events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:listitem="@layout/item_favorite_event"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
-            app:likes="@{viewModel.eventList}"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:likes="@{viewModel.eventList}"
+            tools:listitem="@layout/item_like_event" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
