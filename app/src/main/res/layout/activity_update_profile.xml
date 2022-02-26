@@ -14,8 +14,9 @@
         tools:context=".UpdateProfileActivity">
         <include
             android:id="@+id/toolbar_my_page"
-            layout="@layout/toolbar_sample"
-            app:title='@{"나의 레터"}'/>
+            layout="@layout/toolbar_with_back_button"
+            app:title='@{"나의 레터"}'
+            app:listener="@{viewModel.backButtonListener}"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_photo_update"
@@ -32,7 +33,9 @@
                 android:id="@+id/photo_update"
                 android:layout_width="78dp"
                 android:layout_height="78dp"
-                android:background="@drawable/default_profile_background"/>
+                android:background="@drawable/default_profile_background"
+                app:photo_url="@{viewModel.user.imageUrl}"
+                android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

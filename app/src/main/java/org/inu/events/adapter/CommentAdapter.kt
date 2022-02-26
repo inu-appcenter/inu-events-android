@@ -33,7 +33,7 @@ class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Ada
             Glide
                 .with(binding.profileImageView.context)
                 .load(commentModel.profileImage)
-                .fallback(R.drawable.img_profile)
+                .fallback(R.drawable.ic_default_photo)
                 .into(binding.profileImageView)
 
 

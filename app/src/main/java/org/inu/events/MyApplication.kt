@@ -1,7 +1,6 @@
 package org.inu.events
 
 import android.app.Application
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -31,11 +30,11 @@ class MyApplication : Application() {
             }
         }
 
-        @BindingAdapter("app:photo_uuid")
+        @BindingAdapter("app:photo_url")
         @JvmStatic
-        fun setPhoto(view: ImageView, uuid: String?) {
+        fun setPhoto(view: ImageView, iamgeUrl: String?) {
             Glide.with(view.context)
-                .load("http://uniletter.inuappcenter.kr/images/$uuid")
+                .load(iamgeUrl)
                 .error(R.drawable.default_profile_background)
                 .placeholder(R.drawable.default_profile_background)
                 .into(view)

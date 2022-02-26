@@ -58,4 +58,5 @@
     <string name="alarm_on_content_information">유니레터의 두가지 알림 기준입니다\n\n시작 전 알림:행사 시작 5분전에 알림\n마감 전 알림:행사 마감 하루전에 알림</string>
     <string name="alarm_off_title">알림취소</string>
     <string name="alarm_off_content">알림이 취소 되었습니다\nㅠ0ㅠ"</string>
+    <string name="button_cancel">취소</string>
 </resources>

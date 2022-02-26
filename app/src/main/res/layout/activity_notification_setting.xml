@@ -21,15 +21,17 @@
 
                 <include
                     android:id="@+id/toolbar"
-                    layout="@layout/toolbar_sample"
+                    layout="@layout/toolbar_with_back_button"
                     app:title='@{"새로운 행사 알림"}'/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/toolbar"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="24dp"
                     android:layout_marginHorizontal="@dimen/horizontal_margin"
                     android:layout_marginBottom="88dp"
@@ -49,6 +51,7 @@
             android:background="@drawable/radius_6"
             android:backgroundTint="@color/primary"
             android:text="선택 완료"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:onClick="@{()->viewModel.onClickFinish()}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

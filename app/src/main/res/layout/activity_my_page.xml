@@ -14,13 +14,14 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".MyPageActivity">
 
             <include
                 android:id="@+id/toolbar_my_page"
-                layout="@layout/toolbar_sample"
-                app:title='@{"나의 레터"}'/>
+                layout="@layout/toolbar_with_back_button"
+                app:title='@{"나의 레터"}'
+                app:listener="@{viewModel.backButtonListener}"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_photo"
@@ -37,7 +38,8 @@
                     android:layout_width="78dp"
                     android:layout_height="78dp"
                     android:background="@drawable/default_profile_background"
-                    app:photo_uuid="@{viewModel.imageUrl}"/>
+                    app:photo_url="@{viewModel.user.imageUrl}"
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -49,7 +51,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"
                 android:text="@{viewModel.user.nickname}"
-                tools:text="맥도날드사고싶은"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
@@ -84,30 +85,55 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:background="@drawable/history_background">
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="저장목록"
-                    android:textColor="@color/black80"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    android:onClick="@{(view)->viewModel.onClickLikeList(view)}"/>
+                    android:onClick="@{(view)->viewModel.onClickLikeList(view)}">
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_bookmark_filled"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="저장목록"
+                        android:textColor="@color/black80"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"/>
+                </LinearLayout>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/black10"/>
-                <TextView
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="알림목록"
-                    android:textColor="@color/black80"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:gravity="center"
-                    android:onClick="@{(view)->viewModel.onClickNotificationList(view)}"/>
+                    android:onClick="@{(view)->viewModel.onClickNotificationList(view)}">
+                    <View
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_bell"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="12dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="알림목록"
+                        android:textColor="@color/black80"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -115,7 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/my_history"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="설정"
                 android:textColor="@color/black40"
@@ -172,7 +198,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/my_event"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="댓글 단 글"
                 android:textColor="@color/black"
@@ -200,14 +226,14 @@
                 android:text="개인정보 처리방침"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:onClick="@{(view)->viewModel.onClickPrivacyPolicy(view)"/>
+                android:onClick="@{(view)->viewModel.onClickPrivacyPolicy(view)}"/>
 
             <TextView
                 android:id="@+id/opensource_licence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/privacy_policy"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="오픈소스 라이센스"
                 android:textColor="@color/black"
@@ -241,7 +267,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/logout"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="회원탈퇴"

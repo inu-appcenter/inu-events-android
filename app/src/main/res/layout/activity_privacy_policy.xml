@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/toolbar_sample"
+        layout="@layout/toolbar_with_back_button"
         app:title='@{"개인정보 처리방침"}'/>
 
     <TextView

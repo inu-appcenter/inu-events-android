@@ -72,5 +72,9 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
             intent.action = Intent.ACTION_GET_CONTENT
             launcher.launch(intent)
         }
+
+        viewModel.onClickBackEvent.observe(this) {
+            finish()
+        }
     }
 }

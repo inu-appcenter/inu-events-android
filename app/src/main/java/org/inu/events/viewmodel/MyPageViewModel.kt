@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.inu.events.*
+import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.entity.User
 import org.inu.events.service.UserService
 import org.koin.core.component.KoinComponent
@@ -17,7 +18,13 @@ import org.koin.core.component.inject
 class MyPageViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
     val user = MutableLiveData<User>()
-    val imageUrl = "1ec958a9-cba8-6e20-8f57-39d024ced72d"
+    val onClickBackEvent = SingleLiveEvent<Any>()
+
+    val backButtonListener = object : BackButtonListener {
+        override fun invoke(view: View) {
+            onClickBackEvent.call()
+        }
+    }
 
     fun fetchData() {
         CoroutineScope(Dispatchers.Main).launch {

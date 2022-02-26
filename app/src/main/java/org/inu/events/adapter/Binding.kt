@@ -13,8 +13,14 @@ fun setLikes(recyclerView: RecyclerView, list: List<Event>?) {
 
 @BindingAdapter("app:categories")
 fun setCategories(recyclerView: RecyclerView, list: List<Category>?) {
-    println("아악!!")
     list?.let {
         (recyclerView.adapter as CategoryAdapter).submitList(list)
+    }
+}
+
+@BindingAdapter("app:notifications")
+fun setNotificationEvents(recyclerView: RecyclerView, list: List<Event>?) {
+    list?.let {
+        (recyclerView.adapter as NotificationEventAdapter).submitList(list)
     }
 }

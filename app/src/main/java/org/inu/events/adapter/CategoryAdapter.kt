@@ -1,48 +1,48 @@
 package org.inu.events.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.R
 import org.inu.events.databinding.ItemCategoryBinding
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
-    var list: List<Category>? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
+class CategoryAdapter : ListAdapter<Category, CategoryAdapter.ViewHolder>(CategoriesDiffUtil()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list!![position])
-    }
-    override fun getItemCount() = list?.size ?: 0
-
-    fun submitList(list: List<Category>) {
-        this.list = list
+        holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(val binding: ItemCategoryBinding, val adapter: ListAdapter<Category, ViewHolder>) : RecyclerView.ViewHolder(binding.root) {
         companion object {
-            fun from(parent: ViewGroup) : ViewHolder {
+            fun from(parent: ViewGroup, adapter: ListAdapter<Category, ViewHolder>) : ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemCategoryBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
+                return ViewHolder(binding, adapter)
             }
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         fun bind(item: Category) {
             binding.item = item
             val drawable = ContextCompat.getDrawable(binding.root.context, item.imageSrc)
             binding.card.setImageDrawable(drawable)
-            binding.executePendingBindings()
 
             binding.root.setOnClickListener {
                 item.isChecked = !item.isChecked
-                if(item.isChecked)
-                    it.background = ContextCompat.getDrawable(it.context, R.drawable.category_background_selected)
-                else
-                    it.background = ContextCompat.getDrawable(it.context, R.drawable.category_background)
+                adapter.notifyDataSetChanged()
             }
+
+            if(item.isChecked)
+                binding.root.background = ContextCompat.getDrawable(binding.root.context, R.drawable.category_background_selected)
+            else
+                binding.root.background = ContextCompat.getDrawable(binding.root.context, R.drawable.category_background)
+
+            binding.executePendingBindings()
         }
     }
 }
@@ -52,3 +52,13 @@ data class Category(
     var isChecked: Boolean,
     val imageSrc: Int
 )
+
+class CategoriesDiffUtil : DiffUtil.ItemCallback<Category>() {
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem == newItem
+    }
+}

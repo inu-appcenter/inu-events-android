@@ -24,7 +24,7 @@
 
             <include
                 android:id="@+id/toolbar_register0"
-                layout="@layout/toolbar_sample"
+                layout="@layout/toolbar_with_back_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title='@{@string/event_registration}' />
@@ -180,7 +180,7 @@
 
                     <include
                         android:id="@+id/toolbar_register1"
-                        layout="@layout/toolbar_sample"
+                        layout="@layout/toolbar_with_back_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:title='@{@string/event_registration}' />
@@ -688,7 +688,7 @@
 
             <include
                 android:id="@+id/toolbar_register2"
-                layout="@layout/toolbar_sample"
+                layout="@layout/toolbar_with_back_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title='@{@string/event_registration}' />
