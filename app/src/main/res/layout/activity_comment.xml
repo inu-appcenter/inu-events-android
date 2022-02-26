@@ -110,7 +110,7 @@
                 android:layout_height="35dp"
                 android:background="@drawable/drawable_comment_btn"
                 android:onClick="@{()->commentViewModel.onClickBtn()}"
-                android:text='@{commentViewModel.isLoggedIn() ? "등록" : "로그인"}'
+                android:text='@{commentViewModel.isLoggedIn ? "등록" : "로그인"}'
                 tools:text="등록"
                 android:textColor="@color/white"
                 android:textSize="@dimen/body2"
