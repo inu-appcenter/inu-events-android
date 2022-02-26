@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.NotificationRepository
 import org.koin.core.component.KoinComponent
@@ -24,6 +25,23 @@ class NotificationViewModel : ViewModel(), KoinComponent {
                 it.event
             }
             notificationList.postValue(eventList)
+        }
+    }
+
+    fun onClickNotificationIcon(eventId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var notificationParams = NotificationParams(
+                eventId = eventId,
+                setFor = "start"
+            )
+            notificationRepository.deleteNotification(notificationParams)
+            notificationParams = NotificationParams(
+                eventId = eventId,
+                setFor = "end"
+            )
+            notificationRepository.deleteNotification(notificationParams)
+
+            loadNotificationEvents()
         }
     }
 }

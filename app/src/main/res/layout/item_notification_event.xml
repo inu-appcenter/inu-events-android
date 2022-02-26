@@ -4,6 +4,10 @@
         <variable
             name="item"
             type="org.inu.events.data.model.entity.Event" />
+
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.NotificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +52,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/poster"
                     app:layout_constraintStart_toEndOf="@id/poster"
-                    app:layout_constraintEnd_toStartOf="@id/bookmark_icon"
+                    app:layout_constraintEnd_toStartOf="@id/notification_icon"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     tools:text="현장체험 (인천십) 실습생 모집 공고 근데 더 길게 써야 한다."
@@ -60,14 +64,14 @@
                     android:maxLines="1"/>
 
                 <ImageButton
-                    android:id="@+id/bookmark_icon"
+                    android:id="@+id/notification_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintTop_toTopOf="@id/title"
                     app:layout_constraintBottom_toBottomOf="@id/title"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_bell"
-                    android:background="@null" />
+                    android:background="@null"/>
 
                 <TextView
                     android:layout_width="0dp"
