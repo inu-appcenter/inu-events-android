@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cancel_button"
+    android:layout_width="match_parent"
+    android:layout_height="52dp"
+    android:background="@drawable/drawable_bottom_sheet_dialog_button"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:text="@string/button_cancel"
+    android:textColor="#00BAAE"
+    android:textSize="16sp"
+    android:textStyle="bold" />

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.LikeViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LikeActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_with_back_button"
+            app:title='@{"저장목록"}'
+            app:listener="@{viewModel.backButtonListener}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:likes="@{viewModel.eventList}"
+            tools:listitem="@layout/item_like_event" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

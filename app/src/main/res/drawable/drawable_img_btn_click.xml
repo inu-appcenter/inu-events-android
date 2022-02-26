@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <item>
+        <shape>
+            <solid android:color="@color/white"/>
+            <corners android:radius="8dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/dbdbdb" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/img_profile"
+        android:width="50dp"
+        android:height="50dp"
+        android:gravity="center"/>
+    <item
+        android:width="20dp"
+        android:height="20dp"
+        android:drawable="@drawable/ic_camera"
+        android:gravity="right|bottom"
+        android:start="10dp"
+        android:top="1dp"/>
+</layer-list>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.NotificationSettingViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".NotificationSettingActivity">
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar_with_back_button"
+                    app:title='@{"새로운 행사 알림"}'/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:layout_marginBottom="88dp"
+                    app:spanCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_category"
+                    app:categories="@{viewModel.categoryList}"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/radius_6"
+            android:backgroundTint="@color/primary"
+            android:text="선택 완료"
+            android:textColor="@color/white"
+            android:onClick="@{()->viewModel.onClickFinish()}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
