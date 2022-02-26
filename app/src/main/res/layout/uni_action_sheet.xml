@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="16dp">
+
+    <!-- 설명과 버튼들 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/options"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/uni_action_sheet_action_item" />
+
+    <!-- 간격 -->
+    <include layout="@layout/uni_action_sheet_spacer_item" />
+
+    <!-- 취소 버튼 -->
+    <include layout="@layout/uni_action_sheet_cancel_item" />
+
+</LinearLayout>

@@ -56,4 +56,5 @@
     <string name="alarm_on_content_last">마감 전 알림 신청이 완료 되었습니다\n마감 하루전에 푸쉬 드릴게요 :)</string>
     <string name="alarm_off_title">알림취소</string>
     <string name="alarm_off_content">알림이 취소 되었습니다\nㅠ0ㅠ"</string>
+    <string name="button_cancel">취소</string>
 </resources>
