@@ -119,6 +119,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -134,7 +135,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_complete"
                 app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -210,20 +210,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_letter_registration" />
 
-                    <TextView
-                        android:id="@+id/error_message_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:text="@{registerViewModel.errorMessage}"
-                        android:textColor="#DA1E28"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView_title"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView_title"
-                        tools:text="공백은 제목으로 설정할 수 없습니다." />
-
-
                     <EditText
                         android:id="@+id/editText_title"
                         android:layout_width="match_parent"
@@ -259,13 +245,26 @@
                         app:layout_constraintTop_toBottomOf="@+id/editText_title" />
 
                     <TextView
-                        android:id="@+id/textView_host_example"
+                        android:id="@+id/checkBox_host_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="17dp"
-                        android:layout_marginEnd="@dimen/register_horizontal_margin"
-                        android:text="@string/text_host_example"
-                        android:textColor="@color/black8"
-                        android:textSize="12sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="@string/text_empty"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_host"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_time"
+                        app:layout_constraintTop_toTopOf="@+id/textView_host" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_host"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:button="@null"
+                        android:checked="@={registerViewModel.hostCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onHostCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_host"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView_host" />
@@ -277,14 +276,15 @@
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
-                        android:hint="@string/text_input"
+                        android:hint="@string/text_host_example"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.host}"
-                        android:textColorHint="@color/white"
+                        android:enabled="@{!registerViewModel.hostCheckBoxBoolean}"
+                        android:textColorHint="@color/black20"
                         android:textSize="16sp"
                         app:layout_constraintDimensionRatio="H,1:0.1375"
                         app:layout_constraintEnd_toEndOf="parent"

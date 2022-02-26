@@ -43,6 +43,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
+    val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val locationCheckBoxBoolean = MutableLiveData(false)
     val errorMessage = MutableLiveData("")
@@ -61,15 +62,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private var urlTmp: String? = ""
     private var dateTmp: String? = ""
     private var timeTmp: String? = ""
+    private var hostTmp: String? = ""
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
     private val cal = Calendar.getInstance()
     var datePickerValueStartYear = cal.get(Calendar.YEAR)
-    var datePickerValueStartMonth = cal.get(Calendar.MONTH)
+    var datePickerValueStartMonth = cal.get(Calendar.MONTH)+1
     var datePickerValueStartDay = cal.get(Calendar.DATE)
     var datePickerValueEndYear = cal.get(Calendar.YEAR)
-    var datePickerValueEndMonth = cal.get(Calendar.MONTH)
+    var datePickerValueEndMonth = cal.get(Calendar.MONTH)+1
     var datePickerValueEndDay = cal.get(Calendar.DATE)
     var timePickerValueStartTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
@@ -102,7 +104,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun errorMessageString(): Boolean{
         errorMessage.value = when{
-            title.value!!.isEmpty() -> "공백은 제목으로 설정하실 수 없습니다."
+            title.value!!.isEmpty() -> "필수정보를 모두 입력해주세요"
             else -> ""
         }
         return errorMessage.value!!.isEmpty()
@@ -179,13 +181,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
-                    host = host.value,
+                    host = if(host.value=="") null else host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value == "") null else contactNumber.value,
+                    location = if(location.value == "") null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -200,13 +202,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 currentEvent!!.id,
                 UpdateEventParams(
                     title = title.value ?: "",
-                    host = host.value,
+                    host = if(host.value=="") null else host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value == "") null else contactNumber.value,
+                    location = if(location.value == "") null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -316,6 +318,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 contactNumber.value = null
             }
             !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
+        }
+    }
+
+    fun onHostCheckBoxClick() {
+        when {
+            hostCheckBoxBoolean.value!! -> {
+                hostTmp = host.value
+                host.value = null
+            }
+            !(hostCheckBoxBoolean.value!!) -> host.value = hostTmp
         }
     }
 
