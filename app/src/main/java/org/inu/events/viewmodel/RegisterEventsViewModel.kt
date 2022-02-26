@@ -271,6 +271,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         finishEvent.call()
     }
 
+    fun onTitleEditTextClick(){
+        titleEditTextEmpty.value = false
+    }
+
+    fun onTargetEditTextClick(){
+        targetEditTextEmpty.value = false
+    }
+
     private fun isNoTime() {
         if(startTimePeriod.value == "시간선택 X"){
             startTimePeriod.value = "00:00 AM"
