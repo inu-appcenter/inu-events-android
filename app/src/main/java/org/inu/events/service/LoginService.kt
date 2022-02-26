@@ -31,6 +31,10 @@ class LoginService(
         }
     }
 
+    fun isAutoLoginPossible():Boolean {
+        return accountRepository.getSavedAccount() != null
+    }
+
     fun tryAutoLogin() {
         val account = accountRepository.getSavedAccount() ?: return
         execute {
