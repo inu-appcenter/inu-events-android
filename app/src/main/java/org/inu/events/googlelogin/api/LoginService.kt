@@ -18,7 +18,6 @@ interface LoginService {
         @Body request: LoginGoogleRequestModel
     ): Call<LoginGoogleResponseModel>
 
-
     @POST("login")
     @Headers("content-type: application/json")
     fun sendAccessToken(
