@@ -15,6 +15,7 @@ import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.lang.RuntimeException
 
 class CommentViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
@@ -86,10 +87,11 @@ class CommentViewModel : ViewModel(), KoinComponent {
             commentRepository.postComment(
                 AddCommentParams(
                     eventId = eventIndex,
-                    content = content.value ?: ""
+                    content = content.value ?: throw RuntimeException("큰일났다!!!!!!!!!!!!!!!!!!!!!")
                 )
             )
         }.then {
+            deleteText()
             loadCommentList()
         }.catch { }
     }
@@ -119,7 +121,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
     }
 
     fun deleteText() {
-        content.value = null
+        content.value = ""
     }
 
     fun showBottomSheet(commentId: Int) {
