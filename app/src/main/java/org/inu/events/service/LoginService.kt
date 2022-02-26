@@ -23,10 +23,23 @@ class LoginService(
         execute {
             accountRepository.login(accessToken)
         }.then {
-            accountRepository.saveAccount(Account(it.id, it.rememberMeToken))
+            accountRepository.saveAccount(Account(it.userId, it.rememberMeToken))
             _isLoggedIn.postValue(true)
         }.catch {
             Log.e("!!", it.toString())
+            _isLoggedIn.postValue(false)
+        }
+    }
+
+    fun tryAutoLogin() {
+        val account = accountRepository.getSavedAccount() ?: return
+        execute {
+            accountRepository.login(account)
+        }.then {
+            accountRepository.saveAccount(Account(it.userId, it.rememberMeToken))
+            _isLoggedIn.postValue(true)
+        }.catch {
+            Log.e("자동 로그인 실패", it.toString())
             _isLoggedIn.postValue(false)
         }
     }
