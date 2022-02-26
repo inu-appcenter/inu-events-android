@@ -36,7 +36,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
-    val onOff = MutableLiveData(false)
     val notificationOnOff = MutableLiveData(false)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")

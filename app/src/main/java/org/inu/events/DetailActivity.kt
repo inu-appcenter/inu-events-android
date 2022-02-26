@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,6 +18,7 @@ import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.BottomSheetDialog
 import org.inu.events.dialog.BottomSheetDialogOneButton
+import org.inu.events.dialog.LoginDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.MY_WROTE
@@ -24,14 +26,13 @@ import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
     companion object {
         fun callingIntent(context: Context, eventId: Int = -1, myWrote: Boolean? = false) =
             Intent(context, DetailActivity::class.java).apply {
                 putExtra(EVENT_ID, eventId)
                 putExtra(MY_WROTE, myWrote)
             }
-        private const val SHARED_PREFERENCES_NAME = "alarm"
     }
 
     // 전역 변수로 변경
@@ -98,7 +99,7 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
             else{
-                toast("로그인을 하셔야 알람을 받으실 수 있습니다!")
+                LoginDialog().show(this, { onOk() }, { onCancel() })
             }
         }
     }
@@ -164,4 +165,13 @@ class DetailActivity : AppCompatActivity() {
 
     //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
     private fun isMyWriting() = true
+
+
+    override fun onOk() {
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    override fun onCancel() {
+        toast("로그인을 하셔야 알림을 받으실 수 있습니다!")
+    }
 }
