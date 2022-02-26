@@ -172,11 +172,14 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="true">
+                android:fillViewport="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp" >
+                    android:layout_height="0dp">
 
                     <include
                         android:id="@+id/toolbar_register1"
@@ -219,12 +222,12 @@
                         android:autofillHints="no"
                         android:background="@drawable/drawable_edit_text_background"
                         android:hint="@{registerViewModel.titleErrorMessage}"
-                        android:textColorHint="#66F1241A"
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.title}"
+                        android:textColorHint="#66F1241A"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -248,12 +251,11 @@
                         android:id="@+id/checkBox_host_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
                         android:text="@string/text_empty"
                         android:textColor="@color/black7"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_host"
-                        app:layout_constraintEnd_toStartOf="@+id/checkBox_time"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_host"
                         app:layout_constraintTop_toTopOf="@+id/textView_host" />
 
                     <CheckBox
@@ -276,6 +278,7 @@
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:enabled="@{!registerViewModel.hostCheckBoxBoolean}"
                         android:hint="@string/text_host_example"
                         android:importantForAutofill="no"
                         android:inputType="text"
@@ -283,7 +286,6 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.host}"
-                        android:enabled="@{!registerViewModel.hostCheckBoxBoolean}"
                         android:textColorHint="@color/black20"
                         android:textSize="16sp"
                         app:layout_constraintDimensionRatio="H,1:0.1375"
@@ -340,17 +342,17 @@
                         android:id="@+id/editText_target"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/exitText_height"
-                        android:layout_marginTop="4dp"
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                        android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
                         android:hint="@{registerViewModel.targetErrorMessage}"
-                        android:textColorHint="#66F1241A"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.target}"
+                        android:textColorHint="#66F1241A"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -362,12 +364,37 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="@dimen/register_top_margin"
-                        android:text="시작일을 입력해 주세요."
+                        android:text="행사 시작을 입력해 주세요."
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editText_target" />
+
+                    <TextView
+                        android:id="@+id/checkBox_start_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="시간선택 안함"
+                        android:textColor="@color/black7"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_start"
+                        app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/custom_checkbox"
+                        android:button="@null"
+                        android:checked="@={registerViewModel.timeCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onTimeCheckBoxClick()}"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
 
                     <TextView
                         android:id="@+id/editText_start_date"
@@ -396,9 +423,9 @@
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="26dp"
                         android:background="@color/black7"
-                        app:layout_constraintTop_toBottomOf="@id/textView_start_period"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@id/textView_start_period" />
 
                     <TextView
                         android:id="@+id/editText_start_time"
@@ -412,12 +439,13 @@
                         android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
+                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:text="@={registerViewModel.startTimePeriod}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textView_start_period"
                         app:layout_constraintStart_toEndOf="@id/view2"
+                        app:layout_constraintTop_toBottomOf="@id/textView_start_period"
                         tools:text="시작시간 입력" />
 
                     <TextView
@@ -426,7 +454,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                         android:layout_marginTop="@dimen/register_top_margin"
-                        android:text="종료일을 입력해 주세요."
+                        android:text="행사 마감을 입력해 주세요."
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -435,7 +463,7 @@
 
 
                     <TextView
-                        android:id="@+id/checkBox_time_text"
+                        android:id="@+id/checkBox_same_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
@@ -443,18 +471,18 @@
                         android:textColor="@color/black7"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
-                        app:layout_constraintEnd_toStartOf="@+id/checkBox_time"
+                        app:layout_constraintEnd_toStartOf="@+id/checkBox_same"
                         app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
 
                     <CheckBox
-                        android:id="@+id/checkBox_time"
+                        android:id="@+id/checkBox_same"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
-                        android:checked="@={registerViewModel.timeCheckBoxBoolean}"
                         android:button="@null"
-                        android:onClick="@{() -> registerViewModel.onTimeCheckBoxClick()}"
+                        android:checked="@={registerViewModel.sameCheckBoxBoolean}"
+                        android:onClick="@{() -> registerViewModel.onSameCheckBoxClick()}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
@@ -468,12 +496,12 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:enabled="@{!registerViewModel.sameCheckBoxBoolean}"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.endDatePeriod}"
-                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toStartOf="@+id/view3"
@@ -488,8 +516,8 @@
                         android:layout_marginHorizontal="4dp"
                         android:layout_marginTop="25dp"
                         android:background="@color/black7"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView_end_period" />
 
                     <TextView
@@ -500,12 +528,12 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="@dimen/register_horizontal_margin"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:enabled="@{!registerViewModel.sameCheckBoxBoolean}"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
                         android:paddingHorizontal="38dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.endTimePeriod}"
-                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -560,6 +588,7 @@
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="4dp"
                         android:background="@drawable/drawable_edit_text_background"
+                        android:enabled="@{!registerViewModel.contactNumberCheckBoxBoolean}"
                         android:hint="@string/text_input"
                         android:importantForAutofill="no"
                         android:inputType="text"
@@ -567,7 +596,6 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="12dp"
                         android:text="@={registerViewModel.ContactNumber}"
-                        android:enabled="@{!registerViewModel.contactNumberCheckBoxBoolean}"
                         android:textColorHint="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"

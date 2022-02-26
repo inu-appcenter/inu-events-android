@@ -43,6 +43,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
+    val sameCheckBoxBoolean = MutableLiveData(false)
     val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val locationCheckBoxBoolean = MutableLiveData(false)
@@ -58,12 +59,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         "1ec94c42-4e1a-6030-9859-6dc8e7afe7df",
         "1ec96f4e-970e-6780-792a-5dc26eec006c"
     )
+    private var today = LocalDateTime.now()
     private var imageUuid: String? = ""
     private var imageTmp: String? = ""
     private var contactTmp: String? = ""
     private var urlTmp: String? = ""
-    private var dateTmp: String? = ""
-    private var timeTmp: String? = ""
+    private var dateTmp: String? = today.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    private var timeTmp: String? = today.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en","US")))
+    private var startTimeTmp: String? = ""
     private var hostTmp: String? = ""
 
     var btnIndex = 0
@@ -125,14 +128,21 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadCheckBoxState() {
+        if(currentEvent?.host == null){
+            hostCheckBoxBoolean.value = true
+        }
         if(currentEvent?.location == null){
             locationCheckBoxBoolean.value = true
         }
         if(currentEvent?.contact == null){
             contactNumberCheckBoxBoolean.value = true
         }
+        //todo- 시간 선택 안함 어떻게 상태 불러오지??
+//        if(currentEvent?.startAt == ){
+//            timeCheckBoxBoolean.value = true
+//        }
         if(currentEvent?.startAt == currentEvent?.endAt){
-            timeCheckBoxBoolean.value = true
+            sameCheckBoxBoolean.value = true
         }
         val booleanImageDefault = imageUuidList.contains(currentEvent?.imageUuid)
         if(booleanImageDefault){
@@ -246,6 +256,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
+        isNoTime()
         if(isRequiredInformationEntered()){
             if (isItNew) {
                 addEvent()
@@ -258,6 +269,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             targetErrorMessage.value = "모집대상을 입력해주세요"
         }
         finishEvent.call()
+    }
+
+    private fun isNoTime() {
+        if(startTimePeriod.value == "시간선택 X"){
+            startTimePeriod.value = "00:00 AM"
+        }
+        if(endTimePeriod.value == "시간선택 X"){
+            endTimePeriod.value = "11:59 PM"
+        }
     }
 
     fun onStartDateClick() {
@@ -296,15 +316,31 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onTimeCheckBoxClick(){
+    fun onTimeCheckBoxClick(){      //시간 선택 안함
         when{
             timeCheckBoxBoolean.value!! -> {
+                if(sameCheckBoxBoolean.value!!){
+                    endDatePeriod.value = startDatePeriod.value
+                    endTimePeriod.value = "시간선택 X"
+                }
+                startTimeTmp = startTimePeriod.value
+                startTimePeriod.value = "시간선택 X"
+            }
+            !(timeCheckBoxBoolean.value!!) ->{
+                startTimePeriod.value = startTimeTmp
+            }
+        }
+    }
+
+    fun onSameCheckBoxClick(){      //위와 동일 체크
+        when{
+            sameCheckBoxBoolean.value!! -> {
                 dateTmp = endDatePeriod.value
                 timeTmp = endTimePeriod.value
                 endDatePeriod.value = startDatePeriod.value
                 endTimePeriod.value = startTimePeriod.value
             }
-            !(timeCheckBoxBoolean.value!!) ->{
+            !(sameCheckBoxBoolean.value!!) ->{
                 endDatePeriod.value = dateTmp
                 endTimePeriod.value = timeTmp
             }
