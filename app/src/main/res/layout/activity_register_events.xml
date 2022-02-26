@@ -106,8 +106,8 @@
 
             <CheckBox
                 android:id="@+id/checkBox_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_checkbox"
@@ -260,8 +260,8 @@
 
                     <CheckBox
                         android:id="@+id/checkBox_host"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
@@ -385,8 +385,8 @@
 
                     <CheckBox
                         android:id="@+id/checkBox_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
@@ -476,8 +476,8 @@
 
                     <CheckBox
                         android:id="@+id/checkBox_same"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
@@ -569,8 +569,8 @@
 
                     <CheckBox
                         android:id="@+id/checkBox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
@@ -629,8 +629,8 @@
 
                     <CheckBox
                         android:id="@+id/checkBox_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/custom_checkbox"
                         android:button="@null"
