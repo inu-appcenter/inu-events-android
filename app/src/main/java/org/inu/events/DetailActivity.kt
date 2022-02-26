@@ -56,6 +56,7 @@ class DetailActivity : AppCompatActivity() {
         initNotificationButton()
 
         setupToolbar()
+        showInformation()
     }
 
     private fun initBinding() {
@@ -111,6 +112,12 @@ class DetailActivity : AppCompatActivity() {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
+        }
+    }
+
+    private fun showInformation() {
+        observe(viewModel.informationClickEvent) {
+            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_information), resources.getString(R.string.alarm_on_content_information))
         }
     }
 
