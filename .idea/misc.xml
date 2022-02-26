@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/drawable_btn_background.xml" value="0.1775" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.166" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_alarm_dialog_background.xml" value="0.1775" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_alarm_dialog_button.xml" value="0.1775" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_bottom_sheet_dialog_background_top.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/drawable_splash.xml" value="0.166" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/history_background.xml" value="0.166" />

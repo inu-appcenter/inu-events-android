@@ -76,7 +76,7 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
             if (loginService.isLoggedIn) {
                 if (viewModel.notificationOnOff.value == false) {
                     when(it) {
-                        0 -> toast("비활성화해야해요~")
+                        0 -> toast("마감된 행사입니다!")
                         1 -> bottomDialogOneButton.show(this,{      // 시작 전 알림만
                                 viewModel.postNotification("start")},{})
                         2 -> bottomDialogOneButton.show(this,{      // 마감 전 알림만
