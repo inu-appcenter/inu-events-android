@@ -1,23 +1,14 @@
 package org.inu.events
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import org.inu.events.MyApplication.Companion.bindImageFromUrl
-import org.inu.events.common.extension.*
-import org.inu.events.data.model.dto.AlarmDisplayModel
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
@@ -25,15 +16,13 @@ import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.BottomSheetDialog
+import org.inu.events.dialog.BottomSheetDialogOneButton
 import org.inu.events.googlelogin.GoogleLoginWrapper
-import org.inu.events.objects.IntentMessage.BACK_FROM_ALARM
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.MY_WROTE
-import org.inu.events.service.AlarmReceiver
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.DetailViewModel
 import org.koin.android.ext.android.inject
-import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -55,6 +44,7 @@ class DetailActivity : AppCompatActivity() {
     private val googleLogin = GoogleLoginWrapper(this)
 
     private val bottomDialog = BottomSheetDialog()
+    private val bottomDialogOneButton = BottomSheetDialogOneButton()
     private val alarmDialog = AlarmDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,18 +73,24 @@ class DetailActivity : AppCompatActivity() {
     private fun initNotificationButton() {
         observe(viewModel.alarmClickEvent) {
             if (loginService.isLoggedIn) {
-                if (viewModel.onOff.value == false) {
-                    bottomDialog.show(
-                        this,
-                        { viewModel.postNotification("start")
-                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
-                        },
-                        { viewModel.postNotification("end")
-                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_last), resources.getString(R.string.alarm_on_content_last))
-                        },
-                        {
-                            // 취소 클릭
-                        })
+                if (viewModel.notificationOnOff.value == false) {
+                    when(it) {
+                        0 -> toast("비활성화해야해요~")
+                        1 -> bottomDialogOneButton.show(this,{      // 시작 전 알림만
+                                viewModel.postNotification("start")},{})
+                        2 -> bottomDialogOneButton.show(this,{      // 마감 전 알림만
+                                viewModel.postNotification("end")},{})
+                        3 -> bottomDialog.show(this,    // 시작 전, 마감 전 알림 모두 뜨게
+                            { viewModel.postNotification("start")
+                                alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
+                            },
+                            { viewModel.postNotification("end")
+                                alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_last), resources.getString(R.string.alarm_on_content_last))
+                            },
+                            { // 취소 클릭
+                            })
+                        else -> toast("이게 뜰리가?")
+                    }
                 } else {
                     viewModel.deleteNotification()
                     alarmDialog.showDialog(this, resources.getString(R.string.alarm_off_title), resources.getString(R.string.alarm_off_content)

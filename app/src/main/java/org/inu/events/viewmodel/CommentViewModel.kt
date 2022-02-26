@@ -39,6 +39,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
     //val postCommentClickEvent = SingleLiveEvent<Any>()
     val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
     val arrowUpBtnClickEvent = SingleLiveEvent<Any>()
+    val showToastEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
         private set
@@ -135,5 +136,11 @@ class CommentViewModel : ViewModel(), KoinComponent {
     fun onClickArrowUpBtn() {
         arrowUpBtnClickEvent.call()
         phase.value = 1
+    }
+
+    fun errorMessageString(){
+        if (content.value!!.length >= 300) {
+            showToastEvent.call()
+        }
     }
 }

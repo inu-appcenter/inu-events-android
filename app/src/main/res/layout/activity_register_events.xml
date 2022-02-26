@@ -147,6 +147,7 @@
                 android:background="@drawable/drawable_btn_background"
                 android:backgroundTint="@color/primary100"
                 android:onClick="@{ () -> registerViewModel.onNextClick()}"
+                android:paddingVertical="14dp"
                 android:text="@string/text_next"
                 android:textColor="@color/white"
                 android:textSize="15sp"
@@ -719,7 +720,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView_detail" />
 
             <EditText
-                android:id="@+id/editText_content"
+                android:id="@+id/editText_body"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/register_horizontal_margin"
@@ -748,7 +749,7 @@
                 android:textColor="@color/black7"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editText_content" />
+                app:layout_constraintTop_toBottomOf="@id/editText_body" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before2"
@@ -779,6 +780,7 @@
                 android:background="@drawable/drawable_btn_background"
                 android:backgroundTint="@color/primary100"
                 android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
+                android:paddingVertical="14dp"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
                 android:textSize="15sp"

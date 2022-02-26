@@ -25,7 +25,7 @@ interface EventHttpService {
     fun getEventDetail(@Path("eventId") eventId: Int?): Call<Event>
 
     @DELETE("/events/{eventId}")
-    fun deleteEvent(@Path("eventId") eventId: Int?): Call<Unit>
+    fun deleteEvent(@Path("eventId") eventId: Int): Call<Unit>
 
     @Multipart
     @POST("/images")
