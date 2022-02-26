@@ -4,6 +4,10 @@
         <variable
             name="item"
             type="org.inu.events.data.model.entity.Event" />
+
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.LikeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,20 +16,26 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_marginBottom="20dp"
         android:layout_marginHorizontal="@dimen/horizontal_margin">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="140dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:cardCornerRadius="6dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardCornerRadius="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:elevation="8dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_wrap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="10dp">
+                android:paddingHorizontal="12dp">
 
                 <ImageView
                     android:id="@+id/poster"
@@ -33,7 +43,9 @@
                     android:layout_height="120dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:background="@drawable/outline_border_4"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/outline_border_4" />
 
                 <TextView
                     android:id="@+id/title"
@@ -52,14 +64,15 @@
                     android:ellipsize="end"
                     android:maxLines="1"/>
 
-                <View
+                <ImageButton
                     android:id="@+id/bookmark_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     app:layout_constraintTop_toTopOf="@id/title"
                     app:layout_constraintBottom_toBottomOf="@id/title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/ic_bookmark_filled"/>
+                    android:src="@drawable/ic_bookmark_filled"
+                    android:background="@null"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -81,6 +94,7 @@
                     app:layout_constraintStart_toStartOf="@id/title"
                     app:layout_constraintBottom_toBottomOf="@id/poster"
                     tools:text="댓글 12"
+                    android:text='@{"댓글 " + item.comments}'
                     android:textSize="13sp"
                     android:textColor="@color/black20"/>
 

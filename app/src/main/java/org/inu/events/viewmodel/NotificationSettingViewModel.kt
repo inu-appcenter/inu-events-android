@@ -43,8 +43,7 @@ class NotificationSettingViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun loadSubscription(adapter: CategoryAdapter) {
+    fun loadSubscription() {
         CoroutineScope(Dispatchers.Main).launch {
             val deferred = async(Dispatchers.IO) { subscriptionRepository.getTopics().topics }
             val topics = deferred.await()
@@ -52,7 +51,7 @@ class NotificationSettingViewModel : ViewModel(), KoinComponent {
                 if( topics.contains(it.name) )
                     it.isChecked = true
             }
-            adapter.notifyDataSetChanged()
+            categoryList.postValue(categoryList.value!!)
         }
     }
 }

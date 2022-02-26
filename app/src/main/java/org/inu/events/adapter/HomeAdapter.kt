@@ -60,6 +60,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
             imageUrl += homeData.imageUuid
             bindImageFromUrl(binding.homeImageView, imageUrl)
+            if(homeData.likedByMe==true){
+                binding.likeImageView.background =  if (homeData.likedByMe == true)  ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_on) else ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_off)
+            }
         }
 
         override fun onClick(v: View) {

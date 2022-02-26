@@ -49,6 +49,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
+                android:onClick="@{()->viewModel.onClickInformation()}"
                 android:src="@drawable/img_i"
                 tools:ignore="ContentDescription" />
 
@@ -60,8 +61,8 @@
                 android:layout_marginEnd="27.4dp"
                 android:onClick="@{()->viewModel.onClickLike()}"
                 app:imageResource="@{viewModel.likeButtonSource}"
-                tools:src="@drawable/img_like_off"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/img_like_off" />
 
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>

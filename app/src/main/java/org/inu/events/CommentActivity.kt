@@ -48,14 +48,20 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setUpListener() {
-        commentBinding.commentEditText.addTextChangedListener(object: TextWatcher {
+        commentBinding.commentEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun afterTextChanged(p0: Editable?) {
                 if (commentBinding.commentEditText.text.length >= 300) {
-                    Toast.makeText(this@CommentActivity,"댓글은 300자 이내로 입력가능합니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@CommentActivity,
+                        "댓글은 300자 이내로 입력가능합니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
@@ -65,13 +71,17 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
-                execute {
-                    commentViewModel.postComment()
-                }.then {
-                    commentViewModel.deleteText()
-                    HideEditTextKeyBoard()
-                }.catch {
-                    it.printStackTrace()
+                if (commentViewModel.content.value != null) {
+                    execute {
+                        commentViewModel.postComment()
+                    }.then {
+                        commentViewModel.deleteText()
+                        HideEditTextKeyBoard()
+                    }.catch {
+                        it.printStackTrace()
+                    }
+                } else {
+                    Toast.makeText(this, "글자를 입력하세요.", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 showDialog()
