@@ -1,5 +1,6 @@
 package org.inu.events
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,12 +29,20 @@ class BottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        (view?.parent as View).setBackgroundColor(Color.TRANSPARENT)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bottom_sheet, container, false)
+
         return binding.root
     }
 

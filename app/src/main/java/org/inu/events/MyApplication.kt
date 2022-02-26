@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import org.inu.events.di.myModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import java.util.*
 
 
 class MyApplication : Application() {
@@ -58,5 +59,6 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(myModules)
         }
+
     }
 }

@@ -1,29 +1,26 @@
 package org.inu.events.viewmodel
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.internal.UTC
 import org.inu.events.R
-import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
-import org.inu.events.objects.IntentMessage
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
 import java.text.SimpleDateFormat
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RegisterEventsViewModel : ViewModel(), KoinComponent {
@@ -39,10 +36,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
-    val host = MutableLiveData("")
-    val target = MutableLiveData("") //todo - 서버에 필드 추가되면 구현
-    val location = MutableLiveData("")
-    val contactNumber = MutableLiveData("")
+    val host = MutableLiveData<String?>()
+    val target = MutableLiveData<String?>()
+    val location = MutableLiveData<String?>()
+    val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
@@ -116,10 +113,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.getEvent(eventIndex)
         }.then{
             currentEvent = it
-            title.value = currentEvent?.title
-            body.value = currentEvent?.body
-            host.value = currentEvent?.host
-            location.value = currentEvent?.submissionUrl
+            title.value = it.title
+            body.value = it.body
+            host.value = it.host
+            target.value = it.target
+            contactNumber.value = it.contact
+            location.value = it.location
             imageUuid = currentEvent?.imageUuid
             spinnerSelected()
             datePickerSelect()
@@ -167,11 +166,11 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun datePickerToStartAt(): String {
-        return formatDateForServer(startDatePeriod.value!! + startTimePeriod.value!!)
+        return formatDateForServer("${startDatePeriod.value!!} ${startTimePeriod.value!!}")
     }
 
     private fun datePickerToEndAt(): String {
-        return formatDateForServer(endDatePeriod.value!! + endTimePeriod.value!!)
+        return formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
     }
 
     private fun addEvent() {
@@ -180,15 +179,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
-                    host = host.value ?: "",
+                    host = host.value,
                     category = spinnerToCategory(),
-                    target = target.value ?: "",
+                    target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
                     contact = contactNumber.value,
                     location = location.value,
                     body = body.value ?: "",
-                    imageUuid = imageUuid ?: ""
+                    imageUuid = imageUuid
                 )
             )
         }.then{ }.catch{ }
@@ -201,13 +200,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 currentEvent!!.id,
                 UpdateEventParams(
                     title = title.value ?: "",
-                    host = host.value ?: "",
+                    host = host.value,
                     category = spinnerToCategory(),
-                    //target = target.value ?: "",
+                    target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    //contact = contactNumber.value,
-                    submissionUrl = location.value,
+                    contact = contactNumber.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -344,57 +343,38 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         .format(date)
         .toString()
 
-    private fun formatDateForServer(date: String): String {
-        Log.d("tag", "사용자에게 입력받은 date = $date")
-        val year = date.slice(IntRange(0, 3))
-        val month = date.slice(IntRange(5, 6))
-        val day = date.slice(IntRange(8, 9))
-        val amPm = date.slice(IntRange(16, 17))
-        val hour = date.slice(IntRange(10, 11))
-        val hourStr = if (amPm == "PM") (hour.toInt() + 12) else hour
-        val minute = date.slice(IntRange(13, 14))
-        val second = "00"
-        return "%s-%s-%s %s:%s:%s".format(year, month, day, hourStr, minute, second)
+    private fun serverDateToString(date: String): String{
+        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
     }
 
-    private fun dateFormat(year: String, month: String, day: String) =
-        "%s.%s.%s".format(year, month, day)
+    private fun serverTimeToString(time: String): String{
+        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
+    }
 
-    private fun timeFormat(hour: String, minute: String) =
-        "%s:%s %s".format(
-            if (hour.toInt() > 12) (hour.toInt() - 12).toString() else hour,
-            minute,
-            if (hour.toInt() > 12) "PM" else "AM"
-        )
+    private fun formatDateForServer(date: String): String{
+        val serverDate = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "KO")))
+        return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+    }
 
     private fun datePickerSelect() {
-        val startYear = currentEvent!!.startAt.slice(IntRange(0, 3))
-        val startMonth = currentEvent!!.startAt.slice(IntRange(5, 6))
-        val startDay = currentEvent!!.startAt.slice(IntRange(8, 9))
-        val endYear = currentEvent!!.endAt.slice(IntRange(0, 3))
-        val endMonth = currentEvent!!.endAt.slice(IntRange(5, 6))
-        val endDay = currentEvent!!.endAt.slice(IntRange(8, 9))
-        startDatePeriod.value = dateFormat(startYear, startMonth, startDay)
-        endDatePeriod.value = dateFormat(endYear, endMonth, endDay)
-        datePickerValueStartYear = startYear.toInt()
-        datePickerValueStartMonth = startMonth.toInt()
-        datePickerValueStartDay = startDay.toInt()
-        datePickerValueEndYear = endYear.toInt()
-        datePickerValueEndMonth = endMonth.toInt()
-        datePickerValueEndDay = endDay.toInt()
+        startDatePeriod.value = serverDateToString(currentEvent!!.startAt)
+        endDatePeriod.value = serverDateToString(currentEvent!!.endAt)
+        datePickerValueStartYear = startDatePeriod.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueStartMonth = startDatePeriod.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueStartDay = startDatePeriod.value!!.slice(IntRange(8,9)).toInt()
+        datePickerValueEndYear = endDatePeriod.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueEndMonth = endDatePeriod.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueEndDay = endDatePeriod.value!!.slice(IntRange(8,9)).toInt()
     }
 
-    private fun timePickerSelect() {
-        val startHour = currentEvent!!.startAt.slice(IntRange(11, 12))
-        val startMinute = currentEvent!!.startAt.slice(IntRange(14, 15))
-        val endHour = currentEvent!!.endAt.slice(IntRange(11, 12))
-        val endMinute = currentEvent!!.endAt.slice(IntRange(14, 15))
-        startTimePeriod.value = timeFormat(startHour, startMinute)
-        endTimePeriod.value = timeFormat(endHour, endMinute)
-        timePickerValueStartTime = startHour.toInt()
-        timePickerValueStartMinute = startMinute.toInt()
-        timePickerValueEndTime = endHour.toInt()
-        timePickerValueEndMinute = endMinute.toInt()
+    private fun timePickerSelect() {    //행사 수정 시 서버에서 받아온 시간 값을 textView에 표시하기 위한 함수
+        startTimePeriod.value = serverTimeToString(currentEvent!!.startAt)
+        endTimePeriod.value = serverTimeToString(currentEvent!!.endAt)
+        timePickerValueStartTime = startTimePeriod.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueStartMinute = startTimePeriod.value!!.slice(IntRange(3,4)).toInt()
+        timePickerValueEndTime = endTimePeriod.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueEndMinute = endTimePeriod.value!!.slice(IntRange(3,4)).toInt()
     }
-
 }

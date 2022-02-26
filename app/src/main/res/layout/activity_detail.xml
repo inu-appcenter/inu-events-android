@@ -21,10 +21,10 @@
 
         <include
             android:id="@+id/detailToolbar"
-            layout="@layout/toolbar_sample"
+            layout="@layout/toolbar_sample_read"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@{@string/event_read}"/>
+            app:viewModel="@{detailViewModel}"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -66,12 +66,14 @@
 
                     <TextView
                         android:id="@+id/detailTitle"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginEnd="4dp"
                         android:fontFamily="@font/roboto"
                         android:text="@{detailViewModel.currentEvent.title}"
                         tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당"
                         android:gravity="center_vertical"
+                        android:text="@{detailViewModel.currentEvent.title}"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -168,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                    layoutMarginBottom="@{detailViewModel.locationNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -191,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.subMissionUrlNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                    layoutMarginBottom="@{detailViewModel.locationNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:visibility="@{detailViewModel.contactNull ? View.GONE : View.VISIBLE}"
                 android:orientation="horizontal">
 
@@ -217,7 +219,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="@dimen/detail_bottom_margin"
                     android:orientation="horizontal"
-                    android:visibility="@{detailViewModel.subMissionUrlNull ? View.GONE : View.VISIBLE}">
+                    android:visibility="@{detailViewModel.locationNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:layout_width="80dp"
@@ -228,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{detailViewModel.currentEvent.submissionUrl}"
+                        android:text="@{detailViewModel.currentEvent.location}"
                         android:autoLink="web"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
@@ -258,7 +260,8 @@
                     tools:text="@string/detail_content"
                     android:text="@{detailViewModel.currentEvent.body}"
                     android:textColor="@color/black1"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -293,11 +296,11 @@
             android:id="@+id/NotificationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@{ContextCompat.getColor(context,detailViewModel.onOffBackground)}"
+            android:background="@{ContextCompat.getColor(context,detailViewModel.notificationBackground)}"
             android:paddingVertical="15dp"
-            android:text="@{detailViewModel.onOffText}"
-            android:onClick="@{()->detailViewModel.onClickButton()}"
-            android:textColor="@{ContextCompat.getColor(context,detailViewModel.onOffColor)}"
+            android:text="@{detailViewModel.notificationText}"
+            android:onClick="@{()->detailViewModel.onClickNotification()}"
+            android:textColor="@{ContextCompat.getColor(context,detailViewModel.notificationColor)}"
             android:textSize="15sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
