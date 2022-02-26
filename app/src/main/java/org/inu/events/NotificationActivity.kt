@@ -16,8 +16,11 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding>() {
     }
 
     override fun afterDataBinding() {
-        binding.events.adapter = NotificationEventAdapter()
+        binding.events.adapter = NotificationEventAdapter(viewModel)
 
         viewModel.loadNotificationEvents()
+        viewModel.onClickBackEvent.observe(this) {
+            finish()
+        }
     }
 }

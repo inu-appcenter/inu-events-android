@@ -26,7 +26,7 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
 
     @SuppressLint("NotifyDataSetChanged")
     override fun afterDataBinding() {
-        viewModel.loadSubscription(binding.categories.adapter!! as CategoryAdapter)
+        viewModel.loadSubscription()
         viewModel.finishEvent.observe(this) {
             finish()
         }

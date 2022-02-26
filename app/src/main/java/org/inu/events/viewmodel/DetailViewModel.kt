@@ -39,7 +39,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
-    val onOff = MutableLiveData(false)
     val notificationOnOff = MutableLiveData(false)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
@@ -56,17 +55,14 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val informationClickEvent = SingleLiveEvent<Int>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
-    val notificationBackground = MutableLiveData<Int>(R.color.white)
-    val onOffText = MutableLiveData<String>()
-    val onOffColor = MutableLiveData<Int>(R.color.black80)
-    val onOffBackground = MutableLiveData<Int>(R.color.white)
+    val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
     val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
     val bothNull = MutableLiveData(false)
     val commentSize = MutableLiveData("")
     val boardDateText = MutableLiveData("")
     val boardDateBackground = MutableLiveData<Int>(R.color.white)
-    var notificationQuarter = MutableLiveData(-1)
+    var notificationQuarter = MutableLiveData(-1)   // 알림이 어떻게 표시되어야 하는지 구분 하기위한 변수
 
 
     fun load(eventId: Int) {
@@ -127,13 +123,13 @@ class DetailViewModel : ViewModel(), KoinComponent {
             if(it.location == null) locationNull.value = true
             if(it.contact == null)contactNull.value = true
             eventWroteByMeBoolean = it.wroteByMe ?:false
+            notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
             likeOnOff.value = it.likedByMe ?: false
-            notificationText.value = if (notificationOnOff.value!!) "알람 취소" else "알람 신청"
-            notificationColor.value = if (notificationOnOff.value!!) R.color.primary100 else R.color.white
-            notificationBackground.value = if (notificationOnOff.value!!) R.color.primary_base else R.color.primary100
+            notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알람 취소" else "알람 신청"} else "행사 마감"
+            notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
+            notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.drawable_btn_background
             notificationSetFor.value = it.notificationSetFor ?: ""
-            notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
             boardDateText.value = whenDay(it.endAt)
             boardDateBackground.value = isDeadline()
@@ -146,7 +142,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private fun loadNotificationButton(onOff:Boolean){
         notificationText.value = if (onOff) "알람 취소" else "알람 신청"
         notificationColor.value = if (onOff) R.color.primary100 else R.color.white
-        notificationBackground.value = if (onOff) R.color.primary_base else R.color.primary100
+        notificationBackground.value = if (onOff) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background
     }
 
     //댓글버튼 클릭했을 때 이벤트

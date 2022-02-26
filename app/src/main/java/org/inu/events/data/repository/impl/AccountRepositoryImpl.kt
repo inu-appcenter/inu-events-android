@@ -1,5 +1,6 @@
 package org.inu.events.data.repository.impl
 
+import android.util.Log
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.extension.orThrow
 import org.inu.events.data.httpservice.AccountHttpService
@@ -33,19 +34,15 @@ class AccountRepositoryImpl(
         ).orThrow()!!
     }
 
-    /**
-     * 로컬에 저장된 사용자 정보(Account) 가져오기.
-     */
     override fun getSavedAccount(): Account? {
-        return Account(
-            db.getInt("id", -1).takeIf { it != -1 } ?: return null,
-            db.getString("rememberMeToken") ?: return null
-        )
+        val id = db.getInt("id", -1).takeIf { it != -1 }
+        val rememberMeToken = db.getString("rememberMeToken")
+        Log.e("자", "id $id , re $rememberMeToken")
+
+        return if(id != null && rememberMeToken != null) Account(id, rememberMeToken)
+        else null
     }
 
-    /**
-     * 로컬에 사용자 정보(Account) 저장하기.
-     */
     override fun saveAccount(account: Account) {
         db.putInt("id", account.id)
         db.putString("rememberMeToken", account.rememberMeToken)

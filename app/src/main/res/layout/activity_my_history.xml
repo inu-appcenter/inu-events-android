@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.MyHistoryViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +15,9 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_button"/>
+            layout="@layout/toolbar_with_back_button"
+            app:title='@{viewModel.title}'
+            app:listener="@{viewModel.backButtonListener}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         initBinding()
         setupButtons()
+        tryAutoLogin()
     }
 
     private fun initBinding() {
@@ -80,4 +81,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         viewModel.load()
     }
 
+    fun tryAutoLogin() {
+        loginService.tryAutoLogin()
+    }
 }
