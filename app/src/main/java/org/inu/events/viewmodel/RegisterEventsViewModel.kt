@@ -137,10 +137,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(currentEvent?.contact == null){
             contactNumberCheckBoxBoolean.value = true
         }
-        //todo- 시간 선택 안함 어떻게 상태 불러오지??
-//        if(currentEvent?.startAt == ){
-//            timeCheckBoxBoolean.value = true
-//        }
+        if(currentEvent?.startAt!!.slice(IntRange(11,15))=="00:00"
+            && currentEvent?.endAt!!.slice(IntRange(11,15))=="23:59"){
+            timeCheckBoxBoolean.value = true
+        }
         if(currentEvent?.startAt == currentEvent?.endAt){
             sameCheckBoxBoolean.value = true
         }
