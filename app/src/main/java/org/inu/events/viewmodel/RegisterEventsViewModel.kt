@@ -47,8 +47,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
     val locationCheckBoxBoolean = MutableLiveData(false)
-    val titleErrorMessage = MutableLiveData("")
-    val targetErrorMessage = MutableLiveData("")
+    val titleEditTextEmpty = MutableLiveData(false)
+    val targetEditTextEmpty = MutableLiveData(false)
 
     private val imageUuidList = listOf("1ec96f4e-970e-6780-792a-5dc26eec006c",
         "1ec94c4d-284e-6b70-6eba-0ecc1b8dd491",
@@ -265,8 +265,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             }
         }else{
             onBeforeClick()
-            titleErrorMessage.value = "제목을 입력해주세요"
-            targetErrorMessage.value = "모집대상을 입력해주세요"
+            titleEditTextEmpty.value = title.value.isNullOrBlank()
+            targetEditTextEmpty.value = target.value.isNullOrBlank()
         }
         finishEvent.call()
     }
