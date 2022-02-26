@@ -7,7 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.inu.events.BackButtonListener
 import org.inu.events.DetailActivity
+import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.LikeRepository
@@ -18,6 +20,13 @@ class LikeViewModel : ViewModel(), KoinComponent {
     private val likeRepository: LikeRepository by inject()
 
     val eventList = MutableLiveData<List<Event>>()
+    val onClickBackEvent = SingleLiveEvent<Any>()
+
+    val backButtonListener = object : BackButtonListener {
+        override fun invoke(view: View) {
+            onClickBackEvent.call()
+        }
+    }
 
     fun loadLikes() {
         CoroutineScope(Dispatchers.Main).launch {

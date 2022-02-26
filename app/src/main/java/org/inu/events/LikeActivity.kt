@@ -19,5 +19,8 @@ class LikeActivity : BaseActivity<ActivityLikeBinding>() {
         binding.events.adapter = LikeAdapter(viewModel)
 
         viewModel.loadLikes()
+        viewModel.onClickBackEvent.observe(this) {
+            finish()
+        }
     }
 }
