@@ -40,6 +40,7 @@ class NotificationSettingViewModel : ViewModel(), KoinComponent {
                 .map { it.name }
             val param = Topics(list)
             subscriptionRepository.putTopics(param)
+            subscriptionRepository.putSubscribing(true)
         }
     }
 
