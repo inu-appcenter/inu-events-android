@@ -110,6 +110,9 @@ val myModules = module {
     single<UserService> {
         UserService(userRepository = get())
     }
+
+    single<MyHttpService> { buildRetrofitService() }
+    single<MyRepository> { MyRepositoryImpl( get() ) }
 }
 
 class OkHttpClientFactory {
