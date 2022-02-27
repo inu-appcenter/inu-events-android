@@ -28,5 +28,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>() {
         binding.toolbar.setOnBackListener {
             finish()
         }
+
+        viewModel.loginEvent.observe(this) {
+            finish()
+        }
     }
 }

@@ -114,7 +114,8 @@ val myModules = module {
 
 class OkHttpClientFactory {
     companion object {
-        private val cookieJar = JavaNetCookieJar(CookieManager())
+        private val cookieManager = CookieManager()
+        private val cookieJar = JavaNetCookieJar(cookieManager)
 
         fun create() : OkHttpClient {
             return OkHttpClient.Builder()
@@ -128,6 +129,10 @@ class OkHttpClientFactory {
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
             return interceptor
+        }
+
+        fun clearCookie() {
+            cookieManager.cookieStore.removeAll()
         }
     }
 }

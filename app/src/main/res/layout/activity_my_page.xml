@@ -262,7 +262,8 @@
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="로그아웃"
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:onClick="@{()->viewModel.logout()}"/>
 
             <TextView
                 android:id="@+id/withdrawal"
