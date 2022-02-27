@@ -40,11 +40,13 @@
                     android:id="@+id/poster"
                     android:layout_width="85dp"
                     android:layout_height="120dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginVertical="10dp"
-                    android:background="@drawable/outline_border_4" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/outline_border_4"
+                    android:padding="1dp"
+                    bindImageRadius4="@{@string/image_url(item.imageUuid)}" />
 
                 <TextView
                     android:id="@+id/title"
