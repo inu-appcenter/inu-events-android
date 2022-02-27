@@ -9,4 +9,5 @@ interface AccountRepository {
 
     fun getSavedAccount(): Account?
     fun saveAccount(account: Account)
+    fun clearAccount()
 }

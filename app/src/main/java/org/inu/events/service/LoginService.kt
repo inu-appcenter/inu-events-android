@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Account
 import org.inu.events.data.repository.AccountRepository
+import org.inu.events.di.OkHttpClientFactory
 
 class LoginService(
     private val accountRepository: AccountRepository
@@ -46,5 +47,10 @@ class LoginService(
             Log.e("자동 로그인 실패", it.toString())
             _isLoggedIn.postValue(false)
         }
+    }
+
+    fun logout() {
+        OkHttpClientFactory.clearCookie()
+        accountRepository.clearAccount()
     }
 }
