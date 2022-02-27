@@ -18,7 +18,9 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
             android:layout_marginStart="@dimen/horizontal_margin"
-            android:background="@drawable/outline_border_4"/>
+            android:background="@drawable/outline_border_4"
+            android:padding="1dp"
+            bindImageRadius4="@{@string/image_url(item.imageUuid)}"/>
 
         <TextView
             android:id="@+id/title"
