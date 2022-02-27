@@ -19,7 +19,8 @@ import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
@@ -48,7 +49,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         private set
     var eventWroteByMeBoolean = false
         private set
-    var checkDeadline: Boolean = false
 
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
@@ -59,9 +59,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
     val hostNull = MutableLiveData(false)
-    val boardDateText = MutableLiveData("")
-    val boardDateBackground = MutableLiveData<Int>(R.color.white)
+    val boardDateText = MutableLiveData("D-??")
     var notificationQuarter = MutableLiveData(-1)   // 알림이 어떻게 표시되어야 하는지 구분 하기위한 변수
+    val deadLine = MutableLiveData(false)
 
 
     fun load(eventId: Int) {
@@ -83,29 +83,16 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private fun whenDay(end_at: String?): String {
         if (end_at == null) return "D-??"
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
+        val today = LocalDate.now()
 
-        val endDate = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
-
-        var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
+        val dDay = Period.between(today, endDate).days
 
         if (dDay < 0) {
-            checkDeadline = true
+            deadLine.value = true
             return "마감"
         }
         return "D-$dDay"
-    }
-
-    private fun isDeadline(): Int = if (checkDeadline) {
-        R.drawable.drawable_home_board_date_deadline_background
-    } else {
-        R.drawable.drawable_home_board_date_ongoing_background
     }
 
     //현재 표시할 게시물의 데이터를 가져옴
@@ -132,7 +119,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
             notificationSetFor.value = it.notificationSetFor ?: ""
             likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
             boardDateText.value = whenDay(it.endAt)
-            boardDateBackground.value = isDeadline()
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }

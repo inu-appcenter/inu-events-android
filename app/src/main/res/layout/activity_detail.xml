@@ -93,8 +93,8 @@
                     android:paddingVertical="4dp"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:background="@{ContextCompat.getDrawable(context,detailViewModel.boardDateBackground)}"
-                    tools:background="@drawable/drawable_home_board_date_ongoing_background"
+                    android:background="@drawable/drawable_home_board_date_ongoing_background"
+                    android:backgroundTint="@{detailViewModel.deadLine ? @color/black8 : @color/primary}"
                     tools:text="마감" />
                 </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
