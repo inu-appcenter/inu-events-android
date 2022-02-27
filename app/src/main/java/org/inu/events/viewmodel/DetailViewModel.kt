@@ -58,8 +58,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
     val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
-    val bothNull = MutableLiveData(false)
-    val commentSize = MutableLiveData("")
+    val hostNull = MutableLiveData(false)
     val boardDateText = MutableLiveData("")
     val boardDateBackground = MutableLiveData<Int>(R.color.white)
     var notificationQuarter = MutableLiveData(-1)   // 알림이 어떻게 표시되어야 하는지 구분 하기위한 변수
@@ -120,8 +119,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
-            if(it.location == null) locationNull.value = true
-            if(it.contact == null)contactNull.value = true
+            locationNull.value = (it.location == null)
+            contactNull.value = (it.contact == null)
+            hostNull.value = (it.host == null)
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
