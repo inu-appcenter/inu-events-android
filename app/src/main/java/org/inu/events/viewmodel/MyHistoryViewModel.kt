@@ -3,10 +3,7 @@ package org.inu.events.viewmodel
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.inu.events.DetailActivity
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.MyRepository
@@ -20,9 +17,16 @@ class MyHistoryViewModel : ViewModel(), KoinComponent {
 
     val eventList = MutableLiveData<List<Event>>()
 
-    fun loadEvents() {
+    fun setTitle(isEvent: Boolean) {
+        if(!isEvent) title.value = "댓글 단 글"
+    }
+
+    fun loadEvents(isEvent: Boolean) {
         CoroutineScope(Dispatchers.Main).launch {
-            val eventsDeferred = async(Dispatchers.IO) { myRepository.getEvents() }
+            val eventsDeferred =
+                if(isEvent) async(Dispatchers.IO) { myRepository.getEvents() }
+                else async(Dispatchers.IO) { myRepository.getComments() }
+
             val eventList = eventsDeferred.await()
             this@MyHistoryViewModel.eventList.postValue(eventList)
         }
