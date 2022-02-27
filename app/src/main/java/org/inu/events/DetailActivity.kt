@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import org.inu.events.common.extension.getIntExtra
-import org.inu.events.common.extension.observe
-import org.inu.events.common.extension.observeNonNull
-import org.inu.events.common.extension.toast
+import org.inu.events.common.extension.*
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.BottomSheetDialog
@@ -171,7 +168,7 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
         viewModel.load(id)
     }
 
-    //private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+//    private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
 
     //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
     private fun isMyWriting() = true

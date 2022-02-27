@@ -71,11 +71,10 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
-                if (commentViewModel.content.value != null) {
+                if (!commentViewModel.content.value.isNullOrEmpty()) {
                     execute {
                         commentViewModel.postComment()
                     }.then {
-                        commentViewModel.deleteText()
                         HideEditTextKeyBoard()
                     }.catch {
                         it.printStackTrace()

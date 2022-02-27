@@ -35,7 +35,7 @@ class AccountRepositoryImpl(
     }
 
     override fun getSavedAccount(): Account? {
-        val id = db.getInt("id", -1).takeIf { it != -1 }
+        val id = db.getInt("id", 0).takeIf { it != 0 }
         val rememberMeToken = db.getString("rememberMeToken")
         Log.e("자", "id $id , re $rememberMeToken")
 

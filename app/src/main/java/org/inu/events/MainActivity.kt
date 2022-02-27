@@ -32,6 +32,14 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         tryAutoLogin()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setupRecyclerView()
+        observeNonNull(loginService.isLoggedInLiveData) {
+            viewModel.load()
+        }
+    }
+
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
@@ -75,13 +83,11 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         toast("로그인을 하셔야 게시글 작성이 가능합니다")
     }
 
-    override fun onResume() {
-        super.onResume()
-        setupRecyclerView()
-        viewModel.load()
-    }
-
-    fun tryAutoLogin() {
-        loginService.tryAutoLogin()
+    private fun tryAutoLogin() {
+        if (loginService.isAutoLoginPossible()) {
+            loginService.tryAutoLogin()
+        } else {
+            viewModel.load()
+        }
     }
 }

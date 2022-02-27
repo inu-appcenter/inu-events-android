@@ -20,6 +20,10 @@ import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -51,18 +55,11 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         init {
             itemView.setOnClickListener(this)
         }
-
         fun bind(homeData: Event) {
-            var imageUrl = "http://uniletter.inuappcenter.kr/images/"
             binding.homeData = homeData
             binding.boardDate.text = whenDay(homeData.endAt)
             binding.boardDate.background =
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
-            imageUrl += homeData.imageUuid
-            bindImageFromUrl(binding.homeImageView, imageUrl)
-            if(homeData.likedByMe==true){
-                binding.likeImageView.background =  if (homeData.likedByMe == true)  ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_on) else ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_off)
-            }
         }
 
         override fun onClick(v: View) {
@@ -74,17 +71,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         private fun whenDay(end_at: String?): String {
             if (end_at == null) return "D-??"
 
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
+            val today = LocalDate.now()
 
-            val endDate = dateFormat.parse(end_at).time
-            val today = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.time.time
-
-            var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
+            val dDay = Period.between(today, endDate).days
 
             if (dDay < 0) {
                 checkDeadline = true
