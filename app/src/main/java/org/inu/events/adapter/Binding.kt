@@ -24,3 +24,10 @@ fun setNotificationEvents(recyclerView: RecyclerView, list: List<Event>?) {
         (recyclerView.adapter as NotificationEventAdapter).submitList(list)
     }
 }
+
+@BindingAdapter("app:events")
+fun setEvents(recyclerView: RecyclerView, list: List<Event>?) {
+    list?.let {
+        (recyclerView.adapter as HistoryAdapter).submitList(list)
+    }
+}

@@ -23,12 +23,14 @@
             app:title="@{viewModel.title}" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            app:events="@{viewModel.eventList}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
