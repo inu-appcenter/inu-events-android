@@ -6,23 +6,23 @@
     android:id="@+id/toolbar_register"
     android:layout_width="match_parent"
     android:layout_height="52dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:contentInsetStart="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_button"
         android:layout_width="24dp"
         android:layout_height="24dp"
         tools:ignore="ContentDescription"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/ic_left"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
         android:textColor="@color/black1"
         android:textSize="22sp"
         android:textStyle="bold"

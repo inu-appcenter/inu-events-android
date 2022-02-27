@@ -18,13 +18,6 @@ import org.koin.core.component.inject
 class MyPageViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
     val user = MutableLiveData<User>()
-    val onClickBackEvent = SingleLiveEvent<Any>()
-
-    val backButtonListener = object : BackButtonListener {
-        override fun invoke(view: View) {
-            onClickBackEvent.call()
-        }
-    }
 
     fun fetchData() {
         CoroutineScope(Dispatchers.Main).launch {
