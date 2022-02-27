@@ -20,7 +20,7 @@
             android:background="@color/white"
             android:elevation="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="새로운 행사 알림" />
+            app:title="알림목록" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/events"
