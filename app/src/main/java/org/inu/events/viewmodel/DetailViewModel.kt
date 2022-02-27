@@ -43,7 +43,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val notificationOnOff = MutableLiveData(false)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
-    val likeButtonSource = MutableLiveData(R.drawable.img_like_off)
 
     var eventIndex = -1
         private set
@@ -112,13 +111,12 @@ class DetailViewModel : ViewModel(), KoinComponent {
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
-            likeOnOff.value = it.likedByMe ?: false
             notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알람 취소" else "알람 신청"} else "행사 마감"
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.drawable_btn_background
             notificationSetFor.value = it.notificationSetFor ?: ""
-            likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
             boardDateText.value = whenDay(it.endAt)
+            likeOnOff.value = it.likedByMe
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
@@ -146,10 +144,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
         if (loginService.isLoggedIn) {
             if (likeOnOff.value == true) {
                 deleteLike()
-                likeButtonSource.value = R.drawable.img_like_off
             } else {
                 postLike()
-                likeButtonSource.value = R.drawable.img_like_on
             }
             likeOnOff.value = likeOnOff.value != true
         }

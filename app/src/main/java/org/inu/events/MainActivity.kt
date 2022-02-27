@@ -29,17 +29,21 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         initBinding()
         setupButtons()
-        setupRecyclerView()
         tryAutoLogin()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupRecyclerView()
+        observeNonNull(loginService.isLoggedInLiveData) {
+            viewModel.load()
+        }
     }
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
-        observeNonNull(loginService.isLoggedInLiveData) {
-            viewModel.load()
-        }
     }
 
     private fun setupRecyclerView() {
