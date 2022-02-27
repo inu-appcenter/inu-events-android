@@ -272,9 +272,9 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        binding.toolbarRegister0.toolbarImageView.setOnClickListener { finish() }
-        binding.toolbarRegister1.toolbarImageView.setOnClickListener { finish() }
-        binding.toolbarRegister2.toolbarImageView.setOnClickListener { finish() }
+        binding.toolbarRegister0.setOnBackListener { finish() }
+        binding.toolbarRegister1.setOnBackListener { finish() }
+        binding.toolbarRegister2.setOnBackListener { finish() }
     }
 
     private fun extractEventIdAndLoad() {

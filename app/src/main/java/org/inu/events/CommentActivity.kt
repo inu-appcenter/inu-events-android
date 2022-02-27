@@ -108,7 +108,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupToolbar() {
-        commentBinding.commentToolbar.toolbarImageView.setOnClickListener { finish() }
+        commentBinding.toolbar.setOnBackListener { finish() }
     }
 
     // dialog
