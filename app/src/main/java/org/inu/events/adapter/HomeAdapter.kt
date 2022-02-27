@@ -60,9 +60,6 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             binding.boardDate.text = whenDay(homeData.endAt)
             binding.boardDate.background =
                 ContextCompat.getDrawable(binding.root.context, isDeadline())
-            if(homeData.likedByMe==true){
-                binding.likeImageView.background =  if (homeData.likedByMe == true)  ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_on) else ContextCompat.getDrawable(binding.root.context,R.drawable.img_like_off)
-            }
         }
 
         override fun onClick(v: View) {
