@@ -27,10 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_my_history"
             android:orientation="vertical"
             app:events="@{viewModel.eventList}"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
