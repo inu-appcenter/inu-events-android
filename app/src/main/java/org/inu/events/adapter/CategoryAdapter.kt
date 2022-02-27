@@ -55,12 +55,10 @@ data class Category(
 
 class CategoriesDiffUtil : DiffUtil.ItemCallback<Category>() {
     override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-        Log.e("참조확인", "${oldItem.isChecked}, ${newItem.isChecked}")
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-        Log.e("으잉??", "${oldItem.isChecked}, ${newItem.isChecked}")
         return oldItem.isChecked == newItem.isChecked
     }
 }
