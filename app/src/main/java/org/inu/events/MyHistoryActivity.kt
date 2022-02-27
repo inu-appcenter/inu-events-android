@@ -19,7 +19,9 @@ class MyHistoryActivity : BaseActivity<ActivityMyHistoryBinding>() {
     override fun afterDataBinding() {
         binding.events.adapter = HistoryAdapter(viewModel)
 
-        viewModel.loadEvents()
+        val isEvent = intent.getBooleanExtra("isEvent", true)
+        viewModel.setTitle(isEvent)
+        viewModel.loadEvents(isEvent)
         binding.toolbar.setOnBackListener {
             finish()
         }

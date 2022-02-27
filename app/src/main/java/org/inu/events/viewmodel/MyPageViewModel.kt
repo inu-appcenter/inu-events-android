@@ -57,11 +57,13 @@ class MyPageViewModel : ViewModel(), KoinComponent {
 
     fun onClickMyEvent(view: View) {
         val intent = Intent(view.context, MyHistoryActivity::class.java)
+        intent.putExtra("isEvent", true)
         view.context.startActivity(intent)
     }
 
     fun onClickMyComment(view: View) {
         val intent = Intent(view.context, MyHistoryActivity::class.java)
+        intent.putExtra("isEvent", false)
         view.context.startActivity(intent)
     }
 

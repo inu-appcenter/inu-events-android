@@ -43,4 +43,8 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
             action(it)
         }
     }
+
+    fun setTitle(text: String) {
+        findViewById<TextView>(R.id.title).text = text
+    }
 }
