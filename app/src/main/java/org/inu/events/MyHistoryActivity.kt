@@ -1,7 +1,5 @@
 package org.inu.events
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
 import org.inu.events.base.BaseActivity
 import org.inu.events.databinding.ActivityMyHistoryBinding
@@ -17,7 +15,7 @@ class MyHistoryActivity : BaseActivity<ActivityMyHistoryBinding>() {
     }
 
     override fun afterDataBinding() {
-        viewModel.onClickBackEvent.observe(this) {
+        binding.toolbar.setOnBackListener {
             finish()
         }
     }
