@@ -21,13 +21,6 @@ class LikeViewModel : ViewModel(), KoinComponent {
     private val likeRepository: LikeRepository by inject()
 
     val eventList = MutableLiveData<List<Event>>()
-    val onClickBackEvent = SingleLiveEvent<Any>()
-
-    val backButtonListener = object : BackButtonListener {
-        override fun invoke(view: View) {
-            onClickBackEvent.call()
-        }
-    }
 
     fun loadLikes() {
         CoroutineScope(Dispatchers.Main).launch {

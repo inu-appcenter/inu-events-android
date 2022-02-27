@@ -21,13 +21,6 @@ class NotificationViewModel : ViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
 
     val notificationList = MutableLiveData<List<Event>>()
-    val onClickBackEvent = SingleLiveEvent<Any>()
-
-    val backButtonListener = object : BackButtonListener {
-        override fun invoke(view: View) {
-            onClickBackEvent.call()
-        }
-    }
 
     fun loadNotificationEvents() {
         CoroutineScope(Dispatchers.Main).launch {

@@ -19,7 +19,7 @@ class NotificationActivity : BaseActivity<ActivityNotificationBinding>() {
         binding.events.adapter = NotificationEventAdapter(viewModel)
 
         viewModel.loadNotificationEvents()
-        viewModel.onClickBackEvent.observe(this) {
+        binding.toolbar.setOnBackListener {
             finish()
         }
     }
