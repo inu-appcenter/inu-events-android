@@ -85,7 +85,11 @@
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_privacy_policy.xml" value="0.234375" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_register_events.xml" value="0.234375" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/activity_update_profile.xml" value="0.234375" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_category.xml" value="0.27037037037037037" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.27037037037037037" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_like_event.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_my_history.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_notification_event.xml" value="0.27037037037037037" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_sample.xml" value="0.1925925925925926" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_sample_read.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/toolbar_with_back_button.xml" value="0.234375" />
