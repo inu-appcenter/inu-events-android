@@ -36,6 +36,9 @@
             android:name=".PrivacyPolicyActivity"
             android:exported="false" />
         <activity
+            android:name=".OpenSourceLicensesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyPageActivity"
             android:exported="false" />
         <activity

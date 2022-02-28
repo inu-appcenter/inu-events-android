@@ -53,6 +53,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
     val informationClickEvent = SingleLiveEvent<Int>()
+    val menuClickEvent = SingleLiveEvent<Any>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
@@ -83,16 +84,23 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private fun whenDay(end_at: String?): String {
         if (end_at == null) return "D-??"
 
-        val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
-        val today = LocalDate.now()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        val dDay = Period.between(today, endDate).days
+        val endDate = dateFormat.parse(end_at).time
+        val today = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time.time
+
+        var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
 
         if (dDay < 0) {
             deadLine.value = true
             return "마감"
         }
-        return "D-${if(dDay == 0) "day" else dDay}"
+        return "D-${if(dDay.toInt() == 0) "day" else dDay}"
     }
 
     //현재 표시할 게시물의 데이터를 가져옴
@@ -159,6 +167,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
     // i 버튼 클릭했을 때 이벤트
     fun onClickInformation() {
         informationClickEvent.call()
+    }
+
+    fun onClickMenu(){
+        menuClickEvent.call()
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수

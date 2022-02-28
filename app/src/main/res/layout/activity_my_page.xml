@@ -240,7 +240,8 @@
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:text="오픈소스 라이센스"
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:onClick="@{(view)->viewModel.onClickOpenSourceLicenses(view)}"/>
 
             <TextView
                 android:id="@+id/etc"

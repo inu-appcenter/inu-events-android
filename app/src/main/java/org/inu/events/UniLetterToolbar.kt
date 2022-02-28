@@ -8,7 +8,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 
 class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context, attrs) {
-    private lateinit var title: String
+    private var title: String = ""
+    set(value) {
+        field = value
+        rootView?.findViewById<TextView>(R.id.title)?.text = value
+    }
 
     init {
         initAttrs(attrs)
@@ -44,7 +48,11 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
         }
     }
 
-    fun setTitle(text: String) {
-        findViewById<TextView>(R.id.title).text = text
+    /**
+     * title의 setter를 불러서 타이틀을 설정하려면,
+     * 이 시그니처를 오버라이드해야 합니다.
+     */
+    override fun setTitle(title: CharSequence?) {
+        this.title = title.toString()
     }
 }

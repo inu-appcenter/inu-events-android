@@ -73,19 +73,24 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         private fun whenDay(end_at: String?): String {
             if (end_at == null) return "D-??"
 
-            var dDay = 0
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-            execute {
-                val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
-                val today = LocalDate.now()
-                dDay = Period.between(today, endDate).days
-            }.then {  }.catch {  }
+            val endDate = dateFormat.parse(end_at).time
+            val today = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time.time
+
+            var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
 
             if (dDay < 0) {
                 checkDeadline = true
                 return "마감"
             }
-            return "D-${if(dDay == 0) "day" else dDay}"
+            return "D-${if(dDay.toInt() == 0) "day" else dDay}"
         }
+
     }
 }
