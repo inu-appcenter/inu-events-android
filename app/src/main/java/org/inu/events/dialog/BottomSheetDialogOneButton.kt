@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import org.inu.events.R
 
-class BottomSheetDialogOneButton {
+class BottomSheetDialogOneButton(val context: Context) {
 
-    fun show(context: Context, onOne: () -> Unit, onCancel: () -> Unit, onText:String) {
+    fun show(onOne: () -> Unit, onCancel: () -> Unit, onText:String) {
         val inflater: LayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val customLayout = inflater.inflate(R.layout.bottom_sheet_dialog_one, null)
