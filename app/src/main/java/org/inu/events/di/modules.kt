@@ -3,36 +3,19 @@ package org.inu.events.di
 import com.google.gson.GsonBuilder
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
+import okhttp3.internal.platform.Platform
 import okhttp3.logging.HttpLoggingInterceptor
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.*
-import org.inu.events.data.repository.mock.NotificationRepositoryMock
-import org.inu.events.data.repository.impl.AccountRepositoryImpl
-import org.inu.events.data.repository.impl.CommentRepositoryImpl
-import org.inu.events.data.repository.impl.EventRepositoryImpl
-import org.inu.events.data.repository.impl.UserRepositoryImpl
-import org.inu.events.data.repository.mock.UserRepositoryMock
 import org.inu.events.service.LoginService
 import org.inu.events.service.UserService
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.CookieManager
-import java.util.concurrent.Flow
 
-inline fun <reified T> buildRetrofitService(): T {
-    return Retrofit.Builder()
-        .baseUrl("http://uniletter.inuappcenter.kr/")
-        .addConverterFactory(GsonConverterFactory.create(
-            GsonBuilder().serializeNulls().create()
-        ))
-        .client(OkHttpClientFactory.create())
-        .build()
-        .create(T::class.java)
-
-}
 
 val myModules = module {
     single<EventHttpService> {
@@ -127,6 +110,17 @@ val myModules = module {
     single<MyRepository> { MyRepositoryImpl( get() ) }
 }
 
+inline fun <reified T> buildRetrofitService(): T {
+    return Retrofit.Builder()
+        .baseUrl("http://uniletter.inuappcenter.kr/")
+        .addConverterFactory(GsonConverterFactory.create(
+            GsonBuilder().serializeNulls().create()
+        ))
+        .client(OkHttpClientFactory.create())
+        .build()
+        .create(T::class.java)
+}
+
 class OkHttpClientFactory {
     companion object {
         private val cookieManager = CookieManager()
@@ -139,8 +133,14 @@ class OkHttpClientFactory {
                 .build()
         }
 
+
         private fun createLoggingInterceptor() : HttpLoggingInterceptor {
-            val interceptor = HttpLoggingInterceptor()
+            val interceptor = HttpLoggingInterceptor { message ->
+                if (!message.contains("�")) {
+                    Platform.get().log(message)
+                }
+            }
+
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
             return interceptor
