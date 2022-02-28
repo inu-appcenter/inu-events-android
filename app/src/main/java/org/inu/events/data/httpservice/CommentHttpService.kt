@@ -21,7 +21,6 @@ interface CommentHttpService {
     @DELETE("/comments/{commentId}")
     fun deleteComment(
         @Path("commentId") commentId: Int
-        // todo - event id와 userid가 같을 때 삭제 ?
     ): Call<Unit>
 
     @GET("/comments")
