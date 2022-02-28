@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'com.cookpad.android.plugin.license-tools' version '1.2.2'
 }
 
 android {
