@@ -68,12 +68,13 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(viewModel.postClickEvent) {
             if (loginService.isLoggedIn) {
                 val intent = Intent(this, TempActivity::class.java)
-                startActivity(intent)
-//                startActivity(RegisterEventsActivity.callingIntent(this))
+//                startActivity(intent)
+                startActivity(RegisterEventsActivity.callingIntent(this))
             } else {
                 askUserForLogin()
             }
         }
+
     }
 
     private fun askUserForLogin() {
