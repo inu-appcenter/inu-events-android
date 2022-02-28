@@ -39,9 +39,6 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var binding: ActivityDetailBinding
-
-    private val googleLogin = GoogleLoginWrapper(this)
-
     private val notificationBottomDialog = BottomSheetDialog(this,"알림 신청", "시작 전 알림", "마감 전 알림")
     private val menuBottomSheet = BottomSheetDialog(this,"글 메뉴","수정하기","삭제하기")
     private val bottomDialogOneButton = BottomSheetDialogOneButton(this)
@@ -79,9 +76,11 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
                     when(it) {
                         0 -> toast("마감된 행사입니다!")
                         1 -> bottomDialogOneButton.show({      // 시작 전 알림만
-                                viewModel.postNotification("start")},{},"시작 전 알림")
+                                viewModel.postNotification("start")
+                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))},{},"시작 전 알림")
                         2 -> bottomDialogOneButton.show({      // 마감 전 알림만
-                                viewModel.postNotification("end")},{},"마감 전 알림")
+                                viewModel.postNotification("end")
+                            alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_last), resources.getString(R.string.alarm_on_content_last))},{},"마감 전 알림")
                         3 -> notificationBottomDialog.show(    // 시작 전, 마감 전 알림 모두 뜨게
                             { viewModel.postNotification("start")
                                 alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
