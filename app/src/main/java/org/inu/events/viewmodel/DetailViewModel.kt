@@ -20,6 +20,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
