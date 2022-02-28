@@ -168,10 +168,10 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
         viewModel.load(id)
     }
 
-    private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+    //private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
 
     //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
-    //private fun isMyWriting() = true
+    private fun isMyWriting() = true
 
 
     override fun onOk() {
