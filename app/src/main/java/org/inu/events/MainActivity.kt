@@ -30,20 +30,22 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         initBinding()
         setupButtons()
         tryAutoLogin()
+        setUpSwipeRefresh()
     }
 
     override fun onResume() {
         super.onResume()
         setupRecyclerView()
-        observeNonNull(loginService.isLoggedInLiveData) {
-            viewModel.load()
-        }
     }
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
         binding.lifecycleOwner = this
+
+        observeNonNull(loginService.isLoggedInLiveData) {
+            viewModel.load()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -55,6 +57,13 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         observeNonNull(viewModel.homeDataList) {
             theAdapter.homeDataList = it
+        }
+    }
+
+    private fun setUpSwipeRefresh() {
+        binding.swipeLayout.setOnRefreshListener {
+            viewModel.load()
+            binding.swipeLayout.isRefreshing = false
         }
     }
 
