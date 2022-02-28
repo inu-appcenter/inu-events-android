@@ -3,6 +3,7 @@ package org.inu.events.data.repository.impl
 import android.util.Log
 import org.inu.events.data.httpservice.UserHttpService
 import org.inu.events.data.model.dto.UpdateUserParams
+import org.inu.events.data.model.dto.UpdateUserParamsOnlyNickname
 import org.inu.events.data.model.entity.User
 import org.inu.events.data.repository.UserRepository
 import java.lang.Exception
@@ -31,6 +32,14 @@ class UserRepositoryImpl(
     }
 
     override suspend fun updateUser(user: UpdateUserParams) {
+        try {
+            httpService.updateUser(user).execute()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override suspend fun updateUser(user: UpdateUserParamsOnlyNickname) {
         try {
             httpService.updateUser(user).execute()
         } catch (e: Exception) {

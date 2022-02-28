@@ -19,15 +19,6 @@ import java.io.File
 class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
     override val layoutResourceId = R.layout.activity_update_profile
     private val viewModel: UpdateProfileViewModel by viewModels()
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.inputText.value = s.toString()
-            viewModel.validateNickname()
-        }
-
-        override fun afterTextChanged(s: Editable?) {}
-    }
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,7 +43,6 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.nicknameUpdate.addTextChangedListener(textWatcher)
         viewModel.finishEvent.observe(this) {
             if (viewModel.validateNickname()) finish()
         }

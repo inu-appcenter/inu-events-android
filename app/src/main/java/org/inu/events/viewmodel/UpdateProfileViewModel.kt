@@ -17,8 +17,14 @@ import org.koin.core.component.inject
 class UpdateProfileViewModel : ViewModel(), KoinComponent {
     private val userService: UserService by inject()
     private val eventRepository: EventRepository by inject()
+
     val user = MutableLiveData<User>()
     val updatePhotoEvent = SingleLiveEvent<Any>()
+
+    val inputText = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String>()
+    val finishEvent = SingleLiveEvent<Any>()
+    var imageUuid: String? = null
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
@@ -27,23 +33,14 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    val inputText = MutableLiveData<String>()
-    val errorMessage = MutableLiveData<String>()
-    val finishEvent = SingleLiveEvent<Any>()
-
     fun validateNickname(): Boolean {
         errorMessage.value = when {
             inputText.value!!.isEmpty() -> "공백은 닉네임으로 설정하실 수 없습니다."
-            isDuplicate() -> "중복된 닉네임입니다."
             !isSuitableLength() -> "닉네임은 8자 이내로 설정해 주세요."
             else -> ""
         }
 
         return errorMessage.value!!.isEmpty()
-    }
-
-    private fun isDuplicate(): Boolean {
-        return false
     }
 
     private fun isSuitableLength(): Boolean {
@@ -53,7 +50,7 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     fun onClickFinish() {
         val newUser = UpdateUserParams(
             nickname = inputText.value!!,
-            imageUuid = null
+            imageUuid = imageUuid
         )
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -68,12 +65,7 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
 
     fun uploadImage(image: MultipartBody.Part) {
         CoroutineScope(Dispatchers.IO).launch {
-            val imageUuid = eventRepository.uploadImage(image).uuid
-            val newUser = UpdateUserParams(
-                nickname = null,
-                imageUuid = imageUuid
-            )
-            userService.updateUser(newUser)
+            imageUuid = eventRepository.uploadImage(image).uuid
         }
     }
 }

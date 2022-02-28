@@ -1,6 +1,7 @@
 package org.inu.events.data.httpservice
 
 import org.inu.events.data.model.dto.UpdateUserParams
+import org.inu.events.data.model.dto.UpdateUserParamsOnlyNickname
 import org.inu.events.data.model.entity.User
 import retrofit2.Call
 import retrofit2.Response
@@ -15,4 +16,7 @@ interface UserHttpService {
 
     @PATCH("/me")
     fun updateUser(@Body user: UpdateUserParams): Call<Unit>
+
+    @PATCH("/me")
+    fun updateUser(@Body user: UpdateUserParamsOnlyNickname): Call<Unit>
 }
