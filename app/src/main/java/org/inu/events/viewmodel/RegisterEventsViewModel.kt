@@ -221,8 +221,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun uploadImage(){
         when{
-            (imageUrl.value == "" || imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
-            (imageUrl.value != "") ->return
+            (imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
+            (imageCheckBoxBoolean.value == false && imageUuid !in imageUuidList) -> return
             (imageCheckBoxBoolean.value == false) ->{
                 val file = File(imageUrl.value.toString())
                 val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
