@@ -53,6 +53,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
     val informationClickEvent = SingleLiveEvent<Int>()
+    val menuClickEvent = SingleLiveEvent<Any>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
@@ -159,6 +160,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
     // i 버튼 클릭했을 때 이벤트
     fun onClickInformation() {
         informationClickEvent.call()
+    }
+
+    fun onClickMenu(){
+        menuClickEvent.call()
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수

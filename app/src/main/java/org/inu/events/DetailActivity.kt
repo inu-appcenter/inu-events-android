@@ -42,8 +42,9 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
 
     private val googleLogin = GoogleLoginWrapper(this)
 
-    private val bottomDialog = BottomSheetDialog()
-    private val bottomDialogOneButton = BottomSheetDialogOneButton()
+    private val notificationBottomDialog = BottomSheetDialog(this,"알림 신청", "시작 전 알림", "마감 전 알림")
+    private val menuBottomSheet = BottomSheetDialog(this,"글 메뉴","수정하기","삭제하기")
+    private val bottomDialogOneButton = BottomSheetDialogOneButton(this)
     private val alarmDialog = AlarmDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,7 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
 
         setupToolbar()
         showInformation()
+        showMenu()
     }
 
     private fun initBinding() {
@@ -76,11 +78,11 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
                 if (viewModel.notificationOnOff.value == false) {
                     when(it) {
                         0 -> toast("마감된 행사입니다!")
-                        1 -> bottomDialogOneButton.show(this,{      // 시작 전 알림만
+                        1 -> bottomDialogOneButton.show({      // 시작 전 알림만
                                 viewModel.postNotification("start")},{},"시작 전 알림")
-                        2 -> bottomDialogOneButton.show(this,{      // 마감 전 알림만
+                        2 -> bottomDialogOneButton.show({      // 마감 전 알림만
                                 viewModel.postNotification("end")},{},"마감 전 알림")
-                        3 -> bottomDialog.show(this,    // 시작 전, 마감 전 알림 모두 뜨게
+                        3 -> notificationBottomDialog.show(    // 시작 전, 마감 전 알림 모두 뜨게
                             { viewModel.postNotification("start")
                                 alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
                             },
@@ -110,9 +112,13 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
             if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
-                binding.detailToolbar.likeImageView.visibility = View.INVISIBLE
-                binding.detailToolbar.iImageView.visibility = View.INVISIBLE
+                binding.detailToolbar.likeImageView.visibility = View.GONE
+                binding.detailToolbar.iImageView.visibility = View.GONE
+            }else{
+                binding.detailToolbar.menuImageView.visibility = View.GONE
             }
+        }else{
+            binding.detailToolbar.menuImageView.visibility = View.GONE
         }
     }
 
@@ -122,35 +128,17 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.event_toolbar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.fixToolbarMenu -> {
-                startActivity(RegisterEventsActivity.callingIntent(this, viewModel.eventIndex))
-                true
-            }
-            R.id.deleteToolbarMenu -> {
-                viewModel.onDeleteClickEvent()
-                finish()
-                true
-            }
-            R.id.signOutToolbarMenu -> {
-                googleLogin.signOut()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    private fun showMenu(){
+        observe(viewModel.menuClickEvent){
+            menuBottomSheet.show(
+                onFirst  = {startActivity(RegisterEventsActivity.callingIntent(this, viewModel.eventIndex))},
+                onSecond = {viewModel.onDeleteClickEvent()
+                            finish()},
+                onCancel = {}
+            )
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu!!.findItem(R.id.signOutToolbarMenu).isEnabled = loginService.isLoggedIn
-        return super.onPrepareOptionsMenu(menu)
-    }
 
     override fun onStart() {
         super.onStart()
