@@ -37,7 +37,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData<String?>()
-    val target = MutableLiveData<String?>()
+    val target = MutableLiveData("")
     val location = MutableLiveData<String?>()
     val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
