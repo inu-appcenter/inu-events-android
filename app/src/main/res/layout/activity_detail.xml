@@ -38,13 +38,13 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
-                    android:paddingVertical="24dp"
-                    android:scaleType="centerCrop"
                     imageFromUrl="@{detailViewModel.imageUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                    android:adjustViewBounds="true"
+                    android:paddingVertical="24dp"
+                    android:scaleType="fitCenter"
                     tools:src="@drawable/img_default" />
 
                 <View

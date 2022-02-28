@@ -58,8 +58,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         fun bind(homeData: Event) {
             binding.homeData = homeData
             binding.boardDate.text = whenDay(homeData.endAt)
-            binding.boardDate.background =
-                ContextCompat.getDrawable(binding.root.context, isDeadline())
+            binding.boardDate.backgroundTintList = when(checkDeadline){
+                true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
+                else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
+            }
         }
 
         override fun onClick(v: View) {
@@ -80,13 +82,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
                 checkDeadline = true
                 return "마감"
             }
-            return "D-$dDay"
-        }
-
-        private fun isDeadline(): Int = if (checkDeadline) {
-            R.drawable.drawable_home_board_date_deadline_background
-        } else {
-            R.drawable.drawable_home_board_date_ongoing_background
+            return "D-${if(dDay == 0) "day" else dDay}"
         }
     }
 }
