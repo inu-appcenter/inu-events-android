@@ -1,6 +1,7 @@
 package org.inu.events
 
 import android.app.Application
+import android.util.Log
 import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
@@ -17,45 +18,36 @@ import org.koin.core.context.startKoin
 
 class MyApplication : Application() {
     companion object {
-        @BindingAdapter("imageFromUrl")
+        @BindingAdapter("imageFromUuid")
         @JvmStatic
-        fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-            if (!imageUrl.isNullOrEmpty()) {
+        fun bindImageFromUuid(view: ImageView, imageUuid: String?) {
+
+            if(imageUuid?.trim()?.isBlank() != false) {
                 Glide.with(view.context)
-                    .load(imageUrl)
+                    .load(R.drawable.img_default)
                     .error(R.drawable.img_default)
                     .placeholder(R.drawable.img_default)
                     .into(view)
-            } else {
-                Glide.with(view.context)
-                    .load(imageUrl)
-                    .into(view)
+                return
             }
+
+            loadWithGlide(view, imageUuid)
         }
 
 
         @BindingAdapter("bindImageRadius4")
         @JvmStatic
-        fun bindImage(view: ImageView, imageUrl: String?) {
+        fun bindImage(view: ImageView, imageUuid: String?) {
             val displayMetrics = view.context.resources.displayMetrics
             val radiusWithPixel = (displayMetrics.density * 4).toInt()
 
-            Glide.with(view.context)
-                .load(imageUrl)
-                .transform(CenterCrop(), RoundedCorners(radiusWithPixel))
-                .error(R.drawable.img_default)
-                .placeholder(R.drawable.img_default)
-                .into(view)
+            loadWithGlide(view, imageUuid, radiusWithPixel)
         }
 
-        @BindingAdapter("app:photo_url")
+        @BindingAdapter("app:photo_uuid")
         @JvmStatic
         fun setPhoto(view: ImageView, imageUrl: String?) {
-            Glide.with(view.context)
-                .load(imageUrl)
-                .error(R.drawable.default_profile_background)
-                .placeholder(R.drawable.default_profile_background)
-                .into(view)
+            loadWithGlide(view, imageUrl)
         }
 
         @BindingAdapter("layoutMarginBottom")
@@ -67,6 +59,25 @@ class MyApplication : Application() {
             }
         }
 
+        private fun loadWithGlide(view: ImageView, imageUuid: String?, radiusWithPixel: Int = 0) {
+            val imageUrl = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+
+            if(radiusWithPixel != 0) {
+                Glide.with(view.context)
+                    .load(imageUrl)
+                    .transform(CenterCrop(), RoundedCorners(radiusWithPixel))
+                    .error(R.drawable.img_default)
+                    .placeholder(R.drawable.img_default)
+                    .into(view)
+            }
+            else {
+                Glide.with(view.context)
+                    .load(imageUrl)
+                    .error(R.drawable.img_default)
+                    .placeholder(R.drawable.img_default)
+                    .into(view)
+            }
+        }
     }
 
     override fun onCreate() {

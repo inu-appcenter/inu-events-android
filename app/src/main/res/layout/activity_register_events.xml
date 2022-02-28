@@ -73,7 +73,7 @@
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
                     android:scaleType="centerCrop"
-                    imageFromUrl="@{registerViewModel.imageUrl}"
+                    imageFromUuid="@{registerViewModel.imageUrl}"
                     app:layout_constraintBottom_toTopOf="@+id/cardview_member"
                     app:layout_constraintEnd_toEndOf="@+id/cardview_member"
                     app:layout_constraintStart_toStartOf="@+id/cardview_member"

@@ -42,7 +42,7 @@
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
-                imageFromUrl="@{@string/image_url(homeData.imageUuid)}"
+                imageFromUuid="@{homeData.imageUuid}"
                 app:layout_constraintBottom_toTopOf="@+id/cardview_member"
                 app:layout_constraintEnd_toEndOf="@+id/cardview_member"
                 app:layout_constraintStart_toStartOf="@+id/cardview_member"

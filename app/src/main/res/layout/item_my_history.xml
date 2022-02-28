@@ -20,7 +20,7 @@
             android:layout_marginStart="@dimen/horizontal_margin"
             android:background="@drawable/outline_border_4"
             android:padding="1dp"
-            bindImageRadius4="@{@string/image_url(item.imageUuid)}"/>
+            bindImageRadius4="@{item.imageUuid}"/>
 
         <TextView
             android:id="@+id/title"
