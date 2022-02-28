@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import org.inu.events.R
 
-class BottomSheetDialog(val context: Context, val titleText: String, val firstText: String, val secondText: String) {
+class BottomSheetDialog(val context: Context, private val titleText: String, private val firstText: String, private val secondText: String) {
 
     fun show(onFirst: () -> Unit, onSecond: () -> Unit, onCancel: () -> Unit) {
         val inflater: LayoutInflater =
