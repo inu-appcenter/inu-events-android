@@ -8,6 +8,14 @@ plugins {
 
 android {
 
+    signingConfigs {
+        release {
+            storeFile file('/Users/potados/keystores/uniletter/android/uniletter_keystore')
+            storePassword 'inu123'
+            keyAlias 'key0'
+            keyPassword 'inu123'
+        }
+    }
     dataBinding {
         enabled true
     }
@@ -30,8 +38,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            debuggable false
         }
     }
     compileOptions {
