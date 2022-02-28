@@ -45,6 +45,11 @@ class MyPageViewModel : ViewModel(), KoinComponent {
         view.context.startActivity(intent)
     }
 
+    fun onClickOpenSourceLicenses(view: View) {
+        val intent = Intent(view.context, OpenSourceLicensesActivity::class.java)
+        view.context.startActivity(intent)
+    }
+
     fun onClickLikeList(view: View) {
         val intent = Intent(view.context, LikeActivity::class.java)
         view.context.startActivity(intent)
