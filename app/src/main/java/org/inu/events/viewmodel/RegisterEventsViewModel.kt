@@ -36,10 +36,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
-    val host = MutableLiveData<String?>()
+    val host = MutableLiveData("")
     val target = MutableLiveData("")
-    val location = MutableLiveData<String?>()
-    val contactNumber = MutableLiveData<String?>()
+    val location = MutableLiveData("")
+    val contactNumber = MutableLiveData("")
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
@@ -128,13 +128,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadCheckBoxState() {
-        if(currentEvent?.host == null){
+        if(currentEvent?.host == ""){
             hostCheckBoxBoolean.value = true
         }
-        if(currentEvent?.location == null){
+        if(currentEvent?.location == ""){
             locationCheckBoxBoolean.value = true
         }
-        if(currentEvent?.contact == null){
+        if(currentEvent?.contact == ""){
             contactNumberCheckBoxBoolean.value = true
         }
         if(currentEvent?.startAt!!.slice(IntRange(11,15))=="00:00"
@@ -185,13 +185,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
-                    host = if(host.value=="") null else host.value,
+                    host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = if(contactNumber.value == "") null else contactNumber.value,
-                    location = if(location.value == "") null else location.value,
+                    contact = contactNumber.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -206,13 +206,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 currentEvent!!.id,
                 UpdateEventParams(
                     title = title.value ?: "",
-                    host = if(host.value=="") null else host.value,
+                    host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = if(contactNumber.value == "") null else contactNumber.value,
-                    location = if(location.value == "") null else location.value,
+                    contact = contactNumber.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -221,7 +221,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun uploadImage(){
-        if(imageUrl.value == ""){
+        if(imageUrl.value == "" || imageCheckBoxBoolean.value == true){
             imageUuid = imageUuidList[selectedItemPosition.value!!]
             return
         }
@@ -305,7 +305,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when{
             locationCheckBoxBoolean.value!! ->{
                 urlTmp = location.value
-                location.value = null
+                location.value = ""
             }
             !(locationCheckBoxBoolean.value!!) -> location.value = urlTmp
         }
@@ -356,7 +356,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when {
             contactNumberCheckBoxBoolean.value!! -> {
                 contactTmp = contactNumber.value
-                contactNumber.value = null
+                contactNumber.value = ""
             }
             !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
         }
@@ -366,7 +366,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when {
             hostCheckBoxBoolean.value!! -> {
                 hostTmp = host.value
-                host.value = null
+                host.value = ""
             }
             !(hostCheckBoxBoolean.value!!) -> host.value = hostTmp
         }

@@ -106,9 +106,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
-            locationNull.value = (it.location == null)
-            contactNull.value = (it.contact == null)
-            hostNull.value = (it.host == null)
+            locationNull.value = (it.location == "")
+            contactNull.value = (it.contact == "")
+            hostNull.value = (it.host == "")
             like.value = it.likes
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
@@ -116,7 +116,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알람 취소" else "알람 신청"} else "행사 마감"
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.drawable_btn_background
-            notificationSetFor.value = it.notificationSetFor ?: ""
+            notificationSetFor.value = it.notificationSetFor
             boardDateText.value = whenDay(it.endAt)
             likeOnOff.value = it.likedByMe
         }.catch {
