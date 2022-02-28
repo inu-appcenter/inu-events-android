@@ -1,10 +1,514 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.TempViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/purple_500">
+        android:layout_height="match_parent">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <org.inu.events.UniLetterToolbar
+                    android:id="@+id/toolbar_register1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:elevation="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@string/event_registration" />
+
+                <TextView
+                    android:id="@+id/textView_letter_registration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/text_letter_input"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar_register1" />
+
+                <TextView
+                    android:id="@+id/textView_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/register_horizontal_margin"
+                    android:text="@string/text_title"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_letter_registration" />
+
+                <EditText
+                    android:id="@+id/editText_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="4dp"
+                    android:autofillHints="no"
+                    android:background="@{viewModel.titleEditTextEmpty ? @drawable/drawable_edit_text_error_background : @drawable/drawable_edit_text_background}"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.title}"
+                    android:textColorHint="#66F1241A"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_title"
+                    tools:ignore="DuplicateSpeakableTextCheck" />
+
+                <TextView
+                    android:id="@+id/textView_host"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="@string/text_host"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_title" />
+
+                <TextView
+                    android:id="@+id/checkBox_host_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_empty"
+                    android:textColor="@color/black7"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_host"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox_host"
+                    app:layout_constraintTop_toTopOf="@+id/textView_host" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_host"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_checkbox"
+                    android:button="@null"
+                    android:checked="@={viewModel.hostCheckBoxBoolean}"
+                    android:onClick="@{() -> viewModel.onHostCheckBoxClick()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_host"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_host" />
+
+                <EditText
+                    android:id="@+id/editText_host"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:enabled="@{!viewModel.hostCheckBoxBoolean}"
+                    android:hint="@string/text_host_example"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.host}"
+                    android:textColorHint="@color/black20"
+                    android:textSize="16sp"
+                    app:layout_constraintDimensionRatio="H,1:0.1375"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_host" />
+
+
+                <TextView
+                    android:id="@+id/textView_classification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="@string/text_classification"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_host" />
+
+                <Spinner
+                    android:id="@+id/spinner_classification"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/spinner_background"
+                    android:entries="@array/classification"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:selectedItemPosition="@={viewModel.selectedItemPosition}"
+                    android:spinnerMode="dropdown"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_classification" />
+
+                <TextView
+                    android:id="@+id/textView_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="모집대상을 입력해주세요"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_classification" />
+
+                <EditText
+                    android:id="@+id/editText_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="4dp"
+                    android:background="@{viewModel.targetEditTextEmpty ? @drawable/drawable_edit_text_error_background : @drawable/drawable_edit_text_background}"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.target}"
+                    android:textColorHint="#66F1241A"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_target" />
+
+                <TextView
+                    android:id="@+id/textView_start_period"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="행사 시작을 입력해 주세요."
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_target" />
+
+                <TextView
+                    android:id="@+id/checkBox_start_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="시간선택 안함"
+                    android:textColor="@color/black7"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox_start"
+                    app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_start"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_checkbox"
+                    android:button="@null"
+                    android:checked="@={viewModel.timeCheckBoxBoolean}"
+                    android:onClick="@{() -> viewModel.onTimeCheckBoxClick()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
+
+                <TextView
+                    android:id="@+id/editText_start_date"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginStart="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:gravity="center"
+                    android:onClick="@{ () -> viewModel.onStartDateClick()}"
+                    android:paddingHorizontal="38dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.startDatePeriod}"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_start_period"
+                    tools:text="시작일 입력" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="8dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="26dp"
+                    android:background="@color/black7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_start_period" />
+
+                <TextView
+                    android:id="@+id/editText_start_time"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:gravity="center"
+                    android:onClick="@{ () -> viewModel.onStartTimeClick()}"
+                    android:paddingHorizontal="38dp"
+                    android:paddingVertical="12dp"
+                    android:enabled="@{!viewModel.timeCheckBoxBoolean}"
+                    android:text="@={viewModel.startTimePeriod}"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/view2"
+                    app:layout_constraintTop_toBottomOf="@id/textView_start_period"
+                    tools:text="시작시간 입력" />
+
+                <TextView
+                    android:id="@+id/textView_end_period"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="행사 마감을 입력해 주세요."
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/editText_start_date" />
+
+
+                <TextView
+                    android:id="@+id/checkBox_same_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/text_same"
+                    android:textColor="@color/black7"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox_same"
+                    app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_same"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_checkbox"
+                    android:button="@null"
+                    android:checked="@={viewModel.sameCheckBoxBoolean}"
+                    android:onClick="@{() -> viewModel.onSameCheckBoxClick()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_end_period"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_end_period" />
+
+
+                <TextView
+                    android:id="@+id/editText_end_date"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginStart="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:enabled="@{!viewModel.sameCheckBoxBoolean}"
+                    android:gravity="center"
+                    android:onClick="@{ () -> viewModel.onEndDateClick()}"
+                    android:paddingHorizontal="38dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.endDatePeriod}"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/view3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
+                    tools:text="마감일 입력" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="8dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@color/black7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_end_period" />
+
+                <TextView
+                    android:id="@+id/editText_end_time"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="@dimen/register_horizontal_margin"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:enabled="@{!viewModel.sameCheckBoxBoolean}"
+                    android:gravity="center"
+                    android:onClick="@{ () -> viewModel.onEndTimeClick()}"
+                    android:paddingHorizontal="38dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.endTimePeriod}"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/view3"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_end_period"
+                    tools:text="마감시간 클릭" />
+
+                <TextView
+                    android:id="@+id/textView_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="문의사항시 연락방법을 입력해주세요."
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_end_time" />
+
+                <TextView
+                    android:id="@+id/checkBox_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/text_empty"
+                    android:textColor="@color/black7"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                    app:layout_constraintTop_toTopOf="@+id/textView_contact" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_checkbox"
+                    android:button="@null"
+                    android:checked="@={viewModel.contactNumberCheckBoxBoolean}"
+                    android:onClick="@{() -> viewModel.onContactNumberCheckBoxClick()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_contact" />
+
+
+                <EditText
+                    android:id="@+id/editText_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:enabled="@{!viewModel.contactNumberCheckBoxBoolean}"
+                    android:hint="@string/text_input"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.ContactNumber}"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_contact" />
+
+                <TextView
+                    android:id="@+id/textView_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/register_horizontal_margin"
+                    android:layout_marginTop="@dimen/register_top_margin"
+                    android:text="@string/text_location"
+                    android:textColor="@color/black1"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText_contact" />
+
+                <TextView
+                    android:id="@+id/checkBox_text_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/text_empty"
+                    android:textColor="@color/black7"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_location"
+                    app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                    app:layout_constraintTop_toTopOf="@+id/textView_location" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_location"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_checkbox"
+                    android:button="@null"
+                    android:checked="@={viewModel.locationCheckBoxBoolean}"
+                    android:onClick="@{() -> viewModel.onLocationCheckBoxClick()}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_location" />
+
+                <EditText
+                    android:id="@+id/editText_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/exitText_height"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/drawable_edit_text_background"
+                    android:enabled="@{!viewModel.locationCheckBoxBoolean}"
+                    android:hint="@string/text_input"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="12dp"
+                    android:text="@={viewModel.location}"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_location" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
