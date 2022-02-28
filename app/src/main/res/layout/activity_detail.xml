@@ -38,7 +38,7 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    imageFromUuid="@{detailViewModel.imageUrl}"
+                    imageFromUuid="@{detailViewModel.imageUuid}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"

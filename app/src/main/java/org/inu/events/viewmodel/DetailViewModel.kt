@@ -34,7 +34,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
-    var imageUrl = MutableLiveData("")
+    var imageUuid = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
@@ -112,7 +112,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             endDate.value = dateFormat(it.endAt)
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
-            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
+            imageUuid.value = it.imageUuid
             locationNull.value = (it.location == null)
             contactNull.value = (it.contact == null)
             hostNull.value = (it.host == null)

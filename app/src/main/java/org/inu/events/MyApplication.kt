@@ -1,8 +1,6 @@
 package org.inu.events
 
 import android.app.Application
-import android.util.Log
-import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -10,7 +8,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import org.inu.events.di.myModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -18,6 +15,25 @@ import org.koin.core.context.startKoin
 
 class MyApplication : Application() {
     companion object {
+        @BindingAdapter("imageFromUrl")
+        @JvmStatic
+        fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
+            if(imageUrl?.trim()?.isBlank() != false) {
+                Glide.with(view.context)
+                    .load(R.drawable.img_default)
+                    .error(R.drawable.img_default)
+                    .placeholder(R.drawable.img_default)
+                    .into(view)
+                return
+            }
+
+            Glide.with(view.context)
+                .load(imageUrl)
+                .error(R.drawable.img_default)
+                .placeholder(R.drawable.img_default)
+                .into(view)
+        }
+
         @BindingAdapter("imageFromUuid")
         @JvmStatic
         fun bindImageFromUuid(view: ImageView, imageUuid: String?) {
