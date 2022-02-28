@@ -10,5 +10,5 @@ data class UpdateEventParams(
     val contact: String?,
     val location: String?,
     val body: String,
-    val imageUuid: String?,
+    val imageUuid: String?
 )
