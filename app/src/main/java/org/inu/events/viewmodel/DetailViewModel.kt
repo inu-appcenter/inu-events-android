@@ -41,6 +41,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
     val notificationOnOff = MutableLiveData(false)
+    val like = MutableLiveData(0)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
 
@@ -108,6 +109,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             locationNull.value = (it.location == null)
             contactNull.value = (it.contact == null)
             hostNull.value = (it.host == null)
+            like.value = it.likes
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
@@ -179,7 +181,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             likeRepository.postLike(
                 LikeParam(eventId = eventIndex)
             )
-        }.then {
+        }.then { like.value = like.value!! + 1
         }.catch {  }
     }
 
@@ -188,7 +190,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             likeRepository.deleteLike(
                 LikeParam(eventId = eventIndex)
             )
-        }.then {
+        }.then { like.value = like.value!! - 1
         }.catch {  }
     }
 

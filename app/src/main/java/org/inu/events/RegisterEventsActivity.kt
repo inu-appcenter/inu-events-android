@@ -16,7 +16,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
@@ -47,6 +49,22 @@ class RegisterEventsActivity : AppCompatActivity() {
         }?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
+    private val titleTextWatcher = object: TextWatcher{
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.titleEditTextEmpty.value = s.toString().isEmpty()
+        }
+        override fun afterTextChanged(s: Editable?) { }
+    }
+    private val targetTextWatcher = object: TextWatcher{
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            viewModel.targetEditTextEmpty.value = s.toString().isEmpty()
+        }
+        override fun afterTextChanged(s: Editable?) { }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,8 +87,16 @@ class RegisterEventsActivity : AppCompatActivity() {
             this
         ) {
             if(viewModel.isRequiredInformationEntered()) finish()
-            else Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+            else{
+                Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+                setUpTextWatcher()
+            }
         }
+    }
+
+    private fun setUpTextWatcher() {
+        binding.editTextTitle.addTextChangedListener(titleTextWatcher)
+        binding.editTextTarget.addTextChangedListener(targetTextWatcher)
     }
 
     private fun initBinding() {

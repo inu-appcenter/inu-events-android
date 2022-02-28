@@ -271,14 +271,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         finishEvent.call()
     }
 
-    fun onTitleEditTextClick(){
-        titleEditTextEmpty.value = false
-    }
-
-    fun onTargetEditTextClick(){
-        targetEditTextEmpty.value = false
-    }
-
     private fun isNoTime() {
         if(startTimePeriod.value == "시간선택 X"){
             startTimePeriod.value = "00:00 AM"
@@ -286,6 +278,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(endTimePeriod.value == "시간선택 X"){
             endTimePeriod.value = "11:59 PM"
         }
+    }
+
+    fun isRequiredInformationEntered() = when{
+        title.value!!.isEmpty() -> false
+        target.value!!.isEmpty() -> false
+        else -> true
     }
 
     fun onStartDateClick() {
@@ -390,12 +388,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     fun setEndTime(date: Date) {
         endTimePeriod.value = formatTime(date)
     }
-
-    fun isRequiredInformationEntered() = when{
-            title.value!!.isEmpty() -> false
-            target.value!!.isEmpty() -> false
-            else -> true
-        }
 
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
         .format(date)
