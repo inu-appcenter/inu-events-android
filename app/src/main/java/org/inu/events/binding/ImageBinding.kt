@@ -29,11 +29,3 @@ fun bindImage(view: ImageView, imageUuid: String?) {
 fun setPhoto(view: ImageView, imageUrl: String?) {
     GlideUtil.loadWithUrl(view, imageUrl, R.drawable.ic_default_photo)
 }
-
-@BindingAdapter("layoutMarginBottom")
-fun setLayoutMarginBottom(view: View, dimen: Float) {
-    (view.layoutParams as ViewGroup.MarginLayoutParams).let {
-        it.bottomMargin = dimen.toInt()
-        view.layoutParams = it
-    }
-}
