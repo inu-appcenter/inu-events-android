@@ -45,7 +45,7 @@
                     android:paddingVertical="24dp"
                     android:scaleType="centerCrop"
                     imageFromUrl="@{detailViewModel.imageUrl}"
-                    tools:src="@drawable/img_appcenter" />
+                    tools:src="@drawable/img_default" />
 
                 <View
                     android:layout_width="match_parent"

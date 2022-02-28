@@ -50,7 +50,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener{
         
-        var checkDeadline: Boolean = false
+        private var checkDeadline: Boolean = false
 
         init {
             itemView.setOnClickListener(this)
