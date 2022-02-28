@@ -195,7 +195,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
     }
 
     private fun updateEvent() {
@@ -216,7 +217,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
     }
 
     private fun uploadImage(){
@@ -270,7 +272,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             titleEditTextEmpty.value = title.value.isNullOrBlank()
             targetEditTextEmpty.value = target.value.isNullOrBlank()
         }
-        finishEvent.call()
     }
 
     private fun isNoTime() {
