@@ -73,10 +73,13 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         private fun whenDay(end_at: String?): String {
             if (end_at == null) return "D-??"
 
-            val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
-            val today = LocalDate.now()
+            var dDay = 0
 
-            val dDay = Period.between(today, endDate).days
+            execute {
+                val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
+                val today = LocalDate.now()
+                dDay = Period.between(today, endDate).days
+            }.then {  }.catch {  }
 
             if (dDay < 0) {
                 checkDeadline = true
