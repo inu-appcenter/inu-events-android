@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.color.MaterialColors.getColor
 import org.inu.events.DetailActivity
-import org.inu.events.MyApplication.Companion.bindImageFromUrl
 import org.inu.events.R
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
