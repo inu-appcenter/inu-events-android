@@ -18,38 +18,14 @@ class MyApplication : Application() {
         @BindingAdapter("imageFromUrl")
         @JvmStatic
         fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-            if(imageUrl?.trim()?.isBlank() != false) {
-                Glide.with(view.context)
-                    .load(R.drawable.img_default)
-                    .error(R.drawable.img_default)
-                    .placeholder(R.drawable.img_default)
-                    .into(view)
-                return
-            }
-
-            Glide.with(view.context)
-                .load(imageUrl)
-                .error(R.drawable.img_default)
-                .placeholder(R.drawable.img_default)
-                .into(view)
+            loadWithUrl(view, imageUrl)
         }
 
         @BindingAdapter("imageFromUuid")
         @JvmStatic
         fun bindImageFromUuid(view: ImageView, imageUuid: String?) {
-
-            if(imageUuid?.trim()?.isBlank() != false) {
-                Glide.with(view.context)
-                    .load(R.drawable.img_default)
-                    .error(R.drawable.img_default)
-                    .placeholder(R.drawable.img_default)
-                    .into(view)
-                return
-            }
-
-            loadWithGlide(view, imageUuid)
+            loadWithUuid(view, imageUuid)
         }
-
 
         @BindingAdapter("bindImageRadius4")
         @JvmStatic
@@ -57,13 +33,18 @@ class MyApplication : Application() {
             val displayMetrics = view.context.resources.displayMetrics
             val radiusWithPixel = (displayMetrics.density * 4).toInt()
 
-            loadWithGlide(view, imageUuid, radiusWithPixel)
+            loadWithUuid(view, imageUuid, radiusWithPixel)
         }
 
         @BindingAdapter("app:photo_uuid")
         @JvmStatic
         fun setPhoto(view: ImageView, imageUrl: String?) {
-            loadWithGlide(view, imageUrl)
+            Glide.with(view.context)
+                .load(imageUrl)
+                .transform(CenterCrop())
+                .error(R.drawable.ic_default_photo)
+                .placeholder(R.drawable.ic_default_photo)
+                .into(view)
         }
 
         @BindingAdapter("layoutMarginBottom")
@@ -75,8 +56,28 @@ class MyApplication : Application() {
             }
         }
 
-        private fun loadWithGlide(view: ImageView, imageUuid: String?, radiusWithPixel: Int = 0) {
+        private fun loadWithUuid(view: ImageView, imageUuid: String?, radiusWithPixel: Int = 0) {
+            if(imageUuid?.trim()?.isBlank() != false) {
+                Glide.with(view.context)
+                    .load(R.drawable.img_default)
+                    .error(R.drawable.img_default)
+                    .placeholder(R.drawable.img_default)
+                    .into(view)
+                return
+            }
+
             val imageUrl = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+
+            loadWithUrl(view, imageUrl, radiusWithPixel)
+        }
+
+        private fun loadWithUrl(view: ImageView, imageUrl: String?, radiusWithPixel: Int = 0) {
+            if(imageUrl?.trim()?.isBlank() != false) {
+                Glide.with(view.context)
+                    .load(R.drawable.img_default)
+                    .into(view)
+                return
+            }
 
             if(radiusWithPixel != 0) {
                 Glide.with(view.context)
