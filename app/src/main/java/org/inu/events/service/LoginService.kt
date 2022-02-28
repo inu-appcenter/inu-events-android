@@ -64,6 +64,7 @@ class LoginService(
     fun logout() {
         OkHttpClientFactory.clearCookie()
         accountRepository.clearAccount()
+        _isLoggedIn.postValue(false)
     }
 
     private fun postToken(){
