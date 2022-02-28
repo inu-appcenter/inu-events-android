@@ -1,6 +1,7 @@
 package org.inu.events
 
 import android.app.Application
+import android.util.Log
 import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
@@ -20,17 +21,31 @@ class MyApplication : Application() {
         @BindingAdapter("imageFromUrl")
         @JvmStatic
         fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
-            if (!imageUrl.isNullOrEmpty()) {
+            Glide.with(view.context)
+                .load(imageUrl)
+                .error(R.drawable.img_default)
+                .placeholder(R.drawable.img_default)
+                .into(view)
+        }
+
+        @BindingAdapter("imageFromUuid")
+        @JvmStatic
+        fun bindImageFromUuid(view: ImageView, imageUuid: String?) {
+            if(imageUuid?.trim()?.isBlank() != false) {
                 Glide.with(view.context)
-                    .load(imageUrl)
+                    .load(R.drawable.img_default)
                     .error(R.drawable.img_default)
                     .placeholder(R.drawable.img_default)
                     .into(view)
-            } else {
-                Glide.with(view.context)
-                    .load(imageUrl)
-                    .into(view)
+                return
             }
+
+            val imageUrl = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+            Glide.with(view.context)
+                .load(imageUrl)
+                .error(R.drawable.img_default)
+                .placeholder(R.drawable.img_default)
+                .into(view)
         }
 
 
