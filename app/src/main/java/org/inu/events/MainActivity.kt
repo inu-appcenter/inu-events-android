@@ -30,12 +30,8 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         initBinding()
         setupButtons()
         tryAutoLogin()
-        setUpSwipeRefresh()
-    }
-
-    override fun onResume() {
-        super.onResume()
         setupRecyclerView()
+        setUpSwipeRefresh()
     }
 
     private fun initBinding() {

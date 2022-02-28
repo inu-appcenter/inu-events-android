@@ -30,7 +30,7 @@
                 android:id="@+id/toolbar_ImageView"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_left"
+                android:src="@drawable/ic_arrow_left"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:onClick="@{()->viewModel.onClickLike()}"
                 android:src="@{viewModel.likeOnOff ? @drawable/ic_like_on : @drawable/ic_like_off}"
                 tools:ignore="ContentDescription"
-                tools:src="@drawable/img_like_off" />
+                tools:src="@drawable/ic_like_on" />
 
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>

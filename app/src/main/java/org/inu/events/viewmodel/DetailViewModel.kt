@@ -92,7 +92,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             deadLine.value = true
             return "마감"
         }
-        return "D-$dDay"
+        return "D-${if(dDay == 0) "day" else dDay}"
     }
 
     //현재 표시할 게시물의 데이터를 가져옴

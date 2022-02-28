@@ -50,7 +50,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener{
         
-        var checkDeadline: Boolean = false
+        private var checkDeadline: Boolean = false
 
         init {
             itemView.setOnClickListener(this)
@@ -58,8 +58,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         fun bind(homeData: Event) {
             binding.homeData = homeData
             binding.boardDate.text = whenDay(homeData.endAt)
-            binding.boardDate.background =
-                ContextCompat.getDrawable(binding.root.context, isDeadline())
+            binding.boardDate.backgroundTintList = when(checkDeadline){
+                true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
+                else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
+            }
         }
 
         override fun onClick(v: View) {
@@ -71,22 +73,19 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
         private fun whenDay(end_at: String?): String {
             if (end_at == null) return "D-??"
 
-            val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
-            val today = LocalDate.now()
+            var dDay = 0
 
-            val dDay = Period.between(today, endDate).days
+            execute {
+                val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
+                val today = LocalDate.now()
+                dDay = Period.between(today, endDate).days
+            }.then {  }.catch {  }
 
             if (dDay < 0) {
                 checkDeadline = true
                 return "마감"
             }
-            return "D-$dDay"
-        }
-
-        private fun isDeadline(): Int = if (checkDeadline) {
-            R.drawable.drawable_home_board_date_deadline_background
-        } else {
-            R.drawable.drawable_home_board_date_ongoing_background
+            return "D-${if(dDay == 0) "day" else dDay}"
         }
     }
 }
