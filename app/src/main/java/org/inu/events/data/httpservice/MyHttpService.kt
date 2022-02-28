@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface MyHttpService {
-    @GET("/mycomments")
+    @GET("/events-ive-commented")
     fun getComments(): Call<List<Event>>
 
     @GET("/myevents")

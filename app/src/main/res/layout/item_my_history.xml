@@ -75,6 +75,7 @@
             app:layout_constraintBottom_toBottomOf="@id/poster"
             app:layout_constraintStart_toStartOf="@id/content"
             tools:text="댓글 6"
+            android:text='@{"댓글 " + item.comments}'
             android:textSize="13sp"
             android:textColor="@color/black40"/>
 
