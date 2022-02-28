@@ -46,6 +46,7 @@ class RegisterEventsActivity : AppCompatActivity() {
             val uriPathHelper = URIPathHelper()
             val filePath = uriPathHelper.getPath(this, uri)
             viewModel.imageUrl.value = filePath
+            viewModel.updateImage()
         }?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 

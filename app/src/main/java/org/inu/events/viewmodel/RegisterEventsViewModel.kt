@@ -180,7 +180,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun addEvent() {
         execute {
-            uploadImage()
+            //uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
@@ -195,12 +195,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
     }
 
     private fun updateEvent() {
         execute {
-            uploadImage()
+            //uploadImage()
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
@@ -216,13 +217,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
     }
 
     private fun uploadImage(){
         when{
             (imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
-            (imageCheckBoxBoolean.value == false && imageUuid !in imageUuidList) -> return
             (imageCheckBoxBoolean.value == false) ->{
                 val file = File(imageUrl.value.toString())
                 val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
@@ -238,6 +239,12 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     fun onImageButtonClick() {
         startGalleryClickEvent.call()
+    }
+
+    fun updateImage(){
+        execute {
+            uploadImage()
+        }.catch {  }.then {  }
     }
 
     fun onNextClick() {
@@ -265,7 +272,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             titleEditTextEmpty.value = title.value.isNullOrBlank()
             targetEditTextEmpty.value = target.value.isNullOrBlank()
         }
-        finishEvent.call()
     }
 
     private fun isNoTime() {

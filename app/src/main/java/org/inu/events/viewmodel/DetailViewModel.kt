@@ -20,6 +20,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
@@ -34,7 +35,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
 
-    var imageUuid = MutableLiveData("")
+    var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
@@ -69,15 +70,13 @@ class DetailViewModel : ViewModel(), KoinComponent {
         loadDetailData()
     }
 
-    private fun dateFormat(date:String) = "%s.%s.%s".format(date.slice(IntRange(0,3)),date.slice(IntRange(5,6)),date.slice(IntRange(8,9)))
-    private fun timeFormat(time:String): String{
-        val hour = time.slice(IntRange(11,12))
-        val minute = time.slice(IntRange(14,15))
-        return "%s:%s %s".format(
-            if (hour.toInt() > 12) (hour.toInt() - 12).toString() else hour,
-            minute,
-            if (hour.toInt() > 12) "PM" else "AM"
-        )
+    private fun serverDateToString(date: String): String{
+        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    }
+    private fun serverTimeToString(time: String): String{
+        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
     }
 
     private fun whenDay(end_at: String?): String {
@@ -108,11 +107,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
             eventRepository.getEvent(eventIndex)
         }.then {
             _currentEvent.value = it
-            startDate.value = dateFormat(it.startAt)
-            endDate.value = dateFormat(it.endAt)
-            startTime.value = timeFormat(it.startAt)
-            endTime.value = timeFormat(it.endAt)
-            imageUuid.value = it.imageUuid
+            startDate.value = serverDateToString(it.startAt)
+            endDate.value = serverDateToString(it.endAt)
+            startTime.value = serverTimeToString(it.startAt)
+            endTime.value = serverTimeToString(it.endAt)
+            imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
             locationNull.value = (it.location == null)
             contactNull.value = (it.contact == null)
             hostNull.value = (it.host == null)

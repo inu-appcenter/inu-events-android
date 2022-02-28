@@ -1,5 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    /** THE VERSION NAME! */
+    ext.version_name = '1.0.0'
+
     repositories {
         google()
         mavenCentral()
@@ -15,6 +18,20 @@ buildscript {
     }
 }
 
+allprojects {
+    // These should be applied to all modules in this project.
+    project.ext.set("versionCode", getRevisionCount())
+    project.ext.set("versionName", version_name)
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+/**
+ * We will use the git revision count as a version code.
+ * @return the git revision count, integer.
+ */
+static def getRevisionCount() {
+    return Integer.parseInt('git rev-list --count HEAD'.execute().text.trim())
 }

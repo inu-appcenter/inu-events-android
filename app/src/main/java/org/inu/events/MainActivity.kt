@@ -37,6 +37,13 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         isFromDetail()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.load()
+
+    }
+
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
