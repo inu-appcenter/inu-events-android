@@ -1,8 +1,8 @@
 package org.inu.events
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
+import org.inu.events.adapter.HistoryAdapter
+import org.inu.events.adapter.LikeAdapter
 import org.inu.events.base.BaseActivity
 import org.inu.events.databinding.ActivityMyHistoryBinding
 import org.inu.events.viewmodel.MyHistoryViewModel
@@ -17,7 +17,12 @@ class MyHistoryActivity : BaseActivity<ActivityMyHistoryBinding>() {
     }
 
     override fun afterDataBinding() {
-        viewModel.onClickBackEvent.observe(this) {
+        binding.events.adapter = HistoryAdapter(viewModel)
+
+        val isEvent = intent.getBooleanExtra("isEvent", true)
+        viewModel.setTitle(isEvent)
+        viewModel.loadEvents(isEvent)
+        binding.toolbar.setOnBackListener {
             finish()
         }
     }

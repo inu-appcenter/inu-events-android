@@ -30,5 +30,9 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
         viewModel.finishEvent.observe(this) {
             finish()
         }
+
+        binding.toolbar.setOnBackListener {
+            finish()
+        }
     }
 }

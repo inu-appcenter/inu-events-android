@@ -7,10 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.inu.events.BackButtonListener
 import org.inu.events.DetailActivity
 import org.inu.events.dialog.TwoButtonDialog
-import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.NotificationRepository
@@ -21,13 +19,6 @@ class NotificationViewModel : ViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
 
     val notificationList = MutableLiveData<List<Event>>()
-    val onClickBackEvent = SingleLiveEvent<Any>()
-
-    val backButtonListener = object : BackButtonListener {
-        override fun invoke(view: View) {
-            onClickBackEvent.call()
-        }
-    }
 
     fun loadNotificationEvents() {
         CoroutineScope(Dispatchers.Main).launch {

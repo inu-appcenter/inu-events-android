@@ -16,15 +16,21 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>() {
     override fun dataBinding() {
         super.dataBinding()
         binding.viewModel = viewModel
-
-        viewModel.onClickBackEvent.observe(this) {
-            finish()
-        }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.fetchData()
         binding.executePendingBindings()
+    }
+
+    override fun afterDataBinding() {
+        binding.toolbar.setOnBackListener {
+            finish()
+        }
+
+        viewModel.loginEvent.observe(this) {
+            finish()
+        }
     }
 }

@@ -60,7 +60,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="27.4dp"
                 android:onClick="@{()->viewModel.onClickLike()}"
-                app:imageResource="@{viewModel.likeButtonSource}"
+                android:src="@{viewModel.likeOnOff ? @drawable/ic_like_on : @drawable/ic_like_off}"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/img_like_off" />
 

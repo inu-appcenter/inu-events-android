@@ -16,25 +16,22 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.inu.events.MainActivity
 import org.inu.events.R
-import org.inu.events.data.repository.NotificationRepository
-import org.koin.android.ext.android.inject
+import org.inu.events.common.db.SharedPreferenceWrapper
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MyFirebaseMessagingService:  FirebaseMessagingService(){
-    private val notificationRepository: NotificationRepository by inject()
+class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
+    val context : Context by inject()
+    private val db = SharedPreferenceWrapper(context)
 
     override fun onNewToken(p0: String) {
-        Log.d("FCM TOKEN : ", p0)
+        Log.i("FCM TOKEN : ", p0)
 
-        // todo 로그인 유무 확인후 token 값 서버로 전달
-//        sendFcmToken(p0)
+        db.putString("fcmToken",p0)
+
         super.onNewToken(p0)
     }
 
-//    private fun sendFcmToken(fcmToken:String){
-//        notificationRepository.postFcmToken(
-//            fcmToken
-//        )
-//    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -75,17 +72,15 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(){
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            channel.description = CHANNEL_DESCRIPTION
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
-                channel
-            )
-        }
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        channel.description = CHANNEL_DESCRIPTION
+        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
+            channel
+        )
     }
 
     companion object {

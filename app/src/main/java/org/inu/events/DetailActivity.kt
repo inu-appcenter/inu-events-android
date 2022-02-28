@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import org.inu.events.common.extension.getIntExtra
-import org.inu.events.common.extension.observe
-import org.inu.events.common.extension.observeNonNull
-import org.inu.events.common.extension.toast
+import org.inu.events.common.extension.*
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.BottomSheetDialog
@@ -80,9 +77,9 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
                     when(it) {
                         0 -> toast("마감된 행사입니다!")
                         1 -> bottomDialogOneButton.show(this,{      // 시작 전 알림만
-                                viewModel.postNotification("start")},{})
+                                viewModel.postNotification("start")},{},"시작 전 알림")
                         2 -> bottomDialogOneButton.show(this,{      // 마감 전 알림만
-                                viewModel.postNotification("end")},{})
+                                viewModel.postNotification("end")},{},"마감 전 알림")
                         3 -> bottomDialog.show(this,    // 시작 전, 마감 전 알림 모두 뜨게
                             { viewModel.postNotification("start")
                                 alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
@@ -171,7 +168,7 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
         viewModel.load(id)
     }
 
-    //private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
+//    private fun isMyWriting() = getBooleanExtra(MY_WROTE) ?: false
 
     //개발할 땐 불편하니까 일단 true 로 설정할게요~ 위에있는 코드가 진짜입니당!
     private fun isMyWriting() = true

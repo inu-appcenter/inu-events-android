@@ -47,4 +47,9 @@ class AccountRepositoryImpl(
         db.putInt("id", account.id)
         db.putString("rememberMeToken", account.rememberMeToken)
     }
+
+    override fun clearAccount() {
+        db.putInt("id", -1)
+        db.putString("rememberMeToken", null)
+    }
 }

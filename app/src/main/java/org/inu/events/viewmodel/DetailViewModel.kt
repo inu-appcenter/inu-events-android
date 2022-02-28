@@ -19,7 +19,8 @@ import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
+import java.time.*
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
@@ -42,13 +43,11 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val notificationOnOff = MutableLiveData(false)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
-    val likeButtonSource = MutableLiveData(R.drawable.img_like_off)
 
     var eventIndex = -1
         private set
     var eventWroteByMeBoolean = false
         private set
-    var checkDeadline: Boolean = false
 
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
@@ -58,11 +57,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
     val locationNull = MutableLiveData(false)
     val contactNull = MutableLiveData(false)
-    val bothNull = MutableLiveData(false)
-    val commentSize = MutableLiveData("")
-    val boardDateText = MutableLiveData("")
-    val boardDateBackground = MutableLiveData<Int>(R.color.white)
+    val hostNull = MutableLiveData(false)
+    val boardDateText = MutableLiveData("D-??")
     var notificationQuarter = MutableLiveData(-1)   // 알림이 어떻게 표시되어야 하는지 구분 하기위한 변수
+    val deadLine = MutableLiveData(false)
 
 
     fun load(eventId: Int) {
@@ -84,29 +82,16 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private fun whenDay(end_at: String?): String {
         if (end_at == null) return "D-??"
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val endDate = LocalDateTime.parse(end_at, DateTimeFormatter.ISO_OFFSET_DATE_TIME).toLocalDate()
+        val today = LocalDate.now()
 
-        val endDate = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
-
-        var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
+        val dDay = Period.between(today, endDate).days
 
         if (dDay < 0) {
-            checkDeadline = true
+            deadLine.value = true
             return "마감"
         }
         return "D-$dDay"
-    }
-
-    private fun isDeadline(): Int = if (checkDeadline) {
-        R.drawable.drawable_home_board_date_deadline_background
-    } else {
-        R.drawable.drawable_home_board_date_ongoing_background
     }
 
     //현재 표시할 게시물의 데이터를 가져옴
@@ -120,19 +105,18 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
-            if(it.location == null) locationNull.value = true
-            if(it.contact == null)contactNull.value = true
+            locationNull.value = (it.location == null)
+            contactNull.value = (it.contact == null)
+            hostNull.value = (it.host == null)
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
-            likeOnOff.value = it.likedByMe ?: false
             notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알람 취소" else "알람 신청"} else "행사 마감"
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.drawable_btn_background
             notificationSetFor.value = it.notificationSetFor ?: ""
-            likeButtonSource.value = if (likeOnOff.value == true)  R.drawable.img_like_on else R.drawable.img_like_off
             boardDateText.value = whenDay(it.endAt)
-            boardDateBackground.value = isDeadline()
+            likeOnOff.value = it.likedByMe
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
         }
@@ -160,10 +144,8 @@ class DetailViewModel : ViewModel(), KoinComponent {
         if (loginService.isLoggedIn) {
             if (likeOnOff.value == true) {
                 deleteLike()
-                likeButtonSource.value = R.drawable.img_like_off
             } else {
                 postLike()
-                likeButtonSource.value = R.drawable.img_like_on
             }
             likeOnOff.value = likeOnOff.value != true
         }

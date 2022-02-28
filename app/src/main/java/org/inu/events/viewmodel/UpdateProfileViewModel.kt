@@ -1,15 +1,11 @@
 package org.inu.events.viewmodel
 
-import android.content.Intent
-import android.media.Image
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import org.inu.events.BackButtonListener
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.UpdateUserParams
 import org.inu.events.data.model.entity.User
@@ -23,12 +19,6 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     val user = MutableLiveData<User>()
     val updatePhotoEvent = SingleLiveEvent<Any>()
-    val onClickBackEvent = SingleLiveEvent<Any>()
-    val backButtonListener = object : BackButtonListener {
-        override fun invoke(view: View) {
-            onClickBackEvent.call()
-        }
-    }
 
     init {
         CoroutineScope(Dispatchers.Main).launch {
@@ -41,7 +31,7 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     val errorMessage = MutableLiveData<String>()
     val finishEvent = SingleLiveEvent<Any>()
 
-    fun validateNickname() : Boolean {
+    fun validateNickname(): Boolean {
         errorMessage.value = when {
             inputText.value!!.isEmpty() -> "공백은 닉네임으로 설정하실 수 없습니다."
             isDuplicate() -> "중복된 닉네임입니다."
@@ -52,11 +42,11 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
         return errorMessage.value!!.isEmpty()
     }
 
-    private fun isDuplicate() : Boolean {
+    private fun isDuplicate(): Boolean {
         return false
     }
 
-    private fun isSuitableLength() : Boolean {
+    private fun isSuitableLength(): Boolean {
         return inputText.value!!.length <= 8
     }
 
