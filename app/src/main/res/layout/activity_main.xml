@@ -50,7 +50,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:spanCount="2" />
+                        app:spanCount="2"
+                        tools:listitem="@layout/home_recyclerview_item"
+                        android:paddingBottom="48dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
