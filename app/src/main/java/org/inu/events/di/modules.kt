@@ -59,6 +59,10 @@ val myModules = module {
         buildRetrofitService()
     }
 
+    single<FcmHttpService>{
+        buildRetrofitService()
+    }
+
 
     single<EventRepository> {
 //        EventRepositoryMock()
@@ -88,6 +92,10 @@ val myModules = module {
 
     single<SubscriptionRepository>{
         SubscriptionRepositoryImpl(httpService = get())
+    }
+
+    single<FcmRepository>{
+        FcmRepositoryImpl(httpService = get())
     }
 
     single<AccountRepository> {
