@@ -36,10 +36,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
-    val host = MutableLiveData("")
+    val host = MutableLiveData<String?>()
     val target = MutableLiveData("")
-    val location = MutableLiveData("")
-    val contactNumber = MutableLiveData("")
+    val location = MutableLiveData<String?>()
+    val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
     val timeCheckBoxBoolean = MutableLiveData(false)
@@ -118,7 +118,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             target.value = it.target
             contactNumber.value = it.contact
             location.value = it.location
-            imageUuid = currentEvent?.imageUuid
+            imageUuid = it.imageUuid
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
@@ -128,13 +128,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadCheckBoxState() {
-        if(currentEvent?.host == ""){
+        if(currentEvent?.host == null){
             hostCheckBoxBoolean.value = true
         }
-        if(currentEvent?.location == ""){
+        if(currentEvent?.location == null){
             locationCheckBoxBoolean.value = true
         }
-        if(currentEvent?.contact == ""){
+        if(currentEvent?.contact == null){
             contactNumberCheckBoxBoolean.value = true
         }
         if(currentEvent?.startAt!!.slice(IntRange(11,15))=="00:00"
@@ -151,8 +151,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadImage() {
-        if(imageUrl.value == "")
-            imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+        imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
@@ -221,16 +220,15 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun uploadImage(){
-        if(imageUrl.value == "" || imageCheckBoxBoolean.value == true){
-            imageUuid = imageUuidList[selectedItemPosition.value!!]
-            return
-        }
-        if(imageCheckBoxBoolean.value == false){
-            val file = File(imageUrl.value.toString())
-            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-            imageUuid = eventRepository.uploadImage(image).uuid
-            return
+        when{
+            (imageUrl.value == "" || imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
+            (imageUrl.value != "") ->return
+            (imageCheckBoxBoolean.value == false) ->{
+                val file = File(imageUrl.value.toString())
+                val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+                val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                imageUuid = eventRepository.uploadImage(image).uuid
+            }
         }
     }
 
@@ -305,7 +303,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when{
             locationCheckBoxBoolean.value!! ->{
                 urlTmp = location.value
-                location.value = ""
+                location.value = null
             }
             !(locationCheckBoxBoolean.value!!) -> location.value = urlTmp
         }
@@ -356,7 +354,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when {
             contactNumberCheckBoxBoolean.value!! -> {
                 contactTmp = contactNumber.value
-                contactNumber.value = ""
+                contactNumber.value = null
             }
             !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
         }
@@ -366,7 +364,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         when {
             hostCheckBoxBoolean.value!! -> {
                 hostTmp = host.value
-                host.value = ""
+                host.value = null
             }
             !(hostCheckBoxBoolean.value!!) -> host.value = hostTmp
         }

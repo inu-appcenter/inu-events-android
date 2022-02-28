@@ -106,9 +106,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             startTime.value = timeFormat(it.startAt)
             endTime.value = timeFormat(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
-            locationNull.value = (it.location == "")
-            contactNull.value = (it.contact == "")
-            hostNull.value = (it.host == "")
+            locationNull.value = (it.location == null)
+            contactNull.value = (it.contact == null)
+            hostNull.value = (it.host == null)
             like.value = it.likes
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
