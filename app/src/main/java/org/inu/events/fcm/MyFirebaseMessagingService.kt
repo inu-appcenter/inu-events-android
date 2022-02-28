@@ -1,6 +1,5 @@
 package org.inu.events.fcm
 
-import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -37,15 +36,14 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
 
         createNotificationChannel()
 
-        val title = remoteMessage.data["title"]
-        val message = remoteMessage.data["body"]
+        val title = remoteMessage.notification!!.title
+        val message = remoteMessage.notification!!.body
 
 
         NotificationManagerCompat.from(this)
             .notify((System.currentTimeMillis()/100).toInt(),createNotification(title, message))
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
     private fun createNotification(
         title: String?,
         message: String?
@@ -54,7 +52,7 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
         val pendingIntent = PendingIntent.getActivity(this,(System.currentTimeMillis()/100).toInt(),intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         // todo 알람 디자인 나오면 수정
@@ -83,8 +81,8 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
     }
 
     companion object {
-        private const val CHANNEL_NAME = "Inu Events"
-        private const val CHANNEL_DESCRIPTION = "Inu Events 를 위한 채널"
+        private const val CHANNEL_NAME = "Uni Letter"
+        private const val CHANNEL_DESCRIPTION = "Uni Letter 를 위한 채널"
         private const val CHANNEL_ID = "Channel Id"
     }
 }
