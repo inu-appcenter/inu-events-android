@@ -11,7 +11,7 @@ import org.inu.events.R
 
 class BottomSheetDialogOneButton {
 
-    fun show(context: Context, onOne: () -> Unit, onCancel: () -> Unit) {
+    fun show(context: Context, onOne: () -> Unit, onCancel: () -> Unit, onText:String) {
         val inflater: LayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val customLayout = inflater.inflate(R.layout.bottom_sheet_dialog_one, null)
@@ -30,7 +30,9 @@ class BottomSheetDialogOneButton {
             show()
         }
 
-        val btnOne = customLayout.findViewById<AppCompatButton>(R.id.oneButton)
+        val btnOne = customLayout.findViewById<AppCompatButton>(R.id.oneButton).apply {
+            text = onText
+        }
         btnOne.setOnClickListener {
             onOne()
             dialog.dismiss()

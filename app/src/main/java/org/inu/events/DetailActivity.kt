@@ -77,9 +77,9 @@ class DetailActivity : AppCompatActivity(),LoginDialog.LoginDialog {
                     when(it) {
                         0 -> toast("마감된 행사입니다!")
                         1 -> bottomDialogOneButton.show(this,{      // 시작 전 알림만
-                                viewModel.postNotification("start")},{})
+                                viewModel.postNotification("start")},{},"시작 전 알림")
                         2 -> bottomDialogOneButton.show(this,{      // 마감 전 알림만
-                                viewModel.postNotification("end")},{})
+                                viewModel.postNotification("end")},{},"마감 전 알림")
                         3 -> bottomDialog.show(this,    // 시작 전, 마감 전 알림 모두 뜨게
                             { viewModel.postNotification("start")
                                 alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_start), resources.getString(R.string.alarm_on_content_start))
