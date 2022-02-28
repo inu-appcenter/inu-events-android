@@ -4,6 +4,5 @@ import org.inu.events.base.WebViewOnlyActivity
 
 class OpenSourceLicensesActivity : WebViewOnlyActivity() {
     override val toolbarTitle = "오픈소스 라이센스"
-    override val pageUrl =
-        "https://raw.githubusercontent.com/inu-appcenter/terms-and-conditions/master/유니레터-개인정보처리방침"
+    override val pageUrl = "https://inu-appcenter.github.io/유니레터-오픈소스라이센스.html"
 }

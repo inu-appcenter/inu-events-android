@@ -30,6 +30,7 @@ abstract class WebViewOnlyActivity : BaseActivity<ActivityWebViewOnlyBinding>() 
             with(settings) {
                 javaScriptEnabled = true
                 defaultTextEncodingName = "utf-8"
+                isHorizontalScrollBarEnabled = false
             }
 
             loadUrl(pageUrl)
