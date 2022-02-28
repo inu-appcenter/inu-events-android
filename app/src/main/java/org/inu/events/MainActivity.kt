@@ -1,5 +1,6 @@
 package org.inu.events
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -66,7 +67,9 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun setupButtons() {
         observe(viewModel.postClickEvent) {
             if (loginService.isLoggedIn) {
-                startActivity(RegisterEventsActivity.callingIntent(this))
+                val intent = Intent(this, TempActivity::class.java)
+                startActivity(intent)
+//                startActivity(RegisterEventsActivity.callingIntent(this))
             } else {
                 askUserForLogin()
             }

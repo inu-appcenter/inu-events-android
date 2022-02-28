@@ -18,6 +18,9 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TempActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationSettingActivity"
             android:exported="false" />
         <activity
@@ -62,8 +65,8 @@
             android:exported="true" />
         <activity
             android:name=".RegisterEventsActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
@@ -72,8 +75,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
         <service android:name=".service.AlarmService" />
     </application>
 
