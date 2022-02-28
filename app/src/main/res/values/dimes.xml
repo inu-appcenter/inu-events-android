@@ -8,7 +8,7 @@
     <dimen name="body3">12sp</dimen>
 
     <!-- margin -->
-    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="horizontal_margin">20dp</dimen>
     <dimen name="register_horizontal_margin">20dp</dimen>
     <dimen name="register_top_margin">24dp</dimen>
     <dimen name="detail_horizontal_margin">20dp</dimen>
