@@ -60,7 +60,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="27.4dp"
                 android:onClick="@{()->viewModel.onClickLike()}"
-                android:src="@{viewModel.likeOnOff ? @drawable/ic_like_on : @drawable/ic_like_off}"
+                android:src="@{viewModel.likeOnOff ? @drawable/ic_bookmark_filled : @drawable/ic_bookmark_outlined}"
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_like_on" />
 
