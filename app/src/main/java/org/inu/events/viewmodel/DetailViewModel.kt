@@ -2,7 +2,6 @@ package org.inu.events.viewmodel
 
 import android.content.Context
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
@@ -15,12 +14,12 @@ import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
+import org.inu.events.objects.EndLoad.endLoad
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.text.SimpleDateFormat
 import java.time.*
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class DetailViewModel : ViewModel(), KoinComponent {
@@ -248,7 +247,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
     fun onDeleteClickEvent() {
         execute {
             eventRepository.deleteEvent(eventIndex)
-        }.then {  }. catch {  }
+        }.then {
+            endLoad = true
+        }. catch {  }
     }
 
 }
