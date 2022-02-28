@@ -118,7 +118,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             target.value = it.target
             contactNumber.value = it.contact
             location.value = it.location
-            imageUuid = currentEvent?.imageUuid
+            imageUuid = it.imageUuid
             spinnerSelected()
             datePickerSelect()
             timePickerSelect()
@@ -151,8 +151,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadImage() {
-        if(imageUrl.value == "")
-            imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
+        imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
     }
 
     //행사 수정 시 서버에서 받아온 카테고리 이름 문자열을 스피너 선택으로 바꿔주는 함수
@@ -185,13 +184,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
-                    host = if(host.value=="") null else host.value,
+                    host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = if(contactNumber.value == "") null else contactNumber.value,
-                    location = if(location.value == "") null else location.value,
+                    contact = contactNumber.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -206,32 +205,30 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                 currentEvent!!.id,
                 UpdateEventParams(
                     title = title.value ?: "",
-                    host = if(host.value=="") null else host.value,
+                    host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = if(contactNumber.value == "") null else contactNumber.value,
-                    location = if(location.value == "") null else location.value,
+                    contact = contactNumber.value,
+                    location = location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
             )
-            Log.d("tag","서버에 데이터 넣기")
         }.then{ }.catch{ }
     }
 
     private fun uploadImage(){
-        if(imageUrl.value == ""){
-            imageUuid = imageUuidList[selectedItemPosition.value!!]
-            return
-        }
-        if(imageCheckBoxBoolean.value == false){
-            val file = File(imageUrl.value.toString())
-            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-            imageUuid = eventRepository.uploadImage(image).uuid
-            return
+        when{
+            (imageUrl.value == "" || imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
+            (imageUrl.value != "") ->return
+            (imageCheckBoxBoolean.value == false) ->{
+                val file = File(imageUrl.value.toString())
+                val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+                val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                imageUuid = eventRepository.uploadImage(image).uuid
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package org.inu.events.di
 
+import com.google.gson.GsonBuilder
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,10 +25,13 @@ import java.util.concurrent.Flow
 inline fun <reified T> buildRetrofitService(): T {
     return Retrofit.Builder()
         .baseUrl("http://uniletter.inuappcenter.kr/")
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(
+            GsonBuilder().serializeNulls().create()
+        ))
         .client(OkHttpClientFactory.create())
         .build()
         .create(T::class.java)
+
 }
 
 val myModules = module {
