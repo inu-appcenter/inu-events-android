@@ -217,7 +217,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-            Log.d("tag","서버에 데이터 넣기")
         }.then{ }.catch{ }
     }
 
