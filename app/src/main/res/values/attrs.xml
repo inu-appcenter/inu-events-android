@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="UniLetterToolbar">
         <attr name="title" format="string"/>
+        <attr name="showInformationIcon" format="boolean"/>
     </declare-styleable>
 </resources>

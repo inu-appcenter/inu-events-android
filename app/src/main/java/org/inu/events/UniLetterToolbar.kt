@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 
@@ -13,6 +14,8 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
         field = value
         rootView?.findViewById<TextView>(R.id.title)?.text = value
     }
+
+    private var showInformationIcon: Boolean = false
 
     init {
         initAttrs(attrs)
@@ -26,6 +29,7 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
             0, 0
         ).apply {
             try {
+                showInformationIcon = getBoolean(R.styleable.UniLetterToolbar_showInformationIcon, false)
                 title = getString(R.styleable.UniLetterToolbar_title) ?: ""
             } finally {
                 recycle()
@@ -37,8 +41,10 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
         inflate(context, R.layout.view_toolbar, this)
 
         val titleTextView = findViewById<TextView>(R.id.title)
+        val informationIcon = findViewById<ImageButton>(R.id.information_icon)
 
         titleTextView.text = title
+        informationIcon.visibility = if(showInformationIcon) View.VISIBLE else View.GONE
     }
 
     fun setOnBackListener(action: (view: View)->Unit) {
