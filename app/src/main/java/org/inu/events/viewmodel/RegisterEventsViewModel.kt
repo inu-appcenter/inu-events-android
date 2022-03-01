@@ -179,8 +179,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun addEvent() {
+        noImage()
         execute {
-            //uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
@@ -200,8 +200,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun updateEvent() {
+        noImage()
         execute {
-            //uploadImage()
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
@@ -221,15 +221,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }.catch{ }
     }
 
+    private fun noImage(){
+        if(imageCheckBoxBoolean.value == true) imageUuid = imageUuidList[selectedItemPosition.value!!]
+    }
+
     private fun uploadImage(){
-        when{
-            (imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
-            (imageCheckBoxBoolean.value == false) ->{
-                val file = File(imageUrl.value.toString())
-                val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-                val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                imageUuid = eventRepository.uploadImage(image).uuid
-            }
+        if (imageCheckBoxBoolean.value == false){
+            val file = File(imageUrl.value.toString())
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            imageUuid = eventRepository.uploadImage(image).uuid
         }
     }
 
