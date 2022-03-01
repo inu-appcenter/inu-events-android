@@ -14,7 +14,6 @@ import org.inu.events.data.model.dto.NotificationParams
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
-import org.inu.events.objects.EndLoad.endLoad
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -247,7 +246,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         execute {
             eventRepository.deleteEvent(eventIndex)
         }.then {
-            endLoad = true
         }. catch {  }
     }
 
