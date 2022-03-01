@@ -4,6 +4,9 @@
         <variable
             name="viewModel"
             type="org.inu.events.viewmodel.MyPageViewModel" />
+        <variable
+            name="buildConfig"
+            type="org.inu.events.BuildConfig" />
     </data>
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -275,9 +278,10 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginHorizontal="@dimen/horizontal_margin"
-                android:text="회원탈퇴"
+                android:text='@{String.format("버전 %s(%d)", buildConfig.VERSION_NAME, buildConfig.VERSION_CODE)}'
                 android:textColor="@color/black"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                tools:text="버전 1.0.0(482)"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
