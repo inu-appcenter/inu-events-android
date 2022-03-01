@@ -138,6 +138,9 @@ class RegisterEventsActivity : AppCompatActivity() {
                 { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setStartDate(cal.time)
+                    viewModel.datePickerValueStartYear = y
+                    viewModel.datePickerValueStartMonth = m+1
+                    viewModel.datePickerValueStartDay = d
                 },
                 viewModel.datePickerValueStartYear,
                 viewModel.datePickerValueStartMonth - 1,
