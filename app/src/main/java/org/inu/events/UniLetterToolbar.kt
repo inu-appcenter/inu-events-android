@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import org.inu.events.common.extension.observe
+import org.inu.events.dialog.AlarmDialog
 
 class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context, attrs) {
     private var title: String = ""
@@ -45,6 +47,14 @@ class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context,
 
         titleTextView.text = title
         informationIcon.visibility = if(showInformationIcon) View.VISIBLE else View.GONE
+
+        informationIcon.setOnClickListener {
+            AlarmDialog().showDialog(
+                it.context,
+                resources.getString(R.string.alarm_on_title_information),
+                resources.getString(R.string.alarm_on_content_information)
+            )
+        }
     }
 
     fun setOnBackListener(action: (view: View)->Unit) {
