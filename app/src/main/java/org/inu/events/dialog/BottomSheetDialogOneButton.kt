@@ -5,13 +5,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import org.inu.events.R
 
-class BottomSheetDialogOneButton(val context: Context) {
+class BottomSheetDialogOneButton(val context: Context, private val titleText: String) {
 
-    fun show(onOne: () -> Unit, onCancel: () -> Unit, onText:String) {
+    fun show(firstText:String, onOne: () -> Unit, onCancel: () -> Unit) {
         val inflater: LayoutInflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val customLayout = inflater.inflate(R.layout.bottom_sheet_dialog_one, null)
@@ -30,9 +31,12 @@ class BottomSheetDialogOneButton(val context: Context) {
             show()
         }
 
+        customLayout.findViewById<TextView>(R.id.title).text = titleText
+
         val btnOne = customLayout.findViewById<AppCompatButton>(R.id.oneButton).apply {
-            text = onText
+            text = firstText
         }
+
         btnOne.setOnClickListener {
             onOne()
             dialog.dismiss()
