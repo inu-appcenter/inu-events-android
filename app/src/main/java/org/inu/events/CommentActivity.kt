@@ -15,6 +15,7 @@ import org.inu.events.adapter.CommentAdapter
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
+import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
 import org.inu.events.dialog.BottomSheetDialogOneButton
@@ -123,7 +124,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     // 로그인 취소를 눌렀을 때
     override fun onCancel() {
-        Toast.makeText(this, "로그인을 하셔야 댓글 작성이 가능합니다", Toast.LENGTH_SHORT).show()
+        toast("로그인을 하셔야 게시글 작성이 가능합니다")
     }
 
     override fun onStart() {

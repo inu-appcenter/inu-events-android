@@ -77,17 +77,28 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 askUserForLogin()
             }
         }
-
+        observe(viewModel.likeClickEvent){
+            if(loginService.isLoggedIn){
+                viewModel.onLikePost()
+            }else{
+                showDialog()
+            }
+        }
     }
 
     private fun askUserForLogin() {
         LoginDialog().show(this, ::onOk, ::onCancel)
     }
 
+    private fun showDialog() {
+        LoginDialog().show(this, { onOk() }, { onCancel() })
+    }
+
     override fun onOk() {
         googleLogin.signIn {
-            toast("구글 로그인 성공. 액세스 토큰: $it")
-            loginService.login(it)
+            //toast("구글 로그인 성공. 액세스 토큰: $it")
+            startActivity(Intent(this, LoginActivity::class.java))
+            //loginService.login(it)
         }
     }
 
