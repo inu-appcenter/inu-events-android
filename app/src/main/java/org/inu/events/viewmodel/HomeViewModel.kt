@@ -29,7 +29,11 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val homeDataList: LiveData<List<Event>>
         get() = _homeDataList
 
+    private var eventIndex: Int = 0
+    private var like = false
+
     val postClickEvent = SingleLiveEvent<Any>()
+    val likeClickEvent = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
         override fun onClickMyPage(view: View) {
             if(loginService.isLoggedIn) {
@@ -62,9 +66,15 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
 
     fun onLikeClickEvent(likeByMe: Boolean,eventId: Int){
+        like = likeByMe
+        eventIndex = eventId
+        likeClickEvent.call()
+    }
+
+    fun onLikePost(){
         when{
-            likeByMe -> deleteLike(eventId)
-            else -> postLike(eventId)
+            like -> deleteLike(eventIndex)
+            else -> postLike(eventIndex)
         }
     }
 
