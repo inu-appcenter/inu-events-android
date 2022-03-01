@@ -18,9 +18,15 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
 
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/primary" />
-
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="Channel Id" />
 
         <activity
             android:name=".TempActivity"
@@ -75,8 +81,8 @@
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
-            android:exported="false"
-            android:directBootAware="true">
+            android:directBootAware="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
