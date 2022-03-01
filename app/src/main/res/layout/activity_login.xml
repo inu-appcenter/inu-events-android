@@ -20,12 +20,13 @@
             android:id="@+id/logo"
             android:layout_width="192dp"
             android:layout_height="192dp"
-            android:layout_marginTop="216dp"
-            android:layout_marginEnd="4dp"
             android:background="@drawable/ic_logo"
+            app:layout_constraintBottom_toTopOf="@+id/googleLoginButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.368"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/googleLoginButton"
@@ -34,14 +35,16 @@
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             android:background="@drawable/outlined_radius_8"
             android:drawableStart="@drawable/drawable_google_logo"
+            android:onClick="@{()->loginViewModel.onClickLogin()}"
             android:paddingHorizontal="16dp"
             android:text="구글 계정으로 로그인"
             android:textColor="@color/black1"
             android:textSize="14sp"
-            android:onClick="@{()->loginViewModel.onClickLogin()}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

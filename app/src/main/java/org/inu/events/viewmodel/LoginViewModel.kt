@@ -11,6 +11,7 @@ class LoginViewModel : ViewModel(), KoinComponent {
     private val loginService: LoginService by inject()
 
     val loginClickEvent = SingleLiveEvent<Any>()
+    val loggedIn = loginService.isLoggedInLiveData
 
     fun onClickLogin() {
         loginClickEvent.call()

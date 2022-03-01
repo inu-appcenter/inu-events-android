@@ -10,8 +10,10 @@ import org.inu.events.MyPageActivity
 import org.inu.events.ToolbarListener
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
+import org.inu.events.data.repository.LikeRepository
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
@@ -21,12 +23,17 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     private val eventRepository: EventRepository by inject()
     private val loginService: LoginService by inject()
+    private val likeRepository: LikeRepository by inject()
 
     private val _homeDataList = MutableLiveData<List<Event>>()
     val homeDataList: LiveData<List<Event>>
         get() = _homeDataList
 
+    private var eventIndex: Int = 0
+    private var like = false
+
     val postClickEvent = SingleLiveEvent<Any>()
+    val likeClickEvent = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
         override fun onClickMyPage(view: View) {
             if(loginService.isLoggedIn) {
@@ -56,5 +63,37 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     fun onClickPost() {
         postClickEvent.call()
+    }
+
+    fun onLikeClickEvent(likeByMe: Boolean,eventId: Int){
+        like = likeByMe
+        eventIndex = eventId
+        likeClickEvent.call()
+    }
+
+    fun onLikePost():Boolean{
+        when{
+            like -> deleteLike(eventIndex)
+            else -> postLike(eventIndex)
+        }
+        return loginService.isLoggedIn
+    }
+
+    private fun postLike(eventId: Int){
+        execute {
+            likeRepository.postLike(
+                LikeParam(eventId = eventId)
+            )
+        }.then {
+        }.catch {  }
+    }
+
+    private fun deleteLike(eventId: Int){
+        execute {
+            likeRepository.deleteLike(
+                LikeParam(eventId = eventId)
+            )
+        }.then {
+        }.catch {  }
     }
 }

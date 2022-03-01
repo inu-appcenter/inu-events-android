@@ -15,7 +15,6 @@ import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.lang.RuntimeException
 
 class CommentViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
@@ -37,6 +36,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     val btnClickEvent = SingleLiveEvent<Any>()
     val plusBtnClickEvent = SingleLiveEvent<Any>()
+
     //val postCommentClickEvent = SingleLiveEvent<Any>()
     val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
     val arrowUpBtnClickEvent = SingleLiveEvent<Any>()
@@ -100,7 +100,6 @@ class CommentViewModel : ViewModel(), KoinComponent {
         execute {
             commentRepository.getComments(eventIndex)
         }.then {
-            Log.i("SDFSDFSDFDFQERIEQJIFDFSDJKFJSNZZZZ", it.map { it.toString() }.joinToString(", "))
             callback()
             _commentDataList.value = it
             commentSizeText.value = "댓글 ${it.size} "

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,10 +14,11 @@ import org.inu.events.adapter.CommentAdapter
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
+import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
-import org.inu.events.dialog.BottomSheetDialogOneButton
 import org.inu.events.dialog.LoginDialog
+import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
@@ -34,7 +34,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
-    private val bottomSheet = BottomSheetDialogOneButton(this,"댓글 삭제")
     private lateinit var commentBinding: ActivityCommentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,11 +57,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
             override fun afterTextChanged(p0: Editable?) {
                 if (commentBinding.commentEditText.text.length >= 300) {
-                    Toast.makeText(
-                        this@CommentActivity,
-                        "댓글은 300자 이내로 입력가능합니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast("댓글은 300자 이내로 입력가능합니다.")
                 }
             }
         })
@@ -75,12 +70,12 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     execute {
                         commentViewModel.postComment()
                     }.then {
-                        HideEditTextKeyBoard()
+                        hideEditTextKeyBoard()
                     }.catch {
                         it.printStackTrace()
                     }
                 } else {
-                    Toast.makeText(this, "글자를 입력하세요.", Toast.LENGTH_SHORT).show()
+                    toast("글자를 입력하세요.")
                 }
             } else {
                 showDialog()
@@ -123,7 +118,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     // 로그인 취소를 눌렀을 때
     override fun onCancel() {
-        Toast.makeText(this, "로그인을 하셔야 댓글 작성이 가능합니다", Toast.LENGTH_SHORT).show()
+        toast("로그인을 하셔야 댓글 작성이 가능합니다")
     }
 
     override fun onStart() {
@@ -138,11 +133,14 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setupMenu() {
         observe(commentViewModel.plusBtnClickEvent) {
-            bottomSheet.show("삭제",{commentViewModel.deleteComment {}},{})
+            UniActionSheet(this)
+                .addText("댓글 삭제")
+                .addAction("삭제") { commentViewModel.deleteComment {} }
+                .show()
         }
     }
 
-    private fun HideEditTextKeyBoard() {
+    private fun hideEditTextKeyBoard() {
         val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(commentBinding.commentEditText.windowToken, 0)
     }

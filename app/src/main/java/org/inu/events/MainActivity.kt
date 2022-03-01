@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = HomeAdapter()
+        val theAdapter = HomeAdapter(viewModel)
 
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
@@ -70,25 +70,33 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun setupButtons() {
         observe(viewModel.postClickEvent) {
             if (loginService.isLoggedIn) {
-                val intent = Intent(this, TempActivity::class.java)
+                //               val intent = Intent(this, TempActivity::class.java)
 //                startActivity(intent)
                 startActivity(RegisterEventsActivity.callingIntent(this))
             } else {
                 askUserForLogin()
             }
         }
-
+        observe(viewModel.likeClickEvent){
+            if(loginService.isLoggedIn){
+                viewModel.onLikePost()
+            }else{
+                showDialog()
+            }
+        }
     }
 
     private fun askUserForLogin() {
         LoginDialog().show(this, ::onOk, ::onCancel)
     }
 
+    private fun showDialog() {
+        LoginDialog().show(this, { onOk() }, { onCancel() })
+    }
+
     override fun onOk() {
-        googleLogin.signIn {
-            toast("구글 로그인 성공. 액세스 토큰: $it")
-            loginService.login(it)
-        }
+        val intent = Intent(this, LoginActivity::class.java)
+        this.startActivity(intent)
     }
 
     override fun onCancel() {

@@ -22,7 +22,7 @@ class UserRepositoryImpl(
             if(response.isSuccessful) {
                 return response.body()!!
             } else {
-                Log.e("네트워크 요청", "실패했다...")
+                Log.e("네트워크 요청", "실패했다... ${response.code()}")
             }
         } catch (e: Exception) {
             e.printStackTrace()

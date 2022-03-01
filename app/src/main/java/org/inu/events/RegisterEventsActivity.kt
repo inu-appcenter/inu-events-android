@@ -138,6 +138,9 @@ class RegisterEventsActivity : AppCompatActivity() {
                 { _, y, m, d ->
                     cal.set(y, m, d)
                     viewModel.setStartDate(cal.time)
+                    viewModel.datePickerValueStartYear = y
+                    viewModel.datePickerValueStartMonth = m+1
+                    viewModel.datePickerValueStartDay = d
                 },
                 viewModel.datePickerValueStartYear,
                 viewModel.datePickerValueStartMonth - 1,
@@ -174,7 +177,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                 viewModel.datePickerValueEndMonth - 1,
                 viewModel.datePickerValueEndDay
             ).apply {
-                datePicker.minDate = cal.apply { set(viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth - 1, viewModel.datePickerValueStartDay) }.timeInMillis
+                datePicker.minDate = cal.apply { cal.set(viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth - 1, viewModel.datePickerValueStartDay) }.timeInMillis
             }.show()
         }
     }

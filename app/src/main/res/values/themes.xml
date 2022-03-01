@@ -25,7 +25,7 @@
         <item name="android:buttonBarNegativeButtonStyle">@style/PickerButtonStyleNegative</item>
     </style>
 
-        <!--  Splash theme  -->
+    <!--  Splash theme  -->
     <style name="Theme.Splash" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:statusBarColor">@color/transparent</item>
@@ -35,10 +35,18 @@
     <style name="MyTimePickerTheme" parent="android:Widget.Material.Light.TimePicker">
         <item name="android:timePickerMode">spinner</item>
     </style>
+
     <style name="PickerButtonStylePositive" parent="android:Widget.Material.Button.Borderless">
         <item name="android:textColor">@color/primary</item>
     </style>
+
     <style name="PickerButtonStyleNegative" parent="android:Widget.Material.Button.Borderless">
         <item name="android:textColor">@color/black30</item>
+    </style>
+
+    <!-- 우리우리 특-별한 BottomSheetDialog는 코드에서 백그라운드를 못바꿔서 이렇게 "정석"대로 가는 방법밖에 없답니다^^ -->
+    <style name="UniActionSheet" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
     </style>
 </resources>
