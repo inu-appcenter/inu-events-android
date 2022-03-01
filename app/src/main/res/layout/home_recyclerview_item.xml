@@ -9,6 +9,10 @@
             name="item"
             type="org.inu.events.data.model.entity.Event" />
 
+        <variable
+            name="viewModel"
+            type="org.inu.events.viewmodel.HomeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

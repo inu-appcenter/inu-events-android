@@ -11,7 +11,6 @@ import org.inu.events.data.model.entity.Comment
 import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemCommentBinding
 import org.inu.events.viewmodel.CommentViewModel
-import org.inu.events.viewmodel.DetailViewModel
 
 class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
 

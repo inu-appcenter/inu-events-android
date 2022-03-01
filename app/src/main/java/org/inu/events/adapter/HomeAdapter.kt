@@ -8,30 +8,36 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import okhttp3.internal.notify
 import org.inu.events.DetailActivity
 import org.inu.events.R
 import org.inu.events.data.model.entity.Event
+import org.inu.events.data.repository.LikeRepository
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
+import org.inu.events.viewmodel.HomeViewModel
+import org.inu.events.viewmodel.LikeViewModel
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeAdapter : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
+class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this, viewModel)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),position)
     }
 
-    class ViewHolder private constructor(val binding: HomeRecyclerviewItemBinding, val adapter: ListAdapter<Event, ViewHolder>) :
+    class ViewHolder private constructor(val binding: HomeRecyclerviewItemBinding, val adapter: ListAdapter<Event, ViewHolder>, val viewModel: HomeViewModel) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener{
 
         companion object{
-            fun from(parent: ViewGroup, adapter: ListAdapter<Event, ViewHolder>) : ViewHolder{
+            fun from(parent: ViewGroup, adapter: ListAdapter<Event, ViewHolder>, viewModel: HomeViewModel) : ViewHolder{
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = HomeRecyclerviewItemBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding, adapter)
+                return ViewHolder(binding, adapter, viewModel)
             }
         }
 
@@ -40,8 +46,9 @@ class HomeAdapter : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil
         init {
             itemView.setOnClickListener(this)
         }
-        fun bind(homeData: Event) {
+        fun bind(homeData: Event, position: Int) {
             binding.item = homeData
+            binding.viewModel = viewModel
             binding.boardDate.text = whenDay(homeData.endAt)
             binding.boardDate.backgroundTintList = when(checkDeadline){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
@@ -49,9 +56,10 @@ class HomeAdapter : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil
             }
 
             binding.likeImageView.setOnClickListener{
-
+                viewModel.onLikeClickEvent(homeData.likedByMe ?: false, homeData.id)
+                homeData.likedByMe = !(homeData.likedByMe ?: false)
+                adapter.notifyItemChanged(position)
             }
-
             binding.executePendingBindings()
         }
 

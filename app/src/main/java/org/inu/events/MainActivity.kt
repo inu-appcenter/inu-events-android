@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = HomeAdapter()
+        val theAdapter = HomeAdapter(viewModel)
 
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
