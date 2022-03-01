@@ -111,12 +111,16 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/textView_category"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         tools:text="category | host"
                         android:text="@{detailViewModel.hostNull ? detailViewModel.currentEvent.category : @string/group(detailViewModel.currentEvent.category,detailViewModel.currentEvent.host)}"
                         android:textColor="@color/black1"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,12 +182,16 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/textView_target"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{detailViewModel.currentEvent.target}"
                         tools:text="1년이상 활동 가능한 사람"
                         android:textColor="@color/black1"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -202,12 +210,17 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/textView_contact"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{detailViewModel.currentEvent.contact}"
                         tools:text="카톡"
                         android:textColor="@color/black1"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textIsSelectable="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,7 +245,9 @@
                         android:autoLink="web"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
-                        tools:text="https://github.com/inu-appcenter" />
+                        tools:text="https://github.com/inu-appcenter"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <View

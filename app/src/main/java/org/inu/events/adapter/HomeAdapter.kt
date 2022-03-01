@@ -1,71 +1,59 @@
 package org.inu.events.adapter
 
-import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat.setTint
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.android.material.color.MaterialColors.getColor
 import org.inu.events.DetailActivity
 import org.inu.events.R
-import org.inu.events.common.threading.execute
 import org.inu.events.data.model.entity.Event
-import org.inu.events.data.repository.EventRepository
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Period
-import java.time.format.DateTimeFormatter
 import java.util.*
 
+class HomeAdapter : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this)
 
-    var homeDataList: List<Event> = listOf()
-        set(v) {
-            field = v
-            notifyDataSetChanged()  //뷰 바뀜 리사이클러뷰한테 알려줌
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    class ViewHolder private constructor(val binding: HomeRecyclerviewItemBinding, val adapter: ListAdapter<Event, ViewHolder>) :
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener{
+
+        companion object{
+            fun from(parent: ViewGroup, adapter: ListAdapter<Event, ViewHolder>) : ViewHolder{
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = HomeRecyclerviewItemBinding.inflate(layoutInflater, parent, false)
+
+                return ViewHolder(binding, adapter)
+            }
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        val binding =
-            HomeRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomeViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        holder.bind(homeDataList[position])
-    }
-
-    override fun getItemCount() = homeDataList.size ?: 0
-
-    inner class HomeViewHolder(private val binding: HomeRecyclerviewItemBinding) :
-        RecyclerView.ViewHolder(binding.root), View.OnClickListener{
-        
         private var checkDeadline: Boolean = false
 
         init {
             itemView.setOnClickListener(this)
         }
         fun bind(homeData: Event) {
-            binding.homeData = homeData
+            binding.item = homeData
             binding.boardDate.text = whenDay(homeData.endAt)
             binding.boardDate.backgroundTintList = when(checkDeadline){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
                 else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
             }
+
+            binding.executePendingBindings()
         }
 
         override fun onClick(v: View) {
             with(binding.root.context) {
-                startActivity(DetailActivity.callingIntent(this, binding.homeData!!.id,binding.homeData!!.wroteByMe))
+                startActivity(DetailActivity.callingIntent(this, binding.item!!.id,binding.item!!.wroteByMe))
             }
         }
 
@@ -90,6 +78,15 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
             }
             return "D-${if(dDay.toInt() == 0) "day" else dDay}"
         }
+    }
+}
 
+class HomeEventDiffUtil : DiffUtil.ItemCallback<Event>() {
+    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
+        return oldItem == newItem
+    }
+
+    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+        return oldItem.id == newItem.id
     }
 }

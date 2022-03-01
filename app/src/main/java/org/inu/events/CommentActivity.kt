@@ -17,6 +17,7 @@ import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
+import org.inu.events.dialog.BottomSheetDialogOneButton
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
@@ -33,7 +34,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
-
+    private val bottomSheet = BottomSheetDialogOneButton(this,"댓글 삭제")
     private lateinit var commentBinding: ActivityCommentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupButtons()
         setupRecyclerView()
         setupToolbar()
-        showBottomSheet()
+        setupMenu()
         setUpListener()
     }
 
@@ -70,7 +71,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun setupButtons() {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
-                Toast.makeText(this, "로그인 되어있슴다, 서버로 댓글을 보내자 이제", Toast.LENGTH_SHORT).show()
                 if (!commentViewModel.content.value.isNullOrEmpty()) {
                     execute {
                         commentViewModel.postComment()
@@ -136,10 +136,9 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         commentViewModel.load(id)
     }
 
-    private fun showBottomSheet() {
+    private fun setupMenu() {
         observe(commentViewModel.plusBtnClickEvent) {
-            val bottomSheet = BottomSheet()
-            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+            bottomSheet.show("삭제",{commentViewModel.deleteComment {}},{})
         }
     }
 

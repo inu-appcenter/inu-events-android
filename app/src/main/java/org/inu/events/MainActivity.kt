@@ -12,7 +12,6 @@ import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityMainBinding
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.googlelogin.GoogleLoginWrapper
-import org.inu.events.objects.EndLoad.endLoad
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.HomeViewModel
 import org.koin.android.ext.android.inject
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         tryAutoLogin()
         setupRecyclerView()
         setUpSwipeRefresh()
-        isFromDetail()
     }
 
     override fun onResume() {
@@ -54,20 +52,11 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         }
     }
 
-    fun isFromDetail(){
-        if (endLoad)
-            viewModel.load()
-    }
-
     private fun setupRecyclerView() {
         val theAdapter = HomeAdapter()
 
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
-        }
-
-        observeNonNull(viewModel.homeDataList) {
-            theAdapter.homeDataList = it
         }
     }
 
