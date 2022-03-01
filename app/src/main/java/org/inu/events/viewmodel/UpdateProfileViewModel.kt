@@ -27,6 +27,10 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     var imageUuid: String? = null
 
     init {
+        loadData()
+    }
+
+    private fun loadData() {
         CoroutineScope(Dispatchers.Main).launch {
             user.value = userService.getUserInfo()
             inputText.value = user.value!!.nickname
@@ -66,6 +70,18 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
     fun uploadImage(image: MultipartBody.Part) {
         CoroutineScope(Dispatchers.IO).launch {
             imageUuid = eventRepository.uploadImage(image).uuid
+        }
+    }
+
+    fun resetDefaultImage() {
+        val newUser = UpdateUserParams(
+            nickname = inputText.value!!,
+            imageUuid = null
+        )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userService.resetDefaultImage(newUser)
+            loadData()
         }
     }
 }

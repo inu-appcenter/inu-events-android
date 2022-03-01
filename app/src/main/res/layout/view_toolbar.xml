@@ -27,4 +27,13 @@
         android:textSize="22sp"
         android:textStyle="bold"
         tools:text="제목" />
+
+    <ImageButton
+        android:id="@+id/information_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_i"
+        android:background="@null"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/horizontal_margin"/>
 </androidx.appcompat.widget.Toolbar>

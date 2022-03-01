@@ -22,4 +22,10 @@ class UserService(private val userRepository: UserRepository) {
             }
         }
     }
+
+    suspend fun resetDefaultImage(user: UpdateUserParams) {
+        withContext(Dispatchers.IO) {
+            userRepository.updateUser(user)
+        }
+    }
 }
