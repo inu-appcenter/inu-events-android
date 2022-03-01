@@ -25,7 +25,7 @@ fun bindImage(view: ImageView, imageUuid: String?) {
     GlideUtil.loadWithUuid(view, imageUuid, radiusWithPixel)
 }
 
-@BindingAdapter("app:photo_uuid")
+@BindingAdapter("app:photo_url")
 fun setPhoto(view: ImageView, imageUrl: String?) {
-    GlideUtil.loadWithUrl(view, imageUrl, R.drawable.ic_default_photo)
+    GlideUtil.loadWithUrl(view, imageUrl, default = R.drawable.ic_default_photo)
 }
