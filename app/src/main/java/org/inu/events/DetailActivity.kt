@@ -10,8 +10,6 @@ import androidx.databinding.DataBindingUtil
 import org.inu.events.common.extension.*
 import org.inu.events.databinding.ActivityDetailBinding
 import org.inu.events.dialog.AlarmDialog
-import org.inu.events.dialog.BottomSheetDialog
-import org.inu.events.dialog.BottomSheetDialogOneButton
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -35,9 +33,6 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private val loginService: LoginService by inject()
     private val viewModel: DetailViewModel by viewModels()
     private lateinit var binding: ActivityDetailBinding
-    private val notificationBottomDialog = BottomSheetDialog(this, "알림 신청", "시작 전 알림", "마감 전 알림")
-    private val menuBottomSheet = BottomSheetDialog(this, "글 메뉴", "수정하기", "삭제하기")
-    private val bottomDialogOneButton = BottomSheetDialogOneButton(this, "알림신청")
     private val alarmDialog = AlarmDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,15 +73,13 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(viewModel.alarmClickEvent) {
             if (loginService.isLoggedIn) {
                 if (viewModel.notificationOnOff.value == false) {
-                    val sheet = UniActionSheet(this)
-                        .addText("알림 신청")
-
                     when (it) {
-                        0 -> {
+                        0 ->
                             toast("마감된 행사입니다!")
-                        }
-                        1 -> {
-                            sheet
+
+                        1 ->
+                            UniActionSheet(this)
+                                .addText("알림 신청")
                                 .addAction("시작 전 알림") {
                                     viewModel.postNotification("start")
                                     alarmDialog.showDialog(
@@ -95,9 +88,10 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                                         resources.getString(R.string.alarm_on_content_start)
                                     )
                                 }.show()
-                        }
-                        2 -> {
-                            sheet
+
+                        2 ->
+                            UniActionSheet(this)
+                                .addText("알림 신청")
                                 .addAction("마감 전 알림") {
                                     viewModel.postNotification("end")
                                     alarmDialog.showDialog(
@@ -106,9 +100,10 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                                         resources.getString(R.string.alarm_on_content_last)
                                     )
                                 }.show()
-                        }
-                        3 -> {
-                            sheet
+
+                        3 ->
+                            UniActionSheet(this)
+                                .addText("알림 신청")
                                 .addAction("시작 전 알림") {
                                     viewModel.postNotification("start")
                                     alarmDialog.showDialog(
@@ -125,7 +120,7 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                                         resources.getString(R.string.alarm_on_content_last)
                                     )
                                 }.show()
-                        }
+
                         else -> toast("이게 뜰리가?")
                     }
                 } else {
@@ -171,21 +166,21 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun showMenu() {
         observe(viewModel.menuClickEvent) {
-            menuBottomSheet.show(
-                onFirst = {
+            UniActionSheet(this)
+                .addText("")
+                .addAction("수정하기") {
                     startActivity(
                         RegisterEventsActivity.callingIntent(
                             this,
                             viewModel.eventIndex
                         )
                     )
-                },
-                onSecond = {
+                }
+                .addAction("삭제하기") {
                     viewModel.onDeleteClickEvent()
                     finish()
-                },
-                onCancel = {}
-            )
+                }
+                .show()
         }
     }
 

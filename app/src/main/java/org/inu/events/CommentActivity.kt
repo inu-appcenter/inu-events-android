@@ -17,8 +17,8 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
-import org.inu.events.dialog.BottomSheetDialogOneButton
 import org.inu.events.dialog.LoginDialog
+import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService
 import org.inu.events.viewmodel.CommentViewModel
@@ -34,7 +34,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
-    private val bottomSheet = BottomSheetDialogOneButton(this,"댓글 삭제")
     private lateinit var commentBinding: ActivityCommentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,7 +133,10 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setupMenu() {
         observe(commentViewModel.plusBtnClickEvent) {
-            bottomSheet.show("삭제",{commentViewModel.deleteComment {}},{})
+            UniActionSheet(this)
+                .addText("댓글 삭제")
+                .addAction("삭제") { commentViewModel.deleteComment {} }
+                .show()
         }
     }
 
