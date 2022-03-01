@@ -174,7 +174,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                 viewModel.datePickerValueEndMonth - 1,
                 viewModel.datePickerValueEndDay
             ).apply {
-                datePicker.minDate = cal.apply { set(viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth - 1, viewModel.datePickerValueStartDay) }.timeInMillis
+                datePicker.minDate = cal.apply { cal.set(viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth - 1, viewModel.datePickerValueStartDay) }.timeInMillis
             }.show()
         }
     }

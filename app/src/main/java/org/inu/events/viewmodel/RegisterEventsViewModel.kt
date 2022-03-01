@@ -285,8 +285,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun isRequiredInformationEntered() = when{
-        title.value!!.isEmpty() -> false
-        target.value!!.isEmpty() -> false
+        title.value!!.isBlank() -> false
+        target.value!!.isBlank() -> false
         else -> true
     }
 
