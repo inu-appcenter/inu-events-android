@@ -71,11 +71,12 @@ class HomeViewModel : ViewModel(), KoinComponent {
         likeClickEvent.call()
     }
 
-    fun onLikePost(){
+    fun onLikePost():Boolean{
         when{
             like -> deleteLike(eventIndex)
             else -> postLike(eventIndex)
         }
+        return loginService.isLoggedIn
     }
 
     private fun postLike(eventId: Int){
