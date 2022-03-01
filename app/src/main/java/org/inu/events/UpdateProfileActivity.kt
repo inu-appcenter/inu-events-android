@@ -29,9 +29,7 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
                     val uri = result.data?.data
                     Glide.with(this).load(uri).into(binding.photoUpdate)
 
-                    Log.e("sdf", "$uri")
                     val filePath = URIPathHelper().getPath(this, uri!!)
-                    Log.e("sdf", "$filePath")
                     val file = File(filePath!!)
 
                     val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
