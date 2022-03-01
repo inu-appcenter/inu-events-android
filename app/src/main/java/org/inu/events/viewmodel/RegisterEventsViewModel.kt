@@ -222,7 +222,10 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     private fun noImage(){
-        if(imageCheckBoxBoolean.value == true) imageUuid = imageUuidList[selectedItemPosition.value!!]
+        if(imageUuid == "") imageCheckBoxBoolean.value = true
+        if(imageCheckBoxBoolean.value == true){
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
+        }
     }
 
     private fun uploadImage(){
