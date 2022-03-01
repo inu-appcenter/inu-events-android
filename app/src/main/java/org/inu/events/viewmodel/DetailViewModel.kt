@@ -131,7 +131,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadNotificationButton(onOff:Boolean){
-        notificationText.value = if (onOff) "알람 취소" else "알람 신청"
+        notificationText.value = if (onOff) "알림 취소" else "알림 신청"
         notificationColor.value = if (onOff) R.color.primary100 else R.color.white
         notificationBackground.value = if (onOff) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background
     }
