@@ -65,10 +65,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
         }
-
-        observeNonNull(viewModel.homeDataList) {
-            theAdapter.homeDataList = it
-        }
     }
 
     private fun setUpSwipeRefresh() {

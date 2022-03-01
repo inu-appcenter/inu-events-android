@@ -31,3 +31,10 @@ fun setEvents(recyclerView: RecyclerView, list: List<Event>?) {
         (recyclerView.adapter as HistoryAdapter).submitList(list)
     }
 }
+
+@BindingAdapter("app:home_events")
+fun setHomeEvents(recyclerView: RecyclerView, list: List<Event>?) {
+    list?.let {
+        (recyclerView.adapter as HomeAdapter).submitList(list)
+    }
+}
