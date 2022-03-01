@@ -61,7 +61,7 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
             .setColor(ContextCompat.getColor(this,R.color.primary100))
             .setContentTitle(title)
             .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
@@ -72,7 +72,7 @@ class MyFirebaseMessagingService:  FirebaseMessagingService(),KoinComponent{
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH
         )
         channel.description = CHANNEL_DESCRIPTION
         (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
