@@ -17,7 +17,7 @@ data class Event(
     val imageUuid: String,
     val createdAt: String,
     val wroteByMe: Boolean?,
-    val likedByMe: Boolean?,
+    var likedByMe: Boolean?,
     val notificationSetByMe: Boolean?,
     val notificationSetFor: String,
     val comments: Int,
