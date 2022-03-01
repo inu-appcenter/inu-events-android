@@ -48,6 +48,10 @@ class HomeAdapter : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil
                 else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
             }
 
+            binding.likeImageView.setOnClickListener{
+
+            }
+
             binding.executePendingBindings()
         }
 
