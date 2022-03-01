@@ -57,10 +57,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp">
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/detail_horizontal_margin"
-                    android:layout_marginEnd="63dp"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintEnd_toStartOf="@id/boardDateLayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -86,7 +87,6 @@
                     android:id="@+id/board_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
                     android:text="@{detailViewModel.boardDateText}"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
