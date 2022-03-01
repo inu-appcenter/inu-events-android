@@ -1,7 +1,6 @@
 package org.inu.events
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -33,8 +32,13 @@ class LoginActivity : AppCompatActivity() {
     private fun initViews() {
         observe(viewModel.loginClickEvent) {
             googleLogin.signIn {
-                toast("구글 로그인 성공. 액세스 토큰: $it")
                 viewModel.login(accessToken = it)
+            }
+        }
+
+        observe(viewModel.loggedIn) {
+            if (it == true) {
+                toast("로그인 성공\n유니레터에 오신 것을 환영합니다!")
                 finish()
             }
         }

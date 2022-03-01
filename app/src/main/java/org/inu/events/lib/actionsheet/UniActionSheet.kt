@@ -2,7 +2,6 @@ package org.inu.events.lib.actionsheet
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -49,12 +48,9 @@ class UniActionSheet(private val context: Context) {
     fun show(autoClose: Boolean = true) {
         val layout = LayoutInflater.from(context).inflate(R.layout.uni_action_sheet, null)
 
-        val dialog = BottomSheetDialog(context).apply {
+        val dialog = BottomSheetDialog(context, R.style.UniActionSheet).apply {
             setContentView(layout)
             setCanceledOnTouchOutside(false)
-            window
-                ?.findViewById<View>(R.id.design_bottom_sheet)
-                ?.setBackgroundResource(android.R.color.transparent)
         }
 
         with(layout.findViewById<RecyclerView>(R.id.options)) {

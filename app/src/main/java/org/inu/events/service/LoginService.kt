@@ -39,7 +39,6 @@ class LoginService(
             _isLoggedIn.postValue(true)
             postToken()
         }.catch {
-            Log.e("!!", it.toString())
             _isLoggedIn.postValue(false)
         }
     }
