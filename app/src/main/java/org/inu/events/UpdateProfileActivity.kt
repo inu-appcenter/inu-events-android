@@ -1,9 +1,6 @@
 package org.inu.events
 
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
@@ -13,7 +10,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.inu.events.base.BaseActivity
 import org.inu.events.common.util.URIPathHelper
 import org.inu.events.databinding.ActivityUpdateProfileBinding
-import org.inu.events.dialog.BottomSheetDialog
+import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.viewmodel.UpdateProfileViewModel
 import java.io.File
 
@@ -50,20 +47,18 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
         }
 
         viewModel.updatePhotoEvent.observe(this) {
-            val bottomSheet = BottomSheetDialog(this, "프로필 사진설정", "앨범에서 사진선택", "기본 이미지 변경")
-            bottomSheet.show(
-                onFirst = {
+            UniActionSheet(this)
+                .addText("프로필 사진 설정")
+                .addAction("앨범에서 사진 선택") {
                     val intent = Intent()
                     intent.type = "image/*"
                     intent.action = Intent.ACTION_GET_CONTENT
                     launcher.launch(intent)
-                },
-                {
-                    viewModel.resetDefaultImage()
-                    viewModel
-                },
-                {}
-            )
+                }
+                .addAction("기본 이미지로 변경") {
+                    viewModel.resetToDefaultImage()
+                }
+                .show()
         }
     }
 

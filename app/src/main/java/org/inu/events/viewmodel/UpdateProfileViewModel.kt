@@ -73,7 +73,7 @@ class UpdateProfileViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun resetDefaultImage() {
+    fun resetToDefaultImage() {
         val newUser = UpdateUserParams(
             nickname = inputText.value!!,
             imageUuid = null
