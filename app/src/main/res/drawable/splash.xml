@@ -5,5 +5,6 @@
         android:width="214dp"
         android:height="192dp"
         android:drawable="@drawable/splash_image"
+        android:bottom="100dp"
         android:gravity="center"/>
 </layer-list>
