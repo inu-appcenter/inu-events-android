@@ -56,7 +56,6 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
             }
 
             binding.likeImageView.setOnClickListener{
-                viewModel.onLikeClickEvent(homeData.likedByMe ?: false, homeData.id)
                 if(viewModel.onLikePost()) homeData.likedByMe = !(homeData.likedByMe ?: false)
                 adapter.notifyItemChanged(position)
             }
