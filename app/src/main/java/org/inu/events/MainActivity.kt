@@ -104,10 +104,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun tryAutoLogin() {
-        if (loginService.isAutoLoginPossible()) {
-            loginService.tryAutoLogin()
-        } else {
-            viewModel.load()
-        }
+        loginService.tryAutoLogin()
     }
 }
