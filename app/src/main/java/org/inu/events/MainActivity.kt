@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         super.onResume()
 
         viewModel.load()
-
     }
 
     private fun initBinding() {

@@ -401,4 +401,13 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         timePickerValueEndTime = endTimePeriod.value!!.slice(IntRange(0,1)).toInt()
         timePickerValueEndMinute = endTimePeriod.value!!.slice(IntRange(3,4)).toInt()
     }
+
+    fun setupCurrentTime() {
+        val date = Date()
+
+        setStartDate(date)
+        setStartTime(date)
+        setEndDate(date)
+        setEndTime(date)
+    }
 }
