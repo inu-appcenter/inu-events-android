@@ -91,7 +91,6 @@ class TempViewModel : ViewModel(), KoinComponent {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
-    val finishEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
         private set
@@ -184,6 +183,15 @@ class TempViewModel : ViewModel(), KoinComponent {
         return formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
     }
 
+    fun onCompleteClick() {
+        // TODO : 필수 항목 작성 여부 체크
+        if (isItNew) {
+            addEvent()
+        } else {
+            updateEvent()
+        }
+    }
+
     private fun addEvent() {
         noImage()
         execute {
@@ -201,7 +209,7 @@ class TempViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ finishEvent.call()
+        }.then{
         }.catch{ }
     }
 
@@ -223,7 +231,7 @@ class TempViewModel : ViewModel(), KoinComponent {
                     imageUuid = imageUuid
                 )
             )
-        }.then{ finishEvent.call()
+        }.then{
         }.catch{ }
     }
 
@@ -251,11 +259,6 @@ class TempViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onCancelClick() {
-        // TODO : fragment 종료하기
-        startHomeActivityClickEvent.call()
-    }
-
     fun onImageButtonClick() {
         startGalleryClickEvent.call()
     }
@@ -264,12 +267,6 @@ class TempViewModel : ViewModel(), KoinComponent {
         execute {
             uploadImage()
         }.catch {  }.then {  }
-    }
-
-    fun isRequiredInformationEntered() = when{
-        title.value!!.isBlank() -> false
-        target.value!!.isBlank() -> false
-        else -> true
     }
 
     fun onStartDateClick() {
@@ -364,7 +361,6 @@ class TempViewModel : ViewModel(), KoinComponent {
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
         .format(date)
         .toString()
-
 
     private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
         .format(date)

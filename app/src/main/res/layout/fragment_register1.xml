@@ -38,7 +38,7 @@
             android:background="@drawable/img_btn_background"
             android:clickable="@{!viewModel.imageCheckBoxBoolean}"
             android:contentDescription="@string/text_notice_image"
-            android:onClick="@{ () -> viewModel.onImageButtonClick()}"
+            android:onClick="@{()->viewModel.onImageButtonClick()}"
             android:scaleType="centerInside"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
@@ -60,7 +60,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/cardview_member"
                 app:layout_constraintStart_toStartOf="@+id/cardview_member"
                 app:layout_constraintTop_toTopOf="@+id/cardview_member"
-                tools:src="@drawable/img_default" />
+                tools:src="@drawable/img_default"/>
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
