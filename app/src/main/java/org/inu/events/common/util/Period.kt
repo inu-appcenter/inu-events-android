@@ -23,8 +23,12 @@ class Period {
         return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a", Locale("en", "KO")))
     }
 
-    fun formatDateForServer(date: String): String{
+    private fun formatDateForServer(date: String): String{
         val serverDate = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "KO")))
         return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+    }
+
+    fun datePickerToString(startDatePeriod: String, startTimePeriod: String): String {
+        return formatDateForServer("$startDatePeriod $startTimePeriod")
     }
 }

@@ -174,10 +174,6 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         return array[selectedItemPosition.value!!]
     }
 
-    private fun datePickerToString(startDatePeriod: String, startTimePeriod: String): String {
-        return period.formatDateForServer("$startDatePeriod $startTimePeriod")
-    }
-
     fun onCompleteClick() {
         // TODO : 필수 항목 작성 여부 체크
 
@@ -197,8 +193,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
+                    startAt = period.datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
+                    endAt = period.datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
@@ -219,8 +215,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
+                    startAt = period.datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
+                    endAt = period.datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
