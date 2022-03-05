@@ -9,6 +9,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.inu.events.R
 import org.inu.events.common.threading.execute
+import org.inu.events.common.util.Period
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
@@ -32,6 +33,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     val onNextEvent = SingleLiveEvent<Any>()
 
     val selectedItemPosition = MutableLiveData(0)
+    val period = Period()
     val startDatePeriod = MutableLiveData("")
     val startTimePeriod = MutableLiveData("")
     val endDatePeriod = MutableLiveData("")

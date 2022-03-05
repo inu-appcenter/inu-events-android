@@ -1,11 +1,9 @@
 package org.inu.events.binding
 
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import org.inu.events.R
-import org.inu.events.objects.GlideUtil
+import org.inu.events.common.util.GlideUtil
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {

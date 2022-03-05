@@ -1,4 +1,4 @@
-package org.inu.events.objects
+package org.inu.events.common.util
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
