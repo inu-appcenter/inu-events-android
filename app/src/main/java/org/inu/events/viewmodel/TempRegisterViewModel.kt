@@ -1,7 +1,6 @@
 package org.inu.events.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import okhttp3.MediaType.Companion.toMediaType
@@ -19,9 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -177,12 +174,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         return array[selectedItemPosition.value!!]
     }
 
-    private fun datePickerToStartAt(startDatePeriod: String, startTimePeriod: String): String {
+    private fun datePickerToString(startDatePeriod: String, startTimePeriod: String): String {
         return period.formatDateForServer("$startDatePeriod $startTimePeriod")
-    }
-
-    private fun datePickerToEndAt(): String {
-        return period.formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
     }
 
     fun onCompleteClick() {
@@ -204,8 +197,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = datePickerToEndAt(),
+                    startAt = datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
+                    endAt = datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
@@ -226,8 +219,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = datePickerToEndAt(),
+                    startAt = datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
+                    endAt = datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
