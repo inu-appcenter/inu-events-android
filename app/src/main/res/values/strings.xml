@@ -60,4 +60,5 @@
     <string name="alarm_off_title">알림취소</string>
     <string name="alarm_off_content">알림이 취소 되었습니다\nㅠ0ㅠ"</string>
     <string name="button_cancel">취소</string>
+    <string name="hintText_body">허위 게시물이나 부적절한 언어 사용시\n유니레터 이용이 어려울 수 있습니다.</string>
 </resources>
