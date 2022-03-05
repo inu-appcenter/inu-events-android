@@ -178,11 +178,11 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     private fun datePickerToStartAt(): String {
-        return formatDateForServer("${startDatePeriod.value!!} ${startTimePeriod.value!!}")
+        return period.formatDateForServer("${startDatePeriod.value!!} ${startTimePeriod.value!!}")
     }
 
     private fun datePickerToEndAt(): String {
-        return formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
+        return period.formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
     }
 
     fun onCompleteClick() {
@@ -369,24 +369,10 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         .format(date)
         .toString()
 
-    private fun serverDateToString(date: String): String{
-        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-    }
-
-    private fun serverTimeToString(time: String): String{
-        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
-    }
-
-    private fun formatDateForServer(date: String): String{
-        val serverDate = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "KO")))
-        return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-    }
 
     private fun datePickerSelect() {
-        startDatePeriod.value = serverDateToString(currentEvent!!.startAt)
-        endDatePeriod.value = serverDateToString(currentEvent!!.endAt)
+        startDatePeriod.value = period.serverDateToString(currentEvent!!.startAt)
+        endDatePeriod.value = period.serverDateToString(currentEvent!!.endAt)
         datePickerValueStartYear = startDatePeriod.value!!.slice(IntRange(0,3)).toInt()
         datePickerValueStartMonth = startDatePeriod.value!!.slice(IntRange(5,6)).toInt()
         datePickerValueStartDay = startDatePeriod.value!!.slice(IntRange(8,9)).toInt()
@@ -396,8 +382,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     private fun timePickerSelect() {    //행사 수정 시 서버에서 받아온 시간 값을 textView에 표시하기 위한 함수
-        startTimePeriod.value = serverTimeToString(currentEvent!!.startAt)
-        endTimePeriod.value = serverTimeToString(currentEvent!!.endAt)
+        startTimePeriod.value = period.serverTimeToString(currentEvent!!.startAt)
+        endTimePeriod.value = period.serverTimeToString(currentEvent!!.endAt)
         timePickerValueStartTime = startTimePeriod.value!!.slice(IntRange(0,1)).toInt()
         timePickerValueStartMinute = startTimePeriod.value!!.slice(IntRange(3,4)).toInt()
         timePickerValueEndTime = endTimePeriod.value!!.slice(IntRange(0,1)).toInt()
