@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun setupButtons() {
         observe(viewModel.postClickEvent) {
             if (loginService.isLoggedIn) {
-                //               val intent = Intent(this, TempActivity::class.java)
-//                startActivity(intent)
-                startActivity(RegisterEventsActivity.callingIntent(this))
+                val intent = Intent(this, TempActivity::class.java)
+                startActivity(intent)
+//                startActivity(RegisterEventsActivity.callingIntent(this))
             } else {
                 askUserForLogin()
             }

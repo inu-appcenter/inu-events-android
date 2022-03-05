@@ -25,19 +25,11 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TempViewModel : ViewModel(), KoinComponent {
-    val onPreviousEvent = SingleLiveEvent<Any>()
-    val onNextEvent = SingleLiveEvent<Any>()
-
-    fun onPrevious() {
-        onPreviousEvent.call()
-    }
-
-    fun onClickNext() {
-        onNextEvent.call()
-    }
-
     private val context: Context by inject()
     private val eventRepository: EventRepository by inject()
+
+    val onPreviousEvent = SingleLiveEvent<Any>()
+    val onNextEvent = SingleLiveEvent<Any>()
 
     val selectedItemPosition = MutableLiveData(0)
     val startDatePeriod = MutableLiveData("")
@@ -53,7 +45,6 @@ class TempViewModel : ViewModel(), KoinComponent {
     val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
-    val timeCheckBoxBoolean = MutableLiveData(false)
     val sameCheckBoxBoolean = MutableLiveData(false)
     val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
@@ -76,14 +67,9 @@ class TempViewModel : ViewModel(), KoinComponent {
     private var contactTmp: String? = ""
     private var urlTmp: String? = ""
     private var dateTmp: String? = today.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-    private var timeTmp: String? = today.format(
-        DateTimeFormatter.ofPattern("hh:mm a",
-            Locale("en","US")
-        ))
-    private var startTimeTmp: String? = ""
+    private var timeTmp: String? = today.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en","US")))
     private var hostTmp: String? = ""
 
-    var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
     private val cal = Calendar.getInstance()
     var datePickerValueStartYear = cal.get(Calendar.YEAR)
@@ -96,6 +82,8 @@ class TempViewModel : ViewModel(), KoinComponent {
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
     var timePickerValueEndTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueEndMinute = cal.get(Calendar.MINUTE)
+    private lateinit var startTime:Date
+    private lateinit var endTime:Date
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -151,10 +139,6 @@ class TempViewModel : ViewModel(), KoinComponent {
         if(currentEvent?.contact == null){
             contactNumberCheckBoxBoolean.value = true
         }
-        if(currentEvent?.startAt!!.slice(IntRange(11,15))=="00:00"
-            && currentEvent?.endAt!!.slice(IntRange(11,15))=="23:59"){
-            timeCheckBoxBoolean.value = true
-        }
         if(currentEvent?.startAt == currentEvent?.endAt){
             sameCheckBoxBoolean.value = true
         }
@@ -162,6 +146,14 @@ class TempViewModel : ViewModel(), KoinComponent {
         if(booleanImageDefault){
             imageCheckBoxBoolean.value = true
         }
+    }
+
+    fun onPrevious() {
+        onPreviousEvent.call()
+    }
+
+    fun onClickNext() {
+        onNextEvent.call()
     }
 
     private fun loadImage() {
@@ -193,8 +185,8 @@ class TempViewModel : ViewModel(), KoinComponent {
     }
 
     private fun addEvent() {
+        noImage()
         execute {
-            uploadImage()
             eventRepository.postEvent(
                 AddEventParams(
                     title = title.value ?: "",
@@ -203,18 +195,19 @@ class TempViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
     }
 
     private fun updateEvent() {
+        noImage()
         execute {
-            uploadImage()
             eventRepository.updateEvent(
                 currentEvent!!.id,
                 UpdateEventParams(
@@ -224,29 +217,42 @@ class TempViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
             )
-        }.then{ }.catch{ }
+        }.then{ finishEvent.call()
+        }.catch{ }
+    }
+
+    fun startTimeEndTime(): Boolean{
+        if(startDatePeriod.value == endDatePeriod.value){
+            val timeDiff = endTime.compareTo(startTime)
+            if(timeDiff < 0 ) return true
+        }
+        return false
+    }
+
+    private fun noImage(){
+        if(imageUuid == "") imageCheckBoxBoolean.value = true
+        if(imageCheckBoxBoolean.value == true){
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
+        }
     }
 
     private fun uploadImage(){
-        when{
-            (imageUrl.value == "" || imageCheckBoxBoolean.value == true) -> imageUuid = imageUuidList[selectedItemPosition.value!!]
-            (imageUrl.value != "") ->return
-            (imageCheckBoxBoolean.value == false) ->{
-                val file = File(imageUrl.value.toString())
-                val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-                val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                imageUuid = eventRepository.uploadImage(image).uuid
-            }
+        if (imageCheckBoxBoolean.value == false){
+            val file = File(imageUrl.value.toString())
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+            val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            imageUuid = eventRepository.uploadImage(image).uuid
         }
     }
 
     fun onCancelClick() {
+        // TODO : fragment 종료하기
         startHomeActivityClickEvent.call()
     }
 
@@ -254,33 +260,15 @@ class TempViewModel : ViewModel(), KoinComponent {
         startGalleryClickEvent.call()
     }
 
-    fun onCompleteClick() {
-        isNoTime()
-        if(isRequiredInformationEntered()){
-            if (isItNew) {
-                addEvent()
-            } else {
-                updateEvent()
-            }
-        }else{
-            titleEditTextEmpty.value = title.value.isNullOrBlank()
-            targetEditTextEmpty.value = target.value.isNullOrBlank()
-        }
-        finishEvent.call()
-    }
-
-    private fun isNoTime() {
-        if(startTimePeriod.value == "시간선택 X"){
-            startTimePeriod.value = "00:00 AM"
-        }
-        if(endTimePeriod.value == "시간선택 X"){
-            endTimePeriod.value = "11:59 PM"
-        }
+    fun updateImage(){
+        execute {
+            uploadImage()
+        }.catch {  }.then {  }
     }
 
     fun isRequiredInformationEntered() = when{
-        title.value!!.isEmpty() -> false
-        target.value!!.isEmpty() -> false
+        title.value!!.isBlank() -> false
+        target.value!!.isBlank() -> false
         else -> true
     }
 
@@ -317,22 +305,6 @@ class TempViewModel : ViewModel(), KoinComponent {
                 imageUrl.value = ""
             }
             !(imageCheckBoxBoolean.value!!) -> imageUrl.value = imageTmp
-        }
-    }
-
-    fun onTimeCheckBoxClick(){      //시간 선택 안함
-        when{
-            timeCheckBoxBoolean.value!! -> {
-                if(sameCheckBoxBoolean.value!!){
-                    endDatePeriod.value = startDatePeriod.value
-                    endTimePeriod.value = "시간선택 X"
-                }
-                startTimeTmp = startTimePeriod.value
-                startTimePeriod.value = "시간선택 X"
-            }
-            !(timeCheckBoxBoolean.value!!) ->{
-                startTimePeriod.value = startTimeTmp
-            }
         }
     }
 
@@ -376,6 +348,7 @@ class TempViewModel : ViewModel(), KoinComponent {
     }
 
     fun setStartTime(date: Date) {
+        startTime = date
         startTimePeriod.value = formatTime(date)
     }
 
@@ -384,6 +357,7 @@ class TempViewModel : ViewModel(), KoinComponent {
     }
 
     fun setEndTime(date: Date) {
+        endTime = date
         endTimePeriod.value = formatTime(date)
     }
 
@@ -391,18 +365,19 @@ class TempViewModel : ViewModel(), KoinComponent {
         .format(date)
         .toString()
 
+
     private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
         .format(date)
         .toString()
 
     private fun serverDateToString(date: String): String{
-        val stringDate: LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
     }
 
     private fun serverTimeToString(time: String): String{
-        val timeDate: LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a", Locale("en", "KO")))
+        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
     }
 
     private fun formatDateForServer(date: String): String{

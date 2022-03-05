@@ -14,15 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <org.inu.events.UniLetterToolbar
-            android:id="@+id/toolbar_register0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/event_registration" />
-
         <TextView
             android:id="@+id/textView_image_registration"
             android:layout_width="wrap_content"
@@ -34,7 +25,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_register0" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/imageButton_postImage"

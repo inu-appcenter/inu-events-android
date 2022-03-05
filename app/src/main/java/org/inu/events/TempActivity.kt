@@ -20,16 +20,12 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
 
         viewModel.onNextEvent.observe(this) {
             val position = binding.viewpager.currentItem
-            if(position < RegisterStateAdapter.NUMBER_OF_PAGE - 1) {
-                binding.viewpager.currentItem = position + 1
-            }
+            binding.viewpager.currentItem = position + 1
         }
 
         viewModel.onPreviousEvent.observe(this) {
             val position = binding.viewpager.currentItem
-            if(position > 0){
-                binding.viewpager.currentItem = position - 1
-            }
+            binding.viewpager.currentItem = position - 1
         }
     }
 }
