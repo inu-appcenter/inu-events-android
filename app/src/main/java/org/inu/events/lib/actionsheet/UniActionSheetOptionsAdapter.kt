@@ -56,7 +56,7 @@ class UniActionSheetOptionsAdapter(
             val backgroundRes = when {
                 isFirst -> R.drawable.drawable_bottom_sheet_dialog_background_top
                 isLast -> R.drawable.drawable_bottom_sheet_dialog_background_bottom
-                else -> R.drawable.drawable_bottom_sheet_dialog_button // never happens
+                else -> R.drawable.drawable_bottom_sheet_dialog_background_middle
             }
 
             view.setBackgroundResource(backgroundRes)
