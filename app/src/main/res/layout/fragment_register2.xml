@@ -208,29 +208,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/editText_target" />
 
                 <TextView
-                    android:id="@+id/checkBox_start_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:text="시간선택 안함"
-                    android:textColor="@color/black7"
-                    android:textSize="13sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
-                    app:layout_constraintEnd_toStartOf="@+id/checkBox_start"
-                    app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
-
-                <CheckBox
-                    android:id="@+id/checkBox_start"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/custom_checkbox"
-                    android:button="@null"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
-
-                <TextView
                     android:id="@+id/editText_start_date"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/exitText_height"
