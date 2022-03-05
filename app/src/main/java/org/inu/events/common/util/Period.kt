@@ -7,11 +7,10 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class Period {
-    val startDatePeriod = MutableLiveData("")
-    val startTimePeriod = MutableLiveData("")
-    val endDatePeriod = MutableLiveData("")
-    val endTimePeriod = MutableLiveData("")
+class Period(val startDate: MutableLiveData<String>,
+             val startTime: MutableLiveData<String>,
+             val endDate: MutableLiveData<String>,
+             val endTime: MutableLiveData<String>) {
 
     fun serverDateToString(date: String): String{
         val stringDate: LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
