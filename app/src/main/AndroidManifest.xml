@@ -29,7 +29,7 @@
             android:value="Channel Id" />
 
         <activity
-            android:name=".TempActivity"
+            android:name=".TempRegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity

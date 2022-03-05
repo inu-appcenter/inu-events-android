@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 /**
                  * refactoring 진행중인 코드로 실행하려면 76~77 주석을 해제하고, 78 을 주석처리 하세요.
                  */
-//                val intent = Intent(this, TempActivity::class.java)
-//                startActivity(intent)
-                startActivity(RegisterEventsActivity.callingIntent(this))
+                val intent = Intent(this, TempRegisterActivity::class.java)
+                startActivity(intent)
+//                startActivity(RegisterEventsActivity.callingIntent(this))
             } else {
                 askUserForLogin()
             }

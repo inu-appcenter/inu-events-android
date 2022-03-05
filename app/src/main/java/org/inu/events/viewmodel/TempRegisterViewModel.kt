@@ -24,7 +24,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class TempViewModel : ViewModel(), KoinComponent {
+class TempRegisterViewModel : ViewModel(), KoinComponent {
     private val context: Context by inject()
     private val eventRepository: EventRepository by inject()
 

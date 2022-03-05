@@ -20,12 +20,12 @@ import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
 import org.inu.events.common.util.URIPathHelper
-import org.inu.events.databinding.ActivityTempBinding
+import org.inu.events.databinding.ActivityTempRegisterBinding
 import org.inu.events.objects.IntentMessage
-import org.inu.events.viewmodel.TempViewModel
+import org.inu.events.viewmodel.TempRegisterViewModel
 import java.util.*
 
-class TempActivity : BaseActivity<ActivityTempBinding>() {
+class TempRegisterActivity : BaseActivity<ActivityTempRegisterBinding>() {
     companion object {
         private const val PERMISSION_ALBUM = 101
 
@@ -35,29 +35,29 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
             }
     }
 
-    override val layoutResourceId = R.layout.activity_temp
-    val viewModel: TempViewModel by viewModels()
+    override val layoutResourceId = R.layout.activity_temp_register
+    val registerViewModel: TempRegisterViewModel by viewModels()
 
     override fun dataBinding() {
         super.dataBinding()
-        binding.viewModel = viewModel
+        binding.viewModel = registerViewModel
     }
 
     override fun afterDataBinding() {
-        binding.viewpager.adapter = RegisterStateAdapter(this, viewModel)
+        binding.viewpager.adapter = RegisterStateAdapter(this, registerViewModel)
         binding.viewpager.isUserInputEnabled = false
 
-        viewModel.onNextEvent.observe(this) {
+        registerViewModel.onNextEvent.observe(this) {
             val position = binding.viewpager.currentItem
 
             if (position + 1 < RegisterStateAdapter.NUMBER_OF_PAGE) binding.viewpager.currentItem = position + 1
             else {
-                viewModel.onCompleteClick()
+                registerViewModel.onCompleteClick()
 //                finish()
             }
         }
 
-        viewModel.onPreviousEvent.observe(this) {
+        registerViewModel.onPreviousEvent.observe(this) {
             val position = binding.viewpager.currentItem
 
             if (position == 0) finish()
@@ -69,15 +69,15 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
         it.takeIf { it.resultCode == Activity.RESULT_OK }?.data?.data?.let { uri ->
             val uriPathHelper = URIPathHelper()
             val filePath = uriPathHelper.getPath(this, uri)
-            viewModel.imageUrl.value = filePath
-            viewModel.updateImage()
+            registerViewModel.imageUrl.value = filePath
+            registerViewModel.updateImage()
         } ?: Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
     }
 
     private val titleTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.titleEditTextEmpty.value = s.toString().isEmpty()
+            registerViewModel.titleEditTextEmpty.value = s.toString().isEmpty()
         }
 
         override fun afterTextChanged(s: Editable?) {}
@@ -85,7 +85,7 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
     private val targetTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.targetEditTextEmpty.value = s.toString().isEmpty()
+            registerViewModel.targetEditTextEmpty.value = s.toString().isEmpty()
         }
 
         override fun afterTextChanged(s: Editable?) {}
@@ -110,65 +110,65 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
     }
 
     private fun setupCancelButtons() {
-        observe(viewModel.startHomeActivityClickEvent) {
+        observe(registerViewModel.startHomeActivityClickEvent) {
             finish()
         }
     }
 
     private fun setupStartDatePicker() {
-        viewModel.startDatePickerClickEvent.observe(this) {
+        registerViewModel.startDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setStartDate(cal.time)
-                    viewModel.datePickerValueStartYear = y
-                    viewModel.datePickerValueStartMonth = m + 1
-                    viewModel.datePickerValueStartDay = d
+                    registerViewModel.setStartDate(cal.time)
+                    registerViewModel.datePickerValueStartYear = y
+                    registerViewModel.datePickerValueStartMonth = m + 1
+                    registerViewModel.datePickerValueStartDay = d
                 },
-                viewModel.datePickerValueStartYear,
-                viewModel.datePickerValueStartMonth - 1,
-                viewModel.datePickerValueStartDay
+                registerViewModel.datePickerValueStartYear,
+                registerViewModel.datePickerValueStartMonth - 1,
+                registerViewModel.datePickerValueStartDay
             ).show()
 
         }
     }
 
     private fun setupStartTimePicker() {
-        viewModel.startTimePickerClickEvent.observe(this) {
+        registerViewModel.startTimePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setStartTime(cal.time)
-                    viewModel.timePickerValueStartTime = h
-                    viewModel.timePickerValueStartMinute = m
+                    registerViewModel.setStartTime(cal.time)
+                    registerViewModel.timePickerValueStartTime = h
+                    registerViewModel.timePickerValueStartMinute = m
                 },
-                viewModel.timePickerValueStartTime, viewModel.timePickerValueStartMinute, false
+                registerViewModel.timePickerValueStartTime, registerViewModel.timePickerValueStartMinute, false
             ).show()
         }
     }
 
     private fun setupEndDatePicker() {
-        viewModel.endDatePickerClickEvent.observe(this) {
+        registerViewModel.endDatePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setEndDate(cal.time)
+                    registerViewModel.setEndDate(cal.time)
                 },
-                viewModel.datePickerValueEndYear,
-                viewModel.datePickerValueEndMonth - 1,
-                viewModel.datePickerValueEndDay
+                registerViewModel.datePickerValueEndYear,
+                registerViewModel.datePickerValueEndMonth - 1,
+                registerViewModel.datePickerValueEndDay
             ).apply {
                 datePicker.minDate = cal.apply {
                     cal.set(
-                        viewModel.datePickerValueStartYear,
-                        viewModel.datePickerValueStartMonth - 1,
-                        viewModel.datePickerValueStartDay
+                        registerViewModel.datePickerValueStartYear,
+                        registerViewModel.datePickerValueStartMonth - 1,
+                        registerViewModel.datePickerValueStartDay
                     )
                 }.timeInMillis
             }.show()
@@ -176,23 +176,23 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
     }
 
     private fun setupEndTimePicker() {
-        viewModel.endTimePickerClickEvent.observe(this) {
+        registerViewModel.endTimePickerClickEvent.observe(this) {
             val cal = Calendar.getInstance()
             TimePickerDialog(
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setEndTime(cal.time)
-                    viewModel.timePickerValueEndTime = h
-                    viewModel.timePickerValueEndMinute = m
+                    registerViewModel.setEndTime(cal.time)
+                    registerViewModel.timePickerValueEndTime = h
+                    registerViewModel.timePickerValueEndMinute = m
                 },
-                viewModel.timePickerValueEndTime, viewModel.timePickerValueEndMinute, false
+                registerViewModel.timePickerValueEndTime, registerViewModel.timePickerValueEndMinute, false
             ).show()
         }
     }
 
     private fun initAddPhotoButton() {
-        viewModel.startGalleryClickEvent.observe(this) {
+        registerViewModel.startGalleryClickEvent.observe(this) {
             Log.i("BUTTON", "initAddPhotoButton")
 
             val permissionStatus = ContextCompat.checkSelfPermission(
@@ -275,6 +275,6 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
     private fun extractEventIdAndLoad() {
         val id = getIntExtra(IntentMessage.EVENT_ID) ?: -1
 
-        viewModel.load(id)
+        registerViewModel.load(id)
     }
 }
