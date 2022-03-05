@@ -190,8 +190,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -212,8 +212,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
