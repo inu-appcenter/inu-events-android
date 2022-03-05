@@ -177,8 +177,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         return array[selectedItemPosition.value!!]
     }
 
-    private fun datePickerToStartAt(): String {
-        return period.formatDateForServer("${startDatePeriod.value!!} ${startTimePeriod.value!!}")
+    private fun datePickerToStartAt(startDatePeriod: String, startTimePeriod: String): String {
+        return period.formatDateForServer("$startDatePeriod $startTimePeriod")
     }
 
     private fun datePickerToEndAt(): String {
@@ -204,7 +204,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(),
+                    startAt = datePickerToStartAt(startDatePeriod.value!!, startTimePeriod.value!!),
                     endAt = datePickerToEndAt(),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
@@ -226,7 +226,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(),
+                    startAt = datePickerToStartAt(startDatePeriod.value!!, startTimePeriod.value!!),
                     endAt = datePickerToEndAt(),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
