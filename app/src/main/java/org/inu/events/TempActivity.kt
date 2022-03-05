@@ -44,16 +44,15 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
     }
 
     override fun afterDataBinding() {
-        binding.viewpager.adapter = RegisterStateAdapter(this)
+        binding.viewpager.adapter = RegisterStateAdapter(this, viewModel)
 
         viewModel.onNextEvent.observe(this) {
             val position = binding.viewpager.currentItem
 
-            if (position + 1 < RegisterStateAdapter.NUMBER_OF_PAGE) binding.viewpager.currentItem =
-                position + 1
+            if (position + 1 < RegisterStateAdapter.NUMBER_OF_PAGE) binding.viewpager.currentItem = position + 1
             else {
                 viewModel.onCompleteClick()
-                finish()
+//                finish()
             }
         }
 

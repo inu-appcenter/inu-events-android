@@ -6,9 +6,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import org.inu.events.RegisterFragment1
 import org.inu.events.RegisterFragment2
 import org.inu.events.RegisterFragment3
+import org.inu.events.viewmodel.TempViewModel
 import java.lang.IllegalArgumentException
 
-class RegisterStateAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+class RegisterStateAdapter(fa: FragmentActivity, val viewModel: TempViewModel) : FragmentStateAdapter(fa) {
     companion object {
         const val NUMBER_OF_PAGE = 3
     }
@@ -17,9 +18,9 @@ class RegisterStateAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> RegisterFragment1()
-            1 -> RegisterFragment2()
-            2 -> RegisterFragment3()
+            0 -> RegisterFragment1(viewModel)
+            1 -> RegisterFragment2(viewModel)
+            2 -> RegisterFragment3(viewModel)
             else -> throw IllegalArgumentException("존재하지 않는 페이지입니다.")
         }
     }

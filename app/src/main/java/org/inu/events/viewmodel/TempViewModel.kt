@@ -185,6 +185,7 @@ class TempViewModel : ViewModel(), KoinComponent {
 
     fun onCompleteClick() {
         // TODO : 필수 항목 작성 여부 체크
+
         if (isItNew) {
             addEvent()
         } else {

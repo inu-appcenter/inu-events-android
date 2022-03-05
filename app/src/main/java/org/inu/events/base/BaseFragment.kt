@@ -1,6 +1,7 @@
 package org.inu.events.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,21 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<VB>(inflater, layoutResourceId, container, false)
+        binding = DataBindingUtil.inflate<VB>(inflater, layoutResourceId, container, false)
+        dataBinding()
         return binding.root
+    }
+
+    open fun dataBinding() {
+        binding.lifecycleOwner = this
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        afterDateBinding()
+    }
+
+    open fun afterDateBinding() {
+
     }
 }
