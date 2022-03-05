@@ -22,6 +22,7 @@ import androidx.databinding.adapters.TextViewBindingAdapter.setTextWatcher
 import org.inu.events.common.extension.getIntExtra
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.registerForActivityResult
+import org.inu.events.common.extension.toast
 import org.inu.events.common.util.URIPathHelper
 import org.inu.events.databinding.ActivityRegisterEventsBinding
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -87,10 +88,16 @@ class RegisterEventsActivity : AppCompatActivity() {
         viewModel.finishEvent.observe(
             this
         ) {
-            if(viewModel.isRequiredInformationEntered()) finish()
-            else{
-                Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
-                setUpTextWatcher()
+            when {
+                viewModel.startTimeEndTime() -> {
+                    toast("올바른 마감시간을 설정해주세요.")
+                    viewModel.onBeforeClick()
+                }
+                viewModel.isRequiredInformationEntered() -> finish()
+                else -> {
+                    Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+                    setUpTextWatcher()
+                }
             }
         }
     }
@@ -158,6 +165,8 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
                     viewModel.setStartTime(cal.time)
+                    viewModel.timePickerValueStartTime = h
+                    viewModel.timePickerValueStartMinute = m
                 },
                 viewModel.timePickerValueStartTime, viewModel.timePickerValueStartMinute, false
             ).show()
@@ -190,6 +199,8 @@ class RegisterEventsActivity : AppCompatActivity() {
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
                     viewModel.setEndTime(cal.time)
+                    viewModel.timePickerValueEndTime = h
+                    viewModel.timePickerValueEndMinute = m
                 },
                 viewModel.timePickerValueEndTime, viewModel.timePickerValueEndMinute, false
             ).show()

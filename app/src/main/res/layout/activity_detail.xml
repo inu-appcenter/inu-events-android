@@ -74,7 +74,8 @@
                         tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textIsSelectable="true"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/boardDateLayout"
@@ -118,6 +119,7 @@
                         android:text="@{detailViewModel.hostNull ? detailViewModel.currentEvent.category : @string/group(detailViewModel.currentEvent.category,detailViewModel.currentEvent.host)}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
+                        android:textIsSelectable="true"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true" />
@@ -141,6 +143,7 @@
                         android:layout_height="match_parent"
                         android:text="@{@string/event_period(detailViewModel.startDate, detailViewModel.startTime)}"
                         tools:text="2021.03.22 - 6:00PM"
+                        android:textIsSelectable="true"
                         android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -163,6 +166,7 @@
                         android:layout_height="match_parent"
                         android:text="@{@string/event_period(detailViewModel.endDate, detailViewModel.endTime)}"
                         tools:text="2021.03.22 - 8:00PM"
+                        android:textIsSelectable="true"
                         android:textColor="@color/black1"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -187,6 +191,7 @@
                         android:layout_height="match_parent"
                         android:text="@{detailViewModel.currentEvent.target}"
                         tools:text="1년이상 활동 가능한 사람"
+                        android:textIsSelectable="true"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         android:ellipsize="marquee"
@@ -246,6 +251,7 @@
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         tools:text="https://github.com/inu-appcenter"
+                        android:textIsSelectable="true"
                         android:maxLines="1"
                         android:ellipsize="end"/>
                 </LinearLayout>
@@ -260,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="24dp"
-                    android:text="상세 내용"
+                    android:text="@string/text_detail_letter"
                     android:textColor="@color/black1"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -271,6 +277,7 @@
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
                     tools:text="@string/detail_content"
+                    android:textIsSelectable="true"
                     android:text="@{detailViewModel.currentEvent.body}"
                     android:textColor="@color/black1"
                     android:textSize="15sp"

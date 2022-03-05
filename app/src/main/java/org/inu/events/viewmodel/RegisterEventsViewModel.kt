@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.timepicker.TimeFormat
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.internal.UTC
 import org.inu.events.R
+import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
@@ -20,7 +22,9 @@ import org.koin.core.component.inject
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.*
+import java.time.Instant.now
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 
 class RegisterEventsViewModel : ViewModel(), KoinComponent {
@@ -42,7 +46,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
-    val timeCheckBoxBoolean = MutableLiveData(false)
     val sameCheckBoxBoolean = MutableLiveData(false)
     val hostCheckBoxBoolean = MutableLiveData(false)
     val contactNumberCheckBoxBoolean = MutableLiveData(false)
@@ -66,8 +69,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private var urlTmp: String? = ""
     private var dateTmp: String? = today.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
     private var timeTmp: String? = today.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en","US")))
-    private var startTimeTmp: String? = ""
     private var hostTmp: String? = ""
+
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수
@@ -82,6 +85,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
     var timePickerValueEndTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueEndMinute = cal.get(Calendar.MINUTE)
+    private lateinit var startTime:Date
+    private lateinit var endTime:Date
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -137,10 +142,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(currentEvent?.contact == null){
             contactNumberCheckBoxBoolean.value = true
         }
-        if(currentEvent?.startAt!!.slice(IntRange(11,15))=="00:00"
-            && currentEvent?.endAt!!.slice(IntRange(11,15))=="23:59"){
-            timeCheckBoxBoolean.value = true
-        }
         if(currentEvent?.startAt == currentEvent?.endAt){
             sameCheckBoxBoolean.value = true
         }
@@ -189,8 +190,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -211,8 +212,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     target = target.value,
                     startAt = datePickerToStartAt(),
                     endAt = datePickerToEndAt(),
-                    contact = contactNumber.value,
-                    location = location.value,
+                    contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
+                    location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
@@ -221,8 +222,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }.catch{ }
     }
 
+    fun startTimeEndTime(): Boolean{
+        if(startDatePeriod.value == endDatePeriod.value){
+            val timeDiff = endTime.compareTo(startTime)
+            if(timeDiff < 0 ) return true
+        }
+        return false
+    }
+
     private fun noImage(){
-        if(imageCheckBoxBoolean.value == true) imageUuid = imageUuidList[selectedItemPosition.value!!]
+        if(imageUuid == "") imageCheckBoxBoolean.value = true
+        if(imageCheckBoxBoolean.value == true){
+            imageUuid = imageUuidList[selectedItemPosition.value!!]
+        }
     }
 
     private fun uploadImage(){
@@ -261,7 +273,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        isNoTime()
         if(isRequiredInformationEntered()){
             if (isItNew) {
                 addEvent()
@@ -272,15 +283,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             onBeforeClick()
             titleEditTextEmpty.value = title.value.isNullOrBlank()
             targetEditTextEmpty.value = target.value.isNullOrBlank()
-        }
-    }
-
-    private fun isNoTime() {
-        if(startTimePeriod.value == "시간선택 X"){
-            startTimePeriod.value = "00:00 AM"
-        }
-        if(endTimePeriod.value == "시간선택 X"){
-            endTimePeriod.value = "11:59 PM"
         }
     }
 
@@ -326,22 +328,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onTimeCheckBoxClick(){      //시간 선택 안함
-        when{
-            timeCheckBoxBoolean.value!! -> {
-                if(sameCheckBoxBoolean.value!!){
-                    endDatePeriod.value = startDatePeriod.value
-                    endTimePeriod.value = "시간선택 X"
-                }
-                startTimeTmp = startTimePeriod.value
-                startTimePeriod.value = "시간선택 X"
-            }
-            !(timeCheckBoxBoolean.value!!) ->{
-                startTimePeriod.value = startTimeTmp
-            }
-        }
-    }
-
     fun onSameCheckBoxClick(){      //위와 동일 체크
         when{
             sameCheckBoxBoolean.value!! -> {
@@ -382,6 +368,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun setStartTime(date: Date) {
+        startTime = date
         startTimePeriod.value = formatTime(date)
     }
 
@@ -390,16 +377,18 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun setEndTime(date: Date) {
+        endTime = date
         endTimePeriod.value = formatTime(date)
     }
 
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
-        .format(date)
-        .toString()
+            .format(date)
+            .toString()
+
 
     private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
-        .format(date)
-        .toString()
+            .format(date)
+            .toString()
 
     private fun serverDateToString(date: String): String{
         val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)

@@ -20,7 +20,8 @@
             android:id="@+id/layout0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{registerViewModel.phase == 0 ? View.VISIBLE : View.INVISIBLE}">
+            android:visibility="@{registerViewModel.phase == 0 ? View.VISIBLE : View.INVISIBLE}"
+            tools:visibility="gone">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register0"
@@ -168,7 +169,8 @@
             android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}">
+            android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
+            tools:visibility="visible">
 
 
             <ScrollView
@@ -374,31 +376,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/editText_target" />
 
                     <TextView
-                        android:id="@+id/checkBox_start_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:text="시간선택 안함"
-                        android:textColor="@color/black7"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
-                        app:layout_constraintEnd_toStartOf="@+id/checkBox_start"
-                        app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
-
-                    <CheckBox
-                        android:id="@+id/checkBox_start"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/custom_checkbox"
-                        android:button="@null"
-                        android:checked="@={registerViewModel.timeCheckBoxBoolean}"
-                        android:onClick="@{() -> registerViewModel.onTimeCheckBoxClick()}"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView_start_period"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView_start_period" />
-
-                    <TextView
                         android:id="@+id/editText_start_date"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/exitText_height"
@@ -437,7 +414,6 @@
                         android:background="@drawable/drawable_edit_text_background"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
-                        android:enabled="@{!registerViewModel.timeCheckBoxBoolean}"
                         android:text="@={registerViewModel.startTimePeriod}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
@@ -706,7 +682,8 @@
             android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}">
+            android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
+            tools:visibility="gone">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register2"
@@ -750,12 +727,11 @@
                 android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/drawable_edit_text_background"
-                android:hint="@string/text_input"
+                android:hint="@string/hintText_body"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="12dp"
                 android:text="@={registerViewModel.body}"
-                android:textColorHint="@color/white"
                 android:textSize="16sp"
                 android:gravity="top"
                 app:layout_constraintEnd_toEndOf="parent"
