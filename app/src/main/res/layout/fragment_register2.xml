@@ -152,7 +152,7 @@
                     android:layout_marginTop="4dp"
                     android:background="@drawable/spinner_background"
                     android:entries="@array/classification"
-                    android:paddingHorizontal="16dp"
+                    android:paddingHorizontal="8dp"
                     android:paddingVertical="10dp"
                     android:selectedItemPosition="@={viewModel.selectedItemPosition}"
                     android:spinnerMode="dropdown"
