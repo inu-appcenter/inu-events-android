@@ -30,11 +30,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     val onNextEvent = SingleLiveEvent<Any>()
 
     val selectedItemPosition = MutableLiveData(0)
-    private val startDatePeriod = MutableLiveData("")
-    private val startTimePeriod = MutableLiveData("")
-    private val endDatePeriod = MutableLiveData("")
-    private val endTimePeriod = MutableLiveData("")
-    val period = Period(startDatePeriod, startTimePeriod, endDatePeriod, endTimePeriod)
+    val period = Period()
     val content = MutableLiveData("")
     val title = MutableLiveData("")
     val body = MutableLiveData("")
@@ -193,8 +189,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = period.datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = period.datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
+                    startAt = period.datePickerToString(period.startDate.value!!, period.startTime.value!!),
+                    endAt = period.datePickerToString(period.endDate.value!!, period.endTime.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
@@ -215,8 +211,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = period.datePickerToString(startDatePeriod.value!!, startTimePeriod.value!!),
-                    endAt = period.datePickerToString(endDatePeriod.value!!, endTimePeriod.value!!),
+                    startAt = period.datePickerToString(period.startDate.value!!, period.startTime.value!!),
+                    endAt = period.datePickerToString(period.endDate.value!!, period.endTime.value!!),
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
@@ -228,7 +224,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun startTimeEndTime(): Boolean{
-        if(startDatePeriod.value == endDatePeriod.value){
+        if(period.startDate.value == period.endDate.value){
             val timeDiff = endTime.compareTo(startTime)
             if(timeDiff < 0 ) return true
         }
@@ -300,14 +296,14 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     fun onSameCheckBoxClick(){      //위와 동일 체크
         when{
             sameCheckBoxBoolean.value!! -> {
-                dateTmp = endDatePeriod.value
-                timeTmp = endTimePeriod.value
-                endDatePeriod.value = startDatePeriod.value
-                endTimePeriod.value = startTimePeriod.value
+                dateTmp = period.endDate.value
+                timeTmp = period.endTime.value
+                period.endDate.value = period.startDate.value
+                period.endTime.value = period.startTime.value
             }
             !(sameCheckBoxBoolean.value!!) ->{
-                endDatePeriod.value = dateTmp
-                endTimePeriod.value = timeTmp
+                period.endDate.value = dateTmp
+                period.endTime.value = timeTmp
             }
         }
     }
@@ -333,21 +329,21 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun setStartDate(date: Date) {
-        startDatePeriod.value = formatDate(date)
+        period.startDate.value = formatDate(date)
     }
 
     fun setStartTime(date: Date) {
         startTime = date
-        startTimePeriod.value = formatTime(date)
+        period.startTime.value = formatTime(date)
     }
 
     fun setEndDate(date: Date) {
-        endDatePeriod.value = formatDate(date)
+        period.endDate.value = formatDate(date)
     }
 
     fun setEndTime(date: Date) {
         endTime = date
-        endTimePeriod.value = formatTime(date)
+        period.endTime.value = formatTime(date)
     }
 
     private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
@@ -360,23 +356,23 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
 
     private fun datePickerSelect() {
-        startDatePeriod.value = period.serverDateToString(currentEvent!!.startAt)
-        endDatePeriod.value = period.serverDateToString(currentEvent!!.endAt)
-        datePickerValueStartYear = startDatePeriod.value!!.slice(IntRange(0,3)).toInt()
-        datePickerValueStartMonth = startDatePeriod.value!!.slice(IntRange(5,6)).toInt()
-        datePickerValueStartDay = startDatePeriod.value!!.slice(IntRange(8,9)).toInt()
-        datePickerValueEndYear = endDatePeriod.value!!.slice(IntRange(0,3)).toInt()
-        datePickerValueEndMonth = endDatePeriod.value!!.slice(IntRange(5,6)).toInt()
-        datePickerValueEndDay = endDatePeriod.value!!.slice(IntRange(8,9)).toInt()
+        period.startDate.value = period.serverDateToString(currentEvent!!.startAt)
+        period.endDate.value = period.serverDateToString(currentEvent!!.endAt)
+        datePickerValueStartYear = period.startDate.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueStartMonth = period.startDate.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueStartDay = period.startDate.value!!.slice(IntRange(8,9)).toInt()
+        datePickerValueEndYear = period.endDate.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueEndMonth = period.endDate.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueEndDay = period.endDate.value!!.slice(IntRange(8,9)).toInt()
     }
 
     private fun timePickerSelect() {    //행사 수정 시 서버에서 받아온 시간 값을 textView에 표시하기 위한 함수
-        startTimePeriod.value = period.serverTimeToString(currentEvent!!.startAt)
-        endTimePeriod.value = period.serverTimeToString(currentEvent!!.endAt)
-        timePickerValueStartTime = startTimePeriod.value!!.slice(IntRange(0,1)).toInt()
-        timePickerValueStartMinute = startTimePeriod.value!!.slice(IntRange(3,4)).toInt()
-        timePickerValueEndTime = endTimePeriod.value!!.slice(IntRange(0,1)).toInt()
-        timePickerValueEndMinute = endTimePeriod.value!!.slice(IntRange(3,4)).toInt()
+        period.startTime.value = period.serverTimeToString(currentEvent!!.startAt)
+        period.endTime.value = period.serverTimeToString(currentEvent!!.endAt)
+        timePickerValueStartTime = period.startTime.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueStartMinute = period.startTime.value!!.slice(IntRange(3,4)).toInt()
+        timePickerValueEndTime = period.endTime.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueEndMinute = period.endTime.value!!.slice(IntRange(3,4)).toInt()
     }
 
     fun setupCurrentTime() {
