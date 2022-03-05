@@ -41,16 +41,15 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
             }
         }
 
-        private var checkDeadline: Boolean = false
-
         init {
             itemView.setOnClickListener(this)
         }
+
         fun bind(homeData: Event, position: Int) {
             binding.item = homeData
             binding.viewModel = viewModel
-            binding.boardDate.text = whenDay(homeData.endAt)
-            binding.boardDate.backgroundTintList = when(checkDeadline){
+            binding.boardDate.text = viewModel.whenDay(homeData.endAt)
+            binding.boardDate.backgroundTintList = when(viewModel.onDeadLineCheck()){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
                 else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
             }
@@ -68,27 +67,6 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
             }
         }
 
-        private fun whenDay(end_at: String?): String {
-            if (end_at == null) return "D-??"
-
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-            val endDate = dateFormat.parse(end_at).time
-            val today = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.time.time
-
-            var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
-
-            if (dDay < 0) {
-                checkDeadline = true
-                return "마감"
-            }
-            return "D-${if(dDay.toInt() == 0) "day" else dDay}"
-        }
     }
 }
 
