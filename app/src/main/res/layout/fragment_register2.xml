@@ -471,7 +471,7 @@
                     android:layout_height="@dimen/exitText_height"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="100dp"
+                    android:layout_marginBottom="24dp"
                     android:background="@drawable/drawable_edit_text_background"
                     android:enabled="@{!viewModel.locationCheckBoxBoolean}"
                     android:hint="@string/text_input"

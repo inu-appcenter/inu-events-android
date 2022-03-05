@@ -45,6 +45,7 @@ class TempActivity : BaseActivity<ActivityTempBinding>() {
 
     override fun afterDataBinding() {
         binding.viewpager.adapter = RegisterStateAdapter(this, viewModel)
+        binding.viewpager.isUserInputEnabled = false
 
         viewModel.onNextEvent.observe(this) {
             val position = binding.viewpager.currentItem
