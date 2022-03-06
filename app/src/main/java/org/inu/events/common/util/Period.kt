@@ -51,4 +51,31 @@ class Period {
     fun formatTime(date: Date): String = SimpleDateFormat("hh:mm a", Locale("en", "US"))
         .format(date)
         .toString()
+
+    fun setStartDate(date: Date) {
+        startDate.value = formatDate(date)
+    }
+
+    fun setStartTime(date: Date) {
+        startDateTime = date
+        startTime.value = formatTime(date)
+    }
+
+    fun setEndDate(date: Date) {
+        endDate.value = formatDate(date)
+    }
+
+    fun setEndTime(date: Date) {
+        endDateTime = date
+        endTime.value = formatTime(date)
+    }
+
+    fun setupCurrentTime() {
+        val date = Date()
+
+        setStartDate(date)
+        setStartTime(date)
+        setEndDate(date)
+        setEndTime(date)
+    }
 }

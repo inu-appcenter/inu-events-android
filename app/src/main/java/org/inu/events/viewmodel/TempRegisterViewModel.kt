@@ -325,24 +325,6 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun setStartDate(date: Date) {
-        period.startDate.value = period.formatDate(date)
-    }
-
-    fun setStartTime(date: Date) {
-        period.startDateTime = date
-        period.startTime.value = period.formatTime(date)
-    }
-
-    fun setEndDate(date: Date) {
-        period.endDate.value = period.formatDate(date)
-    }
-
-    fun setEndTime(date: Date) {
-        period.endDateTime = date
-        period.endTime.value = period.formatTime(date)
-    }
-
     private fun datePickerSelect() {
         period.startDate.value = period.serverDateToString(currentEvent!!.startAt)
         period.endDate.value = period.serverDateToString(currentEvent!!.endAt)
@@ -364,11 +346,6 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun setupCurrentTime() {
-        val date = Date()
-
-        setStartDate(date)
-        setStartTime(date)
-        setEndDate(date)
-        setEndTime(date)
+        period.setupCurrentTime()
     }
 }

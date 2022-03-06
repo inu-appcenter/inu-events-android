@@ -120,7 +120,7 @@ class TempRegisterActivity : BaseActivity<ActivityTempRegisterBinding>() {
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setStartDate(cal.time)
+                    viewModel.period.setStartDate(cal.time)
                     viewModel.datePickerValueStartYear = y
                     viewModel.datePickerValueStartMonth = m + 1
                     viewModel.datePickerValueStartDay = d
@@ -140,7 +140,7 @@ class TempRegisterActivity : BaseActivity<ActivityTempRegisterBinding>() {
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setStartTime(cal.time)
+                    viewModel.period.setStartTime(cal.time)
                     viewModel.timePickerValueStartTime = h
                     viewModel.timePickerValueStartMinute = m
                 },
@@ -156,7 +156,7 @@ class TempRegisterActivity : BaseActivity<ActivityTempRegisterBinding>() {
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setEndDate(cal.time)
+                    viewModel.period.setEndDate(cal.time)
                 },
                 viewModel.datePickerValueEndYear,
                 viewModel.datePickerValueEndMonth - 1,
@@ -180,7 +180,7 @@ class TempRegisterActivity : BaseActivity<ActivityTempRegisterBinding>() {
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setEndTime(cal.time)
+                    viewModel.period.setEndTime(cal.time)
                     viewModel.timePickerValueEndTime = h
                     viewModel.timePickerValueEndMinute = m
                 },
