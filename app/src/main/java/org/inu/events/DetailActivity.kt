@@ -45,6 +45,7 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         setupToolbar()
         showMenu()
+        showUserMenu()
         setTextView()
     }
 
@@ -138,7 +139,6 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
-        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -175,6 +175,17 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         }
     }
 
+    private fun showUserMenu(){
+        observe(viewModel.userMenuClickEvent){
+            UniActionSheet(this)
+                .addText("사용자 메뉴")
+                .addAction("차단하기"){
+                    //todo - 차단한사람 글이랑 댓글 안보이게 해야함
+                    toast("(임시로)차단했습니다")
+                }
+                .show()
+        }
+    }
 
     override fun onStart() {
         super.onStart()

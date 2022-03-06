@@ -40,11 +40,12 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
-    val period = Period()
+    var createdDate = MutableLiveData("")
     val notificationOnOff = MutableLiveData(false)
     val like = MutableLiveData(0)
     val likeOnOff = MutableLiveData(false)
     private val notificationSetFor = MutableLiveData("")
+    private val period = Period()
 
     var eventIndex = -1
         private set
@@ -54,6 +55,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
     val menuClickEvent = SingleLiveEvent<Any>()
+    val userMenuClickEvent = SingleLiveEvent<Any>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
@@ -102,6 +104,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             endDate.value = period.serverDateToString(it.endAt)
             startTime.value = period.serverTimeToString(it.startAt)
             endTime.value = period.serverTimeToString(it.endAt)
+            createdDate.value = period.serverDateToString(it.createdAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
             locationNull.value = (it.location == null)
             contactNull.value = (it.contact == null)
@@ -156,6 +159,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     fun onClickMenu(){
         menuClickEvent.call()
+    }
+
+    fun onClickUserMenu(){
+        userMenuClickEvent.call()
     }
 
     // 게시물의 시작시간과 마감시간 또 현재 시간을 비교하는 함수
