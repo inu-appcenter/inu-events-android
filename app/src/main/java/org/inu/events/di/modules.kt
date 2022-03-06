@@ -9,6 +9,7 @@ import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.data.httpservice.*
 import org.inu.events.data.repository.*
 import org.inu.events.data.repository.impl.*
+import org.inu.events.data.repository.mock.BlockRepositoryMock
 import org.inu.events.service.LoginService
 import org.inu.events.service.UserService
 import org.koin.dsl.module
@@ -67,6 +68,12 @@ val myModules = module {
     single<UserRepository> {
         UserRepositoryImpl(get())
 //        UserRepositoryMock()
+    }
+
+    single<BlockRepository> {
+        // TODO -지금은 임시 데이터
+        BlockRepositoryMock()
+    //  BlockRepositoryImpl(get())
     }
 
     single<NotificationRepository>{

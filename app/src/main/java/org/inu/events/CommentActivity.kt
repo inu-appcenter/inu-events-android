@@ -43,8 +43,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupButtons()
         setupRecyclerView()
         setupToolbar()
-        this.setUpMenuWroteByMe()
-        this.setUpMenuNotWroteByMe()
+        this.setupMenu()
         setUpListener()
     }
 
@@ -147,15 +146,6 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     .addAction("사용자 차단하기"){}
                     .show()
             }
-        }
-    }
-    private fun setUpMenuNotWroteByMe() {
-        observe(commentViewModel.plusBtnNotWroteByMeClickEvent) {
-            UniActionSheet(this)
-                .addText("댓글 메뉴")
-                .addAction("신고하기") { } // todo - 안에 신고하기, 차단하기 기능 추가
-                .addAction("사용자 차단하기") {}
-                .show()
         }
     }
 
