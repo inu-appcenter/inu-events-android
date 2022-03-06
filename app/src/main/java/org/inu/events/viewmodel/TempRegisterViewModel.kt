@@ -39,10 +39,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
     val imageCheckBoxBoolean = MutableLiveData(false)
-    val sameCheckBoxBoolean = MutableLiveData(false)
-    val hostCheckBoxBoolean = MutableLiveData(false)
-    val contactNumberCheckBoxBoolean = MutableLiveData(false)
-    val locationCheckBoxBoolean = MutableLiveData(false)
+    val register2ViewModel = Register2ViewModel()
     val titleEditTextEmpty = MutableLiveData(false)
     val targetEditTextEmpty = MutableLiveData(false)
 
@@ -122,16 +119,16 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
     private fun loadCheckBoxState() {
         if(currentEvent?.host == null){
-            hostCheckBoxBoolean.value = true
+            register2ViewModel.hostCheckBoxBoolean.value = true
         }
         if(currentEvent?.location == null){
-            locationCheckBoxBoolean.value = true
+            register2ViewModel.locationCheckBoxBoolean.value = true
         }
         if(currentEvent?.contact == null){
-            contactNumberCheckBoxBoolean.value = true
+            register2ViewModel.contactNumberCheckBoxBoolean.value = true
         }
         if(currentEvent?.startAt == currentEvent?.endAt){
-            sameCheckBoxBoolean.value = true
+            register2ViewModel.sameCheckBoxBoolean.value = true
         }
         val booleanImageDefault = imageUuidList.contains(currentEvent?.imageUuid)
         if(booleanImageDefault){
@@ -264,11 +261,11 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
     fun onLocationCheckBoxClick(){
         when{
-            locationCheckBoxBoolean.value!! ->{
+            register2ViewModel.locationCheckBoxBoolean.value!! ->{
                 urlTmp = location.value
                 location.value = null
             }
-            !(locationCheckBoxBoolean.value!!) -> location.value = urlTmp
+            !(register2ViewModel.locationCheckBoxBoolean.value!!) -> location.value = urlTmp
         }
     }
 
@@ -284,13 +281,13 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
     fun onSameCheckBoxClick(){      //위와 동일 체크
         when{
-            sameCheckBoxBoolean.value!! -> {
+            register2ViewModel.sameCheckBoxBoolean.value!! -> {
                 dateTmp = period.endDate.value
                 timeTmp = period.endTime.value
                 period.endDate.value = period.startDate.value
                 period.endTime.value = period.startTime.value
             }
-            !(sameCheckBoxBoolean.value!!) ->{
+            !(register2ViewModel.sameCheckBoxBoolean.value!!) ->{
                 period.endDate.value = dateTmp
                 period.endTime.value = timeTmp
             }
@@ -299,21 +296,21 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
     fun onContactNumberCheckBoxClick() {
         when {
-            contactNumberCheckBoxBoolean.value!! -> {
+            register2ViewModel.contactNumberCheckBoxBoolean.value!! -> {
                 contactTmp = contactNumber.value
                 contactNumber.value = null
             }
-            !(contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
+            !(register2ViewModel.contactNumberCheckBoxBoolean.value!!) -> contactNumber.value = contactTmp
         }
     }
 
     fun onHostCheckBoxClick() {
         when {
-            hostCheckBoxBoolean.value!! -> {
+            register2ViewModel.hostCheckBoxBoolean.value!! -> {
                 hostTmp = host.value
                 host.value = null
             }
-            !(hostCheckBoxBoolean.value!!) -> host.value = hostTmp
+            !(register2ViewModel.hostCheckBoxBoolean.value!!) -> host.value = hostTmp
         }
     }
 
