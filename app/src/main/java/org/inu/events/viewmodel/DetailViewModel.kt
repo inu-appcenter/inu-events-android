@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import org.inu.events.R
 import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
+import org.inu.events.common.util.Period
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.LikeParam
@@ -39,6 +40,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     var endDate = MutableLiveData("")
     var startTime = MutableLiveData("")
     var endTime = MutableLiveData("")
+    val period = Period()
     val notificationOnOff = MutableLiveData(false)
     val like = MutableLiveData(0)
     val likeOnOff = MutableLiveData(false)
@@ -66,15 +68,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
     fun load(eventId: Int) {
         eventIndex = eventId
         loadDetailData()
-    }
-
-    private fun serverDateToString(date: String): String{
-        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-    }
-    private fun serverTimeToString(time: String): String{
-        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
     }
 
     private fun whenDay(end_at: String?): String {
@@ -105,10 +98,10 @@ class DetailViewModel : ViewModel(), KoinComponent {
             eventRepository.getEvent(eventIndex)
         }.then {
             _currentEvent.value = it
-            startDate.value = serverDateToString(it.startAt)
-            endDate.value = serverDateToString(it.endAt)
-            startTime.value = serverTimeToString(it.startAt)
-            endTime.value = serverTimeToString(it.endAt)
+            startDate.value = period.serverDateToString(it.startAt)
+            endDate.value = period.serverDateToString(it.endAt)
+            startTime.value = period.serverTimeToString(it.startAt)
+            endTime.value = period.serverTimeToString(it.endAt)
             imageUrl.value = "http://uniletter.inuappcenter.kr/images/${it.imageUuid}"
             locationNull.value = (it.location == null)
             contactNull.value = (it.contact == null)
