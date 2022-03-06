@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.AddBlockParams
 import org.inu.events.data.model.dto.AddCommentParams
 import org.inu.events.data.model.dto.UpdateCommentParams
 import org.inu.events.data.model.entity.Comment
 import org.inu.events.data.model.entity.Event
+import org.inu.events.data.repository.BlockRepository
 import org.inu.events.data.repository.CommentRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.service.LoginService
@@ -19,6 +21,7 @@ import org.koin.core.component.inject
 class CommentViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
+    private val blockRepository: BlockRepository by inject()
 
     private val _commentDataList = MutableLiveData<List<Comment>>()
     val commentList: LiveData<List<Comment>>
@@ -45,6 +48,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
     var eventIndex = -1
         private set
     var commentIndex = -1
+        private set
+    var userIndex = -1
         private set
 
     fun load(eventId: Int) {
@@ -96,6 +101,16 @@ class CommentViewModel : ViewModel(), KoinComponent {
         }.catch { }
     }
 
+    fun blockUser() {
+        execute {
+            blockRepository.postBlockUsers(
+                AddBlockParams(
+                    blockUser = userIndex
+                )
+            )
+        }
+    }
+
     private fun loadCommentList(callback: () -> Unit = {}) {
         execute {
             commentRepository.getComments(eventIndex)
@@ -123,9 +138,11 @@ class CommentViewModel : ViewModel(), KoinComponent {
         content.value = ""
     }
 
-    fun showBottomSheet(commentId: Int, wroteByMe: Boolean) {
+    fun showBottomSheet(commentId: Int,userId: Int, wroteByMe: Boolean) {
         commentIndex = commentId
+        userIndex = userId
         Log.i("commentIndex showBottom", commentIndex.toString())
+        Log.i("userIndex showBottom", userIndex.toString())
         plusBtnClickEvent.value = wroteByMe
     }
 

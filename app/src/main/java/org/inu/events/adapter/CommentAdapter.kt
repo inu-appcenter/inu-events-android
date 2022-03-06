@@ -39,10 +39,11 @@ class CommentAdapter(private val viewModel: CommentViewModel) :
 
             binding.commentMoreButton.setOnClickListener{
                 if (commentModel.wroteByMe == true) {
-                    viewModel.showBottomSheet(commentModel.id,true)
+                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,true)
                     Log.i("CLICK", viewModel.commentIndex.toString())
                 }else{
-                    viewModel.showBottomSheet(commentModel.id,false)
+                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,false)
+                    Log.i("CLICK",commentModel.userId.toString())
                 }
             }
         }

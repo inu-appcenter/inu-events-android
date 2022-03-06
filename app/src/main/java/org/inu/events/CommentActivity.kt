@@ -138,12 +138,11 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     .addText("댓글 삭제")
                     .addAction("삭제") { commentViewModel.deleteComment {} }
                     .show()
-            }
-            else {
+            } else {
                 UniActionSheet(this)
                     .addText("댓글 메뉴")
                     .addAction("신고하기") {}
-                    .addAction("사용자 차단하기"){}
+                    .addAction("사용자 차단하기") { commentViewModel.blockUser() }
                     .show()
             }
         }
