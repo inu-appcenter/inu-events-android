@@ -51,7 +51,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
 
     val commentClickEvent = SingleLiveEvent<Int>()
     val alarmClickEvent = SingleLiveEvent<Int>()
-    val informationClickEvent = SingleLiveEvent<Int>()
     val menuClickEvent = SingleLiveEvent<Any>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
@@ -161,10 +160,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    // i 버튼 클릭했을 때 이벤트
-    fun onClickInformation() {
-        informationClickEvent.call()
-    }
 
     fun onClickMenu(){
         menuClickEvent.call()
