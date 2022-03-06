@@ -43,7 +43,8 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupButtons()
         setupRecyclerView()
         setupToolbar()
-        setupMenu()
+        this.setUpMenuWroteByMe()
+        this.setUpMenuNotWroteByMe()
         setUpListener()
     }
 
@@ -131,11 +132,20 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         commentViewModel.load(id)
     }
 
-    private fun setupMenu() {
-        observe(commentViewModel.plusBtnClickEvent) {
+    private fun setUpMenuWroteByMe() {
+        observe(commentViewModel.plusBtnWroteByMeClickEvent) {
             UniActionSheet(this)
                 .addText("댓글 삭제")
                 .addAction("삭제") { commentViewModel.deleteComment {} }
+                .show()
+        }
+    }
+    private fun setUpMenuNotWroteByMe() {
+        observe(commentViewModel.plusBtnNotWroteByMeClickEvent) {
+            UniActionSheet(this)
+                .addText("댓글 메뉴")
+                .addAction("신고하기") { } // todo - 안에 신고하기, 차단하기 기능 추가
+                .addAction("사용자 차단하기") {}
                 .show()
         }
     }

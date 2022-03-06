@@ -35,7 +35,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
     val isLoggedIn = loginService.isLoggedInLiveData
 
     val btnClickEvent = SingleLiveEvent<Any>()
-    val plusBtnClickEvent = SingleLiveEvent<Any>()
+    val plusBtnWroteByMeClickEvent = SingleLiveEvent<Any>()
+    val plusBtnNotWroteByMeClickEvent = SingleLiveEvent<Any>()
 
     //val postCommentClickEvent = SingleLiveEvent<Any>()
     val arrowDownBtnClickEvent = SingleLiveEvent<Any>()
@@ -123,10 +124,15 @@ class CommentViewModel : ViewModel(), KoinComponent {
         content.value = ""
     }
 
-    fun showBottomSheet(commentId: Int) {
+    fun showBottomSheetWroteByMe(commentId: Int) {
         commentIndex = commentId
         Log.i("commentIndex showBottom", commentIndex.toString())
-        plusBtnClickEvent.call()
+        plusBtnWroteByMeClickEvent.call()
+    }
+
+    fun showBottomSheetNotWroteByMe(commentId: Int) {
+        commentIndex = commentId
+        plusBtnNotWroteByMeClickEvent.call()
     }
 
     fun onClickArrowDownBtn() {

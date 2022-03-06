@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_dot"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/profileImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/profileImageView" />
