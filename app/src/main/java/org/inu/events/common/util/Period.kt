@@ -1,6 +1,7 @@
 package org.inu.events.common.util
 
 import androidx.lifecycle.MutableLiveData
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -39,4 +40,12 @@ class Period {
     fun datePickerToString(date: String, time: String): String {
         return formatDateForServer("$date $time")
     }
+
+    fun formatDate(date: Date): String = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
+        .format(date)
+        .toString()
+
+    fun formatTime(date: Date): String = SimpleDateFormat("hh:mm a", Locale("en", "US"))
+        .format(date)
+        .toString()
 }

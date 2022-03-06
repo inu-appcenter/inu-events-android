@@ -329,31 +329,22 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun setStartDate(date: Date) {
-        period.startDate.value = formatDate(date)
+        period.startDate.value = period.formatDate(date)
     }
 
     fun setStartTime(date: Date) {
         startTime = date
-        period.startTime.value = formatTime(date)
+        period.startTime.value = period.formatTime(date)
     }
 
     fun setEndDate(date: Date) {
-        period.endDate.value = formatDate(date)
+        period.endDate.value = period.formatDate(date)
     }
 
     fun setEndTime(date: Date) {
         endTime = date
-        period.endTime.value = formatTime(date)
+        period.endTime.value = period.formatTime(date)
     }
-
-    private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
-        .format(date)
-        .toString()
-
-    private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
-        .format(date)
-        .toString()
-
 
     private fun datePickerSelect() {
         period.startDate.value = period.serverDateToString(currentEvent!!.startAt)
