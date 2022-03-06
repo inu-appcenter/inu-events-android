@@ -43,13 +43,13 @@
                 tools:text="읽어보기" />
 
             <ImageView
-                android:id="@+id/i_ImageView"
+                android:id="@+id/menu_ImageView"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
-                android:onClick="@{()->viewModel.onClickInformation()}"
-                android:src="@drawable/ic_i"
+                android:onClick="@{() -> viewModel.onClickMenu()}"
+                android:src="@drawable/ic_menu"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -63,15 +63,6 @@
                 tools:ignore="ContentDescription"
                 tools:src="@drawable/ic_bookmark_outlined" />
 
-            <ImageView
-                android:id="@+id/menu_ImageView"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
-                android:onClick="@{() -> viewModel.onClickMenu()}"
-                android:src="@drawable/ic_menu"
-                tools:ignore="ContentDescription" />
 
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>

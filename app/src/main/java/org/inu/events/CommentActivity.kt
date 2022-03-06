@@ -135,8 +135,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.plusBtnClickEvent) {
             if (it) {
                 UniActionSheet(this)
-                    .addText("댓글 삭제")
-                    .addAction("삭제") { commentViewModel.deleteComment {} }
+                    .addAction("삭제", dimmed = true) { commentViewModel.deleteComment {} }
                     .show()
             } else {
                 UniActionSheet(this)

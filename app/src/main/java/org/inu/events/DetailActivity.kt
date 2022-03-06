@@ -44,8 +44,8 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         initNotificationButton()
 
         setupToolbar()
-        showInformation()
         showMenu()
+        showUserMenu()
         setTextView()
     }
 
@@ -139,51 +139,53 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setupToolbar() {
         binding.detailToolbar.toolbarImageView.setOnClickListener { finish() }
-        //todo - 툴바메뉴는 자신이 작성한 글일 경우에만 노출돼야함
         if (loginService.isLoggedIn) {
-            if (isMyWriting()) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
-                binding.detailToolbar.likeImageView.visibility = View.GONE
-                binding.detailToolbar.iImageView.visibility = View.GONE
-            } else {
-                binding.detailToolbar.menuImageView.visibility = View.GONE
-            }
         } else {
             binding.detailToolbar.menuImageView.visibility = View.GONE
         }
     }
 
-    private fun showInformation() {
-        observe(viewModel.informationClickEvent) {
-            alarmDialog.showDialog(
-                this,
-                resources.getString(R.string.alarm_on_title_information),
-                resources.getString(R.string.alarm_on_content_information)
-            )
-        }
-    }
 
     private fun showMenu() {
         observe(viewModel.menuClickEvent) {
-            UniActionSheet(this)
-                .addText("")
-                .addAction("수정하기") {
-                    startActivity(
-                        RegisterEventsActivity.callingIntent(
-                            this,
-                            viewModel.eventIndex
+            if (isMyWriting()) {
+                UniActionSheet(this)
+                    .addText("글 메뉴")
+                    .addAction("수정하기") {
+                        startActivity(
+                            RegisterEventsActivity.callingIntent(
+                                this,
+                                viewModel.eventIndex
+                            )
                         )
-                    )
-                }
-                .addAction("삭제하기") {
-                    viewModel.onDeleteClickEvent()
-                    finish()
+                    }
+                    .addAction("삭제하기") {
+                        viewModel.onDeleteClickEvent()
+                        finish()
+                    }
+                    .show()
+            } else{
+                UniActionSheet(this)
+                    .addText("글 메뉴")
+                    .addAction("신고하기") {}
+                    .show()
+            }
+        }
+    }
+
+    private fun showUserMenu(){
+        observe(viewModel.userMenuClickEvent){
+            UniActionSheet(this)
+                .addText("사용자 메뉴")
+                .addAction("차단하기"){
+                    //todo - 차단한사람 글이랑 댓글 안보이게 해야함
+                    toast("(임시로)차단했습니다")
                 }
                 .show()
         }
     }
-
 
     override fun onStart() {
         super.onStart()

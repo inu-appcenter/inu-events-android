@@ -219,10 +219,22 @@
                     android:onClick="@{(view)->viewModel.onClickMyComment(view)}"/>
 
                 <TextView
-                    android:id="@+id/information"
+                    android:id="@+id/blocked_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/my_comment"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:text="차단한 계정"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:onClick="@{(view)->viewModel.onClickBlockedAccount(view)}"/>
+
+                <TextView
+                    android:id="@+id/information"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/blocked_account"
                     android:layout_marginTop="24dp"
                     android:layout_marginHorizontal="@dimen/horizontal_margin"
                     android:text="이용안내"
