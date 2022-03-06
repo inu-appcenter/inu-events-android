@@ -72,6 +72,11 @@ class MyPageViewModel : ViewModel(), KoinComponent {
         view.context.startActivity(intent)
     }
 
+    fun onClickBlockedAccount(view: View) {
+        val intent = Intent(view.context, BlockedAccountActivity::class.java)
+        view.context.startActivity(intent)
+    }
+
     fun logout() {
         CoroutineScope(Dispatchers.Main).launch {
             val deferred = async(Dispatchers.IO) { loginService.logout() }
