@@ -118,18 +118,8 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     private fun loadCheckBoxState() {
-        if(currentEvent?.host == null){
-            register2ViewModel.hostCheckBoxBoolean.value = true
-        }
-        if(currentEvent?.location == null){
-            register2ViewModel.locationCheckBoxBoolean.value = true
-        }
-        if(currentEvent?.contact == null){
-            register2ViewModel.contactNumberCheckBoxBoolean.value = true
-        }
-        if(currentEvent?.startAt == currentEvent?.endAt){
-            register2ViewModel.sameCheckBoxBoolean.value = true
-        }
+        register2ViewModel.setCheckBoxState(currentEvent)
+
         val booleanImageDefault = imageUuidList.contains(currentEvent?.imageUuid)
         if(booleanImageDefault){
             imageCheckBoxBoolean.value = true
