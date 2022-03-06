@@ -87,6 +87,7 @@
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/ic_like_off.xml" value="0.2" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/ic_like_on.xml" value="0.2" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/ic_logo.xml" value="0.2" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/oulined_radius_100.xml" value="0.1775" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/outline_border_4.xml" value="0.2" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/radius_6.xml" value="0.2" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/drawable/radius_8.xml" value="0.2" />
@@ -108,6 +109,7 @@
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/fragment_register2.xml" value="0.1875" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/fragment_register3.xml" value="0.1875" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/home_recyclerview_item.xml" value="0.2523076923076923" />
+        <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_blocked_account.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_category.xml" value="0.27037037037037037" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_comment.xml" value="0.27037037037037037" />
         <entry key="..\:/Users/algosketch/AndroidStudioProjects/inu-events-android/app/src/main/res/layout/item_like_event.xml" value="0.36614583333333334" />
