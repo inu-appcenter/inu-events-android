@@ -220,14 +220,6 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
         }.catch{ }
     }
 
-    fun startTimeEndTime(): Boolean{
-        if(period.startDate.value == period.endDate.value){
-            val timeDiff = period.endDateTime.compareTo(period.startDateTime)
-            if(timeDiff < 0 ) return true
-        }
-        return false
-    }
-
     private fun noImage(){
         if(imageUuid == "") imageCheckBoxBoolean.value = true
         if(imageCheckBoxBoolean.value == true){
