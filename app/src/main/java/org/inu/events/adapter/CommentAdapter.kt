@@ -25,7 +25,7 @@ class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Ada
         fun bind(commentModel: Comment) {
             binding.nickNameTextView.text = commentModel.nickname
             binding.commentTextView.text = commentModel.content
-            binding.commentMoreButton.isVisible = commentModel.wroteByMe == true
+            binding.commentMoreButton.isVisible =  true
             binding.writerTextView.isVisible = viewModel.currentEvent.value!!.userId == commentModel.userId
             Log.i("ViewModel DSMFLKsmdkfmlSDMlfkmSLKDMfkSMDLKFMAKLFMKAMDKFMKLADFMA","${viewModel.currentEvent.value!!.userId.toString()} ${commentModel.userId.toString()}")
             // 프로필 이미지 삽입
@@ -37,8 +37,12 @@ class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Ada
 
 
             binding.commentMoreButton.setOnClickListener{
-                viewModel.showBottomSheet(commentModel.id)
-                Log.i("CLICK",viewModel.commentIndex.toString())
+                if (commentModel.wroteByMe == true) {
+                    viewModel.showBottomSheet(commentModel.id,true)
+                    Log.i("CLICK", viewModel.commentIndex.toString())
+                }else{
+                    viewModel.showBottomSheet(commentModel.id,false)
+                }
             }
         }
     }
