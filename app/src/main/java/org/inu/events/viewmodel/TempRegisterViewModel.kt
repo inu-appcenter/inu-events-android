@@ -17,7 +17,6 @@ import org.inu.events.data.repository.EventRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -77,8 +76,6 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
     var timePickerValueEndTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueEndMinute = cal.get(Calendar.MINUTE)
-    private lateinit var startTime:Date
-    private lateinit var endTime:Date
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -225,7 +222,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
 
     fun startTimeEndTime(): Boolean{
         if(period.startDate.value == period.endDate.value){
-            val timeDiff = endTime.compareTo(startTime)
+            val timeDiff = period.endDateTime.compareTo(period.startDateTime)
             if(timeDiff < 0 ) return true
         }
         return false
@@ -333,7 +330,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun setStartTime(date: Date) {
-        startTime = date
+        period.startDateTime = date
         period.startTime.value = period.formatTime(date)
     }
 
@@ -342,7 +339,7 @@ class TempRegisterViewModel : ViewModel(), KoinComponent {
     }
 
     fun setEndTime(date: Date) {
-        endTime = date
+        period.endDateTime = date
         period.endTime.value = period.formatTime(date)
     }
 

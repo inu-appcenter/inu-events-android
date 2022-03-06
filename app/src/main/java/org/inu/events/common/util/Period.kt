@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Period {
+    lateinit var startDateTime: Date
+    lateinit var endDateTime: Date
+
     val startDate = MutableLiveData("")
     val startTime = MutableLiveData("")
     val endDate = MutableLiveData("")
