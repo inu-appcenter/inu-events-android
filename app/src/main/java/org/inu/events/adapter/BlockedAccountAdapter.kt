@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.data.model.entity.User
 import org.inu.events.databinding.ItemBlockedAccountBinding
+import org.inu.events.dialog.TwoButtonDialog
 import org.inu.events.viewmodel.BlockedAccountViewModel
 
 class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) : ListAdapter<User, BlockedAccountAdapter.ViewHolder>(BlockedAccountDiffUtil()) {
@@ -22,7 +23,9 @@ class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) : ListAdapte
         fun bind(item: User) {
             binding.item = item
             binding.cancelBlockingButton.setOnClickListener {
-                viewModel.onClickCancelBlocking(item.id!!)
+                TwoButtonDialog("차단을 해제하시겠어요?") {
+                    viewModel.onClickCancelBlocking(item.id!!)
+                }.show(it.context)
             }
             binding.executePendingBindings()
         }
