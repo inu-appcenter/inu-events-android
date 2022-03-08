@@ -103,10 +103,20 @@ class CommentViewModel : ViewModel(), KoinComponent {
 
     fun blockUser() {
         execute {
-            blockRepository.postBlockUsers(
+            blockRepository.postBlockUser(
                 AddBlockParams(
                     targetUserId = userIndex
                 )
+            )
+        }.then {
+            loadCommentList()
+        }.catch { it.printStackTrace() }
+    }
+
+    fun deleteBlockUser() {
+        execute {
+            blockRepository.deleteBlockUsers(
+                targetUserId = userIndex
             )
         }.then {
             loadCommentList()

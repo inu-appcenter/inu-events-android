@@ -17,6 +17,7 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
+import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -34,7 +35,9 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
+    private val alarmDialog = AlarmDialog()
     private lateinit var commentBinding: ActivityCommentBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +66,15 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         })
     }
 
+    private fun showBlockDialog() {
+        alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_block), resources.getString(R.string.alarm_on_content_block))
+    }
+
     private fun setupButtons() {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 if (!commentViewModel.content.value.isNullOrEmpty()) {
+                    //if (정지된사람이 아니면) { }
                     execute {
                         commentViewModel.postComment()
                     }.then {
@@ -74,7 +82,10 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     }.catch {
                         it.printStackTrace()
                     }
-                } else {
+
+                    //else {showBlockDialog()}
+                }
+                else {
                     toast("글자를 입력하세요.")
                 }
             } else {
@@ -140,7 +151,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             } else {
                 UniActionSheet(this)
                     .addText("댓글 메뉴")
-                    .addAction("신고하기") {}
+                    .addAction("신고하기") {commentViewModel.deleteBlockUser()} // todo - 이거 임시로 지우는거 했으니 지워라 꼭!
                     .addAction("사용자 차단하기") { commentViewModel.blockUser() }
                     .show()
             }

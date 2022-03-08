@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface BlockHttpService {
     // todo - 서버 이후 수정
     @POST("/blocks")
-    fun addBlockUser(
+    fun postBlockUser(
         @Body params: AddBlockParams
     ): Call<Unit>
 

@@ -6,8 +6,8 @@ import org.inu.events.data.model.entity.Block
 import org.inu.events.data.repository.BlockRepository
 
 class BlockRepositoryImpl(private val httpService: BlockHttpService) : BlockRepository {
-    override fun postBlockUsers(params: AddBlockParams) {
-        httpService.addBlockUser(params).execute()
+    override fun postBlockUser(params: AddBlockParams) {
+        httpService.postBlockUser(params).execute()
     }
 
     override fun getBlockUsers(): List<Block> {

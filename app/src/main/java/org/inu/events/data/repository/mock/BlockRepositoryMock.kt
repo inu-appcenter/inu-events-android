@@ -12,7 +12,7 @@ class BlockRepositoryMock : BlockRepository {
         )
     )
 
-    override fun postBlockUsers(params: AddBlockParams) {
+    override fun postBlockUser(params: AddBlockParams) {
         c.add(
             Block(
                 id = 4
