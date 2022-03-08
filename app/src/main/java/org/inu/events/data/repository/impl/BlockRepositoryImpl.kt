@@ -9,4 +9,12 @@ class BlockRepositoryImpl(private val httpService: BlockHttpService) : BlockRepo
     override fun postBlockUsers(params: AddBlockParams) {
         httpService.addBlockUser(params).execute()
     }
+
+    override fun getBlockUsers(): List<Block> {
+        return httpService.fetchBlockUser().execute().body()!!
+    }
+
+    override fun deleteBlockUsers(targetUserId: Int) {
+        httpService.deleteBlockUser(targetUserId).execute()
+    }
 }

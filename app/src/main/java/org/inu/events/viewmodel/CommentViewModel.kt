@@ -105,7 +105,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
         execute {
             blockRepository.postBlockUsers(
                 AddBlockParams(
-                    blockUser = userIndex
+                    targetUserId = userIndex
                 )
             )
         }.then {

@@ -6,4 +6,6 @@ import org.inu.events.data.model.entity.Comment
 
 interface BlockRepository {
     fun postBlockUsers(params: AddBlockParams)
+    fun getBlockUsers() : List<Block>
+    fun deleteBlockUsers(targetUserId: Int)
 }
