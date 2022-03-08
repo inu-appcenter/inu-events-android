@@ -180,8 +180,11 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             UniActionSheet(this)
                 .addText("사용자 메뉴")
                 .addAction("차단하기"){
-                    //todo - 차단한사람 글이랑 댓글 안보이게 해야함
-                    toast("(임시로)차단했습니다")
+                    if (loginService.isLoggedIn){
+                        finish()
+                    }else{
+                        LoginDialog().show(this, { onOk() }, { onCancel() })
+                    }
                 }
                 .show()
         }
