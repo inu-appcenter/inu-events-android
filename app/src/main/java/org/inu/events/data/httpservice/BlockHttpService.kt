@@ -16,7 +16,7 @@ interface BlockHttpService {
     fun fetchBlockUser(
     ): Call<List<Block>>
 
-    @DELETE("/blocks")
+    @DELETE("/blocks/{blockUserId}")
     fun deleteBlockUser(
         @Path("blockUserId") targetUserId: Int
     ): Call<Unit>
