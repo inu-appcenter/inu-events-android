@@ -116,7 +116,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
     fun deleteBlockUser() {
         execute {
             blockRepository.deleteBlockUsers(
-                targetUserId = userIndex
+                targetUserId = AddBlockParams(userIndex)
             )
         }.then {
             loadCommentList()

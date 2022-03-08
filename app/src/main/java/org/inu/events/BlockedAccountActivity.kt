@@ -21,5 +21,7 @@ class BlockedAccountActivity : BaseActivity<ActivityBlockedAccountBinding>() {
         binding.toolbar.setOnBackListener {
             finish()
         }
+
+        viewModel.loadData()
     }
 }

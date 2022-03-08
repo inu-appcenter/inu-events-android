@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="item"
+            type="org.inu.events.data.model.entity.User" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -13,7 +19,9 @@
             android:layout_height="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:photo_url="@{item.imageUrl}"
+            tools:src="@drawable/default_profile_background"/>
 
         <TextView
             android:id="@+id/nickname"
@@ -25,7 +33,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="삐약삐약" />
+            tools:text="삐약삐약"
+            android:text="@{item.nickname}"/>
 
         <TextView
             android:id="@+id/cancel_blocking_button"

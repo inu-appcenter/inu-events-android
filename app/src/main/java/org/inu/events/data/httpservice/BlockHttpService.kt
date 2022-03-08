@@ -2,6 +2,7 @@ package org.inu.events.data.httpservice
 
 import org.inu.events.data.model.dto.AddBlockParams
 import org.inu.events.data.model.entity.Block
+import org.inu.events.data.model.entity.BlockedUser
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,10 +15,10 @@ interface BlockHttpService {
 
     @GET("/blocks")
     fun fetchBlockUser(
-    ): Call<List<Block>>
+    ): Call<List<BlockedUser>>
 
-    @DELETE("/blocks/{blockUserId}")
+    @HTTP(method = "DELETE", path = "/blocks", hasBody = true)
     fun deleteBlockUser(
-        @Path("blockUserId") targetUserId: Int
+        @Body targetUserId: AddBlockParams
     ): Call<Unit>
 }

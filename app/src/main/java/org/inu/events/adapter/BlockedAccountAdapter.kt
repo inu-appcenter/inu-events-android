@@ -20,7 +20,7 @@ class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) : ListAdapte
 
     class ViewHolder private constructor(val binding: ItemBlockedAccountBinding, val viewModel: BlockedAccountViewModel) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
-            binding.nickname.text = item.nickname
+            binding.item = item
             binding.cancelBlockingButton.setOnClickListener {
                 viewModel.onClickCancelBlocking(item.id!!)
             }

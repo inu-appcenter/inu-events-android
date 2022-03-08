@@ -4,7 +4,7 @@ import org.inu.events.data.model.dto.AddBlockParams
 import org.inu.events.data.model.entity.Block
 import org.inu.events.data.model.entity.Comment
 import org.inu.events.data.repository.BlockRepository
-
+/*
 class BlockRepositoryMock : BlockRepository {
     private val c = mutableListOf(
         Block(
@@ -27,4 +27,4 @@ class BlockRepositoryMock : BlockRepository {
     override fun deleteBlockUsers(targetUserId: Int) {
         c.removeIf { it.id == targetUserId }
     }
-}
+}*/
