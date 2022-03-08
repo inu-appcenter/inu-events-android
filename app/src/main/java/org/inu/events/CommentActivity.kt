@@ -151,7 +151,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             } else {
                 UniActionSheet(this)
                     .addText("댓글 메뉴")
-                    .addAction("신고하기") {commentViewModel.deleteBlockUser()} // todo - 이거 임시로 지우는거 했으니 지워라 꼭!
+                    .addAction("신고하기") {}
                     .addAction("사용자 차단하기") { commentViewModel.blockUser() }
                     .show()
             }
