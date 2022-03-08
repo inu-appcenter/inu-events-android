@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.inu.events.data.model.dto.AddBlockParams
 import org.inu.events.data.model.entity.User
@@ -26,10 +27,15 @@ class BlockedAccountViewModel : ViewModel(), KoinComponent {
     }
 
     fun onClickCancelBlocking(userId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        val deferred = CoroutineScope(Dispatchers.IO).async {
             blockRepository.deleteBlockUsers(
                 AddBlockParams(userId)
             )
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            deferred.await()
+            loadData()
         }
     }
 }
