@@ -108,6 +108,8 @@ class CommentViewModel : ViewModel(), KoinComponent {
                     blockUser = userIndex
                 )
             )
+        }.then {
+            loadCommentList()
         }
     }
 
