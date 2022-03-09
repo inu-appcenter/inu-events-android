@@ -167,8 +167,9 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                         )
                     }
                     .addAction("삭제하기") {
-                        viewModel.onDeleteClickEvent()
-                        finish()
+                        LoginDialog().show(this,{
+                            viewModel.onDeleteClickEvent()
+                            finish()}, {},"정말 삭제하시겠습니까?")
                     }
                     .show()
             } else{

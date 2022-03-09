@@ -256,6 +256,7 @@ class DetailViewModel : ViewModel(),KoinComponent {
         execute {
             eventRepository.deleteEvent(eventIndex)
         }.then {
+            context.toast("삭제 완료되었습니다.")
         }. catch {  }
     }
 
