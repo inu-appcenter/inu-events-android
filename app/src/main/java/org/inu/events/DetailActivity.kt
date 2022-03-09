@@ -46,6 +46,7 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupToolbar()
         showMenu()
         showUserMenu()
+        showLogin()
         setTextView()
     }
 
@@ -142,8 +143,12 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         if (loginService.isLoggedIn) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
-        } else {
-            binding.detailToolbar.menuImageView.visibility = View.GONE
+        }
+    }
+
+    private fun showLogin(){
+        observe(viewModel.notLoginEvent){
+            LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 저장하실 수 있습니다!") })
         }
     }
 
@@ -162,14 +167,18 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                         )
                     }
                     .addAction("삭제하기") {
-                        viewModel.onDeleteClickEvent()
-                        finish()
+                        LoginDialog().show(this,{
+                            viewModel.onDeleteClickEvent()
+                            finish()}, {},"정말 삭제하시겠습니까?")
                     }
                     .show()
             } else{
                 UniActionSheet(this)
                     .addText("글 메뉴")
-                    .addAction("신고하기") {}
+                    .addAction("신고하기") {
+                        if (loginService.isLoggedIn){ }
+                        else{LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 신고하실 수 있습니다!") })}
+                    }
                     .show()
             }
         }
@@ -180,8 +189,12 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             UniActionSheet(this)
                 .addText("사용자 메뉴")
                 .addAction("차단하기"){
-                    //todo - 차단한사람 글이랑 댓글 안보이게 해야함
-                    toast("(임시로)차단했습니다")
+                    if (loginService.isLoggedIn){
+                        viewModel.blockUser()
+                        finish()
+                    }else{
+                        LoginDialog().show(this, { onOk() }, { onCancel() })
+                    }
                 }
                 .show()
         }

@@ -67,14 +67,17 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun showBlockDialog() {
-        alarmDialog.showDialog(this, resources.getString(R.string.alarm_on_title_block), resources.getString(R.string.alarm_on_content_block))
+        alarmDialog.showDialog(
+            this,
+            resources.getString(R.string.alarm_on_title_block),
+            resources.getString(R.string.alarm_on_content_block)
+        )
     }
 
     private fun setupButtons() {
         observe(commentViewModel.btnClickEvent) {
             if (loginService.isLoggedIn) {
                 if (!commentViewModel.content.value.isNullOrEmpty()) {
-                    //if (정지된사람이 아니면) { }
                     execute {
                         commentViewModel.postComment()
                     }.then {
@@ -82,10 +85,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     }.catch {
                         it.printStackTrace()
                     }
-
-                    //else {showBlockDialog()}
-                }
-                else {
+                } else {
                     toast("글자를 입력하세요.")
                 }
             } else {
@@ -146,13 +146,20 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.plusBtnClickEvent) {
             if (it) {
                 UniActionSheet(this)
-                    .addAction("삭제", dimmed = true) { commentViewModel.deleteComment {} }
+                    .addAction("삭제", dimmed = true) {
+                        LoginDialog().show(this,{commentViewModel.deleteComment {} },{},"정말 삭제하시겠습니까?") }
                     .show()
             } else {
                 UniActionSheet(this)
                     .addText("댓글 메뉴")
                     .addAction("신고하기") {}
-                    .addAction("사용자 차단하기") { commentViewModel.blockUser() }
+                    .addAction("사용자 차단하기") {
+                        if (loginService.isLoggedIn) {
+                            commentViewModel.blockUser()
+                        }else {
+                            showDialog()
+                        }
+                    }
                     .show()
             }
         }

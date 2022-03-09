@@ -1,9 +1,12 @@
 package org.inu.events.viewmodel
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddBlockParams
@@ -22,6 +25,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
     private val commentRepository: CommentRepository by inject()
     private val blockRepository: BlockRepository by inject()
+    private val context: Context by inject()
 
     private val _commentDataList = MutableLiveData<List<Comment>>()
     val commentList: LiveData<List<Comment>>
@@ -70,6 +74,7 @@ class CommentViewModel : ViewModel(), KoinComponent {
         execute {
             commentRepository.deleteComment(commentId = commentIndex)
         }.then {
+            context.toast("삭제 완료되었습니다.")
             loadCommentList(callback)
         }.catch {
         }
