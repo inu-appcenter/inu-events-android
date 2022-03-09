@@ -46,6 +46,7 @@
 
     <string name="comment">댓글</string>
     <string name="event_registration">레터등록</string>
+    <string name="event_preview">미리보기</string>
     <string name="event_read">읽어보기</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">댓글 메뉴</string>

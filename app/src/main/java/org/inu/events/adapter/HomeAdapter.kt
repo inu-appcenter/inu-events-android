@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import okhttp3.internal.notify
 import org.inu.events.DetailActivity
 import org.inu.events.R
+import org.inu.events.common.util.Period
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
@@ -46,10 +47,11 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
         }
 
         fun bind(homeData: Event, position: Int) {
+            val period = Period()
             binding.item = homeData
             binding.viewModel = viewModel
-            binding.boardDate.text = viewModel.whenDay(homeData.endAt)
-            binding.boardDate.backgroundTintList = when(viewModel.onDeadLineCheck()){
+            binding.boardDate.text = period.whenDay(homeData.endAt)
+            binding.boardDate.backgroundTintList = when(period.checkDeadline){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
                 else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))
             }

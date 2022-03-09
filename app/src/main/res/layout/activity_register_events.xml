@@ -170,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
 
             <ScrollView
@@ -385,7 +385,7 @@
                         android:background="@drawable/drawable_edit_text_background"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onStartDateClick()}"
-                        android:text="@={registerViewModel.startDatePeriod}"
+                        android:text="@={registerViewModel.period.startDate}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toStartOf="@+id/view2"
@@ -414,7 +414,7 @@
                         android:background="@drawable/drawable_edit_text_background"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onStartTimeClick()}"
-                        android:text="@={registerViewModel.startTimePeriod}"
+                        android:text="@={registerViewModel.period.startTime}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -473,7 +473,7 @@
                         android:enabled="@{!registerViewModel.sameCheckBoxBoolean}"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onEndDateClick()}"
-                        android:text="@={registerViewModel.endDatePeriod}"
+                        android:text="@={registerViewModel.period.endDate}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toStartOf="@+id/view3"
@@ -503,7 +503,7 @@
                         android:enabled="@{!registerViewModel.sameCheckBoxBoolean}"
                         android:gravity="center"
                         android:onClick="@{ () -> registerViewModel.onEndTimeClick()}"
-                        android:text="@={registerViewModel.endTimePeriod}"
+                        android:text="@={registerViewModel.period.endTime}"
                         android:textColor="@color/black1"
                         android:textSize="15sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -658,6 +658,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_next1"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -673,8 +674,7 @@
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/button_before1"
-                style="@style/Widget.AppCompat.Button.Borderless"/>
+                app:layout_constraintStart_toEndOf="@id/button_before1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -727,13 +727,13 @@
                 android:layout_marginHorizontal="@dimen/register_horizontal_margin"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/drawable_edit_text_background"
+                android:gravity="top"
                 android:hint="@string/hintText_body"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
-                android:gravity="top"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_content" />
@@ -752,6 +752,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before2"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -766,11 +767,11 @@
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_complete2"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.AppCompat.Button.Borderless"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_complete2"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -780,15 +781,379 @@
                 android:backgroundTint="@color/primary100"
                 android:onClick="@{ () -> registerViewModel.onCompleteClick()}"
                 android:paddingVertical="14dp"
+                android:text="@string/text_next"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_before2" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{registerViewModel.phase == 3 ? View.VISIBLE : View.INVISIBLE}"
+            tools:visibility="visible">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <org.inu.events.UniLetterToolbar
+                        android:id="@+id/toolbar_register3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:elevation="8dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:title="@string/event_preview" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:adjustViewBounds="true"
+                        android:paddingVertical="24dp"
+                        android:scaleType="fitCenter"
+                        imageFromUrl = "@{registerViewModel.imageUrl}"
+                        tools:src="@drawable/img_default" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="@color/black5" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/detail_horizontal_margin"
+                            android:layout_marginEnd="4dp"
+                            app:layout_constraintEnd_toStartOf="@id/boardDateLayout"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/detailTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="4dp"
+                                android:gravity="center_vertical"
+                                android:text="@{registerViewModel.title}"
+                                android:textColor="@color/black"
+                                android:textIsSelectable="true"
+                                android:textSize="18sp"
+                                tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/boardDateLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/board_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/drawable_home_board_date_ongoing_background"
+                                android:backgroundTint="@{registerViewModel.deadLine ? @color/black8 : @color/primary}"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"
+                                android:text="@{registerViewModel.boardDateText}"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                tools:text="마감" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:text="카테고리"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/textView_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@{registerViewModel.hostCheckBoxBoolean ? registerViewModel.category : @string/group(registerViewModel.category,registerViewModel.host)}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="category | host" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="시작일시"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@{@string/event_period(registerViewModel.period.startDate, registerViewModel.period.startTime)}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="2021.03.22 - 6:00PM" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="마감일시"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@{@string/event_period(registerViewModel.period.endDate, registerViewModel.period.endTime)}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="2021.03.22 - 8:00PM" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        layoutMarginBottom="@{registerViewModel.locationCheckBoxBoolean &amp;&amp; registerViewModel.contactNumberCheckBoxBoolean ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="모집대상"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/textView_target2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@{registerViewModel.target}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="1년이상 활동 가능한 사람" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        layoutMarginBottom="@{registerViewModel.locationCheckBoxBoolean ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:visibility="@{registerViewModel.contactNumberCheckBoxBoolean ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="문의사항"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/textView_contact2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:singleLine="true"
+                            android:text="@{registerViewModel.contactNumber}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="카톡" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="@dimen/detail_bottom_margin"
+                        android:orientation="horizontal"
+                        android:visibility="@{registerViewModel.locationCheckBoxBoolean ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="신청링크"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:autoLink="web"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{registerViewModel.location}"
+                            android:textColor="@color/black1"
+                            android:textIsSelectable="true"
+                            android:textSize="15sp"
+                            tools:text="https://github.com/inu-appcenter" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="@color/black5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/text_detail_letter"
+                        android:textColor="@color/black1"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="16dp"
+                        android:text="@{registerViewModel.body}"
+                        android:textColor="@color/black1"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="내용" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="100dp">
+
+                        <ImageView
+                            android:id="@+id/eye"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_eye"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/viewTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="0회"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/eye"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/commentTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="저장 0 • 댓글 0개"
+                            android:textSize="15sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_before3"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary_base"
+                android:onClick="@{ () -> registerViewModel.onBeforeClick()}"
+                android:paddingVertical="14dp"
+                android:text="@string/text_before"
+                android:textColor="@color/primary100"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_complete3"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_complete3"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/drawable_btn_background"
+                android:backgroundTint="@color/primary100"
+                android:onClick="@{ () -> registerViewModel.onFinishClick()}"
+                android:paddingVertical="14dp"
                 android:text="@string/text_complete"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button_before2"
-                style="@style/Widget.AppCompat.Button.Borderless"/>
-
+                app:layout_constraintStart_toEndOf="@+id/button_before3"
+                tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

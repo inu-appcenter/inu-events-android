@@ -1,5 +1,6 @@
 package org.inu.events.common.util
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -11,6 +12,8 @@ import java.util.*
 class Period {
     lateinit var startDateTime: Date
     lateinit var endDateTime: Date
+
+    var checkDeadline = false
 
     val startDate = MutableLiveData("")
     val startTime = MutableLiveData("")
@@ -79,11 +82,44 @@ class Period {
         setEndTime(date)
     }
 
-    fun startTimeEndTime(): Boolean{
-        if(startDate.value == endDate.value){
-            val timeDiff = endDateTime.compareTo(startDateTime)
-            if(timeDiff < 0 ) return true
+    fun startTimeEndTime(startAt:String?, endAt:String?): Boolean{
+        if(startAt == null || endAt == null) return false
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+
+        val start = dateFormat.parse(startAt).time
+        val end = dateFormat.parse(endAt).time
+
+
+        val diff = (end - start)
+        return when(diff<0){
+            true -> true
+            else -> false
         }
-        return false
+    }
+
+    fun whenDay(end_at: String?, check:Boolean = false): String {
+        if (end_at == null) return "D-??"
+
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        if(check) dateFormat = SimpleDateFormat("yyyy.MM.dd")
+
+
+        val endAt = dateFormat.parse(end_at).time
+        val today = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time.time
+
+        val dDay = (endAt - today) / (24 * 60 * 60 * 1000)
+
+        if (dDay < 0) {
+            checkDeadline = true
+            return "마감"
+        }
+        checkDeadline = false
+        return "D-${if(dDay.toInt() == 0) "day" else dDay}"
     }
 }

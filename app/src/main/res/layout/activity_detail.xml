@@ -333,14 +333,32 @@
                     android:textSize="15sp"
                     />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="end"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/eye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_eye"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/viewTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text='@{detailViewModel.currentEvent.views + "회"}'
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/eye"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/commentTextView"
@@ -349,15 +367,12 @@
                         android:text="@{@string/event_save_comments(detailViewModel.like,detailViewModel.currentEvent.comments)}"
                         android:textSize="15sp"
                         android:onClick="@{()->detailViewModel.onClickComment()}"
-                        tools:text = "저장 71 • 댓글 7개"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text = "저장 7 • 댓글 17개"/>
 
 
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="@color/black5" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
         </ScrollView>
