@@ -80,9 +80,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             }
         }
         observe(viewModel.likeClickEvent){
-            if(loginService.isLoggedIn){
-                viewModel.onLikePost()
-            }else{
+            if(!loginService.isLoggedIn){
                 showDialog()
             }
         }

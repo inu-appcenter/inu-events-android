@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val homeDataList: LiveData<List<Event>>
         get() = _homeDataList
 
-    private var eventIndex: Int = 0
+    var eventIndex: Int = 0
     private var like = false
 
     val postClickEvent = SingleLiveEvent<Any>()
@@ -67,9 +67,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
         postClickEvent.call()
     }
 
-    fun onLikeClickEvent(likeByMe: Boolean,eventId: Int){
-        like = likeByMe
-        eventIndex = eventId
+    fun onLogIn(){
         likeClickEvent.call()
     }
 
