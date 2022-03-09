@@ -10,8 +10,10 @@ import org.inu.events.common.threading.execute
 import org.inu.events.common.util.Period
 import org.inu.events.data.model.entity.Event
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.AddBlockParams
 import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.dto.NotificationParams
+import org.inu.events.data.repository.BlockRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
@@ -28,6 +30,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
     private val likeRepository: LikeRepository by inject()
     private val loginService: LoginService by inject()
+    private val blockRepository: BlockRepository by inject()
     private val context: Context by inject()
 
     //현재 표시할 게시물의 데이터가 저장돼있음
@@ -156,6 +159,16 @@ class DetailViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun blockUser() {
+        execute {
+            blockRepository.postBlockUser(
+                AddBlockParams(
+                    targetUserId = _currentEvent.value!!.userId
+                )
+            )
+        }.then {
+        }.catch { it.printStackTrace() }
+    }
 
     fun onClickMenu(){
         menuClickEvent.call()

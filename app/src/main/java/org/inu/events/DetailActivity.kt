@@ -181,6 +181,7 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 .addText("사용자 메뉴")
                 .addAction("차단하기"){
                     if (loginService.isLoggedIn){
+                        viewModel.blockUser()
                         finish()
                     }else{
                         LoginDialog().show(this, { onOk() }, { onCancel() })
