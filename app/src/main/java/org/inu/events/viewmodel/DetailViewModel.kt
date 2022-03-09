@@ -17,6 +17,7 @@ import org.inu.events.data.repository.BlockRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
+import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -25,7 +26,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DetailViewModel : ViewModel(), KoinComponent {
+class DetailViewModel : ViewModel(),KoinComponent {
     private val eventRepository: EventRepository by inject()
     private val notificationRepository: NotificationRepository by inject()
     private val likeRepository: LikeRepository by inject()
@@ -59,6 +60,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
     val alarmClickEvent = SingleLiveEvent<Int>()
     val menuClickEvent = SingleLiveEvent<Any>()
     val userMenuClickEvent = SingleLiveEvent<Any>()
+    val notLoginEvent = SingleLiveEvent<Any>()
     val notificationText = MutableLiveData<String>()
     val notificationColor = MutableLiveData<Int>(R.color.black80)
     val notificationBackground = MutableLiveData<Int>(R.drawable.notification_on_btn_background)
@@ -155,7 +157,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             likeOnOff.value = likeOnOff.value != true
         }
         else{
-            context.toast("로그인을 하셔야 저장하실 수 있습니다~!!")
+            notLoginEvent.call()
         }
     }
 

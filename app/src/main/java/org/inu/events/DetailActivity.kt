@@ -46,6 +46,7 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupToolbar()
         showMenu()
         showUserMenu()
+        showLogin()
         setTextView()
     }
 
@@ -144,6 +145,12 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 supportActionBar?.setDisplayShowTitleEnabled(false)
         } else {
             binding.detailToolbar.menuImageView.visibility = View.GONE
+        }
+    }
+
+    private fun showLogin(){
+        observe(viewModel.notLoginEvent){
+            LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 저장하실 수 있습니다!") })
         }
     }
 
