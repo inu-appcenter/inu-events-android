@@ -30,6 +30,10 @@ val myModules = module {
         buildRetrofitService()
     }
 
+    single<BlockHttpService> {
+        buildRetrofitService()
+    }
+
     single<AccountHttpService> {
         buildRetrofitService()
     }
@@ -67,6 +71,12 @@ val myModules = module {
     single<UserRepository> {
         UserRepositoryImpl(get())
 //        UserRepositoryMock()
+    }
+
+    single<BlockRepository> {
+        // TODO -지금은 임시 데이터
+    //    BlockRepositoryMock()
+      BlockRepositoryImpl(get())
     }
 
     single<NotificationRepository>{

@@ -31,11 +31,12 @@ class UniActionSheet(private val context: Context) {
 
     /**
      * 액션 버튼을 추가합니다.
+     * @param dimmed 버튼 배경을 회색으로 표시할지 여부입니다. 기본 false.
      * @param onClick 버튼이 눌렸을 때 호출될 콜백입니다. 콜백의 첫번째 인자에 dismiss 함수를 담아서 호출합니다.
      */
-    fun addAction(text: String, onClick: (dismiss: () -> Unit) -> Unit): UniActionSheet {
+    fun addAction(text: String, dimmed: Boolean = false, onClick: (dismiss: () -> Unit) -> Unit): UniActionSheet {
         options.add(
-            UniActionSheetOption.UniActionSheetAction(text, onClick)
+            UniActionSheetOption.UniActionSheetAction(text, dimmed, onClick)
         )
 
         return this

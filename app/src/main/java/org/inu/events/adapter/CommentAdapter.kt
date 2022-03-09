@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.inu.events.R
 import org.inu.events.data.model.entity.Comment
-import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemCommentBinding
 import org.inu.events.viewmodel.CommentViewModel
 
-class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
+class CommentAdapter(private val viewModel: CommentViewModel) :
+    RecyclerView.Adapter<CommentAdapter.CommentItemViewHolder>() {
 
     var commentList: List<Comment> = listOf()
         set(v) {
@@ -20,7 +20,8 @@ class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Ada
             notifyDataSetChanged()
         }
 
-    inner class CommentItemViewHolder(private val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CommentItemViewHolder(private val binding: ItemCommentBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(commentModel: Comment) {
             binding.nickNameTextView.text = commentModel.nickname
@@ -38,10 +39,11 @@ class CommentAdapter(private val viewModel: CommentViewModel) : RecyclerView.Ada
 
             binding.commentMoreButton.setOnClickListener{
                 if (commentModel.wroteByMe == true) {
-                    viewModel.showBottomSheet(commentModel.id,true)
+                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,true)
                     Log.i("CLICK", viewModel.commentIndex.toString())
                 }else{
-                    viewModel.showBottomSheet(commentModel.id,false)
+                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,false)
+                    Log.i("CLICK",commentModel.userId.toString())
                 }
             }
         }

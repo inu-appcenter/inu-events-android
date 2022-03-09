@@ -8,5 +8,4 @@
     android:gravity="center"
     android:textColor="#B3B3B3"
     android:textSize="14sp"
-    android:textStyle="bold"
     tools:text="적절한 설명" />

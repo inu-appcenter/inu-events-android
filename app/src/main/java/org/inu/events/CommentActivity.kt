@@ -17,6 +17,7 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
+import org.inu.events.dialog.AlarmDialog
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
@@ -34,7 +35,9 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private val commentViewModel: CommentViewModel by viewModels()
     private val loginService: LoginService by inject()
+    private val alarmDialog = AlarmDialog()
     private lateinit var commentBinding: ActivityCommentBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,7 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupButtons()
         setupRecyclerView()
         setupToolbar()
-        setupMenu()
+        this.setupMenu()
         setUpListener()
     }
 
@@ -61,6 +64,14 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 }
             }
         })
+    }
+
+    private fun showBlockDialog() {
+        alarmDialog.showDialog(
+            this,
+            resources.getString(R.string.alarm_on_title_block),
+            resources.getString(R.string.alarm_on_content_block)
+        )
     }
 
     private fun setupButtons() {
@@ -135,15 +146,19 @@ class CommentActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         observe(commentViewModel.plusBtnClickEvent) {
             if (it) {
                 UniActionSheet(this)
-                    .addText("댓글 삭제")
-                    .addAction("삭제") { commentViewModel.deleteComment {} }
+                    .addAction("삭제", dimmed = true) { commentViewModel.deleteComment {} }
                     .show()
-            }
-            else {
+            } else {
                 UniActionSheet(this)
                     .addText("댓글 메뉴")
                     .addAction("신고하기") {}
-                    .addAction("사용자 차단하기"){}
+                    .addAction("사용자 차단하기") {
+                        if (loginService.isLoggedIn) {
+                            commentViewModel.blockUser()
+                        }else {
+                            showDialog()
+                        }
+                    }
                     .show()
             }
         }
