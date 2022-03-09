@@ -338,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="24dp"
-                    android:layout_marginBottom="100dp">
+                    android:layout_marginBottom="16dp">
 
                     <ImageView
                         android:id="@+id/eye"
@@ -373,11 +373,6 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="@color/black5" />
 
             </LinearLayout>
         </ScrollView>
