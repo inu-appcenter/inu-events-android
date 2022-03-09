@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     /** 버전 이름 여기에다가 쓰세요오오오오오오오오옹오! */
-    ext.version_name = '1.0.0'
+    ext.version_name = '1.1.2'
 
     repositories {
         google()

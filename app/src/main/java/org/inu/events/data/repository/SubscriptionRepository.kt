@@ -4,7 +4,7 @@ import org.inu.events.data.model.dto.Topics
 
 interface SubscriptionRepository {
     fun putSubscribing(subscribing: Boolean)
-    fun getSubscribing() : Boolean
+    fun getSubscribing(): Boolean
     fun putTopics(param: Topics)
-    fun getTopics() : Topics
+    fun getTopics(): Topics
 }

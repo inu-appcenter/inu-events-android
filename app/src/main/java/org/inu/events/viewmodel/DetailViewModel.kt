@@ -96,7 +96,7 @@ class DetailViewModel : ViewModel(),KoinComponent {
             eventWroteByMeBoolean = it.wroteByMe ?:false
             notificationQuarter.value = timeComparison(LocalDateTime.now().toString(),it.startAt,it.endAt)
             notificationOnOff.value = it.notificationSetByMe ?: false
-            notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알람 취소" else "알람 신청"} else "행사 마감"
+            notificationText.value = if(notificationQuarter.value != 0){ if (notificationOnOff.value!!) "알림 취소" else "알림 신청"} else "행사 마감"
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.btn_background_black10_radius6
             notificationSetFor.value = it.notificationSetFor

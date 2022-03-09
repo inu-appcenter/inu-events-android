@@ -240,7 +240,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
 
     private fun setPreview(){
         category.value = spinnerToCategory()
-        boardDateText.value = period.whenDay(period.endDate.value,true)
+        boardDateText.value = period.whenDay(endAt)
         deadLine.value = period.checkDeadline
         setPreviewCheckBoxState()
         noImage()
