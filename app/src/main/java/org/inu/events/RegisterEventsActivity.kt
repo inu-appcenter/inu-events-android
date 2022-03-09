@@ -89,8 +89,8 @@ class RegisterEventsActivity : AppCompatActivity() {
             this
         ) {
             when {
-                viewModel.period.startTimeEndTime() -> {
-                    toast("올바른 마감시간을 설정해주세요.")
+                viewModel.period.startTimeEndTime(viewModel.startAt,viewModel.endAt) -> {
+                    toast("올바른 행사 마감을 설정해 주세요.")
                     viewModel.onBeforeClick()
                 }
                 viewModel.isRequiredInformationEntered() -> viewModel.onNextClick()

@@ -1,5 +1,6 @@
 package org.inu.events.common.util
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -81,13 +82,19 @@ class Period {
         setEndTime(date)
     }
 
-    fun startTimeEndTime(): Boolean{
+    fun startTimeEndTime(startAt:String?, endAt:String?): Boolean{
+        if(startAt == null || endAt == null) return false
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
-        if(startDate.value == endDate.value){
-            val timeDiff = endDateTime.compareTo(startDateTime)
-            if(timeDiff < 0 ) return true
+        val start = dateFormat.parse(startAt).time
+        val end = dateFormat.parse(endAt).time
+
+
+        val diff = (end - start)
+        return when(diff<0){
+            true -> true
+            else -> false
         }
-        return false
     }
 
     fun whenDay(end_at: String?, check:Boolean = false): String {

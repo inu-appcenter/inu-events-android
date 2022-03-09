@@ -81,6 +81,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
     var timePickerValueEndTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueEndMinute = cal.get(Calendar.MINUTE)
+    var startAt = ""
+    var endAt = ""
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -274,6 +276,8 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
+        startAt = period.formattedStartDateTime
+        endAt = period.formattedEndDateTime
         previewEvent.call()
     }
 
