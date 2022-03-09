@@ -22,7 +22,7 @@ interface SubscriptionHttpService {
         @Body param: Topics
     ) : Call<Unit>
 
-    @GET("subscription/topics")
+    @GET("/subscription/topics")
     fun getTopics(
     ) : Call<Topics>
 }
