@@ -819,7 +819,7 @@
                         android:background="@color/white"
                         android:elevation="8dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:title="@string/event_registration" />
+                        app:title="@string/event_preview" />
 
                     <ImageView
                         android:id="@+id/imageView"

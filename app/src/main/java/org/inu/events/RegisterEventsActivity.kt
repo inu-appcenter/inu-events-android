@@ -297,6 +297,7 @@ class RegisterEventsActivity : AppCompatActivity() {
         binding.toolbarRegister0.setOnBackListener { finish() }
         binding.toolbarRegister1.setOnBackListener { finish() }
         binding.toolbarRegister2.setOnBackListener { finish() }
+        binding.toolbarRegister3.setOnBackListener { finish() }
     }
 
     private fun extractEventIdAndLoad() {

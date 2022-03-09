@@ -368,7 +368,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-
     private fun datePickerSelect() {
         period.startDate.value = period.serverDateToString(currentEvent!!.startAt)
         period.endDate.value = period.serverDateToString(currentEvent!!.endAt)

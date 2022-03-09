@@ -33,7 +33,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     private var eventIndex: Int = 0
     private var like = false
-    private var checkDeadline = false
 
     val postClickEvent = SingleLiveEvent<Any>()
     val likeClickEvent = SingleLiveEvent<Any>()
@@ -81,31 +80,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
         return loginService.isLoggedIn
     }
-
-    fun whenDay(end_at: String?): String {
-        if (end_at == null) return "D-??"
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-        val endDate = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
-
-        val dDay = (endDate - today) / (24 * 60 * 60 * 1000)
-
-        if (dDay < 0) {
-            checkDeadline = true
-            return "마감"
-        }
-        checkDeadline = false
-        return "D-${if(dDay.toInt() == 0) "day" else dDay}"
-    }
-
-    fun onDeadLineCheck() = checkDeadline
 
     private fun postLike(eventId: Int){
         execute {

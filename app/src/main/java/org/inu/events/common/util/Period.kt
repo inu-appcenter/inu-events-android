@@ -82,6 +82,7 @@ class Period {
     }
 
     fun startTimeEndTime(): Boolean{
+
         if(startDate.value == endDate.value){
             val timeDiff = endDateTime.compareTo(startDateTime)
             if(timeDiff < 0 ) return true
