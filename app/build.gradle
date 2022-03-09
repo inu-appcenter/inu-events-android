@@ -109,6 +109,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     // espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 
