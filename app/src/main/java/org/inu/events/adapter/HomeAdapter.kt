@@ -50,6 +50,7 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
             val period = Period()
             binding.item = homeData
             binding.viewModel = viewModel
+            viewModel.eventIndex = homeData.id
             binding.boardDate.text = period.whenDay(homeData.endAt)
             binding.boardDate.backgroundTintList = when(period.checkDeadline){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
@@ -58,6 +59,7 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
 
             binding.likeImageView.setOnClickListener{
                 if(viewModel.onLikePost()) homeData.likedByMe = !(homeData.likedByMe ?: false)
+                else viewModel.onLogIn()
                 adapter.notifyItemChanged(position)
             }
             binding.executePendingBindings()
