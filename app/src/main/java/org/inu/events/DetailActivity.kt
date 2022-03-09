@@ -143,8 +143,6 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         if (loginService.isLoggedIn) {
                 setSupportActionBar(binding.detailToolbar.toolbarRegister)
                 supportActionBar?.setDisplayShowTitleEnabled(false)
-        } else {
-            binding.detailToolbar.menuImageView.visibility = View.GONE
         }
     }
 
@@ -176,7 +174,10 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             } else{
                 UniActionSheet(this)
                     .addText("글 메뉴")
-                    .addAction("신고하기") {}
+                    .addAction("신고하기") {
+                        if (loginService.isLoggedIn){ }
+                        else{LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 신고하실 수 있습니다!") })}
+                    }
                     .show()
             }
         }
