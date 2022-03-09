@@ -85,20 +85,26 @@ class RegisterEventsActivity : AppCompatActivity() {
 
 
     private fun addEvent() {
-        viewModel.finishEvent.observe(
+        viewModel.previewEvent.observe(
             this
         ) {
             when {
-                viewModel.startTimeEndTime() -> {
+                viewModel.period.startTimeEndTime() -> {
                     toast("올바른 마감시간을 설정해주세요.")
                     viewModel.onBeforeClick()
                 }
-                viewModel.isRequiredInformationEntered() -> finish()
+                viewModel.isRequiredInformationEntered() -> viewModel.onNextClick()
                 else -> {
                     Toast.makeText(this,"필수정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
                     setUpTextWatcher()
+                    viewModel.onBeforeClick()
                 }
             }
+        }
+        viewModel.finishEvent.observe(
+            this
+        ) {
+            finish()
         }
     }
 
@@ -114,14 +120,7 @@ class RegisterEventsActivity : AppCompatActivity() {
     }
 
     private fun setupCurrentDate() {
-        val date = Date()
-
-        with(viewModel) {
-            setStartDate(date)
-            setStartTime(date)
-            setEndDate(date)
-            setEndTime(date)
-        }
+        viewModel.setupCurrentTime()
 
         with(binding) {
             editTextStartDate.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -144,9 +143,9 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setStartDate(cal.time)
+                    viewModel.period.setStartDate(cal.time)
                     viewModel.datePickerValueStartYear = y
-                    viewModel.datePickerValueStartMonth = m+1
+                    viewModel.datePickerValueStartMonth = m + 1
                     viewModel.datePickerValueStartDay = d
                 },
                 viewModel.datePickerValueStartYear,
@@ -164,7 +163,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setStartTime(cal.time)
+                    viewModel.period.setStartTime(cal.time)
                     viewModel.timePickerValueStartTime = h
                     viewModel.timePickerValueStartMinute = m
                 },
@@ -180,13 +179,19 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this,
                 { _, y, m, d ->
                     cal.set(y, m, d)
-                    viewModel.setEndDate(cal.time)
+                    viewModel.period.setEndDate(cal.time)
                 },
                 viewModel.datePickerValueEndYear,
                 viewModel.datePickerValueEndMonth - 1,
                 viewModel.datePickerValueEndDay
             ).apply {
-                datePicker.minDate = cal.apply { cal.set(viewModel.datePickerValueStartYear, viewModel.datePickerValueStartMonth - 1, viewModel.datePickerValueStartDay) }.timeInMillis
+                datePicker.minDate = cal.apply {
+                    cal.set(
+                        viewModel.datePickerValueStartYear,
+                        viewModel.datePickerValueStartMonth - 1,
+                        viewModel.datePickerValueStartDay
+                    )
+                }.timeInMillis
             }.show()
         }
     }
@@ -198,7 +203,7 @@ class RegisterEventsActivity : AppCompatActivity() {
                 this, { _, h, m ->
                     cal.set(Calendar.HOUR_OF_DAY, h)
                     cal.set(Calendar.MINUTE, m)
-                    viewModel.setEndTime(cal.time)
+                    viewModel.period.setEndTime(cal.time)
                     viewModel.timePickerValueEndTime = h
                     viewModel.timePickerValueEndMinute = m
                 },

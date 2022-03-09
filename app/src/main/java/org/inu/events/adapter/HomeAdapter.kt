@@ -48,10 +48,9 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
 
         fun bind(homeData: Event, position: Int) {
             val period = Period()
-            period.endDate.value = homeData.endAt
             binding.item = homeData
             binding.viewModel = viewModel
-            binding.boardDate.text = period.whenDay()
+            binding.boardDate.text = period.whenDay(homeData.endAt)
             binding.boardDate.backgroundTintList = when(period.checkDeadline){
                 true -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.black8))
                 else -> ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary))

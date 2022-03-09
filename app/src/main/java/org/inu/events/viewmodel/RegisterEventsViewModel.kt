@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.material.timepicker.TimeFormat
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.internal.UTC
 import org.inu.events.R
-import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
+import org.inu.events.common.util.Period
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
@@ -20,11 +18,8 @@ import org.inu.events.data.repository.EventRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
-import java.text.SimpleDateFormat
 import java.time.*
-import java.time.Instant.now
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 
 class RegisterEventsViewModel : ViewModel(), KoinComponent {
@@ -32,19 +27,20 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     private val eventRepository: EventRepository by inject()
 
     val selectedItemPosition = MutableLiveData(0)
-    val startDatePeriod = MutableLiveData("")
-    val startTimePeriod = MutableLiveData("")
-    val endDatePeriod = MutableLiveData("")
-    val endTimePeriod = MutableLiveData("")
+    val period = Period()
     val content = MutableLiveData("")
     val phase = MutableLiveData(0)
     val title = MutableLiveData("")
     val body = MutableLiveData("")
     val host = MutableLiveData<String?>()
+    val category = MutableLiveData("")
     val target = MutableLiveData("")
     val location = MutableLiveData<String?>()
     val contactNumber = MutableLiveData<String?>()
     val imageUrl = MutableLiveData("")
+    val boardDateText = MutableLiveData("")
+    val deadLine = MutableLiveData(false)
+
     val imageCheckBoxBoolean = MutableLiveData(false)
     val sameCheckBoxBoolean = MutableLiveData(false)
     val hostCheckBoxBoolean = MutableLiveData(false)
@@ -85,8 +81,6 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     var timePickerValueStartMinute = cal.get(Calendar.MINUTE)
     var timePickerValueEndTime = cal.get(Calendar.HOUR_OF_DAY)
     var timePickerValueEndMinute = cal.get(Calendar.MINUTE)
-    private lateinit var startTime:Date
-    private lateinit var endTime:Date
 
     val startHomeActivityClickEvent = SingleLiveEvent<Any>()
     val startGalleryClickEvent = SingleLiveEvent<Any>()
@@ -94,6 +88,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val startTimePickerClickEvent = SingleLiveEvent<Any>()
     val endDatePickerClickEvent = SingleLiveEvent<Any>()
     val endTimePickerClickEvent = SingleLiveEvent<Any>()
+    val previewEvent = SingleLiveEvent<Any>()
     val finishEvent = SingleLiveEvent<Any>()
 
     var eventIndex = -1
@@ -151,6 +146,18 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    private fun setPreviewCheckBoxState(){
+        if(host.value.isNullOrBlank()){
+            hostCheckBoxBoolean.value = true
+        }
+        if(location.value.isNullOrBlank()){
+            locationCheckBoxBoolean.value = true
+        }
+        if(contactNumber.value.isNullOrBlank()){
+            contactNumberCheckBoxBoolean.value = true
+        }
+    }
+
     private fun loadImage() {
         imageUrl.value = "http://uniletter.inuappcenter.kr/images/$imageUuid"
     }
@@ -171,16 +178,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         return array[selectedItemPosition.value!!]
     }
 
-    private fun datePickerToStartAt(): String {
-        return formatDateForServer("${startDatePeriod.value!!} ${startTimePeriod.value!!}")
-    }
-
-    private fun datePickerToEndAt(): String {
-        return formatDateForServer("${endDatePeriod.value!!} ${endTimePeriod.value!!}")
-    }
-
     private fun addEvent() {
-        noImage()
         execute {
             eventRepository.postEvent(
                 AddEventParams(
@@ -188,20 +186,19 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt(),
+                    startAt = period.formattedStartDateTime,
+                    endAt = period.formattedEndDateTime,
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
             )
-        }.then{ finishEvent.call()
+        }.then{
         }.catch{ }
     }
 
     private fun updateEvent() {
-        noImage()
         execute {
             eventRepository.updateEvent(
                 currentEvent!!.id,
@@ -210,24 +207,16 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
                     host = host.value,
                     category = spinnerToCategory(),
                     target = target.value,
-                    startAt = datePickerToStartAt(),
-                    endAt = datePickerToEndAt(),
+                    startAt = period.formattedStartDateTime,
+                    endAt = period.formattedEndDateTime,
                     contact = if(contactNumber.value.isNullOrBlank())null else contactNumber.value,
                     location = if(location.value.isNullOrBlank())null else location.value,
                     body = body.value ?: "",
                     imageUuid = imageUuid
                 )
             )
-        }.then{ finishEvent.call()
+        }.then{
         }.catch{ }
-    }
-
-    fun startTimeEndTime(): Boolean{
-        if(startDatePeriod.value == endDatePeriod.value){
-            val timeDiff = endTime.compareTo(startTime)
-            if(timeDiff < 0 ) return true
-        }
-        return false
     }
 
     private fun noImage(){
@@ -235,6 +224,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         if(imageCheckBoxBoolean.value == true){
             imageUuid = imageUuidList[selectedItemPosition.value!!]
         }
+        loadImage()
     }
 
     private fun uploadImage(){
@@ -244,6 +234,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
             val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
             imageUuid = eventRepository.uploadImage(image).uuid
         }
+    }
+
+    private fun setPreview(){
+        category.value = spinnerToCategory()
+        boardDateText.value = period.whenDay(period.endDate.value,true)
+        deadLine.value = period.checkDeadline
+        setPreviewCheckBoxState()
+        noImage()
     }
 
     fun onCancelClick() {
@@ -264,6 +262,9 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         Log.i("BUTTON", "다음 버튼 클릭")
         btnIndex++
         phase.value = btnIndex
+        if(btnIndex == 3){
+            setPreview()
+        }
     }
 
     fun onBeforeClick() {
@@ -273,24 +274,28 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     }
 
     fun onCompleteClick() {
-        if(isRequiredInformationEntered()){
-            if (isItNew) {
-                addEvent()
-            } else {
-                updateEvent()
-            }
-        }else{
-            onBeforeClick()
-            titleEditTextEmpty.value = title.value.isNullOrBlank()
-            targetEditTextEmpty.value = target.value.isNullOrBlank()
+        previewEvent.call()
+    }
+
+    fun onFinishClick(){
+        if (isItNew) {
+            addEvent()
+        } else {
+            updateEvent()
+        }
+        finishEvent.call()
+    }
+
+    fun isRequiredInformationEntered():Boolean {
+        titleEditTextEmpty.value = title.value.isNullOrBlank()
+        targetEditTextEmpty.value = target.value.isNullOrBlank()
+        return when{
+            title.value!!.isBlank() -> false
+            target.value!!.isBlank() -> false
+            else -> true
         }
     }
 
-    fun isRequiredInformationEntered() = when{
-        title.value!!.isBlank() -> false
-        target.value!!.isBlank() -> false
-        else -> true
-    }
 
     fun onStartDateClick() {
         startDatePickerClickEvent.call()
@@ -331,14 +336,14 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     fun onSameCheckBoxClick(){      //위와 동일 체크
         when{
             sameCheckBoxBoolean.value!! -> {
-                dateTmp = endDatePeriod.value
-                timeTmp = endTimePeriod.value
-                endDatePeriod.value = startDatePeriod.value
-                endTimePeriod.value = startTimePeriod.value
+                dateTmp = period.endDate.value
+                timeTmp = period.endTime.value
+                period.endDate.value = period.startDate.value
+                period.endTime.value = period.startTime.value
             }
             !(sameCheckBoxBoolean.value!!) ->{
-                endDatePeriod.value = dateTmp
-                endTimePeriod.value = timeTmp
+                period.endDate.value = dateTmp
+                period.endTime.value = timeTmp
             }
         }
     }
@@ -363,65 +368,28 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun setStartDate(date: Date) {
-        startDatePeriod.value = formatDate(date)
-    }
-
-    fun setStartTime(date: Date) {
-        startTime = date
-        startTimePeriod.value = formatTime(date)
-    }
-
-    fun setEndDate(date: Date) {
-        endDatePeriod.value = formatDate(date)
-    }
-
-    fun setEndTime(date: Date) {
-        endTime = date
-        endTimePeriod.value = formatTime(date)
-    }
-
-    private fun formatDate(date: Date) = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
-            .format(date)
-            .toString()
-
-
-    private fun formatTime(date: Date) = SimpleDateFormat("hh:mm a", Locale("en", "US"))
-            .format(date)
-            .toString()
-
-    private fun serverDateToString(date: String): String{
-        val stringDate:LocalDate = LocalDate.parse(date, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return stringDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
-    }
-
-    private fun serverTimeToString(time: String): String{
-        val timeDate:LocalTime = LocalTime.parse(time, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        return timeDate.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en", "KO")))
-    }
-
-    private fun formatDateForServer(date: String): String{
-        val serverDate = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm a", Locale("en", "KO")))
-        return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-    }
 
     private fun datePickerSelect() {
-        startDatePeriod.value = serverDateToString(currentEvent!!.startAt)
-        endDatePeriod.value = serverDateToString(currentEvent!!.endAt)
-        datePickerValueStartYear = startDatePeriod.value!!.slice(IntRange(0,3)).toInt()
-        datePickerValueStartMonth = startDatePeriod.value!!.slice(IntRange(5,6)).toInt()
-        datePickerValueStartDay = startDatePeriod.value!!.slice(IntRange(8,9)).toInt()
-        datePickerValueEndYear = endDatePeriod.value!!.slice(IntRange(0,3)).toInt()
-        datePickerValueEndMonth = endDatePeriod.value!!.slice(IntRange(5,6)).toInt()
-        datePickerValueEndDay = endDatePeriod.value!!.slice(IntRange(8,9)).toInt()
+        period.startDate.value = period.serverDateToString(currentEvent!!.startAt)
+        period.endDate.value = period.serverDateToString(currentEvent!!.endAt)
+        datePickerValueStartYear = period.startDate.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueStartMonth = period.startDate.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueStartDay = period.startDate.value!!.slice(IntRange(8,9)).toInt()
+        datePickerValueEndYear = period.endDate.value!!.slice(IntRange(0,3)).toInt()
+        datePickerValueEndMonth = period.endDate.value!!.slice(IntRange(5,6)).toInt()
+        datePickerValueEndDay = period.endDate.value!!.slice(IntRange(8,9)).toInt()
     }
 
     private fun timePickerSelect() {    //행사 수정 시 서버에서 받아온 시간 값을 textView에 표시하기 위한 함수
-        startTimePeriod.value = serverTimeToString(currentEvent!!.startAt)
-        endTimePeriod.value = serverTimeToString(currentEvent!!.endAt)
-        timePickerValueStartTime = startTimePeriod.value!!.slice(IntRange(0,1)).toInt()
-        timePickerValueStartMinute = startTimePeriod.value!!.slice(IntRange(3,4)).toInt()
-        timePickerValueEndTime = endTimePeriod.value!!.slice(IntRange(0,1)).toInt()
-        timePickerValueEndMinute = endTimePeriod.value!!.slice(IntRange(3,4)).toInt()
+        period.startTime.value = period.serverTimeToString(currentEvent!!.startAt)
+        period.endTime.value = period.serverTimeToString(currentEvent!!.endAt)
+        timePickerValueStartTime = period.startTime.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueStartMinute = period.startTime.value!!.slice(IntRange(3,4)).toInt()
+        timePickerValueEndTime = period.endTime.value!!.slice(IntRange(0,1)).toInt()
+        timePickerValueEndMinute = period.endTime.value!!.slice(IntRange(3,4)).toInt()
+    }
+
+    fun setupCurrentTime() {
+        period.setupCurrentTime()
     }
 }

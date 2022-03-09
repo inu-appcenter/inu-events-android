@@ -98,8 +98,7 @@ class DetailViewModel : ViewModel(), KoinComponent {
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.btn_background_black10_radius6
             notificationSetFor.value = it.notificationSetFor
-            period.endDate.value = it.endAt
-            boardDateText.value = period.whenDay()
+            boardDateText.value = period.whenDay(it.endAt)
             deadLine.value = period.checkDeadline
             likeOnOff.value = it.likedByMe
         }.catch {

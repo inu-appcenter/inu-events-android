@@ -89,12 +89,15 @@ class Period {
         return false
     }
 
-    fun whenDay(): String {
-        if (endDate.value == null) return "D-??"
+    fun whenDay(end_at: String?, check:Boolean = false): String {
+        if (end_at == null) return "D-??"
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        val endDate = dateFormat.parse(endDate.value).time
+        if(check) dateFormat = SimpleDateFormat("yyyy.MM.dd")
+
+
+        val endAt = dateFormat.parse(end_at).time
         val today = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -102,7 +105,7 @@ class Period {
             set(Calendar.MILLISECOND, 0)
         }.time.time
 
-        val dDay = (endDate - today) / (24 * 60 * 60 * 1000)
+        val dDay = (endAt - today) / (24 * 60 * 60 * 1000)
 
         if (dDay < 0) {
             checkDeadline = true
