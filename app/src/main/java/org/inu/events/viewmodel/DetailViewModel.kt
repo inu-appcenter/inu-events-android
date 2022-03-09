@@ -75,28 +75,6 @@ class DetailViewModel : ViewModel(), KoinComponent {
         loadDetailData()
     }
 
-    private fun whenDay(end_at: String?): String {
-        if (end_at == null) return "D-??"
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-        val endDate = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }.time.time
-
-        var dDay = (endDate - today) / (24 * 60 * 60 * 1000)
-
-        if (dDay < 0) {
-            deadLine.value = true
-            return "마감"
-        }
-        return "D-${if(dDay.toInt() == 0) "day" else dDay}"
-    }
-
     //현재 표시할 게시물의 데이터를 가져옴
     private fun loadDetailData() {
         execute {
@@ -120,7 +98,9 @@ class DetailViewModel : ViewModel(), KoinComponent {
             notificationColor.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.color.primary100 else R.color.white} else R.color.black
             notificationBackground.value = if (notificationQuarter.value != 0 ) {if (notificationOnOff.value!!) R.drawable.notification_off_btn_background else R.drawable.notification_on_btn_background} else R.drawable.btn_background_black10_radius6
             notificationSetFor.value = it.notificationSetFor
-            boardDateText.value = whenDay(it.endAt)
+            period.endDate.value = it.endAt
+            boardDateText.value = period.whenDay()
+            deadLine.value = period.checkDeadline
             likeOnOff.value = it.likedByMe
         }.catch {
             Log.i("error: loadDetailData",it.stackTrace.toString())
