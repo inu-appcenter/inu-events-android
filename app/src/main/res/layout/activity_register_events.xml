@@ -683,7 +683,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register2"
@@ -732,6 +732,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="16dp"
+                android:maxLength="800"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -797,7 +798,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 3 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -823,6 +824,7 @@
 
                     <ImageView
                         android:id="@+id/imageView"
+                        imageFromUrl="@{registerViewModel.imageUrl}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
@@ -830,7 +832,6 @@
                         android:adjustViewBounds="true"
                         android:paddingVertical="24dp"
                         android:scaleType="fitCenter"
-                        imageFromUrl = "@{registerViewModel.imageUrl}"
                         tools:src="@drawable/img_default" />
 
                     <View
