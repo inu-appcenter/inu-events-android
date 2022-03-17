@@ -105,7 +105,7 @@ class Period {
         if(check) dateFormat = SimpleDateFormat("yyyy.MM.dd")
 
         val endAt = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance().time.time
+        val today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).time.time
 
         val dDay = (endAt - today) / (24 * 60 * 60 * 1000)
         val diffSec = (endAt - today) / 1000;
