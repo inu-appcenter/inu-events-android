@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="android.view.View"></import>
+        <import type="android.view.View" />
 
         <variable
             name="commentViewModel"

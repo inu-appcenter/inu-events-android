@@ -20,7 +20,7 @@
     <string name="text_content">내용을 입력해주세요.</string>
     <string name="text_before">이전</string>
     <string name="text_complete">완료</string>
-    <string name="text_notice_image">없음 선택시 기본이미지가 등록됩니다</string>
+    <string name="text_notice_image">없음 선택시 유니레터가 제공하는 이미지가 등록됩니다</string>
     <string name="text_edit">수정하기</string>
     <string name="text_location">신청 링크 또는 장소를 입력해 주세요</string>
     <string name="text_notice_max">800자 이내로 입력 가능합니다.</string>
