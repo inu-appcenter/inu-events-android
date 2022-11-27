@@ -8,7 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AccountHttpService {
-    @POST("/login/oauth")
+    @POST("/login/oauth/google")
     fun login(@Body params: OAuthLoginParams): Call<LoginResult>
 
     @POST("/login/remembered")
