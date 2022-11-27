@@ -78,7 +78,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
             eventRepository.getEvents()
         }.then {
             _homeDataList.value = it
-            spinnerClickEvent.call()
         }.catch {  }
     }
 
@@ -87,7 +86,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
             eventRepository.getEventByCategory(params)
         }.then{
             _homeDataList.value = it
-            spinnerClickEvent.call()
         }.catch {  }
     }
 
@@ -107,9 +105,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
         return loginService.isLoggedIn
     }
 
+    //카테고리 필터 선택할 때
     fun onClickSpinner(){
-//        spinnerClickEvent.call()
-        load()
+        spinnerClickEvent.call()
     }
 
     private fun postLike(eventId: Int){

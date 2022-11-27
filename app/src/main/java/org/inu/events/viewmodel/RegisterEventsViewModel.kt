@@ -37,7 +37,7 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
     val target = MutableLiveData("")
     val location = MutableLiveData<String?>()
     val contactNumber = MutableLiveData<String?>()
-    val imageUrl = MutableLiveData("")
+    val imageUrl = MutableLiveData("https://uniletter.inuappcenter.kr/images/1ec96f4e-970e-6780-792a-5dc26eec006c")
     val boardDateText = MutableLiveData("")
     val deadLine = MutableLiveData(false)
 
@@ -59,14 +59,13 @@ class RegisterEventsViewModel : ViewModel(), KoinComponent {
         "1ec96f4e-970e-6780-792a-5dc26eec006c"
     )
     private var today = LocalDateTime.now()
-    private var imageUuid: String? = ""
+    private var imageUuid: String? = "1ec96f4e-970e-6780-792a-5dc26eec006c"
     private var imageTmp: String? = ""
     private var contactTmp: String? = ""
     private var urlTmp: String? = ""
     private var dateTmp: String? = today.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
     private var timeTmp: String? = today.format(DateTimeFormatter.ofPattern("hh:mm a",Locale("en","US")))
     private var hostTmp: String? = ""
-
 
     var btnIndex = 0
     //기존 글 수정 시 타임피커와 데이트피커 값을 불러오기 위한 정보 저장 변수

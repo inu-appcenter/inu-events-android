@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         tryAutoLogin()
         setupRecyclerView()
         setUpSwipeRefresh()
+        reLoad()
     }
 
     override fun onResume() {
@@ -110,9 +111,9 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         loginService.tryAutoLogin()
     }
 
-//    private fun reLoad(){
-//        observe(viewModel.spinnerClickEvent){
-//
-//        }
-//    }
+    private fun reLoad(){
+        observe(viewModel.spinnerClickEvent){
+
+        }
+    }
 }

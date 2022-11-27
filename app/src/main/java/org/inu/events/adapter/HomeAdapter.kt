@@ -22,7 +22,7 @@ import org.koin.java.KoinJavaComponent.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
+class HomeAdapter(var viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this, viewModel)
 

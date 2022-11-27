@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 0 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register0"
@@ -86,8 +86,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/text_notice_image"
+                android:maxLines="2"
                 android:textColor="@color/black7"
                 android:textSize="14sp"
+                android:lineSpacingMultiplier="1.2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageButton_postImage" />
 
@@ -108,14 +110,15 @@
                 android:id="@+id/checkBox_image"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_checkbox"
                 android:button="@null"
                 android:checked="@={registerViewModel.imageCheckBoxBoolean}"
                 android:onClick="@{() -> registerViewModel.onImageCheckBoxClick()}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
+                app:layout_constraintBottom_toBottomOf="@+id/checkBox_image_text"
+                app:layout_constraintTop_toTopOf="@+id/checkBox_image_text" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before"
@@ -166,7 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
 
             <ScrollView
