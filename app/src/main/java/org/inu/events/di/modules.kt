@@ -1,5 +1,6 @@
 package org.inu.events.di
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient

@@ -4,6 +4,7 @@ import android.util.Log
 import okhttp3.MultipartBody
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.dto.AddEventParams
+import org.inu.events.data.model.dto.GetEventByCategoryParam
 import org.inu.events.data.model.dto.UpdateEventParams
 import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
@@ -16,6 +17,16 @@ class EventRepositoryImpl(
     override fun getEvents(): List<Event> {
         return httpService.fetchEvent().execute().body()!!
     }
+
+    override fun getEventByCategory(params: GetEventByCategoryParam): List<Event> {
+        return httpService.getEventByCategory(
+            params.categoryId,
+            params.eventStatus,
+            params.pageNum,
+            params.pageSize
+        ).execute().body()!!
+    }
+
 
     override fun getEvent(eventId: Int): Event {
         return httpService.getEventDetail(eventId).execute().body()!!

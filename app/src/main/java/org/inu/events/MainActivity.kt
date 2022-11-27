@@ -5,7 +5,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
 import org.inu.events.adapter.HomeAdapter
+import org.inu.events.adapter.HomeEventDiffUtil
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var theAdapter: HomeAdapter
 
     private val googleLogin = GoogleLoginWrapper(this)
 
@@ -37,7 +41,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     override fun onResume() {
         super.onResume()
-
         viewModel.load()
     }
 
@@ -52,7 +55,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     }
 
     private fun setupRecyclerView() {
-        val theAdapter = HomeAdapter(viewModel)
+        theAdapter = HomeAdapter(viewModel)
 
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
@@ -106,4 +109,10 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     private fun tryAutoLogin() {
         loginService.tryAutoLogin()
     }
+
+//    private fun reLoad(){
+//        observe(viewModel.spinnerClickEvent){
+//
+//        }
+//    }
 }

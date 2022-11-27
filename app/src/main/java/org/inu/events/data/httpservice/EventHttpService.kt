@@ -12,6 +12,14 @@ interface EventHttpService {
     @GET("/events")
     fun fetchEvent(): Call<List<Event>>
 
+    @GET("/events-by-category")
+    fun getEventByCategory(
+        @Query("categoryId") categoryId: Int,
+        @Query("eventStatus") eventStatus: Boolean,
+        @Query("pageNum") pageNum: Int?,
+        @Query("pageSize") pageSize: Int?
+    ): Call<List<Event>>
+
     @POST("/events")
     fun postEvent(@Body params: AddEventParams): Call<Unit>
 
@@ -32,5 +40,4 @@ interface EventHttpService {
     fun uploadImage(
         @Part file: MultipartBody.Part
     ): Call<UploadImageResult>
-
 }

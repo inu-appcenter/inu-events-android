@@ -1,15 +1,19 @@
 package org.inu.events.viewmodel
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DiffUtil
 import org.inu.events.LoginActivity
 import org.inu.events.MyPageActivity
+import org.inu.events.R
 import org.inu.events.ToolbarListener
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
+import org.inu.events.data.model.dto.GetEventByCategoryParam
 import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
@@ -18,8 +22,6 @@ import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HomeViewModel : ViewModel(), KoinComponent {
 
@@ -33,9 +35,19 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     var eventIndex: Int = 0
     private var like = false
+    var selectedCategory = MutableLiveData(0)
+    private val eventQueryParam = MutableLiveData(
+        GetEventByCategoryParam(
+            categoryId = 0,
+            eventStatus = false,
+            pageNum = 0,
+            pageSize = 0
+        )
+    )
 
     val postClickEvent = SingleLiveEvent<Any>()
     val likeClickEvent = SingleLiveEvent<Any>()
+    val spinnerClickEvent = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
         override fun onClickMyPage(view: View) {
             if(loginService.isLoggedIn) {
@@ -52,14 +64,30 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
 
     fun load() {
-        loadHomeData()
+        eventQueryParam.value?.let {
+            it.categoryId = selectedCategory.value?.toInt() ?: 0
+            loadEventByCategory(
+                params = it
+            )
+        }
     }
 
+    @Deprecated("이벤트 전부 불러오는 메서드. 카테고리 필터링으로 대체할 예정임")
     private fun loadHomeData() {
         execute {
             eventRepository.getEvents()
         }.then {
             _homeDataList.value = it
+            spinnerClickEvent.call()
+        }.catch {  }
+    }
+
+    private fun loadEventByCategory(params: GetEventByCategoryParam){
+        execute {
+            eventRepository.getEventByCategory(params)
+        }.then{
+            _homeDataList.value = it
+            spinnerClickEvent.call()
         }.catch {  }
     }
 
@@ -79,6 +107,11 @@ class HomeViewModel : ViewModel(), KoinComponent {
         return loginService.isLoggedIn
     }
 
+    fun onClickSpinner(){
+//        spinnerClickEvent.call()
+        load()
+    }
+
     private fun postLike(eventId: Int){
         execute {
             likeRepository.postLike(
@@ -96,4 +129,5 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }.then {
         }.catch {  }
     }
+
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classification">
-        <item>선택없음</item>
-        <item>동아리/소모임</item>
-        <item>학생회</item>
-        <item>간식나눔</item>
-        <item>대회/공모전</item>
-        <item>스터디</item>
-        <item>구인</item>
-        <item>기타</item>
+        <item name = "0">선택없음</item>
+        <item name = "1">동아리/소모임</item>
+        <item name = "2">학생회</item>
+        <item name = "3">간식나눔</item>
+        <item name = "4">대회/공모전</item>
+        <item name = "5">스터디</item>
+        <item name = "6">구인</item>
+        <item name = "7">기타</item>
+        <item name = "8">교육/강연</item>
     </string-array>
 </resources>
