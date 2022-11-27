@@ -10,7 +10,10 @@ import retrofit2.http.*
 
 interface EventHttpService {
     @GET("/events")
-    fun fetchEvent(): Call<List<Event>>
+    fun fetchEvent(
+        @Query("pageNum") pageNum: Int = 0,
+        @Query("pageSize") pageSize: Int = 20
+    ): Call<List<Event>>
 
     @POST("/events")
     fun postEvent(@Body params: AddEventParams): Call<Unit>
