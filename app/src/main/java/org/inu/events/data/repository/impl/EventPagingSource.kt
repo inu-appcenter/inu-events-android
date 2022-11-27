@@ -31,7 +31,7 @@ class EventPagingSource(
                     STARTING_KEY -> null
                     else -> ensureValidKey(key = start - params.loadSize)
                 },
-                nextKey = start + params.loadSize
+                nextKey = if(data.size == params.loadSize) start + params.loadSize else null
             )
         }
     }
