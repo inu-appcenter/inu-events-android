@@ -5,6 +5,7 @@ import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
 import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
+import org.inu.events.data.repository.impl.EventPagingSource
 
 interface EventRepository {
     fun getEvents(): List<Event>
@@ -13,4 +14,5 @@ interface EventRepository {
     fun updateEvent(id: Int, params: UpdateEventParams)
     fun deleteEvent(eventId: Int)
     fun uploadImage(image: MultipartBody.Part): UploadImageResult
+    fun createEventPageSource(): EventPagingSource
 }

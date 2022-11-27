@@ -37,4 +37,8 @@ class EventRepositoryImpl(
         Log.d("tag","이미지 업로드 함수 호출")
         return httpService.uploadImage(image).execute().body()!!
     }
+
+    override fun createEventPageSource(): EventPagingSource {
+        return EventPagingSource(httpService)
+    }
 }
