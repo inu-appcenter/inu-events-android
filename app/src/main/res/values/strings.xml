@@ -23,7 +23,7 @@
     <string name="text_notice_image">없음 선택시 기본이미지가 등록됩니다</string>
     <string name="text_edit">수정하기</string>
     <string name="text_location">신청 링크 또는 장소를 입력해 주세요</string>
-    <string name="text_notice_max">800자 이내로 입력 가능합니다.</string>
+    <string name="text_notice_max">8000자 이내로 입력 가능합니다.</string>
     <string name="text_delete">삭제</string>
     <string name="text_input">댓글을 입력해주세요. </string>
     <string name="text_url">첨부할 URL이 있다면 입력해주세요.</string>
