@@ -9,6 +9,8 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface EventHttpService {
+
+    @Headers("Connection: close")
     @GET("/events")
     fun fetchEvent(
         @Query("pageNum") pageNum: Int = 0,
