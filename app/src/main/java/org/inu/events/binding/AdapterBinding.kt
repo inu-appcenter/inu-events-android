@@ -33,13 +33,6 @@ fun setEvents(recyclerView: RecyclerView, list: List<Event>?) {
     }
 }
 
-@BindingAdapter("app:home_events")
-fun setHomeEvents(recyclerView: RecyclerView, list: List<Event>?) {
-    list?.let {
-        (recyclerView.adapter as HomeAdapter).submitList(list)
-    }
-}
-
 @BindingAdapter("app:blockedAccounts")
 fun setBlockedAccounts(recyclerView: RecyclerView, list:List<User>?) {
     list?.let {

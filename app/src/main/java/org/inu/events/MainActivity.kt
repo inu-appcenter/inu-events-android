@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.inu.events.adapter.HomeAdapter
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
@@ -56,6 +59,12 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
         binding.homeRecyclerView.apply {
             adapter = theAdapter  //데이터를 아답터에 전달
+        }
+
+        lifecycleScope.launch {
+            viewModel.homeDataList.collectLatest {
+                theAdapter.submitData(it)
+            }
         }
     }
 

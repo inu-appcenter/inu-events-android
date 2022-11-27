@@ -5,6 +5,9 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.*
+import kotlinx.coroutines.flow.Flow
 import org.inu.events.LoginActivity
 import org.inu.events.MyPageActivity
 import org.inu.events.ToolbarListener
@@ -14,6 +17,7 @@ import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
+import org.inu.events.data.repository.impl.EventPagingSource
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
@@ -27,9 +31,14 @@ class HomeViewModel : ViewModel(), KoinComponent {
     private val loginService: LoginService by inject()
     private val likeRepository: LikeRepository by inject()
 
-    private val _homeDataList = MutableLiveData<List<Event>>()
-    val homeDataList: LiveData<List<Event>>
-        get() = _homeDataList
+    private val pageSize = 10
+
+    val homeDataList: Flow<PagingData<Event>> = Pager(
+        config = PagingConfig(pageSize = pageSize),
+        pagingSourceFactory = { eventRepository.createEventPageSource() }
+    )
+        .flow
+        .cachedIn(viewModelScope)
 
     var eventIndex: Int = 0
     private var like = false
@@ -52,15 +61,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
 
     fun load() {
-        loadHomeData()
-    }
-
-    private fun loadHomeData() {
-        execute {
-            eventRepository.getEvents()
-        }.then {
-            _homeDataList.value = it
-        }.catch {  }
+//        eventPageSource.invalidate()
     }
 
     fun onClickPost() {

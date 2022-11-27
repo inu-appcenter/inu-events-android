@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,19 +23,22 @@ import org.koin.java.KoinJavaComponent.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
+class HomeAdapter(val viewModel: HomeViewModel) : PagingDataAdapter<Event, HomeAdapter.ViewHolder>(HomeEventDiffUtil()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, this, viewModel)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position),position)
+        val item = getItem(position)
+        item?.let {
+            holder.bind(item, position)
+        }
     }
 
-    class ViewHolder private constructor(val binding: HomeRecyclerviewItemBinding, val adapter: ListAdapter<Event, ViewHolder>, val viewModel: HomeViewModel) :
+    class ViewHolder private constructor(val binding: HomeRecyclerviewItemBinding, val adapter: HomeAdapter, val viewModel: HomeViewModel) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener{
 
         companion object{
-            fun from(parent: ViewGroup, adapter: ListAdapter<Event, ViewHolder>, viewModel: HomeViewModel) : ViewHolder{
+            fun from(parent: ViewGroup, adapter: HomeAdapter, viewModel: HomeViewModel) : ViewHolder{
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = HomeRecyclerviewItemBinding.inflate(layoutInflater, parent, false)
 
@@ -76,10 +80,10 @@ class HomeAdapter(val viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
 
 class HomeEventDiffUtil : DiffUtil.ItemCallback<Event>() {
     override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem == newItem
     }
 }
