@@ -47,7 +47,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     val postClickEvent = SingleLiveEvent<Any>()
     val likeClickEvent = SingleLiveEvent<Any>()
-    val spinnerClickEvent = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
         override fun onClickMyPage(view: View) {
             if(loginService.isLoggedIn) {
@@ -106,9 +105,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     //카테고리 필터 선택할 때
     fun onClickSpinner(parent: ViewParent, view: View, position:Int, id:Long){
-        Log.d("dajflksdfkal","$position")
         eventQueryParam.value?.categoryId = position
-        spinnerClickEvent.call()
+        load()
     }
 
     private fun postLike(eventId: Int){
