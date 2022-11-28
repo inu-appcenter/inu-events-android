@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun reLoad(){
         observe(viewModel.spinnerClickEvent){
-
+            viewModel.load()
         }
     }
 }

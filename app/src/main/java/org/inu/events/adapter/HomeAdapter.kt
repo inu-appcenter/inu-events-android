@@ -1,6 +1,7 @@
 package org.inu.events.adapter
 
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class HomeAdapter(var viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
 
         fun bind(homeData: Event, position: Int) {
             val period = Period()
+            Log.d("asdfasdfasdf", homeData.title)
             binding.item = homeData
             binding.viewModel = viewModel
             viewModel.eventIndex = homeData.id
@@ -71,6 +73,7 @@ class HomeAdapter(var viewModel: HomeViewModel) : ListAdapter<Event, HomeAdapter
             }
         }
 
+//        fun replaceList()
     }
 }
 

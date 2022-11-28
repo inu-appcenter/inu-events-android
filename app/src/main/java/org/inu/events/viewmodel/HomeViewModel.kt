@@ -3,13 +3,14 @@ package org.inu.events.viewmodel
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.view.ViewParent
+import android.widget.Adapter
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.DiffUtil
 import org.inu.events.LoginActivity
 import org.inu.events.MyPageActivity
-import org.inu.events.R
 import org.inu.events.ToolbarListener
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
@@ -35,7 +36,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     var eventIndex: Int = 0
     private var like = false
-    var selectedCategory = MutableLiveData(0)
     private val eventQueryParam = MutableLiveData(
         GetEventByCategoryParam(
             categoryId = 0,
@@ -65,7 +65,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     fun load() {
         eventQueryParam.value?.let {
-            it.categoryId = selectedCategory.value?.toInt() ?: 0
             loadEventByCategory(
                 params = it
             )
@@ -106,7 +105,9 @@ class HomeViewModel : ViewModel(), KoinComponent {
     }
 
     //카테고리 필터 선택할 때
-    fun onClickSpinner(){
+    fun onClickSpinner(parent: ViewParent, view: View, position:Int, id:Long){
+        Log.d("dajflksdfkal","$position")
+        eventQueryParam.value?.categoryId = position
         spinnerClickEvent.call()
     }
 
