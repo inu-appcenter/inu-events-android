@@ -2,8 +2,6 @@ package org.inu.events.viewmodel
 
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -17,13 +15,10 @@ import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
-import org.inu.events.data.repository.impl.EventPagingSource
 import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HomeViewModel : ViewModel(), KoinComponent {
 
@@ -45,6 +40,7 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     val postClickEvent = SingleLiveEvent<Any>()
     val likeClickEvent = SingleLiveEvent<Any>()
+    val shouldRefresh = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
         override fun onClickMyPage(view: View) {
             if(loginService.isLoggedIn) {
@@ -60,8 +56,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun load() {
-//        eventPageSource.invalidate()
+    fun refresh() {
+        shouldRefresh.call()
     }
 
     fun onClickPost() {
