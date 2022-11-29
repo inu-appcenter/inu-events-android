@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.inu.events.common.threading.execute
 import org.inu.events.data.model.dto.AddFcmParams
@@ -13,18 +14,17 @@ import org.inu.events.data.repository.FcmRepository
 import org.inu.events.di.OkHttpClientFactory
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 class LoginService(
     private val accountRepository: AccountRepository
-): KoinComponent {
+) : KoinComponent {
     private val _isLoggedIn = MutableLiveData(false)
 
     val isLoggedInLiveData: LiveData<Boolean> = _isLoggedIn
     val isLoggedIn: Boolean get() = _isLoggedIn.value!!
 
     private val fcmRepository: FcmRepository by inject()
-    private val context : Context by inject()
+    private val context: Context by inject()
     private val db = SharedPreferenceWrapper(context)
 
     /**
@@ -37,13 +37,13 @@ class LoginService(
         }.then {
             accountRepository.saveAccount(Account(it.userId, it.rememberMeToken))
             _isLoggedIn.postValue(true)
-            postToken()
+            postToken(AddFcmParams(db.getString("fcmToken") ?: ""))
         }.catch {
             _isLoggedIn.postValue(false)
         }
     }
 
-    fun isAutoLoginPossible():Boolean {
+    fun isAutoLoginPossible(): Boolean {
         return accountRepository.getSavedAccount() != null
     }
 
@@ -60,17 +60,23 @@ class LoginService(
         }
     }
 
-    fun logout() {
-        OkHttpClientFactory.clearCookie()
-        accountRepository.clearAccount()
-        _isLoggedIn.postValue(false)
+    suspend fun logout() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val deferred = CoroutineScope(Dispatchers.IO).async {
+                postToken(AddFcmParams(""))
+            }
+            deferred.await()
+            OkHttpClientFactory.clearCookie()
+            accountRepository.clearAccount()
+            _isLoggedIn.postValue(false)
+        }
     }
 
-    private fun postToken(){
+    private fun postToken(token: AddFcmParams) {
         execute {
-            fcmRepository.postFcm(
-                AddFcmParams( db.getString("fcmToken") ?: ""))
+            fcmRepository.postFcm(token)
         }.then {
-        }.catch {  }
+        }.catch {
+        }
     }
 }
