@@ -36,12 +36,13 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         tryAutoLogin()
         setupRecyclerView()
         setUpSwipeRefresh()
+        setupRefreshEvent()
     }
 
     override fun onResume() {
         super.onResume()
 
-        viewModel.load()
+        viewModel.refresh()
     }
 
     private fun initBinding() {
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         binding.lifecycleOwner = this
 
         observeNonNull(loginService.isLoggedInLiveData) {
-            viewModel.load()
+            viewModel.refresh()
         }
     }
 
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setUpSwipeRefresh() {
         binding.swipeLayout.setOnRefreshListener {
-            viewModel.load()
+            viewModel.refresh()
             binding.swipeLayout.isRefreshing = false
         }
     }
@@ -92,6 +93,12 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             if(!loginService.isLoggedIn){
                 showDialog()
             }
+        }
+    }
+
+    private fun setupRefreshEvent() {
+        viewModel.shouldRefresh.observe(this) {
+            (binding.homeRecyclerView.adapter as HomeAdapter).refresh()
         }
     }
 
