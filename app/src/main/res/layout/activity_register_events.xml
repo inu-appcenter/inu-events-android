@@ -729,7 +729,6 @@
                 android:inputType="textMultiLine"
                 android:maxLength="800"
                 android:padding="16dp"
-                android:maxLength="800"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
