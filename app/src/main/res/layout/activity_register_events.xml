@@ -679,7 +679,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register2"
@@ -729,6 +729,7 @@
                 android:inputType="textMultiLine"
                 android:maxLength="800"
                 android:padding="16dp"
+                android:maxLength="800"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
