@@ -39,12 +39,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupRefreshEvent()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.refresh()
-    }
-
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.mainViewModel = viewModel
