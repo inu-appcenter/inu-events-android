@@ -84,6 +84,6 @@ class HomeEventDiffUtil : DiffUtil.ItemCallback<Event>() {
     }
 
     override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
+        return newItem.isSameListContent(oldItem)
     }
 }
