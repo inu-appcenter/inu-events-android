@@ -98,23 +98,29 @@ class Period {
     }
 
     fun whenDay(end_at: String?, check:Boolean = false): String {
+        //end_at: 한국시간임
         if (end_at == null) return "D-??"
 
-        var dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-
-        if(check) dateFormat = SimpleDateFormat("yyyy.MM.dd")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
         val endAt = dateFormat.parse(end_at).time
-        val today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).time.time
+        val today = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time.time
+        val todayWithTime = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul")).time.time
 
         val dDay = (endAt - today) / (24 * 60 * 60 * 1000)
-        val diffSec = (endAt - today) / 1000;
+        val diffSec = (endAt - todayWithTime) / 1000;
 
-        if (diffSec < 0) {
+        if (diffSec <= 0) {
             checkDeadline = true
             return "마감"
         }
         checkDeadline = false
+        Log.d("dafdf","${endAt} - ${todayWithTime} = ${endAt-todayWithTime}")
         return "D-${if(dDay.toInt() == 0) "day" else dDay}"
     }
 }
