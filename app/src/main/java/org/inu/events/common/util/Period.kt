@@ -10,9 +10,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Period {
-    lateinit var startDateTime: Date
-    lateinit var endDateTime: Date
-
     var checkDeadline = false
 
     val startDate = MutableLiveData("")
@@ -43,15 +40,15 @@ class Period {
         return serverDate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 
-    fun datePickerToString(date: String, time: String): String {
+    private fun datePickerToString(date: String, time: String): String {
         return formatDateForServer("$date $time")
     }
 
-    fun formatDate(date: Date): String = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
+    private fun formatDate(date: Date): String = SimpleDateFormat("yyyy.MM.dd", Locale("ko", "KR"))
         .format(date)
         .toString()
 
-    fun formatTime(date: Date): String = SimpleDateFormat("hh:mm a", Locale("en", "US"))
+    private fun formatTime(date: Date): String = SimpleDateFormat("hh:mm a", Locale("en", "US"))
         .format(date)
         .toString()
 
@@ -60,7 +57,6 @@ class Period {
     }
 
     fun setStartTime(date: Date) {
-        startDateTime = date
         startTime.value = formatTime(date)
     }
 
@@ -69,7 +65,6 @@ class Period {
     }
 
     fun setEndTime(date: Date) {
-        endDateTime = date
         endTime.value = formatTime(date)
     }
 
