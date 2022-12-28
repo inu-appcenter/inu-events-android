@@ -6,13 +6,12 @@ import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import org.inu.events.base.BaseActivity
-import org.inu.events.common.util.URIPathHelper
+import org.inu.events.common.extension.asRequestBody
+import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityUpdateProfileBinding
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.viewmodel.UpdateProfileViewModel
-import java.io.File
 
 
 class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
@@ -24,13 +23,21 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
             if (result.resultCode == RESULT_OK) {
                 try {
                     val uri = result.data?.data
+                    if (uri == null) {
+                        toast("이미지를 가져오지 못 하였습니다 ㅠㅡㅠ")
+                        return@registerForActivityResult
+                    }
+
                     Glide.with(this).load(uri).into(binding.photoUpdate)
 
-                    val filePath = URIPathHelper().getPath(this, uri!!)
-                    val file = File(filePath!!)
+                    val stream = contentResolver.openInputStream(uri)
+                    if (stream == null) {
+                        toast("입력 스트림을 열지 못 하였습니다 ㅠㅡㅠ")
+                        return@registerForActivityResult
+                    }
 
-                    val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
-                    val image = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                    val requestFile = stream.asRequestBody("multipart/form-data".toMediaType())
+                    val image = MultipartBody.Part.createFormData("file", "file", requestFile)
                     viewModel.uploadImage(image)
                 } catch (e: Exception) {
                     e.printStackTrace()

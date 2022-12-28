@@ -2,17 +2,12 @@ package org.inu.events.viewmodel
 
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.inu.events.*
 import org.inu.events.common.util.SingleLiveEvent
 import org.inu.events.data.model.entity.User
-import org.inu.events.di.OkHttpClientFactory
 import org.inu.events.service.LoginService
 import org.inu.events.service.UserService
 import org.koin.core.component.KoinComponent

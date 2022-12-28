@@ -14,7 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout0"
@@ -39,9 +40,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/text_picture_registration"
-                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_register0" />
 
@@ -52,34 +53,30 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="8dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/black30"
-                app:cardElevation="0dp"
-                app:cardCornerRadius="12dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/img_btn_background"
                 android:clickable="@{!registerViewModel.imageCheckBoxBoolean}"
                 android:contentDescription="@string/text_notice_image"
                 android:onClick="@{ () -> registerViewModel.onImageButtonClick()}"
-                android:scaleType="centerInside"
-                app:layout_constraintBottom_toTopOf="@+id/textView_Info"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration">
+                app:layout_constraintTop_toBottomOf="@+id/textView_image_registration"
+                app:strokeColor="@color/black30"
+                app:strokeWidth="1dp">
 
                 <ImageView
                     android:id="@+id/home_imageView"
+                    imageFromUrl="@{registerViewModel.imageUrl}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    android:cropToPadding="true"
-                    android:scaleType="centerCrop"
-                    imageFromUrl="@{registerViewModel.imageUrl}"
                     app:layout_constraintBottom_toTopOf="@+id/cardview_member"
                     app:layout_constraintEnd_toEndOf="@+id/cardview_member"
                     app:layout_constraintStart_toStartOf="@+id/cardview_member"
                     app:layout_constraintTop_toTopOf="@+id/cardview_member"
-                    tools:src="@drawable/img_default"/>
+                    tools:src="@drawable/img_default" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -87,20 +84,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginTop="8dp"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="2"
                 android:text="@string/text_notice_image"
                 android:textColor="@color/black7"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/button_before"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageButton_postImage" />
 
 
             <TextView
                 android:id="@+id/checkBox_image_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="@string/text_empty"
                 android:textColor="@color/black7"
                 android:textSize="13sp"
@@ -111,14 +110,15 @@
                 android:id="@+id/checkBox_image"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="8dp"
                 android:background="@drawable/custom_checkbox"
                 android:button="@null"
                 android:checked="@={registerViewModel.imageCheckBoxBoolean}"
                 android:onClick="@{() -> registerViewModel.onImageCheckBoxClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/checkBox_image_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageButton_postImage" />
+                app:layout_constraintTop_toTopOf="@+id/checkBox_image_text" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_before"
@@ -142,6 +142,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_complete"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -158,19 +159,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/button_before"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 1 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
 
             <ScrollView
@@ -289,7 +288,6 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingHorizontal="16dp"
-                        android:paddingVertical="12dp"
                         android:text="@={registerViewModel.host}"
                         android:textColorHint="@color/black20"
                         android:textSize="16sp"
@@ -321,7 +319,6 @@
                         android:background="@drawable/spinner_background"
                         android:entries="@array/classification"
                         android:paddingHorizontal="16dp"
-                        android:paddingVertical="10dp"
                         android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/black1"
@@ -677,13 +674,12 @@
                 app:layout_constraintStart_toEndOf="@id/button_before1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <org.inu.events.UniLetterToolbar
                 android:id="@+id/toolbar_register2"
@@ -731,10 +727,10 @@
                 android:hint="@string/hintText_body"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
+                android:maxLength="800"
                 android:padding="16dp"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
-                android:maxLength="8000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_content" />
@@ -798,7 +794,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{registerViewModel.phase == 3 ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -824,6 +820,7 @@
 
                     <ImageView
                         android:id="@+id/imageView"
+                        imageFromUrl="@{registerViewModel.imageUrl}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
@@ -831,7 +828,6 @@
                         android:adjustViewBounds="true"
                         android:paddingVertical="24dp"
                         android:scaleType="fitCenter"
-                        imageFromUrl = "@{registerViewModel.imageUrl}"
                         tools:src="@drawable/img_default" />
 
                     <View
@@ -1157,6 +1153,7 @@
                 tools:ignore="DuplicateClickableBoundsCheck,TextContrastCheck,DuplicateSpeakableTextCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
