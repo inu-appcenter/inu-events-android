@@ -11,8 +11,10 @@ import retrofit2.http.*
 interface EventHttpService {
 
     @Headers("Connection: close")
-    @GET("/events")
-    fun fetchEvent(
+    @GET("/events-by-category")
+    fun fetchEvents(
+        @Query("categoryId") categoryId: Int = 0,
+        @Query("eventStatus") eventStatus: Boolean = false,
         @Query("pageNum") pageNum: Int = 0,
         @Query("pageSize") pageSize: Int = 20
     ): Call<List<Event>>

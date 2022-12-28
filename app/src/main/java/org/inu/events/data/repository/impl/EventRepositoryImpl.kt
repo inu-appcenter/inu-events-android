@@ -1,6 +1,12 @@
 package org.inu.events.data.repository.impl
 
 import android.util.Log
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.dto.AddEventParams
@@ -13,9 +19,12 @@ class EventRepositoryImpl(
     private val httpService: EventHttpService
 ) : EventRepository {
 
-    override fun getEvents(): List<Event> {
-        return httpService.fetchEvent().execute().body()!!
-    }
+    override fun getEvents(categoryId: Int, eventStatus: Boolean) = Pager(
+        config = PagingConfig(10),
+        pagingSourceFactory = {
+            createEventPageSource(categoryId, eventStatus)
+        }
+    ).flow
 
     override fun getEvent(eventId: Int): Event {
         return httpService.getEventDetail(eventId).execute().body()!!
@@ -38,7 +47,7 @@ class EventRepositoryImpl(
         return httpService.uploadImage(image).execute().body()!!
     }
 
-    override fun createEventPageSource(): EventPagingSource {
-        return EventPagingSource(httpService)
+    override fun createEventPageSource(categoryId: Int, eventStatus: Boolean): EventPagingSource {
+        return EventPagingSource(httpService, categoryId, eventStatus)
     }
 }

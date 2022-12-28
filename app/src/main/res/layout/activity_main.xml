@@ -22,6 +22,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:listener="@{mainViewModel.toolbarListener}" />
 
+        <Spinner
+            android:id="@+id/spinner_classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/classification"
+            android:onItemSelected="@{(parent, view, position, id)->mainViewModel.onClickSpinner(parent, view, position, id)}"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black1"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
@@ -29,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include"
+            app:layout_constraintTop_toBottomOf="@id/spinner_classification"
             tools:context=".MainActivity">
 
             <androidx.recyclerview.widget.RecyclerView

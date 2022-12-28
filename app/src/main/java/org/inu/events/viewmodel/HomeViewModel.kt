@@ -2,10 +2,16 @@ package org.inu.events.viewmodel
 
 import android.content.Intent
 import android.view.View
+import android.view.ViewParent
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.inu.events.LoginActivity
 import org.inu.events.MyPageActivity
 import org.inu.events.ToolbarListener
@@ -28,12 +34,20 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     private val pageSize = 10
 
-    val homeDataList: Flow<PagingData<Event>> = Pager(
-        config = PagingConfig(pageSize = pageSize),
-        pagingSourceFactory = { eventRepository.createEventPageSource() }
-    )
-        .flow
-        .cachedIn(viewModelScope)
+    val _homeDataList = MutableStateFlow<PagingData<Event>>(PagingData.empty())
+    val homeDataList = _homeDataList.asStateFlow()
+
+    fun getHomeData(categoryId: Int, eventStatus: Boolean) {
+        viewModelScope.launch {
+            eventRepository.getEvents(categoryId, eventStatus).collect {
+                _homeDataList.value = it
+            }
+        }
+    }
+
+    fun onClickSpinner(parent: ViewParent, view: View, position:Int, id:Long){
+        getHomeData(position, false)
+    }
 
     var eventIndex: Int = 0
     private var like = false

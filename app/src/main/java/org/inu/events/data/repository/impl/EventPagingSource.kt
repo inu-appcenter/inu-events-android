@@ -10,13 +10,13 @@ import org.inu.events.data.model.entity.Event
 private val STARTING_KEY = 0
 
 class EventPagingSource(
-    private val httpService: EventHttpService
+    private val httpService: EventHttpService,
+    private val categoryId: Int = 0,
+    private val eventStatus: Boolean = false,
 ) : PagingSource<Int, Event>() {
 
     override fun getRefreshKey(state: PagingState<Int, Event>): Int? {
-        val anchorPosition = state.anchorPosition ?: return null
-        val event = state.closestItemToPosition(anchorPosition) ?: return null
-        return ensureValidKey(key = event.id - (state.config.pageSize / 2))
+        return ensureValidKey(key = 0)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Event> {
@@ -24,14 +24,19 @@ class EventPagingSource(
         val page = start / params.loadSize
 
         return withContext(Dispatchers.IO) {
-            val data = httpService.fetchEvent(pageNum = page, pageSize = params.loadSize).execute().body()!!
+            val data = httpService.fetchEvents(
+                pageNum = page,
+                pageSize = params.loadSize,
+                categoryId = categoryId,
+                eventStatus = eventStatus
+            ).execute().body()!!
             LoadResult.Page(
                 data = data,
                 prevKey = when (start) {
                     STARTING_KEY -> null
                     else -> ensureValidKey(key = start - params.loadSize)
                 },
-                nextKey = if(data.size == params.loadSize) start + params.loadSize else null
+                nextKey = if (data.size == params.loadSize) start + params.loadSize else null
             )
         }
     }

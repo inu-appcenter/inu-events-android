@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val googleLogin = GoogleLoginWrapper(this)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_InuEvents) // 이것도 지울 수 있을 것 같아요.
         super.onCreate(savedInstanceState)
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
     override fun onResume() {
         super.onResume()
 
-        viewModel.refresh()
+//        viewModel.refresh()
     }
 
     private fun initBinding() {
