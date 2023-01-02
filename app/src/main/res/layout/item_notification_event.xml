@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.NotificationViewModel" />
+            type="org.inu.events.ui.mypage.store.NotificationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -8,7 +8,7 @@
             type="String" />
         <variable
             name="listener"
-            type="org.inu.events.ToolbarListener" />
+            type="org.inu.events.ui.util.toolbar.ToolbarListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

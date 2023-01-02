@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.LikeViewModel" />
+            type="org.inu.events.ui.mypage.store.LikeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

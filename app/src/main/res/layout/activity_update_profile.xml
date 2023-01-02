@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.UpdateProfileViewModel" />
+            type="org.inu.events.ui.mypage.UpdateProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,9 +12,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UpdateProfileActivity">
+        tools:context=".ui.mypage.UpdateProfileActivity">
 
-        <org.inu.events.UniLetterToolbar
+        <org.inu.events.ui.util.toolbar.UniLetterToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

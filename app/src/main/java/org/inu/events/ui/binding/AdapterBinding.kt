@@ -2,9 +2,9 @@ package org.inu.events.ui.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.inu.events.adapter.*
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.model.entity.User
+import org.inu.events.ui.adapter.*
 
 @BindingAdapter("app:likes")
 fun setLikes(recyclerView: RecyclerView, list: List<Event>?) {

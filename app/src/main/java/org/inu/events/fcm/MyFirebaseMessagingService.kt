@@ -12,7 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.inu.events.MainActivity
+import org.inu.events.ui.home.MainActivity
 import org.inu.events.R
 import org.inu.events.common.db.SharedPreferenceWrapper
 import org.koin.core.component.KoinComponent

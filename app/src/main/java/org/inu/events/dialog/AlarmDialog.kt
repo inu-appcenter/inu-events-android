@@ -8,7 +8,6 @@ import android.graphics.drawable.InsetDrawable
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import org.inu.events.DetailActivity
 import org.inu.events.R
 
 class AlarmDialog {

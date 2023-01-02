@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.TempRegisterViewModel" />
+            type="org.inu.events.ui.register.tmp.TempRegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

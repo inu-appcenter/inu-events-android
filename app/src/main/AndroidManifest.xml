@@ -17,7 +17,7 @@
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".BlockedAccountActivity"
+            android:name=".ui.mypage.shortcut.BlockedAccountActivity"
             android:exported="false" />
 
         <meta-data
@@ -31,35 +31,35 @@
             android:value="Channel Id" />
 
         <activity
-            android:name=".TempRegisterActivity"
+            android:name=".ui.register.tmp.TempRegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".NotificationSettingActivity"
+            android:name=".ui.mypage.setting.NotificationSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".ui.mypage.store.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".LikeActivity"
+            android:name=".ui.mypage.store.LikeActivity"
             android:exported="false" />
         <activity
-            android:name=".MyHistoryActivity"
+            android:name=".ui.mypage.shortcut.MyHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateProfileActivity"
+            android:name=".ui.mypage.UpdateProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".PrivacyPolicyActivity"
+            android:name=".ui.mypage.info.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
-            android:name=".OpenSourceLicensesActivity"
+            android:name=".ui.mypage.info.OpenSourceLicensesActivity"
             android:exported="false" />
         <activity
-            android:name=".MyPageActivity"
+            android:name=".ui.mypage.MyPageActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Splash">
             <intent-filter>
@@ -69,16 +69,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".ui.detail.DetailActivity"
             android:exported="true" />
         <activity
-            android:name=".CommentActivity"
+            android:name=".ui.detail.CommentActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterEventsActivity"
+            android:name=".ui.register.RegisterEventsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
 

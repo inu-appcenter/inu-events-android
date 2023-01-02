@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.HomeViewModel" />
+            type="org.inu.events.ui.home.HomeViewModel" />
 
     </data>
 

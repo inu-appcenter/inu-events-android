@@ -9,7 +9,7 @@
 
         <variable
             name="commentViewModel"
-            type="org.inu.events.viewmodel.CommentViewModel" />
+            type="org.inu.events.ui.detail.CommentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <org.inu.events.UniLetterToolbar
+        <org.inu.events.ui.util.toolbar.UniLetterToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

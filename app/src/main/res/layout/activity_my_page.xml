@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.MyPageViewModel" />
+            type="org.inu.events.ui.mypage.MyPageViewModel" />
         <variable
             name="buildConfig"
             type="org.inu.events.BuildConfig" />
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <org.inu.events.UniLetterToolbar
+        <org.inu.events.ui.util.toolbar.UniLetterToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".MyPageActivity"
+                tools:context=".ui.mypage.MyPageActivity"
                 android:paddingTop="36dp">
 
                 <androidx.cardview.widget.CardView

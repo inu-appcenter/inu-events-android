@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.BlockedAccountViewModel" />
+            type="org.inu.events.ui.mypage.shortcut.BlockedAccountViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BlockedAccountActivity">
+        tools:context=".ui.mypage.shortcut.BlockedAccountActivity">
 
-        <org.inu.events.UniLetterToolbar
+        <org.inu.events.ui.util.toolbar.UniLetterToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="차단한 계정"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@color/white"
-            android:elevation="8dp"/>
+            android:elevation="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="차단한 계정" />
 
         <ScrollView
             android:layout_width="match_parent"
