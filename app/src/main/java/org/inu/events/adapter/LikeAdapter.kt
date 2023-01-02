@@ -9,15 +9,21 @@ import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemLikeEventBinding
 import org.inu.events.viewmodel.LikeViewModel
 
-class LikeAdapter(val viewModel: LikeViewModel) : ListAdapter<Event, LikeAdapter.ViewHolder>(LikeDiffUtil()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, viewModel)
+class LikeAdapter(val viewModel: LikeViewModel) :
+    ListAdapter<Event, LikeAdapter.ViewHolder>(LikeDiffUtil) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder.from(parent, viewModel)
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(val binding: ItemLikeEventBinding, val viewModel: LikeViewModel) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(
+        val binding: ItemLikeEventBinding,
+        val viewModel: LikeViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
         companion object {
-            fun from(parent: ViewGroup, viewModel: LikeViewModel) : ViewHolder {
+            fun from(parent: ViewGroup, viewModel: LikeViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemLikeEventBinding.inflate(layoutInflater, parent, false)
 
@@ -25,27 +31,31 @@ class LikeAdapter(val viewModel: LikeViewModel) : ListAdapter<Event, LikeAdapter
             }
         }
 
+        init {
+            binding.bookmarkIcon.setOnClickListener {
+                binding.item?.let { event ->
+                    viewModel.onClickLikeIcon(event.id, it)
+                }
+            }
+
+            binding.cardWrap.setOnClickListener {
+                binding.item?.let { event ->
+                    viewModel.onClickDetail(it, event)
+                }
+            }
+        }
+
         fun bind(item: Event) {
             binding.item = item
             binding.viewModel = viewModel
-            binding.bookmarkIcon.setOnClickListener {
-                viewModel.onClickLikeIcon(item.id, it)
-            }
-            binding.cardWrap.setOnClickListener {
-                viewModel.onClickDetail(it, item)
-            }
-            binding
             binding.executePendingBindings()
         }
     }
-}
 
-class LikeDiffUtil : DiffUtil.ItemCallback<Event>() {
-    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
-    }
+    companion object LikeDiffUtil : DiffUtil.ItemCallback<Event>() {
+        override fun areItemsTheSame(oldItem: Event, newItem: Event) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
+        override fun areContentsTheSame(oldItem: Event, newItem: Event) = oldItem == newItem
     }
 }
+

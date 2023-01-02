@@ -21,7 +21,7 @@ class NotificationSettingActivity : BaseActivity<ActivityNotificationSettingBind
         super.dataBinding()
         binding.viewModel = viewModel
         binding.categories.adapter = CategoryAdapter()
-        binding.categories.addItemDecoration(CategoryItemDecoration(2, 8, true))
+        binding.categories.addItemDecoration(CategoryItemDecoration(2, 8))
     }
 
     @SuppressLint("NotifyDataSetChanged")

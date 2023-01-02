@@ -10,7 +10,8 @@ import org.inu.events.databinding.ItemBlockedAccountBinding
 import org.inu.events.dialog.TwoButtonDialog
 import org.inu.events.viewmodel.BlockedAccountViewModel
 
-class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) : ListAdapter<User, BlockedAccountAdapter.ViewHolder>(BlockedAccountDiffUtil()) {
+class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) :
+    ListAdapter<User, BlockedAccountAdapter.ViewHolder>(BlockedAccountDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent, viewModel)
     }
@@ -19,19 +20,28 @@ class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) : ListAdapte
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(val binding: ItemBlockedAccountBinding, val viewModel: BlockedAccountViewModel) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(
+        val binding: ItemBlockedAccountBinding,
+        val viewModel: BlockedAccountViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.cancelBlockingButton.setOnClickListener {
+                binding.item?.let { user ->
+                    TwoButtonDialog("차단을 해제하시겠어요?") {
+                        viewModel.onClickCancelBlocking(user.id!!)
+                    }.show(it.context)
+                }
+            }
+        }
+
         fun bind(item: User) {
             binding.item = item
-            binding.cancelBlockingButton.setOnClickListener {
-                TwoButtonDialog("차단을 해제하시겠어요?") {
-                    viewModel.onClickCancelBlocking(item.id!!)
-                }.show(it.context)
-            }
             binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent: ViewGroup, viewModel: BlockedAccountViewModel) : ViewHolder {
+            fun from(parent: ViewGroup, viewModel: BlockedAccountViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemBlockedAccountBinding.inflate(layoutInflater, parent, false)
 

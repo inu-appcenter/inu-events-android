@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 class CategoryItemDecoration(
     private val spanCount: Int = 2,
     private val spacing: Int = 0,
-    private val includeEdge: Boolean = false
 ) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,

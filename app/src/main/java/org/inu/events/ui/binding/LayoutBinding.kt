@@ -1,4 +1,4 @@
-package org.inu.events.binding
+package org.inu.events.ui.binding
 
 import android.view.View
 import android.view.ViewGroup

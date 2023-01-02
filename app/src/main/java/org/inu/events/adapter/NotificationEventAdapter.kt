@@ -9,15 +9,21 @@ import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemNotificationEventBinding
 import org.inu.events.viewmodel.NotificationViewModel
 
-class NotificationEventAdapter(val viewModel: NotificationViewModel) : ListAdapter<Event, NotificationEventAdapter.ViewHolder>(EventDiffUtil()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent, viewModel)
+class NotificationEventAdapter(val viewModel: NotificationViewModel) :
+    ListAdapter<Event, NotificationEventAdapter.ViewHolder>(EventDiffUtil) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ViewHolder.from(parent, viewModel)
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(val binding: ItemNotificationEventBinding, val viewModel: NotificationViewModel) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(
+        val binding: ItemNotificationEventBinding,
+        val viewModel: NotificationViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
         companion object {
-            fun from(parent: ViewGroup, viewModel: NotificationViewModel) : ViewHolder {
+            fun from(parent: ViewGroup, viewModel: NotificationViewModel): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemNotificationEventBinding.inflate(layoutInflater, parent, false)
 
@@ -25,27 +31,32 @@ class NotificationEventAdapter(val viewModel: NotificationViewModel) : ListAdapt
             }
         }
 
+        init {
+            binding.notificationIcon.setOnClickListener {
+                binding.item?.let { event ->
+                    viewModel.onClickBookmarkIcon(event.id, it)
+                }
+            }
+
+            binding.cardWrap.setOnClickListener {
+                binding.item?.let { event ->
+                    viewModel.onClickDetail(it, event)
+                }
+            }
+        }
+
         fun bind(item: Event) {
             binding.item = item
             binding.viewModel = viewModel
-            binding.notificationIcon.setOnClickListener {
-                viewModel.onClickBookmarkIcon(item.id, it)
-            }
-            binding.cardWrap.setOnClickListener {
-                viewModel.onClickDetail(it, item)
-            }
-            binding
+
             binding.executePendingBindings()
         }
     }
-}
 
-class EventDiffUtil : DiffUtil.ItemCallback<Event>() {
-    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
-    }
+    companion object EventDiffUtil : DiffUtil.ItemCallback<Event>() {
+        override fun areItemsTheSame(oldItem: Event, newItem: Event) = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-        return oldItem == newItem
+        override fun areContentsTheSame(oldItem: Event, newItem: Event) = oldItem == newItem
     }
 }
+

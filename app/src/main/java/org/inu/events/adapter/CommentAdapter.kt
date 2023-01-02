@@ -26,9 +26,9 @@ class CommentAdapter(private val viewModel: CommentViewModel) :
         fun bind(commentModel: Comment) {
             binding.nickNameTextView.text = commentModel.nickname
             binding.commentTextView.text = commentModel.content
-            binding.commentMoreButton.isVisible =  true
-            binding.writerTextView.isVisible = viewModel.currentEvent.value!!.userId == commentModel.userId
-            Log.i("ViewModel DSMFLKsmdkfmlSDMlfkmSLKDMfkSMDLKFMAKLFMKAMDKFMKLADFMA","${viewModel.currentEvent.value!!.userId.toString()} ${commentModel.userId.toString()}")
+            binding.commentMoreButton.isVisible = true
+            binding.writerTextView.isVisible =
+                viewModel.currentEvent.value!!.userId == commentModel.userId
             // 프로필 이미지 삽입
             Glide
                 .with(binding.profileImageView.context)
@@ -37,13 +37,11 @@ class CommentAdapter(private val viewModel: CommentViewModel) :
                 .into(binding.profileImageView)
 
 
-            binding.commentMoreButton.setOnClickListener{
+            binding.commentMoreButton.setOnClickListener {
                 if (commentModel.wroteByMe == true) {
-                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,true)
-                    Log.i("CLICK", viewModel.commentIndex.toString())
-                }else{
-                    viewModel.showBottomSheet(commentModel.id,commentModel.userId,false)
-                    Log.i("CLICK",commentModel.userId.toString())
+                    viewModel.showBottomSheet(commentModel.id, commentModel.userId, true)
+                } else {
+                    viewModel.showBottomSheet(commentModel.id, commentModel.userId, false)
                 }
             }
         }

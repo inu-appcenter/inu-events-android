@@ -1,7 +1,8 @@
-package org.inu.events.adapter
+package org.inu.events.ui.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.inu.events.adapter.*
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.model.entity.User
 
@@ -34,7 +35,7 @@ fun setEvents(recyclerView: RecyclerView, list: List<Event>?) {
 }
 
 @BindingAdapter("app:blockedAccounts")
-fun setBlockedAccounts(recyclerView: RecyclerView, list:List<User>?) {
+fun setBlockedAccounts(recyclerView: RecyclerView, list: List<User>?) {
     list?.let {
         (recyclerView.adapter as BlockedAccountAdapter).submitList(list)
     }
