@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="androidx.core.content.ContextCompat" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
         <variable
             name="detailViewModel"
@@ -24,7 +26,7 @@
             layout="@layout/toolbar_sample_read"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:viewModel="@{detailViewModel}"/>
+            app:viewModel="@{detailViewModel}" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -56,8 +58,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="24dp"
-                        android:textSize="13sp"
                         android:text="@{detailViewModel.currentEvent.nickname}"
+                        android:textSize="13sp"
                         app:layout_constraintStart_toEndOf="@+id/circleImageView"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="닉네임입니다." />
@@ -78,8 +80,8 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_menu"
                         android:onClick="@{()->detailViewModel.onClickUserMenu()}"
+                        android:src="@drawable/ic_menu"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView" />
 
@@ -90,8 +92,8 @@
                     imageFromUrl="@{detailViewModel.imageUrl}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
+                    android:layout_marginTop="16dp"
                     android:adjustViewBounds="true"
                     android:paddingVertical="24dp"
                     android:scaleType="fitCenter"
@@ -106,48 +108,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/detail_horizontal_margin"
-                    android:layout_marginEnd="4dp"
-                    app:layout_constraintEnd_toStartOf="@id/boardDateLayout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/detailTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/detail_horizontal_margin"
                         android:layout_marginEnd="4dp"
-                        android:text="@{detailViewModel.currentEvent.title}"
-                        tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textIsSelectable="true"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/boardDateLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-                <TextView
-                    android:id="@+id/board_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{detailViewModel.boardDateText}"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    android:background="@drawable/drawable_home_board_date_ongoing_background"
-                    android:backgroundTint="@{detailViewModel.deadLine ? @color/black8 : @color/primary}"
-                    tools:text="마감" />
-                </LinearLayout>
+                        app:layout_constraintEnd_toStartOf="@id/boardDateLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/detailTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            android:text="@{detailViewModel.currentEvent.title}"
+                            android:textColor="@color/black"
+                            android:textIsSelectable="true"
+                            android:textSize="18sp"
+                            tools:text="앱센터 13기 신입멤버 모집한드아아아아아아앙아아아아아아아아아악ㅋㅋㅋ아싸됐당" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/boardDateLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/board_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/drawable_home_board_date_ongoing_background"
+                            android:backgroundTint="@{detailViewModel.deadLine ? @color/black8 : @color/primary}"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="@{detailViewModel.boardDateText}"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            tools:text="마감" />
+                    </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -165,14 +171,14 @@
                         android:id="@+id/textView_category"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        tools:text="category | host"
-                        android:text="@{detailViewModel.hostNull ? detailViewModel.currentEvent.category : @string/group(detailViewModel.currentEvent.category,detailViewModel.currentEvent.host)}"
-                        android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        android:textIsSelectable="true"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:text="@{detailViewModel.hostNull ? detailViewModel.currentEvent.category : @string/group(detailViewModel.currentEvent.category,detailViewModel.currentEvent.host)}"
+                        android:textColor="@color/black1"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="category | host" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -192,10 +198,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{@string/event_period(detailViewModel.startDate, detailViewModel.startTime)}"
-                        tools:text="2021.03.22 - 6:00PM"
-                        android:textIsSelectable="true"
                         android:textColor="@color/black1"
-                        android:textSize="15sp" />
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="2021.03.22 - 6:00PM" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,18 +221,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@{@string/event_period(detailViewModel.endDate, detailViewModel.endTime)}"
-                        tools:text="2021.03.22 - 8:00PM"
-                        android:textIsSelectable="true"
                         android:textColor="@color/black1"
-                        android:textSize="15sp" />
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="2021.03.22 - 8:00PM" />
                 </LinearLayout>
 
                 <LinearLayout
+                    layoutMarginBottom="@{detailViewModel.locationNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.locationNull &amp;&amp; detailViewModel.contactNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:orientation="horizontal">
 
                     <TextView
@@ -239,24 +245,24 @@
                         android:id="@+id/textView_target"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{detailViewModel.currentEvent.target}"
-                        tools:text="1년이상 활동 가능한 사람"
-                        android:textIsSelectable="true"
-                        android:textColor="@color/black1"
-                        android:textSize="15sp"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:text="@{detailViewModel.currentEvent.target}"
+                        android:textColor="@color/black1"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="1년이상 활동 가능한 사람" />
                 </LinearLayout>
 
                 <LinearLayout
+                    layoutMarginBottom="@{detailViewModel.locationNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    layoutMarginBottom="@{detailViewModel.locationNull ? @dimen/detail_bottom_margin : @dimen/detail_bottom_margin_null}"
-                    android:visibility="@{detailViewModel.contactNull ? View.GONE : View.VISIBLE}"
-                android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="@{detailViewModel.contactNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:layout_width="80dp"
@@ -268,14 +274,14 @@
                         android:id="@+id/textView_contact"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{detailViewModel.currentEvent.contact}"
-                        tools:text="카톡"
-                        android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        android:textIsSelectable="true"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:text="@{detailViewModel.currentEvent.contact}"
+                        android:textColor="@color/black1"
+                        android:textIsSelectable="true"
+                        android:textSize="15sp"
+                        tools:text="카톡" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -294,16 +300,18 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/textView_location"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@{detailViewModel.currentEvent.location}"
                         android:autoLink="web"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:text="@{detailViewModel.currentEvent.location}"
                         android:textColor="@color/black1"
-                        android:textSize="15sp"
-                        tools:text="https://github.com/inu-appcenter"
                         android:textIsSelectable="true"
-                        android:maxLines="1"
-                        android:ellipsize="end"/>
+                        android:textSize="15sp"
+                        tools:text="https://gisssssssssssssssssthub.com/inu-appcenter" />
                 </LinearLayout>
 
                 <View
@@ -326,12 +334,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/detail_horizontal_margin"
                     android:layout_marginTop="16dp"
-                    tools:text="@string/detail_content"
-                    android:textIsSelectable="true"
                     android:text="@{detailViewModel.currentEvent.body}"
                     android:textColor="@color/black1"
+                    android:textIsSelectable="true"
                     android:textSize="15sp"
-                    />
+                    tools:text="@string/detail_content" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -364,12 +371,12 @@
                         android:id="@+id/commentTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{()->detailViewModel.onClickComment()}"
                         android:text="@{@string/event_save_comments(detailViewModel.like,detailViewModel.currentEvent.comments)}"
                         android:textSize="15sp"
-                        android:onClick="@{()->detailViewModel.onClickComment()}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text = "저장 7 • 댓글 17개"/>
+                        tools:text="저장 7 • 댓글 17개" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -381,14 +388,14 @@
             android:id="@+id/NotificationButton"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="16dp"
             android:background="@{ContextCompat.getDrawable(context,detailViewModel.notificationBackground)}"
+            android:onClick="@{()->detailViewModel.onClickNotification()}"
             android:paddingVertical="15dp"
             android:text="@{detailViewModel.notificationText}"
-            android:onClick="@{()->detailViewModel.onClickNotification()}"
             android:textColor="@{ContextCompat.getColor(context,detailViewModel.notificationColor)}"
             android:textSize="15sp"
-            tools:ignore="HardcodedText,TextContrastCheck"
-            android:layout_marginBottom="16dp"
-            android:layout_marginHorizontal="20dp"/>
+            tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>
 </layout>

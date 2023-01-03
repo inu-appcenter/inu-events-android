@@ -53,9 +53,10 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
 
     private fun setTextView() {
         binding.apply {
-            textViewContact.isSelected = true
             textViewCategory.isSelected = true
             textViewTarget.isSelected = true
+            textViewContact.isSelected = true
+            textViewLocation.isSelected = true
         }
     }
 
