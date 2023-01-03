@@ -16,7 +16,7 @@ import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
-import org.inu.events.dialog.LoginDialog
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.inu.events.ui.login.LoginActivity
 import org.inu.events.ui.mypage.MyPageActivity

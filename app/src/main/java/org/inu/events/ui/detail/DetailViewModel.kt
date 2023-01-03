@@ -3,6 +3,7 @@ package org.inu.events.ui.detail
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import org.inu.events.R
 import org.inu.events.common.extension.toast
@@ -17,14 +18,10 @@ import org.inu.events.data.repository.BlockRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
-import org.inu.events.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.text.SimpleDateFormat
 import java.time.*
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class DetailViewModel : ViewModel(),KoinComponent {
     private val eventRepository: EventRepository by inject()
@@ -38,6 +35,10 @@ class DetailViewModel : ViewModel(),KoinComponent {
     private val _currentEvent = MutableLiveData<Event>()
     val currentEvent: MutableLiveData<Event>
         get() = _currentEvent
+
+    var locationLabel = Transformations.map(currentEvent) {
+        if (it.location?.contains("http") == true) "신청링크" else "신청장소"
+    }
 
     var imageUrl = MutableLiveData("")
     var startDate = MutableLiveData("")

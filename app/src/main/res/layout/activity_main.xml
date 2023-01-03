@@ -41,6 +41,8 @@
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +53,6 @@
                 android:id="@+id/home_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="14dp"
-                android:paddingBottom="48dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView_blur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_drawable_blur"

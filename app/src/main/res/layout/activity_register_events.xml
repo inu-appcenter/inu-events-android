@@ -726,7 +726,7 @@
                 android:hint="@string/hintText_body"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLength="800"
+                android:maxLength="8000"
                 android:padding="16dp"
                 android:text="@={registerViewModel.body}"
                 android:textSize="16sp"
