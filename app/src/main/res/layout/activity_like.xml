@@ -5,14 +5,14 @@
     <data>
         <variable
             name="viewModel"
-            type="org.inu.events.viewmodel.LikeViewModel" />
+            type="org.inu.events.ui.mypage.store.LikeViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LikeActivity">
+        tools:context=".ui.mypage.store.LikeActivity">
 
-        <org.inu.events.UniLetterToolbar
+        <org.inu.events.ui.util.toolbar.UniLetterToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

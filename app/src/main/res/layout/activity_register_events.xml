@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="registerViewModel"
-            type="org.inu.events.viewmodel.RegisterEventsViewModel" />
+            type="org.inu.events.ui.register.RegisterEventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout0"
@@ -24,7 +23,7 @@
             android:visibility="@{registerViewModel.phase == 0 ? View.VISIBLE : View.INVISIBLE}"
             tools:visibility="gone">
 
-            <org.inu.events.UniLetterToolbar
+            <org.inu.events.ui.util.toolbar.UniLetterToolbar
                 android:id="@+id/toolbar_register0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp">
 
-                    <org.inu.events.UniLetterToolbar
+                    <org.inu.events.ui.util.toolbar.UniLetterToolbar
                         android:id="@+id/toolbar_register1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -681,7 +680,7 @@
             android:visibility="@{registerViewModel.phase == 2 ? View.VISIBLE : View.INVISIBLE}"
             tools:visibility="visible">
 
-            <org.inu.events.UniLetterToolbar
+            <org.inu.events.ui.util.toolbar.UniLetterToolbar
                 android:id="@+id/toolbar_register2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -809,7 +808,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <org.inu.events.UniLetterToolbar
+                    <org.inu.events.ui.util.toolbar.UniLetterToolbar
                         android:id="@+id/toolbar_register3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

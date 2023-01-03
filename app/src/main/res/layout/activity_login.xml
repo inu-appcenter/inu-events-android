@@ -8,13 +8,13 @@
 
         <variable
             name="loginViewModel"
-            type="org.inu.events.viewmodel.LoginViewModel" />
+            type="org.inu.events.ui.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity">
+        tools:context=".ui.login.LoginActivity">
 
         <View
             android:id="@+id/logo"
