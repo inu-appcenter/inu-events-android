@@ -294,10 +294,12 @@
                     android:visibility="@{detailViewModel.locationNull ? View.GONE : View.VISIBLE}">
 
                     <TextView
+                        android:id="@+id/textView_location_label"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="신청링크"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:text="@{detailViewModel.locationLabel}"
+                        tools:text="신청링크" />
 
                     <TextView
                         android:id="@+id/textView_location"
