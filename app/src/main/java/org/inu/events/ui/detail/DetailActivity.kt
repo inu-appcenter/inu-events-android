@@ -11,8 +11,8 @@ import org.inu.events.R
 import org.inu.events.ui.register.RegisterEventsActivity
 import org.inu.events.common.extension.*
 import org.inu.events.databinding.ActivityDetailBinding
-import org.inu.events.dialog.AlarmDialog
-import org.inu.events.dialog.LoginDialog
+import org.inu.events.ui.util.dialog.AlarmDialog
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.objects.IntentMessage.MY_WROTE
@@ -178,7 +178,8 @@ class DetailActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                     .addText("글 메뉴")
                     .addAction("신고하기") {
                         if (loginService.isLoggedIn){ }
-                        else{LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 신고하실 수 있습니다!") })}
+                        else{
+                            LoginDialog().show(this, { onOk() }, { toast("로그인을 하셔야 신고하실 수 있습니다!") })}
                     }
                     .show()
             }

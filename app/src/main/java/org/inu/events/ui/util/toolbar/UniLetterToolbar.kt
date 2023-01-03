@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import org.inu.events.R
-import org.inu.events.dialog.AlarmDialog
+import org.inu.events.ui.util.dialog.AlarmDialog
 
 class UniLetterToolbar(context: Context, attrs: AttributeSet) : Toolbar(context, attrs) {
     private var title: String = ""

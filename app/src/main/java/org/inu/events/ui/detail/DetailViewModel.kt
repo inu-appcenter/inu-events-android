@@ -17,7 +17,7 @@ import org.inu.events.data.repository.BlockRepository
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
 import org.inu.events.data.repository.NotificationRepository
-import org.inu.events.dialog.LoginDialog
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

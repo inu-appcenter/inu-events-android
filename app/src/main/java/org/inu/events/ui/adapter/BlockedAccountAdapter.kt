@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.data.model.entity.User
 import org.inu.events.databinding.ItemBlockedAccountBinding
-import org.inu.events.dialog.TwoButtonDialog
+import org.inu.events.ui.util.dialog.TwoButtonDialog
 import org.inu.events.ui.mypage.shortcut.BlockedAccountViewModel
 
 class BlockedAccountAdapter(val viewModel: BlockedAccountViewModel) :

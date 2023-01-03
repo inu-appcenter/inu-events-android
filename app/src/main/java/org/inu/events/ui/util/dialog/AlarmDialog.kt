@@ -1,4 +1,4 @@
-package org.inu.events.dialog
+package org.inu.events.ui.util.dialog
 
 import android.app.AlertDialog
 import android.content.Context

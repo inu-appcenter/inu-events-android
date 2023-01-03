@@ -19,8 +19,8 @@ import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.common.threading.execute
 import org.inu.events.databinding.ActivityCommentBinding
-import org.inu.events.dialog.AlarmDialog
-import org.inu.events.dialog.LoginDialog
+import org.inu.events.ui.util.dialog.AlarmDialog
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.lib.actionsheet.UniActionSheet
 import org.inu.events.objects.IntentMessage.EVENT_ID
 import org.inu.events.service.LoginService

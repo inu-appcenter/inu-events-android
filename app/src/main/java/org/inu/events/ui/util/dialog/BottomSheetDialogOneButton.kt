@@ -1,4 +1,4 @@
-package org.inu.events.dialog
+package org.inu.events.ui.util.dialog
 
 import android.content.Context
 import android.graphics.Color
