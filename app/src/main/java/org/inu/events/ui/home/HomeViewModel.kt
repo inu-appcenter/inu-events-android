@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.inu.events.common.threading.execute
 import org.inu.events.common.util.SingleLiveEvent
@@ -16,10 +15,10 @@ import org.inu.events.data.model.dto.LikeParam
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.repository.EventRepository
 import org.inu.events.data.repository.LikeRepository
-import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.service.LoginService
 import org.inu.events.ui.login.LoginActivity
 import org.inu.events.ui.mypage.MyPageActivity
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.ui.util.toolbar.ToolbarListener
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,23 +29,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
     private val loginService: LoginService by inject()
     private val likeRepository: LikeRepository by inject()
 
-    private val pageSize = 10
-
     val _homeDataList = MutableStateFlow<PagingData<Event>>(PagingData.empty())
     val homeDataList = _homeDataList.asStateFlow()
-
-    fun getHomeData(categoryId: Int, eventStatus: Boolean) {
-        viewModelScope.launch {
-            eventRepository.getEvents(categoryId, eventStatus).collect {
-                _homeDataList.value = it
-            }
-        }
-    }
-
-    fun onClickSpinner(parent: ViewParent, view: View, position: Int, id: Long) {
-        getHomeData(position, false)
-    }
-
     var eventIndex: Int = 0
     private var like = false
 
@@ -104,5 +88,17 @@ class HomeViewModel : ViewModel(), KoinComponent {
             )
         }.then {
         }.catch { }
+    }
+
+    private fun getHomeData(categoryId: Int, eventStatus: Boolean) {
+        viewModelScope.launch {
+            eventRepository.getEvents(categoryId, eventStatus).collect {
+                _homeDataList.value = it
+            }
+        }
+    }
+
+    fun onClickSpinner(parent: ViewParent, view: View, position: Int, id: Long) {
+        getHomeData(position, false)
     }
 }
