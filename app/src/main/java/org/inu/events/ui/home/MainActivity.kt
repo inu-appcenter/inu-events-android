@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupRecyclerView()
         setUpSwipeRefresh()
         setupRefreshEvent()
+        setupSpinner()
     }
 
     override fun onResume() {
@@ -99,6 +100,17 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         viewModel.shouldRefresh.observe(this) {
             (binding.homeRecyclerView.adapter as HomeAdapter).refresh()
         }
+    }
+
+    private fun setupSpinner() {
+        val categoryItems = resources.getStringArray(R.array.classification)
+        val filterItems = resources.getStringArray(R.array.filter)
+
+        val categoryAdapter = SpinnerAdapter(this, R.layout.uni_spinner_popup, categoryItems.toMutableList(), "카테고리")
+        val filterAdapter = SpinnerAdapter(this, R.layout.uni_spinner_popup, filterItems.toMutableList(), "전체")
+
+        binding.spinnerClassification.adapter = categoryAdapter
+        binding.spinnerFilter.adapter = filterAdapter
     }
 
     private fun askUserForLogin() {

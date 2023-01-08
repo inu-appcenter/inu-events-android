@@ -25,16 +25,37 @@
         <Spinner
             android:id="@+id/spinner_classification"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/spinner_background"
+            android:background="@null"
             android:entries="@array/classification"
             android:onItemSelected="@{(parent, view, position, id)->mainViewModel.onClickSpinner(parent, view, position, id)}"
+            android:popupBackground="@drawable/popup_background"
+            android:popupElevation="4dp"
             android:spinnerMode="dropdown"
             android:textColor="@color/black1"
             android:textSize="12sp"
+            android:dropDownVerticalOffset="40dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+        <Spinner
+            android:id="@+id/spinner_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            android:entries="@array/filter"
+            android:popupBackground="@drawable/popup_background"
+            android:popupElevation="4dp"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/black1"
+            android:textSize="12sp"
+            android:dropDownVerticalOffset="40dp"
+            app:layout_goneMarginEnd="4dp"
+            app:layout_constraintEnd_toStartOf="@id/spinner_classification"
             app:layout_constraintTop_toBottomOf="@+id/include" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

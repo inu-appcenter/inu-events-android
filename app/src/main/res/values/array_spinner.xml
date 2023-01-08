@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classification">
-        <item>선택없음</item>
+        <item>전체</item>
         <item>동아리/소모임</item>
         <item>학생회</item>
         <item>간식나눔</item>
@@ -9,5 +9,10 @@
         <item>스터디</item>
         <item>구인</item>
         <item>기타</item>
+    </string-array>
+
+    <string-array name="filter">
+        <item>전체</item>
+        <item>진행중</item>
     </string-array>
 </resources>
