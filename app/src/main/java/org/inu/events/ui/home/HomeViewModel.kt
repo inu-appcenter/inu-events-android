@@ -29,8 +29,10 @@ class HomeViewModel : ViewModel(), KoinComponent {
     private val loginService: LoginService by inject()
     private val likeRepository: LikeRepository by inject()
 
-    val _homeDataList = MutableStateFlow<PagingData<Event>>(PagingData.empty())
+    private val _homeDataList = MutableStateFlow<PagingData<Event>>(PagingData.empty())
     val homeDataList = _homeDataList.asStateFlow()
+    private var categoryId = 0
+    private var eventStatus = false
     var eventIndex: Int = 0
     private var like = false
 
@@ -98,7 +100,13 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onClickSpinner(parent: ViewParent, view: View, position: Int, id: Long) {
-        getHomeData(position, false)
+    fun onCategoryItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+        categoryId = position
+        getHomeData(categoryId, eventStatus)
+    }
+
+    fun onFilterItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+        eventStatus = position == 1
+        getHomeData(categoryId, eventStatus)
     }
 }
