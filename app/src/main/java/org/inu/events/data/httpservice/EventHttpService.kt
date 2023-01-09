@@ -1,10 +1,11 @@
 package org.inu.events.data.httpservice
 
+import androidx.paging.PagingSource
 import okhttp3.MultipartBody
 import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
-import org.inu.events.data.model.entity.Event
 import org.inu.events.data.model.dto.UploadImageResult
+import org.inu.events.data.model.entity.Event
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -40,4 +41,12 @@ interface EventHttpService {
         @Part file: MultipartBody.Part
     ): Call<UploadImageResult>
 
+    @GET("/events-by-search-with-filtering")
+    suspend fun searchEvents(
+        @Query("categoryId") categoryId: Int,
+        @Query("eventStatus") eventStatus: Boolean,
+        @Query("content") content: String,
+        @Query("pageNum") pageNum: Int,
+        @Query("pageSize") pageSize: Int,
+    ): List<Event>
 }
