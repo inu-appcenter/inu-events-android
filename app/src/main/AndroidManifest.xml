@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InuEvents"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".ui.mypage.shortcut.BlockedAccountActivity"
             android:exported="false" />
@@ -81,6 +82,9 @@
             android:name=".ui.register.RegisterEventsActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.home.SearchActivity"
+            android:exported="false"/>
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
