@@ -1,4 +1,4 @@
-package org.inu.events.ui.adapter
+package org.inu.events.ui.adapter.like
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
