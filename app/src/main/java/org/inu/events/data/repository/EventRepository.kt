@@ -7,7 +7,7 @@ import org.inu.events.data.model.dto.AddEventParams
 import org.inu.events.data.model.dto.UpdateEventParams
 import org.inu.events.data.model.dto.UploadImageResult
 import org.inu.events.data.model.entity.Event
-import org.inu.events.data.repository.impl.EventPagingSource
+import org.inu.events.data.source.EventPagingSource
 
 interface EventRepository {
     fun getEvents(categoryId: Int, eventStatus: Boolean): Flow<PagingData<Event>>
@@ -17,4 +17,10 @@ interface EventRepository {
     fun deleteEvent(eventId: Int)
     fun uploadImage(image: MultipartBody.Part): UploadImageResult
     fun createEventPageSource(categoryId: Int, eventStatus: Boolean): EventPagingSource
+
+    fun searchEvents(
+        categoryId: Int,
+        eventStatus: Boolean,
+        content: String,
+    ): Flow<PagingData<Event>>
 }

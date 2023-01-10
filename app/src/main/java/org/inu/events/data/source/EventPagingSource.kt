@@ -1,4 +1,4 @@
-package org.inu.events.data.repository.impl
+package org.inu.events.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import org.inu.events.data.httpservice.EventHttpService
 import org.inu.events.data.model.entity.Event
 
-private val STARTING_KEY = 0
+private const val STARTING_KEY = 0
 
 class EventPagingSource(
     private val httpService: EventHttpService,
@@ -15,7 +15,7 @@ class EventPagingSource(
     private val eventStatus: Boolean = false,
 ) : PagingSource<Int, Event>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Event>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Event>): Int {
         return ensureValidKey(key = 0)
     }
 

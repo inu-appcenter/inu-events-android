@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.data.model.entity.Event
 import org.inu.events.data.model.entity.User
 import org.inu.events.ui.adapter.*
+import org.inu.events.ui.adapter.like.LikeAdapter
 
 @BindingAdapter("app:likes")
 fun setLikes(recyclerView: RecyclerView, list: List<Event>?) {
