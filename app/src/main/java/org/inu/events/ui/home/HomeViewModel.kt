@@ -1,6 +1,7 @@
 package org.inu.events.ui.home
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.view.ViewParent
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,11 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val likeClickEvent = SingleLiveEvent<Any>()
     val shouldRefresh = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
+        override fun onClickSearch(view: View) {
+            val intent = Intent(view.context, SearchActivity::class.java)
+            view.context.startActivity(intent)
+        }
+
         override fun onClickMyPage(view: View) {
             if (loginService.isLoggedIn) {
                 val intent = Intent(view.context, MyPageActivity::class.java)
