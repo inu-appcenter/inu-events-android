@@ -58,6 +58,10 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    init {
+        getHomeData(categoryId, eventStatus)
+    }
+
     fun refresh() {
         shouldRefresh.call()
     }
