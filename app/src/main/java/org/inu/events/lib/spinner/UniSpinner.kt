@@ -70,8 +70,9 @@ class UniSpinner @JvmOverloads constructor(
         popUp.apply {
             isModal = true
             anchorView = this@UniSpinner
-            verticalOffset = this.height + 8
-            setContentWidth(measureWidth() + 100)
+            verticalOffset = this.height + DISTANCE_POPUP_TITLE
+            width = measureWidth() + MARGIN_END_POPUP_ITEM
+            setBackgroundDrawable(context.getDrawable(R.drawable.popup_background))
         }
 
     }
@@ -82,5 +83,10 @@ class UniSpinner @JvmOverloads constructor(
             popUp.dismiss()
             onClick(position)
         }
+    }
+
+    companion object {
+        const val DISTANCE_POPUP_TITLE = 8 * 3
+        const val MARGIN_END_POPUP_ITEM = 16 * 3
     }
 }
