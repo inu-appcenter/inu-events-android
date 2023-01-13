@@ -1,9 +1,7 @@
 package org.inu.events.ui.home
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
-import android.view.ViewParent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -106,12 +104,12 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onCategoryItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+    val onCategoryItemClick = fun(position: Int) {
         categoryId = position
         getHomeData(categoryId, eventStatus)
     }
 
-    fun onFilterItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+    val onFilterItemClick = fun(position: Int) {
         eventStatus = position == 1
         getHomeData(categoryId, eventStatus)
     }
