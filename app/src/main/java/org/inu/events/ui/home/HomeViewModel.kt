@@ -2,7 +2,6 @@ package org.inu.events.ui.home
 
 import android.content.Intent
 import android.view.View
-import android.view.ViewParent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -40,6 +39,11 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val likeClickEvent = SingleLiveEvent<Any>()
     val shouldRefresh = SingleLiveEvent<Any>()
     val toolbarListener = object : ToolbarListener {
+        override fun onClickSearch(view: View) {
+            val intent = Intent(view.context, SearchActivity::class.java)
+            view.context.startActivity(intent)
+        }
+
         override fun onClickMyPage(view: View) {
             if (loginService.isLoggedIn) {
                 val intent = Intent(view.context, MyPageActivity::class.java)
@@ -52,6 +56,10 @@ class HomeViewModel : ViewModel(), KoinComponent {
                 )
             }
         }
+    }
+
+    init {
+        getHomeData(categoryId, eventStatus)
     }
 
     fun refresh() {
@@ -100,12 +108,12 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    fun onCategoryItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+    val onCategoryItemClick = fun(position: Int) {
         categoryId = position
         getHomeData(categoryId, eventStatus)
     }
 
-    fun onFilterItemClick(parent: ViewParent, view: View, position: Int, id: Long) {
+    val onFilterItemClick = fun(position: Int) {
         eventStatus = position == 1
         getHomeData(categoryId, eventStatus)
     }

@@ -25,6 +25,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         initRecyclerView()
+        initBackButton()
         observeSearch()
 
         setContentView(binding.root)
@@ -42,6 +43,12 @@ class SearchActivity : AppCompatActivity() {
                     adapter.submitData(it)
                 }
             }
+        }
+    }
+
+    private fun initBackButton() {
+        binding.tvBack.setOnClickListener {
+            finish()
         }
     }
 }

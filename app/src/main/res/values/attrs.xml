@@ -4,4 +4,9 @@
         <attr name="title" format="string"/>
         <attr name="showInformationIcon" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="UniSpinner">
+        <attr name="items"  format="reference" />
+    </declare-styleable>
+
 </resources>

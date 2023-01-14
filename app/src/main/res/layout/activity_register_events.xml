@@ -315,7 +315,7 @@
                         android:layout_height="@dimen/exitText_height"
                         android:layout_marginHorizontal="20dp"
                         android:layout_marginTop="4dp"
-                        android:background="@drawable/spinner_background"
+                        android:background="@drawable/drawable_edit_text_background"
                         android:entries="@array/classification"
                         android:paddingHorizontal="16dp"
                         android:selectedItemPosition="@={registerViewModel.selectedItemPosition}"
