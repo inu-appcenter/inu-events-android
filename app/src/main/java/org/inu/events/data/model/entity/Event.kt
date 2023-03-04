@@ -25,12 +25,4 @@ data class Event(
     val likes: Int,
     val notifications: Int,
     val submissionUrl: String,
-) {
-    fun isSameListContent(event: Event): Boolean {
-        return imageUuid == event.imageUuid ||
-                title == event.title ||
-                startAt == event.startAt ||
-                endAt == event.endAt ||
-                category == event.category
-    }
-}
+)

@@ -8,16 +8,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.inu.events.ui.login.LoginActivity
 import org.inu.events.R
-import org.inu.events.ui.register.RegisterEventsActivity
-import org.inu.events.ui.adapter.HomeAdapter
 import org.inu.events.common.extension.observe
 import org.inu.events.common.extension.observeNonNull
 import org.inu.events.common.extension.toast
 import org.inu.events.databinding.ActivityMainBinding
-import org.inu.events.ui.util.dialog.LoginDialog
 import org.inu.events.service.LoginService
+import org.inu.events.ui.adapter.HomeAdapter
+import org.inu.events.ui.login.LoginActivity
+import org.inu.events.ui.register.RegisterEventsActivity
+import org.inu.events.ui.util.dialog.LoginDialog
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
@@ -38,10 +38,10 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
         setupRefreshEvent()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
 
-//        viewModel.refresh()
+        viewModel.refresh()
     }
 
     private fun initBinding() {
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
                 askUserForLogin()
             }
         }
-        observe(viewModel.likeClickEvent){
-            if(!loginService.isLoggedIn){
+        observe(viewModel.likeClickEvent) {
+            if (!loginService.isLoggedIn) {
                 showDialog()
             }
         }
@@ -100,17 +100,6 @@ class MainActivity : AppCompatActivity(), LoginDialog.LoginDialog {
             (binding.homeRecyclerView.adapter as HomeAdapter).refresh()
         }
     }
-
-//    private fun setupSpinner() {
-//        val categoryItems = resources.getStringArray(R.array.classification)
-//        val filterItems = resources.getStringArray(R.array.filter)
-//
-//        val categoryAdapter = SpinnerAdapter(this, R.layout.uni_spinner_popup, categoryItems.toMutableList(), "카테고리")
-//        val filterAdapter = SpinnerAdapter(this, R.layout.uni_spinner_popup, filterItems.toMutableList(), "전체")
-//
-//        binding.spinnerClassification.adapter = categoryAdapter
-//        binding.spinnerFilter.adapter = filterAdapter
-//    }
 
     private fun askUserForLogin() {
         LoginDialog().show(this, ::onOk, ::onCancel)
