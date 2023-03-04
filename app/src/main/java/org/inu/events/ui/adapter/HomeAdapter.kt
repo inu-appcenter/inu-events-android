@@ -100,7 +100,8 @@ class HomeAdapter(val viewModel: HomeViewModel) :
         override fun areItemsTheSame(oldItem: Event, newItem: Event) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Event, newItem: Event) =
-            newItem.isSameListContent(oldItem)
+        override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
+            return newItem == oldItem
+        }
     }
 }
