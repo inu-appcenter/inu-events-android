@@ -2,7 +2,7 @@ package org.inu.events.ui.mypage.store
 
 import androidx.activity.viewModels
 import org.inu.events.R
-import org.inu.events.ui.adapter.like.LikeAdapter
+import org.inu.events.ui.adapter.LikeAdapter
 import org.inu.events.base.BaseActivity
 import org.inu.events.databinding.ActivityLikeBinding
 
