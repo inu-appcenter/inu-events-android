@@ -6,11 +6,17 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.data.model.entity.Event
-import org.inu.events.databinding.ItemLikeEventBinding
+import org.inu.events.databinding.ItemSearchEventBinding
 
-class SearchPagingAdapter : PagingDataAdapter<Event, SearchPagingAdapter.ViewHolder>(LikeDiffUtil) {
+class SearchPagingAdapter(
+    val onClickEvent: (event: Event) -> Unit,
+    val onCLickLikeIcon: (event: Event) -> Boolean
+) :
+    PagingDataAdapter<Event, SearchPagingAdapter.ViewHolder>(SearchDiffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(
+        parent, onClickEvent, onCLickLikeIcon
+    )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { event ->
@@ -19,8 +25,28 @@ class SearchPagingAdapter : PagingDataAdapter<Event, SearchPagingAdapter.ViewHol
     }
 
     class ViewHolder private constructor(
-        val binding: ItemLikeEventBinding
+        val binding: ItemSearchEventBinding,
+        val _onClickEvent: (event: Event) -> Unit,
+        val _onCLickLikeIcon: (event: Event) -> Boolean
     ) : RecyclerView.ViewHolder(binding.root) {
+
+
+        init {
+            onClickEvent()
+            onClickLikeIcon()
+        }
+
+        private fun onClickEvent() {
+            itemView.setOnClickListener {
+                binding.item?.let(_onClickEvent)
+            }
+        }
+
+        private fun onClickLikeIcon() {
+            binding.bookmarkIcon.setOnClickListener {
+                binding.item?.let(_onCLickLikeIcon)
+            }
+        }
 
         fun bind(item: Event) {
             binding.item = item
@@ -28,16 +54,20 @@ class SearchPagingAdapter : PagingDataAdapter<Event, SearchPagingAdapter.ViewHol
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(
+                parent: ViewGroup,
+                onClickEvent: (event: Event) -> Unit,
+                onCLickLikeIcon: (event: Event) -> Boolean
+            ): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemLikeEventBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemSearchEventBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
+                return ViewHolder(binding, onClickEvent, onCLickLikeIcon)
             }
         }
     }
 
-    companion object LikeDiffUtil : DiffUtil.ItemCallback<Event>() {
+    companion object SearchDiffUtil : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event) = oldItem == newItem

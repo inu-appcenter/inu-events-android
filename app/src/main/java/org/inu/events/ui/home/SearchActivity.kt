@@ -8,14 +8,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ActivitySearchBinding
 import org.inu.events.ui.adapter.SearchPagingAdapter
+import org.inu.events.ui.detail.DetailActivity
 
 class SearchActivity : AppCompatActivity() {
 
     private val vm: SearchViewModel by viewModels()
     private lateinit var binding: ActivitySearchBinding
-    private val adapter = SearchPagingAdapter()
+    private val adapter = SearchPagingAdapter(
+        onClickEvent = {
+            onClickSearchedEvent(it)
+        },
+        onCLickLikeIcon = {
+            onClickLikeIcon(it)
+        }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,5 +59,13 @@ class SearchActivity : AppCompatActivity() {
         binding.tvBack.setOnClickListener {
             finish()
         }
+    }
+
+    private fun onClickSearchedEvent(event: Event) {
+        startActivity(DetailActivity.callingIntent(this, event.id, event.wroteByMe))
+    }
+
+    private fun onClickLikeIcon(event: Event): Boolean {
+        return false
     }
 }

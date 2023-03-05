@@ -3,6 +3,7 @@ package org.inu.events.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -51,7 +52,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
                 categoryId = category.value,
                 eventStatus = eventStatus.value,
                 content = searchText.value
-            ).collectLatest { pagingData ->
+            ).cachedIn(viewModelScope).collectLatest { pagingData ->
                 searchResult.value = pagingData
             }
         }
