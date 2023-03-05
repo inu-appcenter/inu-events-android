@@ -9,13 +9,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.inu.events.databinding.ActivitySearchBinding
-import org.inu.events.ui.adapter.like.LikePagingAdapter
+import org.inu.events.ui.adapter.SearchPagingAdapter
 
 class SearchActivity : AppCompatActivity() {
 
     private val vm: SearchViewModel by viewModels()
     private lateinit var binding: ActivitySearchBinding
-    private val adapter = LikePagingAdapter()
+    private val adapter = SearchPagingAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

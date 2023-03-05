@@ -1,4 +1,4 @@
-package org.inu.events.ui.adapter.like
+package org.inu.events.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.ItemLikeEventBinding
 
-class LikePagingAdapter : PagingDataAdapter<Event, LikePagingAdapter.ViewHolder>(LikeDiffUtil) {
+class SearchPagingAdapter : PagingDataAdapter<Event, SearchPagingAdapter.ViewHolder>(LikeDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder.from(parent)
 
