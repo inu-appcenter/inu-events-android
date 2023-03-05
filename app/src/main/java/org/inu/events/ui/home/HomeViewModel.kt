@@ -32,8 +32,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val homeDataList = _homeDataList.asStateFlow()
     private var categoryId = 0
     private var eventStatus = false
-    var eventIndex: Int = 0
-    private var like = false
 
     val postClickEvent = SingleLiveEvent<Any>()
     val likeClickEvent = SingleLiveEvent<Any>()
@@ -74,10 +72,10 @@ class HomeViewModel : ViewModel(), KoinComponent {
         likeClickEvent.call()
     }
 
-    fun onLikePost(): Boolean {
-        when {
-            like -> deleteLike(eventIndex)
-            else -> postLike(eventIndex)
+    fun onLikePost(event: Event): Boolean {
+        when (event.likedByMe) {
+            true -> deleteLike(event.id)
+            else -> postLike(event.id)
         }
         return loginService.isLoggedIn
     }
