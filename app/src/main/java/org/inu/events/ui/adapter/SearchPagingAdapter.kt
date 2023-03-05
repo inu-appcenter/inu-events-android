@@ -10,7 +10,7 @@ import org.inu.events.databinding.ItemSearchEventBinding
 
 class SearchPagingAdapter(
     val onClickEvent: (event: Event) -> Unit,
-    val onCLickLikeIcon: (event: Event) -> Boolean
+    val onCLickLikeIcon: (event: Event) -> Unit
 ) :
     PagingDataAdapter<Event, SearchPagingAdapter.ViewHolder>(SearchDiffUtil) {
 
@@ -26,8 +26,8 @@ class SearchPagingAdapter(
 
     class ViewHolder private constructor(
         val binding: ItemSearchEventBinding,
-        val _onClickEvent: (event: Event) -> Unit,
-        val _onCLickLikeIcon: (event: Event) -> Boolean
+        private val _onClickEvent: (event: Event) -> Unit,
+        private val _onCLickLikeIcon: (event: Event) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
@@ -57,7 +57,7 @@ class SearchPagingAdapter(
             fun from(
                 parent: ViewGroup,
                 onClickEvent: (event: Event) -> Unit,
-                onCLickLikeIcon: (event: Event) -> Boolean
+                onCLickLikeIcon: (event: Event) -> Unit
             ): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemSearchEventBinding.inflate(layoutInflater, parent, false)
