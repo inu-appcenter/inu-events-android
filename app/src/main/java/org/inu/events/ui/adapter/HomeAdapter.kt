@@ -7,11 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.inu.events.ui.detail.DetailActivity
 import org.inu.events.R
 import org.inu.events.common.util.Period
 import org.inu.events.data.model.entity.Event
 import org.inu.events.databinding.HomeRecyclerviewItemBinding
+import org.inu.events.ui.detail.DetailActivity
 import org.inu.events.ui.home.HomeViewModel
 
 class HomeAdapter(val viewModel: HomeViewModel) :
@@ -65,16 +65,14 @@ class HomeAdapter(val viewModel: HomeViewModel) :
         private fun onClickLike() {
             binding.likeImageView.setOnClickListener {
                 binding.item?.let { event ->
-                    if (viewModel.onLikePost()) event.likedByMe = !(event.likedByMe ?: false)
-                    else viewModel.onLogIn()
-
-                    adapter.notifyItemChanged(bindingAdapterPosition)
+                    if (viewModel.onLikePost(event)) {
+                        viewModel.refresh()
+                    } else viewModel.onLogIn()
                 }
             }
         }
 
         fun bind(homeData: Event) {
-            viewModel.eventIndex = homeData.id
             binding.item = homeData
             binding.viewModel = viewModel
             binding.boardDate.text = period.whenDay(homeData.endAt)
